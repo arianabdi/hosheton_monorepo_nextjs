@@ -1,0 +1,269 @@
+// Docking layout: split tree + panels + lightweight drag preview.
+// The area is forced to LTR so split geometry (first=left/top) is physical;
+// panel content restores the document direction for correct RTL text.
+
+.dockArea {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: 4px;
+    direction: ltr;
+}
+
+.splitH {
+    display: flex;
+    flex-direction: row;
+    min-width: 0;
+    min-height: 0;
+}
+
+.splitV {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+}
+
+.dividerH {
+    width: 5px;
+    flex: 0 0 auto;
+    cursor: col-resize;
+    position: relative;
+    z-index: 5;
+    touch-action: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 2px;
+        width: 1px;
+        background: var(--ve-border, var(--input-border-color));
+        transition: background 0.15s;
+    }
+
+    &:hover::after {
+        background: var(--brand-color, #6366f1);
+    }
+}
+
+.dividerV {
+    height: 5px;
+    flex: 0 0 auto;
+    cursor: row-resize;
+    position: relative;
+    z-index: 5;
+    touch-action: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 2px;
+        height: 1px;
+        background: var(--ve-border, var(--input-border-color));
+        transition: background 0.15s;
+    }
+
+    &:hover::after {
+        background: var(--brand-color, #6366f1);
+    }
+}
+
+.panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    // Never let a panel collapse below a usable size (spec: minimum size).
+    min-width: 120px;
+    min-height: 80px;
+    background: var(--ve-panel, var(--input-background-color));
+    border: 1px solid var(--ve-border, var(--input-border-color));
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 2px;
+}
+
+// Split geometry stays physical (LTR); panel text flows with the document.
+:global([dir='rtl']) .panel {
+    direction: rtl;
+}
+
+// Dragged window: content dims, cell becomes a light-blue empty frame
+// marking where the window came from. Toggled via classList — no re-render.
+.dragSource {
+    background: rgba(96, 165, 250, 0.1);
+
+    .panelBody,
+    .panelHeader {
+        opacity: 0.22;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border: 2px dashed rgba(96, 165, 250, 0.75);
+        border-radius: 8px;
+        background: rgba(96, 165, 250, 0.12);
+        pointer-events: none;
+        z-index: 30;
+    }
+}
+
+.panelHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    flex-shrink: 0;
+    padding: 0 4px 0 8px;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    background: var(--ve-header-bar, var(--input-background-color));
+    border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    .panelTitle {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        min-width: 0;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ve-text, var(--body-text-color));
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        svg {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+        }
+    }
+
+    .tabBar {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        min-width: 0;
+        overflow-x: auto;
+        flex: 1;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tabBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 7px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            touch-action: none;
+
+            svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            &:hover {
+                color: var(--ve-text, inherit);
+                background: var(--ve-hover, rgba(128, 128, 128, 0.1));
+            }
+        }
+
+        .tabBtnActive {
+            color: var(--ve-text, inherit);
+            background: var(--ve-surface, var(--body-background));
+            border-color: var(--ve-border, var(--input-border-color));
+        }
+    }
+
+    .panelActions {
+        display: flex;
+        align-items: center;
+        gap: 1px;
+        margin-inline-start: auto;
+        flex-shrink: 0;
+
+        .panelBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border: none;
+            border-radius: 5px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            cursor: pointer;
+
+            svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            &:hover {
+                background: var(--ve-hover, rgba(128, 128, 128, 0.15));
+                color: var(--ve-text, inherit);
+            }
+        }
+    }
+}
+
+.panelBody {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    // Overflowing tab content (settings/logs/export) scrolls inside the panel;
+    // self-managed panes (preview/timeline/media) never overflow themselves.
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+// Overlay layer for the drag preview: fully separate from the panels,
+// pointer-events disabled, moved with transform only. Flat blue rectangle —
+// border + 10% fill, no shadow, no blur, no window content.
+.previewLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    display: none;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.previewRect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    border: 2px solid rgba(59, 130, 246, 0.9);
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 6px;
+    will-change: transform;
+}

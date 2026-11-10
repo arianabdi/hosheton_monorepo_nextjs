@@ -1,0 +1,367 @@
+.header {
+    position: relative;
+    z-index: 80;
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    min-height: 48px;
+    height: 48px;
+    padding: 6px 12px;
+    background: transparent;
+    color: var(--body-text-color);
+    border: 0;
+}
+
+.start {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: start;
+    min-width: 0;
+
+    > span {
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+.logoLink,
+.iconBtn,
+.closeBtn,
+.checkBtn,
+.item {
+    appearance: none;
+    background: color-mix(in srgb, var(--body-text-color) 5.5%, transparent);
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--body-text-color);
+    cursor: pointer;
+    opacity: 0.82;
+    border-radius: 10px;
+    line-height: 0;
+    text-decoration: none;
+    font: inherit;
+    transition: background 0.16s ease, opacity 0.16s ease;
+
+    &:hover,
+    &:focus-visible {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+        outline: none;
+    }
+
+    svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+}
+
+/* لوگوی کامل هوشتون (مثل سایدبار)، نه نشان کوچک */
+.logoLink {
+    width: auto;
+    padding: 0 8px;
+    background: transparent;
+    color: inherit;
+}
+
+.brandLogo {
+    height: 20px;
+    width: auto;
+    max-width: 110px;
+    display: block;
+    object-fit: contain;
+}
+
+.iconBtn {
+    &.iconBtnActive {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+    }
+
+    img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.titleBlock {
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    max-width: 100%;
+    color: var(--body-text-color);
+}
+
+.projectName,
+.titleInput {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--body-text-color);
+    min-width: 0;
+    max-width: 260px;
+    height: 34px;
+    box-sizing: border-box;
+    background: color-mix(in srgb, var(--body-text-color) 5.5%, transparent);
+    border-radius: 10px;
+}
+
+.projectName {
+    appearance: none;
+    border: 0;
+    margin: 0;
+    padding: 0 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+    color: inherit;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    max-width: 260px;
+    opacity: 0.88;
+    transition: background 0.16s ease, opacity 0.16s ease;
+}
+
+.projectNameAction {
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+        outline: none;
+    }
+}
+
+.titleInput {
+    border: 0;
+    outline: none;
+    padding: 0 12px;
+    margin: 0;
+    text-align: center;
+    field-sizing: content;
+    box-shadow: none;
+    opacity: 1;
+}
+
+.checkBtn {
+    &:hover:not(:disabled) {
+        opacity: 1;
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.4;
+    }
+}
+
+.end {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: end;
+
+    > span {
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+.budget {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 148px;
+    min-width: 120px;
+    height: 34px;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 5.5%, transparent);
+    flex-shrink: 0;
+    cursor: default;
+    transition: background 0.16s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    }
+
+    &:hover .budgetPopup {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.budgetTop {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+    line-height: 1;
+}
+
+.budgetSpent {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--icon-green, #278e67);
+    white-space: nowrap;
+}
+
+.budgetMeta {
+    font-size: 9px;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.budgetBar {
+    width: 100%;
+    height: 4px;
+    border-radius: 99px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+}
+
+.budgetFill {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--icon-green, #278e67);
+}
+
+.budgetPopup {
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline-end: 0;
+    width: 240px;
+    background: var(--input-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.15);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h5 {
+        margin: 0 0 2px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--icon-green, #278e67);
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 6px;
+    }
+}
+
+.budgetRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--body-text-color);
+}
+
+.switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.divider {
+    color: var(--body-text-color);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1;
+    opacity: 0.22;
+    flex-shrink: 0;
+    user-select: none;
+    padding: 0 2px;
+}
+
+.closeBtn {
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    }
+}
+
+.item {
+    opacity: 0.58;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.active {
+    color: var(--body-text-color);
+    opacity: 1;
+    background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+}
+
+@media (max-width: 768px) {
+    .header {
+        height: 44px;
+        min-height: 44px;
+        padding: 5px 8px;
+        gap: 6px;
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .start {
+        gap: 5px;
+    }
+
+    .end {
+        gap: 5px;
+    }
+
+    .switcher {
+        gap: 5px;
+    }
+
+    .logoLink,
+    .iconBtn,
+    .closeBtn,
+    .checkBtn,
+    .item {
+        width: 32px;
+        height: 32px;
+    }
+
+    .hideOnMobile {
+        display: none !important;
+    }
+
+    .projectName,
+    .titleInput {
+        max-width: 120px;
+        height: 32px;
+    }
+}

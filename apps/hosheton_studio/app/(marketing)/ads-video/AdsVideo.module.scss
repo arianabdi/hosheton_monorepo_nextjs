@@ -1,0 +1,2960 @@
+// استودیو ویدیو تبلیغاتی (ads-video) — استایلِ هم‌تم با اپلیکیشن (روشن/تیره)
+// سطوح و متن از متغیرهای سراسری globals.css می‌آیند؛ اکسنت نارنجیِ این بخش
+// به‌صورت متغیر ماژول‌محور برای هر تم تعریف می‌شود.
+
+// .modalTheme: محتوای مودال‌های ModalHelper با portal به body منتقل می‌شود
+// و از .root ارث‌بری نمی‌کند — متغیرهای ads اینجا هم تعریف می‌شوند.
+.root,
+.denied,
+.modalTheme {
+    --ads-accent: #d9480f;
+    --ads-accent-strong: #c2410c;
+    --ads-warn: #a16207;
+    --ads-danger: var(--icon-red, #bb5c5c);
+    --ads-ok: var(--icon-green, #278e67);
+    --ads-accent-soft: color-mix(in srgb, var(--ads-accent) 9%, transparent);
+    --ads-accent-border: color-mix(in srgb, var(--ads-accent) 45%, transparent);
+    --ads-accent-ring: color-mix(in srgb, var(--ads-accent) 30%, transparent);
+    --ads-surface: var(--scrollable-list-item-background, var(--card-background, #fff));
+    --ads-surface-raised: var(--input-background-color, #fff);
+    --ads-surface-sunken: var(--page-view-background-color, #f7f7f7);
+    --ads-border: var(--input-border-color, #e3e3e3);
+    --ads-border-strong: var(--border-color, #cbcbcb);
+    --ads-text: var(--body-text-color, #000);
+    --ads-text-muted: var(--settings-text-muted, #666);
+    --ads-text-faint: color-mix(in srgb, var(--body-text-color, #000) 55%, transparent);
+    --ads-code-bg: var(--code-block-background-color, #f7f7f7);
+    --ads-player-bg: #000;
+    --ads-stage-bg: color-mix(in srgb, var(--ads-surface-sunken) 88%, var(--ads-accent) 2%);
+    --ads-overlay: rgba(15, 23, 42, 0.45);
+    --ads-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+
+    :global([data-theme='dark']) & {
+        --ads-accent: #f78166;
+        --ads-accent-strong: #f78166;
+        --ads-warn: #d29922;
+        --ads-accent-soft: color-mix(in srgb, var(--ads-accent) 12%, transparent);
+        --ads-stage-bg: #131318;
+        --ads-overlay: rgba(1, 4, 9, 0.72);
+        --ads-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    }
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    background: var(--ads-surface-sunken);
+    color: var(--ads-text);
+    font-size: 13px;
+}
+
+// ── toolbar ─────────────────────────────────────────────
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--ads-border);
+    background: var(--ads-surface);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.toolbarTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+
+    strong { font-weight: 700; }
+    svg { color: var(--ads-accent); }
+}
+
+.toolbarSpacer { flex: 1; }
+
+.projectSwitch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    select {
+        max-width: 260px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+    }
+}
+
+.newProjectForm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px dashed var(--ads-accent-border);
+    border-radius: 10px;
+    background: var(--ads-accent-soft);
+
+    input {
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        min-width: 200px;
+    }
+    select {
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+    }
+}
+
+// ── دکمه‌ها ─────────────────────────────────────────────
+.primaryBtn,
+.ghostBtn,
+.dangerGhostBtn,
+.iconBtn,
+.playerBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    font: inherit;
+    color: inherit;
+
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+}
+
+.primaryBtn {
+    padding: 7px 14px;
+    border: 1px solid var(--ads-accent-border);
+    background: linear-gradient(135deg, var(--ads-accent-strong), var(--ads-accent));
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover:not(:disabled) { filter: brightness(1.08); }
+}
+
+.ghostBtn {
+    padding: 7px 12px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+
+    &:hover:not(:disabled) { border-color: var(--ads-accent-border); }
+}
+
+.dangerGhostBtn {
+    padding: 6px 9px;
+    border: 1px solid color-mix(in srgb, var(--ads-danger) 45%, transparent);
+    background: transparent;
+    color: var(--ads-danger);
+
+    &:hover:not(:disabled) { background: color-mix(in srgb, var(--ads-danger) 12%, transparent); }
+}
+
+.iconBtn {
+    padding: 6px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+
+    &:hover:not(:disabled) { border-color: var(--ads-accent-border); }
+}
+
+.spin { animation: adsSpin 0.9s linear infinite; }
+
+@keyframes adsSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.pulse {
+    color: var(--ads-accent);
+    animation: adsPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes adsPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+// ── حالت خالی / دسترسی ─────────────────────────────────
+.denied {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ads-text);
+    background: var(--ads-surface-sunken);
+    font-size: 13px;
+
+    h2 { margin: 4px 0 0; font-size: 17px; }
+    p { margin: 0; max-width: 460px; color: var(--ads-text-muted); line-height: 1.9; }
+    svg { color: var(--ads-accent); }
+}
+
+.emptyState {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    padding: 40px 20px;
+
+    h2 { margin: 4px 0 0; font-size: 17px; }
+    p { margin: 0; max-width: 460px; color: var(--ads-text-muted); line-height: 1.9; }
+    svg { color: var(--ads-accent); }
+}
+
+// ── بنر ساخت خودکار ────────────────────────────────────
+.autoBanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 16px 0;
+    padding: 9px 14px;
+    border: 1px solid var(--ads-accent-border);
+    border-radius: 10px;
+    background: var(--ads-accent-soft);
+    font-size: 12px;
+
+    strong { font-weight: 700; }
+    em {
+        font-style: normal;
+        color: var(--ads-warn);
+        font-size: 11px;
+        margin-inline-start: auto;
+    }
+}
+
+.autoProgress {
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--ads-accent) 18%, transparent);
+    color: var(--ads-accent);
+    font-weight: 700;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.autoProgressBar {
+    flex: 1;
+    min-width: 80px;
+    max-width: 220px;
+    height: 4px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ads-accent) 15%, transparent);
+    overflow: hidden;
+}
+
+.autoProgressBarFill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--ads-accent);
+    transition: width 0.6s ease;
+}
+
+.modeAuto {
+    color: var(--ads-warn) !important;
+    border-color: var(--ads-warn) !important;
+    background: color-mix(in srgb, var(--ads-warn) 12%, transparent) !important;
+}
+
+// ── چیدمان سه‌ستونی ────────────────────────────────────
+.columns {
+    display: grid;
+    grid-template-columns: 310px minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 16px;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: auto;
+    align-items: start;
+
+    @media (max-width: 1100px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// حالت کاری: هر ستون ارتفاع کامل و اسکرول داخلی
+.columnsWork {
+    overflow: hidden;
+    align-items: stretch;
+
+    > * {
+        min-height: 0;
+        max-height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    // صحنه اسکرول نمی‌خواهد — خودش fullheight است
+    > .stage {
+        overflow: hidden;
+    }
+}
+
+.paneHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+
+    span { display: inline-flex; align-items: center; gap: 6px; }
+}
+
+.paneEmpty {
+    padding: 14px;
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 10px;
+    color: var(--ads-text-muted);
+    line-height: 1.9;
+    font-size: 12px;
+}
+
+// ── استوری‌بورد (پیش‌نمایش Fullsize) ───────────────────
+.storyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+// آیتم استوری‌بورد = خودِ پیش‌نمایش؛ نه کارت با حاشیه
+.cutItem {
+    position: relative;
+    flex: none;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-player-bg);
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+        border-color: var(--ads-accent-border);
+
+        .cutHoverMeta { opacity: 1; }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--ads-accent-ring);
+        outline-offset: 1px;
+    }
+}
+
+.cutItemActive {
+    border-color: var(--ads-accent);
+    box-shadow: 0 0 0 2px var(--ads-accent-ring);
+}
+
+// کادر هم‌تم؛ ویدیو با سایز اصلی‌اش (16:9 پهن یا 9:16 موبایلی) وسط آن
+.cutThumbFull {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ads-accent) 4%, transparent), transparent 60%),
+        var(--ads-stage-bg);
+    pointer-events: none;
+    flex: none;
+}
+
+.cutThumbBox {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--ads-player-bg);
+    outline: 1px solid var(--ads-border-strong);
+
+    iframe {
+        // مختصات فیزیکی — تا در RTL هم scale به‌درستی داخل قاب بنشیند
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border: 0;
+        pointer-events: none;
+    }
+}
+
+.cutThumbEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    color: var(--ads-text-faint);
+    font-size: 11px;
+}
+
+// نام کات — همیشه visible روی لبه‌ی پایین پیش‌نمایش
+.cutNameBar {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: 14px 10px 7px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.78), transparent);
+    color: #fff;
+
+    strong {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+// بقیه‌ی مشخصات — فقط با hover
+.cutHoverMeta {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 10px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent);
+    color: #eee;
+    font-size: 10.5px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+}
+
+.cutItem:hover .cutHoverMeta {
+    pointer-events: auto;
+}
+
+.cutBadges em { font-style: normal; }
+
+.cutActions {
+    display: flex;
+    gap: 4px;
+    margin-inline-start: auto;
+
+    button {
+        padding: 2px 7px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 6px;
+        color: #eee;
+        cursor: pointer;
+        font-size: 11px;
+        line-height: 1.5;
+
+        &:hover:not(:disabled) { border-color: var(--ads-accent); color: #fff; }
+        &:disabled { opacity: 0.3; cursor: not-allowed; }
+    }
+}
+
+// ── صحنه ───────────────────────────────────────────────
+.stage {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    height: 100%;
+}
+
+.stageEmpty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--ads-text-muted);
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 14px;
+    padding: 30px;
+    text-align: center;
+    line-height: 2;
+
+    svg { color: var(--ads-accent); }
+    p { margin: 0; max-width: 420px; }
+}
+
+.stageHead {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.stageTitle {
+    flex: 1;
+    min-width: 160px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+    color: inherit;
+    font: inherit;
+    font-weight: 700;
+
+    &:focus { outline: none; border-color: var(--ads-accent); }
+}
+
+.durationInput {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+
+    input {
+        width: 90px;
+        padding: 7px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+    }
+}
+
+// ── پخش‌کننده ──────────────────────────────────────────
+.player {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-height: 0;
+}
+
+// محوطه‌ی صحنه — کل ارتفاع ستون؛ قاب دقیقاً هم‌نسبتِ ویدیو وسط آن و هم‌تم
+.playerStageArea {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 220px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid var(--ads-border);
+    background:
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ads-accent) 4%, transparent), transparent 55%),
+        var(--ads-stage-bg);
+}
+
+// سایز ویدیو — گوشه‌ی بالای محوطه
+.stageSizeBadge {
+    position: absolute;
+    top: 10px;
+    inset-inline-start: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 9px;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--ads-text) 7%, transparent);
+    color: var(--ads-text-muted);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    direction: ltr;
+    z-index: 2;
+
+    em {
+        font-style: normal;
+        font-weight: 400;
+        color: var(--ads-text-faint);
+        max-width: 220px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        direction: rtl;
+    }
+}
+
+.stageCutName {
+    font-style: normal;
+    direction: rtl;
+}
+
+// قاب ویدیو — دقیقاً به نسبت تصویر، با خط دور واضح
+.playerFrameBox {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--ads-player-bg);
+    outline: 1px solid var(--ads-border-strong);
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35);
+}
+
+// چیپ نسبت تصویر — گوشه‌ی قاب
+.frameRatioChip {
+    position: absolute;
+    bottom: 8px;
+    inset-inline-end: 8px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.55);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    direction: ltr;
+    pointer-events: none;
+}
+
+.playerFrame {
+    // مختصات فیزیکی top/left — iframe با transform: scale در قاب جا می‌شود و
+    // اگر inset/right هم می‌گذاشتیم در RTL لنگرِ راست، قاب را از جا می‌کاند
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--ads-player-bg);
+}
+
+// کات بعدی که از قبل mount شده — تا پخش یکجا بی‌درنگ باشد
+.playerFrameHidden {
+    visibility: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.playerEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--ads-text-faint);
+    border: 1px dashed rgba(255, 255, 255, 0.18);
+    border-radius: 6px;
+    width: 100%;
+}
+
+.playerBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.playerBtn {
+    padding: 6px 9px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+    font-size: 10px;
+}
+
+.playerSeek {
+    flex: 1;
+    min-width: 80px;
+    height: 4px;
+    accent-color: var(--ads-accent);
+    cursor: pointer;
+    // محور زمان همیشه چپ‌به‌راست
+    direction: ltr;
+
+    &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+.playerTime {
+    direction: ltr;
+    color: var(--ads-text-muted);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+// راهنمای ویرایش درجا — فقط در حالت توقف زیر قاب دیده می‌شود
+.playerEditHint {
+    color: var(--ads-accent);
+    background: var(--ads-accent-soft);
+    border: 1px solid var(--ads-accent-border);
+    padding: 3px 9px;
+    border-radius: 7px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// تایم‌لاین سراسری پخش یکجا — هر سگمنت یک کات
+.allTimeline {
+    flex: 1;
+    display: flex;
+    gap: 3px;
+    min-width: 100px;
+    height: 14px;
+    align-items: stretch;
+}
+
+.allSegment {
+    border: 0;
+    padding: 0;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--ads-accent) 22%, transparent);
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover { background: color-mix(in srgb, var(--ads-accent) 40%, transparent); }
+}
+
+.allSegmentActive {
+    background: var(--ads-accent);
+}
+
+// ── نوار نسخه‌ها ───────────────────────────────────────
+.versionBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface);
+}
+
+.versionLabel {
+    font-size: 12px;
+    color: var(--ads-text-muted);
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.versionPreviewNote {
+    color: var(--ads-warn);
+    font-style: normal;
+}
+
+.versionNav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    select {
+        max-width: 300px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+    }
+}
+
+// ── سربرگ صحنه (سوییچ تک‌کات / پخش یکجا) ───────────────
+.stageHead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.stageModeSwitch {
+    display: inline-flex;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid var(--ads-border);
+    border-radius: 9px;
+    background: var(--ads-surface);
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 11px;
+        font-size: 11.5px;
+        border-radius: 7px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        font: inherit;
+
+        &:disabled { opacity: 0.4; cursor: not-allowed; }
+        &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+    }
+}
+
+.stageCutTitle {
+    font-weight: 700;
+    font-size: 13px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// ── Sidebar تب‌دار (چت | المان‌ها | تنظیمات) ────────────
+.sidePanel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--ads-border);
+    border-radius: 14px;
+    background: var(--ads-surface);
+    overflow: hidden;
+}
+
+.sideTabs {
+    display: flex;
+    gap: 2px;
+    padding: 6px 6px 0;
+    border-bottom: 1px solid var(--ads-border);
+    background: var(--ads-surface);
+}
+
+.sideTab {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 6px;
+    font-size: 11.5px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    font: inherit;
+    white-space: nowrap;
+
+    &:hover { color: var(--ads-text); }
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: -2px; }
+}
+
+.sideTabActive {
+    color: var(--ads-accent);
+    border-bottom-color: var(--ads-accent);
+}
+
+.sideBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.codeBox {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.codeBox {
+    textarea {
+        width: 100%;
+        min-height: 220px;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-code-bg);
+        color: inherit;
+        font-family: var(--font-fira, 'JetBrains Mono', 'Fira Code', Consolas, monospace);
+        font-size: 12px;
+        line-height: 1.7;
+        resize: vertical;
+        box-sizing: border-box;
+
+        &:focus { outline: none; border-color: var(--ads-accent-border); }
+    }
+}
+
+.codeActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: var(--ads-text-muted);
+    font-size: 11px;
+}
+
+// ── صداگذاری ───────────────────────────────────────────
+.voicePanel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.voiceSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface);
+
+    h4 {
+        margin: 0;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--ads-accent);
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+        resize: vertical;
+        box-sizing: border-box;
+
+        &:focus { outline: none; border-color: var(--ads-accent); }
+    }
+}
+
+.voiceCurrent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    audio { height: 34px; max-width: 320px; }
+}
+
+.voiceMeta {
+    font-size: 11px;
+    color: var(--ads-text-muted);
+}
+
+.voiceControls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    select {
+        padding: 7px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+        max-width: 210px;
+    }
+}
+
+.sfxForm {
+    display: grid;
+    grid-template-columns: minmax(160px, 1fr) auto auto auto;
+    gap: 8px;
+    align-items: end;
+
+    @media (max-width: 700px) { grid-template-columns: 1fr 1fr; }
+
+    input {
+        padding: 7px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--ads-text-muted);
+    }
+}
+
+.panelEmpty {
+    padding: 20px;
+    color: var(--ads-text-muted);
+    text-align: center;
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 10px;
+}
+
+// ── پنل چت (سبک Cursor) ────────────────────────────────
+.composerMode {
+    display: inline-flex;
+    gap: 4px;
+
+    button {
+        padding: 4px 9px;
+        font-size: 11px;
+        border-radius: 7px;
+        border: 1px solid var(--ads-border);
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        font: inherit;
+
+        &:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+    }
+}
+
+.modeActive {
+    color: var(--ads-accent) !important;
+    border-color: var(--ads-accent) !important;
+    background: var(--ads-accent-soft) !important;
+}
+
+.chatPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    min-height: 0;
+}
+
+// پیام‌ها — خودش اسکرول می‌شود تا بعد از هر ارسال به پایین برود
+// (چیدمان هم‌سان با چت استودیو: ستونِ turnها با فاصله‌ی ۱۲px)
+.chatMessages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 2px 8px;
+}
+
+// یک turn کامل پیام کاربر — حباب + اکشن‌های hover (کپی/ویرایش)
+.chatTurn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &:hover .messageActions,
+    &:focus-within .messageActions {
+        opacity: 1;
+    }
+}
+
+// پیام کاربر — همان حباب چت استودیو (حالت text): گرد ۲۶px با دُم، بدون رنگ برند
+.chatUser {
+    align-self: flex-end;
+    max-width: 86%;
+    width: fit-content;
+    padding: 12px 14px;
+    border-radius: 26px;
+    border-end-end-radius: 3px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+// اکشن‌های زیر پیام (کپی/ویرایش) — فقط با hover، مثل چت استودیو
+.messageActions {
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 7px;
+        border: 0;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 11px;
+        opacity: 0.68;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background: var(--input-background-color);
+            opacity: 1;
+        }
+
+        &:disabled {
+            cursor: default;
+            opacity: 0.4;
+        }
+    }
+}
+
+.userActions {
+    align-self: flex-end;
+}
+
+// بندانگشتی پیوست‌های پیام کاربر — همان چیپ ۶۴px چت استودیو
+.chatAttachRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 8px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.chatAttachThumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: color-mix(in srgb, #000 18%, transparent);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    em {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-style: normal;
+        font-size: 20px;
+    }
+}
+
+// بنر «ویرایش پیام» بالای کامپوزر — همان بنر بنفش چت استودیو
+.editModeBanner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    background: color-mix(in srgb, #8b5cf6 9%, var(--body-background));
+    color: var(--body-text-color);
+
+    > span {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+
+        > svg {
+            flex: 0 0 auto;
+            color: #8b5cf6;
+        }
+
+        span {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+    }
+
+    strong {
+        font-size: 12px;
+    }
+
+    small {
+        font-size: 10.5px;
+        opacity: 0.7;
+    }
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        font-size: 11px;
+        cursor: pointer;
+
+        &:hover:not(:disabled) { border-color: #8b5cf6; color: #8b5cf6; }
+        &:disabled { opacity: 0.45; cursor: default; }
+    }
+}
+
+// نشانگر آپلود تصویر پیست‌شده
+.pasteUploading {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+}
+
+.chatSystem {
+    align-self: stretch;
+    padding: 4px 8px;
+    color: var(--ads-text-faint);
+    font-size: 10.5px;
+    word-break: break-word;
+}
+
+// پاسخ — ساده و تمام‌عرض (همان «مقاله»ی چت متنی): متن + مراحل + المان‌ها، بدون کارت
+.chatAssistant {
+    align-self: stretch;
+    width: 100%;
+    padding: 2px 4px;
+    font-size: 14px;
+
+    p { margin: 0; }
+}
+
+.chatAssistantError {
+    border-inline-start: 3px solid color-mix(in srgb, var(--ads-danger) 55%, transparent);
+    padding-inline-start: 10px;
+}
+
+.chatAssistantText {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 6px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+// مراحل اجرا — نمایش گام‌به‌گام کارها
+.chatSteps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chatSteps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: var(--ads-text-muted);
+
+    > svg, > span { flex-shrink: 0; margin-top: 3px; }
+}
+
+.stepLabel {
+    min-width: 0;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.stepDetail {
+    font-style: normal;
+    font-size: 10.5px;
+    color: var(--ads-text-faint);
+}
+
+.stepPending { color: var(--ads-text-faint); }
+.stepDone { color: var(--ads-ok); font-weight: 700; }
+
+.stepError {
+    color: var(--ads-danger);
+    font-weight: 700;
+}
+
+.chatSteps li.step_done { color: var(--ads-text); }
+.chatSteps li.step_error {
+    color: var(--ads-danger);
+
+    .stepLabel { color: var(--ads-danger); }
+}
+
+.chatError {
+    margin-top: 6px;
+    color: var(--ads-danger);
+    font-size: 11px;
+    line-height: 1.8;
+    word-break: break-word;
+}
+
+// کات‌های تولیدشده — دکمه‌ی پرش
+.chatCutRefs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.chatCutRef {
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-accent-border);
+    background: var(--ads-accent-soft);
+    color: var(--ads-accent);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+
+    &:hover { border-color: var(--ads-accent); }
+}
+
+.chatMeta {
+    display: block;
+    margin-top: 6px;
+    font-size: 10.5px;
+    color: var(--ads-text-faint);
+}
+
+// کامپوزر پایین چت
+.chatComposer {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 10px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface);
+}
+
+.chatPromptBox {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+    padding: 6px 6px 6px 8px;
+
+    &:focus-within { border-color: var(--ads-accent); }
+
+    > div:first-child { flex: 1; min-width: 0; }
+}
+
+.chatSendBtn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-accent-border);
+    background: linear-gradient(135deg, var(--ads-accent-strong), var(--ads-accent));
+    color: #fff;
+    cursor: pointer;
+
+    &:hover:not(:disabled) { filter: brightness(1.08); }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.soundToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    user-select: none;
+
+    input { accent-color: var(--ads-accent); cursor: pointer; }
+    svg { color: var(--ads-accent); }
+}
+
+.composerHint {
+    font-size: 10px;
+    color: var(--ads-text-faint);
+    align-self: flex-end;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+
+    select,
+    input {
+        padding: 7px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+.editTarget {
+    font-size: 11px;
+    color: var(--ads-text-muted);
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: var(--ads-accent-soft);
+    border: 1px solid var(--ads-accent-border);
+
+    strong { color: var(--ads-accent); }
+}
+
+// ── پیوست‌ها ───────────────────────────────────────────
+.attachmentPicker {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.attachmentAdd {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px dashed var(--ads-border-strong);
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    font: inherit;
+
+    &:hover:not(:disabled) { color: var(--ads-accent); border-color: var(--ads-accent-border); }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.attachmentError {
+    color: var(--ads-danger);
+    font-size: 11px;
+}
+
+.attachmentChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.attachmentChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+    font-size: 11px;
+    max-width: 190px;
+
+    img {
+        width: 22px;
+        height: 22px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    em { font-style: normal; }
+    span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    button {
+        border: 0;
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        display: inline-flex;
+        padding: 1px;
+
+        &:hover { color: var(--ads-danger); }
+    }
+}
+
+// ── مودال‌ها (چیدمان از ModalHelper؛ فقط سربرگ/محتوا اینجا استایل می‌گیرد) ──
+.modalTheme {
+    background: var(--ads-surface);
+    color: var(--ads-text);
+    font-size: 13px;
+    padding: 16px 18px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.modalHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    h3 {
+        margin: 0;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+.modalHint {
+    margin: 0 0 12px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+    line-height: 1.9;
+}
+
+.modalLoading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: var(--ads-text-muted);
+}
+
+.modalEmpty {
+    padding: 24px;
+    text-align: center;
+    color: var(--ads-text-muted);
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 10px;
+    line-height: 2;
+}
+
+// ── قالب‌ها ────────────────────────────────────────────
+.templateGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px;
+}
+
+.templateCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+        border-color: var(--ads-accent-border);
+        box-shadow: 0 4px 16px color-mix(in srgb, var(--ads-accent) 10%, transparent);
+    }
+}
+
+.templateThumb {
+    height: 90px;
+    border-radius: 8px;
+    background: var(--ads-player-bg);
+    border: 1px solid var(--ads-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ads-text-faint);
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.templateMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+
+    strong { font-size: 12px; }
+    span { font-size: 11px; color: var(--ads-text-muted); }
+    em {
+        font-size: 11px;
+        color: var(--ads-text-faint);
+        font-style: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+.templateActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-top: auto;
+}
+
+// ── خروجی ──────────────────────────────────────────────
+.exportForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-size: 11px;
+        color: var(--ads-text-muted);
+
+        select,
+        input[type='text'],
+        input:not([type='checkbox']) {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--ads-border);
+            background: var(--ads-surface-raised);
+            color: inherit;
+            font: inherit;
+        }
+    }
+
+    .checkRow {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--ads-text);
+
+        input { accent-color: var(--ads-accent); }
+    }
+
+    button { align-self: flex-start; }
+}
+
+.formError {
+    color: var(--ads-danger);
+    font-size: 11px;
+}
+
+.exportList {
+    h4 {
+        margin: 0 0 8px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+}
+
+.exportRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface);
+    font-size: 11px;
+}
+
+.exportStatus {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+
+    &.status_completed { color: var(--ads-ok); background: color-mix(in srgb, var(--ads-ok) 12%, transparent); }
+    &.status_failed { color: var(--ads-danger); background: color-mix(in srgb, var(--ads-danger) 12%, transparent); }
+    &.status_rendering { color: var(--ads-warn); background: color-mix(in srgb, var(--ads-warn) 12%, transparent); }
+    &.status_queued { color: var(--ads-text-muted); background: color-mix(in srgb, var(--ads-text-muted) 12%, transparent); }
+}
+
+.exportMeta { color: var(--ads-text-muted); }
+.exportDate { color: var(--ads-text-faint); margin-inline-start: auto; }
+
+.exportError {
+    color: var(--ads-danger);
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// ── پنل المان‌های کات (تب المان‌ها) ─────────────────────
+.elementsPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.elementsHead {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.elementsHint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+    line-height: 1.8;
+
+    svg { color: var(--ads-accent); flex-shrink: 0; }
+}
+
+.elementsActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.elementRow {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 9px 10px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+}
+
+.elementLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ads-text);
+}
+
+.elementRow input[type='text'],
+.elementRow input:not([type]),
+.elementRow input[type='number'],
+.elementRow textarea {
+    width: 100%;
+    padding: 6px 9px;
+    border-radius: 7px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface);
+    color: inherit;
+    font: inherit;
+    font-size: 11.5px;
+    box-sizing: border-box;
+
+    &:focus { outline: none; border-color: var(--ads-accent); }
+}
+
+.elementRow textarea { resize: vertical; }
+
+.elementColor {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    input[type='color'] {
+        width: 34px;
+        height: 30px;
+        padding: 2px;
+        border: 1px solid var(--ads-border);
+        border-radius: 7px;
+        background: var(--ads-surface);
+        cursor: pointer;
+    }
+
+    input[type='text'] { flex: 1; min-width: 0; direction: ltr; }
+}
+
+.elementImage {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    img {
+        width: 100%;
+        max-height: 90px;
+        object-fit: contain;
+        border-radius: 7px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-code-bg);
+    }
+
+    input { direction: ltr; }
+}
+
+// ── تب آیتم‌ها (فهرست المان‌های کات) ────────────────────
+.itemsPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.itemsToolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.itemsCount {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ads-accent);
+    white-space: nowrap;
+}
+
+.itemsSearch {
+    flex: 1;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border: 1px solid var(--ads-border);
+    border-radius: 8px;
+    background: var(--ads-surface-raised);
+    color: var(--ads-text-faint);
+
+    &:focus-within { border-color: var(--ads-accent); }
+
+    input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        font-size: 11px;
+
+        &:focus { outline: none; }
+    }
+}
+
+.itemsHint {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 0;
+    font-size: 10.5px;
+    line-height: 1.8;
+    color: var(--ads-text-muted);
+
+    svg { color: var(--ads-accent); flex-shrink: 0; margin-top: 4px; }
+}
+
+.itemRow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-align: start;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover { border-color: var(--ads-accent-border); }
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+}
+
+.itemRowActive {
+    border-color: var(--ads-accent);
+    box-shadow: 0 0 0 2px var(--ads-accent-ring);
+}
+
+.itemRowIndex {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--ads-accent) 12%, transparent);
+    color: var(--ads-accent);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.itemRowMain {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.itemRowLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    min-width: 0;
+
+    svg { color: var(--ads-text-muted); flex-shrink: 0; }
+}
+
+.itemRowCustom {
+    font-style: normal;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 5px;
+    background: var(--ads-accent-soft);
+    color: var(--ads-accent);
+    flex-shrink: 0;
+}
+
+.itemRowValue {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    color: var(--ads-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    i {
+        flex-shrink: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        border: 1px solid var(--ads-border-strong);
+        display: inline-block;
+    }
+}
+
+// ── پنل تنظیمات کلیپ (تب تنظیمات) ──────────────────────
+.clipSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.clipSection {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    padding: 11px 12px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface-raised);
+
+    h4 {
+        margin: 0;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--ads-accent);
+    }
+
+    button { align-self: flex-start; }
+}
+
+.fieldRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.sectionTextarea {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface);
+    color: inherit;
+    font: inherit;
+    resize: vertical;
+    box-sizing: border-box;
+
+    &:focus { outline: none; border-color: var(--ads-accent); }
+}
+
+.codeBoxInline {
+    width: 100%;
+    min-height: 160px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-code-bg);
+    color: inherit;
+    font-family: var(--font-fira, 'JetBrains Mono', 'Fira Code', Consolas, monospace);
+    font-size: 11px;
+    line-height: 1.7;
+    resize: vertical;
+    box-sizing: border-box;
+
+    &:focus { outline: none; border-color: var(--ads-accent-border); }
+}
+
+// ── پنل صدا (تایم‌لاین میکس) ───────────────────────────
+.audioPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.audioHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    strong { font-size: 12px; }
+    span { font-size: 10.5px; color: var(--ads-text-muted); }
+}
+
+// تایم‌لاین چندردیفی صداها
+.audioTimeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 0 8px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface-raised);
+}
+
+.audioRuler {
+    position: relative;
+    height: 14px;
+    margin: 0 10px;
+    border-bottom: 1px dashed var(--ads-border);
+    direction: ltr;
+
+    span {
+        position: absolute;
+        top: 0;
+        transform: translateX(-50%);
+        font-size: 8.5px;
+        color: var(--ads-text-faint);
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.audioRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    min-height: 30px;
+}
+
+.audioRowLabel {
+    flex-shrink: 0;
+    width: 64px;
+    font-size: 10px;
+    color: var(--ads-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audioRowTrack {
+    position: relative;
+    flex: 1;
+    height: 26px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--ads-text) 5%, transparent);
+    // محور زمان همیشه چپ‌به‌راست
+    direction: ltr;
+}
+
+.audioBlock {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    min-width: 14px;
+    border-radius: 5px;
+    border: 1px solid color-mix(in srgb, var(--ads-accent) 55%, transparent);
+    background: color-mix(in srgb, var(--ads-accent) 22%, transparent);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font: inherit;
+    transition: box-shadow 0.15s ease;
+
+    span {
+        padding: 0 5px;
+        font-size: 9px;
+        color: var(--ads-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: start;
+    }
+
+    &:hover { background: color-mix(in srgb, var(--ads-accent) 34%, transparent); }
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+}
+
+.audioBlockVoice {
+    border-color: color-mix(in srgb, var(--ads-ok) 55%, transparent);
+    background: color-mix(in srgb, var(--ads-ok) 22%, transparent);
+
+    &:hover { background: color-mix(in srgb, var(--ads-ok) 34%, transparent); }
+}
+
+.audioBlockSelected {
+    box-shadow: 0 0 0 2px var(--ads-accent-ring);
+}
+
+// پخش‌کننده‌ی عمودی میکس
+.audioPlayhead {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--ads-accent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.audioEmptyHint {
+    padding: 10px;
+    font-size: 10.5px;
+    color: var(--ads-text-faint);
+    line-height: 1.8;
+}
+
+// ویرایشگر ترک انتخاب‌شده
+.audioEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface-raised);
+
+    h5 {
+        margin: 0;
+        font-size: 11px;
+        color: var(--ads-accent);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 10.5px;
+        color: var(--ads-text-muted);
+        line-height: 1.8;
+        word-break: break-word;
+    }
+}
+
+.audioSliderRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    color: var(--ads-text-muted);
+
+    label { width: 64px; flex-shrink: 0; }
+    input[type='range'] { flex: 1; accent-color: var(--ads-accent); min-width: 0; }
+    output { direction: ltr; font-variant-numeric: tabular-nums; min-width: 30px; text-align: center; }
+}
+
+.audioEditorActions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+// افزودن افکت جدید
+.audioAddForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 12px;
+    background: transparent;
+
+    > label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 10.5px;
+        color: var(--ads-text-muted);
+    }
+
+    input[type='text'],
+    input:not([type]) {
+        padding: 7px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+        box-sizing: border-box;
+        width: 100%;
+
+        &:focus { outline: none; border-color: var(--ads-accent); }
+    }
+}
+
+.audioAddRow {
+    display: flex;
+    gap: 8px;
+    align-items: end;
+
+    > label:first-child { flex: 1; min-width: 0; }
+    > label:not(:first-child) { width: 86px; }
+}
+
+// ریل باریک استوری‌بورد وقتی پنهان است
+.storyboardRail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 12px 4px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface);
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    font: inherit;
+
+    span {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ads-accent);
+    }
+
+    &:hover { border-color: var(--ads-accent-border); color: var(--ads-accent); }
+}
+
+// ستون‌ها وقتی استوری‌بورد بسته است — ادیتور بزرگ‌تر
+.columnsNoBoard {
+    grid-template-columns: 40px minmax(0, 1fr) 330px;
+}
+
+// سوییچ دامنه‌ی ویرایش در چت (این کات / همه‌ی کات‌ها)
+.scopeToggle {
+    display: inline-flex;
+    gap: 4px;
+    align-self: flex-start;
+
+    button {
+        padding: 4px 10px;
+        font-size: 10.5px;
+        border-radius: 7px;
+        border: 1px solid var(--ads-border);
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        font: inherit;
+
+        &:hover { color: var(--ads-text); }
+    }
+}
+
+.scopeActive {
+    color: var(--ads-accent) !important;
+    border-color: var(--ads-accent) !important;
+    background: var(--ads-accent-soft) !important;
+}
+
+// ردیف المان فوکوس‌شده
+.elementRowFocused {
+    border-color: var(--ads-accent) !important;
+    box-shadow: 0 0 0 2px var(--ads-accent-ring);
+}
+
+// کنترل جابه‌جایی المان
+.elementMove {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--ads-border);
+    color: var(--ads-text-faint);
+    font-size: 10px;
+
+    svg { flex-shrink: 0; }
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    input {
+        width: 58px;
+        padding: 3px 6px;
+        border-radius: 6px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface);
+        color: inherit;
+        font: inherit;
+        font-size: 10.5px;
+        direction: ltr;
+
+        &:focus { outline: none; border-color: var(--ads-accent); }
+    }
+}
+
+// ترک فعال صدا در لحظه
+.audioBlockActive {
+    box-shadow: 0 0 0 2px var(--ads-accent);
+    filter: none;
+}
+
+.audioBlockDimmed {
+    opacity: 0.35;
+}
+
+.audioRowLabelActive {
+    color: var(--ads-accent);
+    font-weight: 700;
+}
+
+// ردیف جایگزینی سریع صدا
+.audioReplaceRow {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    input {
+        flex: 1;
+        min-width: 0;
+        padding: 6px 9px;
+        border-radius: 7px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface);
+        color: inherit;
+        font: inherit;
+        font-size: 11px;
+        box-sizing: border-box;
+
+        &:focus { outline: none; border-color: var(--ads-accent); }
+    }
+}
+
+// ───────────────────────── چک‌لیست ویرایش سریع المان‌ها ─────────────────────────
+
+.elementPlan {
+    margin-top: 8px;
+    border: 1px solid var(--ads-border, rgba(255, 255, 255, 0.12));
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--ads-accent, #8b5cf6) 6%, transparent);
+    overflow: hidden;
+    font-size: 11px;
+
+    .planHead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 9px;
+        border-bottom: 1px solid var(--ads-border, rgba(255, 255, 255, 0.12));
+        background: color-mix(in srgb, var(--ads-accent, #8b5cf6) 10%, transparent);
+
+        .planTitle {
+            font-weight: 700;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .planApplied {
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .planRevertedTag {
+            color: var(--ads-muted, rgba(255, 255, 255, 0.6));
+            font-weight: 700;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .planToggleAll {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: none;
+            background: transparent;
+            color: var(--ads-muted, inherit);
+            font-size: 10px;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+
+            input {
+                accent-color: var(--ads-accent, #8b5cf6);
+                width: 12px;
+                height: 12px;
+                margin: 0;
+            }
+
+            &:disabled { opacity: 0.5; cursor: not-allowed; }
+        }
+    }
+
+    .planRows {
+        display: flex;
+        flex-direction: column;
+        max-height: 200px;
+        overflow-y: auto;
+
+        .planRow {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 9px;
+            cursor: pointer;
+
+            + .planRow {
+                border-top: 1px solid color-mix(in srgb, var(--ads-border, rgba(255, 255, 255, 0.12)) 60%, transparent);
+            }
+
+            input[type='checkbox'] {
+                accent-color: var(--ads-accent, #8b5cf6);
+                width: 13px;
+                height: 13px;
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            .planRowLabel {
+                min-width: 0;
+                flex: 0 1 auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: 600;
+            }
+
+            .planRowValues {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                min-width: 0;
+                flex: 1;
+                justify-content: flex-end;
+                color: var(--ads-muted, rgba(255, 255, 255, 0.65));
+
+                em { font-style: normal; flex-shrink: 0; }
+            }
+
+            &:hover:not(.planRowLocked) {
+                background: color-mix(in srgb, var(--ads-accent, #8b5cf6) 8%, transparent);
+            }
+
+            &.planRowLocked { cursor: default; }
+        }
+    }
+
+    .planColor {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+
+        i {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            display: inline-block;
+        }
+
+        code { font-size: 10px; direction: ltr; }
+    }
+
+    .planValueText {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+
+    .planApplyBtn,
+    .planRevertBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: calc(100% - 14px);
+        margin: 7px;
+        padding: 6px 8px;
+        border: none;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .planApplyBtn {
+        background: var(--ads-accent, #8b5cf6);
+        color: #fff;
+
+        &:disabled { opacity: 0.45; cursor: not-allowed; }
+    }
+
+    .planRevertBtn {
+        background: color-mix(in srgb, #ef4444 12%, transparent);
+        border: 1px solid color-mix(in srgb, #ef4444 45%, transparent);
+        color: #ef4444;
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
+    &.planReverted { opacity: 0.7; }
+
+    &.planFailed {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 9px;
+    }
+}
+
+.modeQuick {
+    border-color: color-mix(in srgb, var(--ads-accent, #8b5cf6) 55%, transparent);
+    color: var(--ads-accent, #8b5cf6);
+
+    &:disabled { opacity: 0.45; }
+}
+
+// ───────────────────────── برند کیت ─────────────────────────
+
+// پیش‌نمایش زنده — با تغییر رنگ‌ها/فونت/لوگو همان لحظه به‌روز می‌شود
+.brandPreviewCard {
+    position: relative;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    padding: 16px 14px 14px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    overflow: hidden;
+    min-height: 118px;
+    transition: background 0.15s ease;
+}
+
+.brandPreviewLabel {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 10px;
+    font-size: 9px;
+    letter-spacing: 0.03em;
+    opacity: 0.45;
+}
+
+.brandPreviewLogo {
+    max-height: 30px;
+    max-width: 130px;
+    object-fit: contain;
+    margin-bottom: 2px;
+}
+
+.brandPreviewHeadline { font-size: 15px; font-weight: 700; line-height: 1.5; }
+.brandPreviewSub { font-size: 11px; line-height: 1.6; opacity: 0.72; }
+
+.brandPreviewActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.brandPreviewBtn {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+.brandPreviewGhost {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 11px;
+    border-radius: 999px;
+    border: 1px solid;
+}
+
+.brandPreviewBadge {
+    position: absolute;
+    top: 10px;
+    inset-inline-end: 10px;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 999px;
+}
+
+// هر بخش برند کیت (پالت / فونت / لوگو / لحن) — با توضیح کاربرد
+.brandSection {
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--ads-surface-sunken) 55%, transparent);
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.brandSectionHead {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 11px;
+
+    strong { display: block; font-size: 12px; }
+
+    p {
+        margin: 3px 0 0;
+        font-size: 10.5px;
+        line-height: 1.8;
+        color: var(--ads-text-muted);
+    }
+}
+
+.brandSectionIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: var(--ads-accent-soft);
+    border: 1px solid var(--ads-accent-border);
+    color: var(--ads-accent);
+}
+
+.brandFields {
+    display: grid;
+    // min(195px, 100%) — در کانتینر باریک‌تر از 195px (شیت موبایل) ستون از عرض کانتینر بیرون نمی‌زند
+    grid-template-columns: repeat(auto-fill, minmax(min(195px, 100%), 1fr));
+    gap: 10px 14px;
+}
+
+.brandField {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+    min-width: 0;
+
+    input[type='text'] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface-raised);
+        color: inherit;
+        font: inherit;
+    }
+}
+
+.brandFieldHint {
+    font-size: 10px;
+    line-height: 1.65;
+    color: var(--ads-text-muted);
+}
+
+.brandColorRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    input[type='color'] {
+        width: 34px;
+        height: 30px;
+        padding: 2px;
+        flex-shrink: 0;
+        border: 1px solid var(--ads-border);
+        border-radius: 6px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    input[type='text'] { flex: 1; min-width: 0; }
+}
+
+.brandLogoRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input[type='text'] { flex: 1; }
+}
+
+.brandLogoThumb {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 4px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+}
+
+.brandActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 2px;
+}
+
+.brandHint {
+    margin: 10px 0 0;
+    font-size: 10px;
+    line-height: 1.8;
+    color: var(--ads-text-muted);
+}
+
+// ── تب‌های برند کیت (هویت بصری | فایل‌ها و مدیا) — همان زبان بصری sideTabs ──
+.brandTabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--ads-border);
+}
+
+.brandTab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--ads-text-muted);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover { color: var(--ads-text); }
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: -2px; }
+}
+
+.brandTabActive {
+    color: var(--ads-accent);
+    border-bottom-color: var(--ads-accent);
+}
+
+// شمارنده‌ی کوچک کنار عنوان تب مدیا — تعداد آیتم‌های ثبت‌شده
+.brandTabCount {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--ads-accent-soft);
+    color: var(--ads-accent);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+// ── آیتم مدیا — ردیف نوع/عنوان/حذف + آدرس فایل + توضیح ──
+.brandMediaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+
+    input[type='text'],
+    input:not([type]) {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 7px 9px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface);
+        color: inherit;
+        font: inherit;
+        font-size: 11.5px;
+    }
+}
+
+// ردیف افقی داخل آیتم (نوع + عنوان + حذف / عنوان + حذف)
+.brandMediaRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.brandMediaType {
+    flex-shrink: 0;
+    width: 108px;
+    padding: 7px 6px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface);
+    color: inherit;
+    font: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+}
+
+.brandMediaTitle {
+    flex: 1;
+    min-width: 0;
+}
+
+// دکمه‌ی حذف آیتم — گوشه‌ی ردیف، با رنگ خطر در هاور
+.brandItemRemove {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--ads-danger);
+        border-color: var(--ads-border);
+        background: var(--ads-surface-sunken);
+    }
+}
+
+// حالت خالی لیست مدیا/یادداشت
+.brandMediaEmpty {
+    padding: 14px;
+    margin-bottom: 8px;
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 10px;
+    color: var(--ads-text-muted);
+    font-size: 11px;
+    line-height: 1.9;
+    text-align: center;
+}
+
+// ── یادداشت متنی عنوان‌دار — عنوان + متن چندخطی ──
+.brandNoteItem {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 7px 9px;
+        border-radius: 8px;
+        border: 1px solid var(--ads-border);
+        background: var(--ads-surface);
+        color: inherit;
+        font: inherit;
+        font-size: 11.5px;
+    }
+}
+
+.brandNoteBody {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 7px 9px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface);
+    color: inherit;
+    font: inherit;
+    font-size: 11.5px;
+    line-height: 1.8;
+    resize: vertical;
+    min-height: 58px;
+
+    &:focus-visible {
+        outline: none;
+        border-color: var(--ads-accent-border);
+    }
+}

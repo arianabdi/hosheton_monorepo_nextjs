@@ -1,0 +1,719 @@
+.commentsPanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.commentsError {
+    margin: 0 16px 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+    font-size: 0.75rem;
+}
+
+.commentsEmpty {
+    padding: 20px 16px;
+    text-align: center;
+    font-size: 0.78rem;
+    opacity: 0.5;
+}
+
+// ── حالت خالی گفتگو ─────────────────────────────────────────────────
+// هم‌سبک موشن حالت خالی تنظیمات نود: پیام اول در کادر تایپ می‌شود، نشانگر روی
+// ارسال کلیک می‌کند («بوم»: ریپل + پرتو)، حباب فنری بالا می‌پرد و طرف مقابل
+// در حال نوشتن است. تقریباً فقط transform/opacity، بدون JS.
+.emptyChat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 240px;
+    text-align: center;
+    color: var(--body-text-color);
+}
+
+.emptyChatArt {
+    --hint-accent: #3b82f6;
+    --hint-loop: 4s;
+    // حباب خودی مثل bubbleOwn: تیره در تم روشن، روشن در تم تیره تا دیده شود
+    --chat-own: var(--body-text-color);
+
+    position: relative;
+    width: 220px;
+    height: 112px;
+    margin-bottom: 12px;
+    // حباب خودی همیشه سمت راست فیزیکی است (مثل لیست واقعی)
+    direction: ltr;
+}
+
+.emptyChatText {
+    margin: 0;
+    max-width: 230px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// حباب پیام اول — از دکمه ارسال (192, 92) بالا می‌پرد و سمت راست می‌نشیند
+.emptyChatBubble {
+    position: absolute;
+    left: 116px;
+    top: 14px;
+    width: 88px;
+    height: 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 11px;
+    border-radius: 14px 14px 5px 14px;
+    background: var(--chat-own);
+    opacity: 0;
+    transform-origin: 85% 100%;
+    animation: emptyChatBubble var(--hint-loop) linear infinite;
+
+    b {
+        display: block;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-background, #fff) 55%, transparent);
+
+        &:last-of-type {
+            width: 55%;
+        }
+    }
+}
+
+// فلش کوتاه لحظه فرود حباب
+.emptyChatFlash {
+    position: absolute;
+    inset: -3px;
+    border-radius: 16px 16px 7px 16px;
+    border: 2px solid var(--hint-accent);
+    opacity: 0;
+    animation: emptyChatFlash var(--hint-loop) ease-out infinite;
+}
+
+// «در حال نوشتن…» طرف مقابل (مثل bubbleOther)
+.emptyChatTyping {
+    position: absolute;
+    left: 16px;
+    top: 52px;
+    width: 40px;
+    height: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 10px 10px 10px 4px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    opacity: 0;
+    transform-origin: 0 100%;
+    animation: emptyChatTyping var(--hint-loop) cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+
+    i {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+        animation: emptyChatDot 0.9s ease-in-out infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+    }
+}
+
+.emptyChatComposer {
+    position: absolute;
+    left: 16px;
+    top: 80px;
+    width: 188px;
+    height: 24px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+}
+
+// متن پیش‌نویس که تایپ می‌شود و با ارسال پاک می‌شود + نشانگر چشمک‌زن
+.emptyChatDraft {
+    position: absolute;
+    left: 11px;
+    top: 9px;
+    height: 4px;
+    width: 0;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--body-text-color) 22%, transparent);
+    animation: emptyChatDraft var(--hint-loop) linear infinite;
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: -4px;
+        top: -3px;
+        width: 1.5px;
+        height: 10px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        animation: emptyChatCaret 0.8s steps(1) infinite;
+    }
+}
+
+.emptyChatSend {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--chat-own);
+    color: var(--input-background-color);
+    font-size: 9px;
+    animation: emptyChatSend var(--hint-loop) linear infinite;
+}
+
+// نقطه کلیک = مرکز دکمه ارسال (192, 92)
+.emptyChatRipple {
+    position: absolute;
+    left: 192px;
+    top: 92px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: emptyChatRipple var(--hint-loop) ease-out infinite;
+}
+
+.emptyChatBurst {
+    position: absolute;
+    left: 192px;
+    top: 92px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: emptyChatRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.emptyChatCursor {
+    position: absolute;
+    left: 184px;
+    top: 84px;
+    width: 22px;
+    height: 22px;
+    color: var(--body-text-color);
+    animation: emptyChatCursor var(--hint-loop) ease-in-out infinite;
+}
+
+// زمان‌بندی روی حلقه ۴ ثانیه‌ای — هر ۱٪ = ۴۰ms؛ کلیک ارسال حوالی ۲۹٪
+@keyframes emptyChatDraft {
+    0%, 4% { width: 0; animation-timing-function: steps(8, end); }
+    24% { width: 92px; }
+    31% { width: 92px; }
+    33%, 100% { width: 0; }
+}
+
+@keyframes emptyChatCaret {
+    50% { opacity: 0; }
+}
+
+@keyframes emptyChatSend {
+    0%, 18% { transform: scale(1); opacity: 0.35; background: var(--chat-own); }
+    22% { opacity: 1; }
+    27% { transform: scale(1); background: var(--chat-own); }
+    29% { transform: scale(0.8); background: var(--hint-accent); }
+    32% { transform: scale(1.15); }
+    36% { transform: scale(1); }
+    44% { opacity: 1; background: var(--hint-accent); }
+    54%, 100% { opacity: 0.35; background: var(--chat-own); }
+}
+
+@keyframes emptyChatCursor {
+    0%, 12% { transform: translate(30px, 24px); opacity: 0; }
+    25% { transform: translate(0, 0); opacity: 1; }
+    29% { transform: translate(0, 0) scale(0.78); }
+    32%, 52% { transform: translate(0, 0) scale(1); opacity: 1; }
+    64%, 100% { transform: translate(30px, 24px); opacity: 0; }
+}
+
+@keyframes emptyChatRipple {
+    0%, 29% { transform: scale(0.4); opacity: 0; }
+    31% { opacity: 0.9; }
+    46%, 100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes emptyChatRay {
+    0%, 29.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    30.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    39%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+}
+
+@keyframes emptyChatBubble {
+    0%, 30% { transform: translate(32px, 62px) scale(0.25); opacity: 0; animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1); }
+    31% { opacity: 1; }
+    36% { transform: translate(0, -4px) scale(1.07); animation-timing-function: ease-out; }
+    40% { transform: translate(0, 1px) scale(0.98); }
+    44%, 84% { transform: translate(0, 0) scale(1); opacity: 1; }
+    94%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+}
+
+@keyframes emptyChatFlash {
+    0%, 35% { transform: scale(0.96); opacity: 0; }
+    37% { opacity: 0.9; }
+    50%, 100% { transform: scale(1.18, 1.4); opacity: 0; }
+}
+
+@keyframes emptyChatTyping {
+    0%, 50% { transform: scale(0.5); opacity: 0; }
+    56%, 84% { transform: scale(1); opacity: 1; }
+    94%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes emptyChatDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.55; }
+    30% { transform: translateY(-3px); opacity: 1; }
+}
+
+// بدون موشن: گفتگوی نمونه را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .emptyChatBubble,
+    .emptyChatFlash,
+    .emptyChatTyping,
+    .emptyChatTyping i,
+    .emptyChatDraft,
+    .emptyChatDraft::after,
+    .emptyChatSend,
+    .emptyChatRipple,
+    .emptyChatBurst i,
+    .emptyChatCursor {
+        animation: none;
+    }
+
+    .emptyChatBubble,
+    .emptyChatTyping {
+        opacity: 1;
+    }
+
+    .emptyChatCursor {
+        opacity: 0;
+    }
+}
+
+// ── Message list ────────────────────────────────────────────────────
+// The screenshot's chat look: own bubbles pinned to the physical right,
+// everyone else's to the physical left — in both LTR and RTL, auto
+// physical margins are used so page direction can't flip the sides.
+.commentsList {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 12px 12px;
+}
+
+.commentRow {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+}
+
+.rowOwn {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.rowOther {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.stackOwn,
+.stackOther {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+// Cross-axis alignment is direction-aware (start = right in RTL).
+.stackOwn {
+    align-items: flex-end;
+
+    [dir='rtl'] & {
+        align-items: flex-start;
+    }
+}
+
+.stackOther {
+    align-items: flex-start;
+
+    [dir='rtl'] & {
+        align-items: flex-end;
+    }
+}
+
+.messageMeta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 0 6px;
+    font-size: 0.66rem;
+    line-height: 1.4;
+}
+
+.messageAuthor {
+    font-weight: 700;
+    opacity: 0.72;
+}
+
+.messageTime {
+    font-size: 0.62rem;
+    opacity: 0.45;
+    white-space: nowrap;
+}
+
+.messageFoot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 6px;
+    min-height: 14px;
+
+    &.footOwn {
+        justify-content: flex-end;
+
+        [dir='rtl'] & {
+            justify-content: flex-start;
+        }
+    }
+}
+
+.messageDeleteBtn {
+    border: none;
+    background: transparent;
+    color: inherit;
+    opacity: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 6px;
+
+    &:hover {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.08);
+    }
+}
+
+.commentRow:hover .messageDeleteBtn {
+    opacity: 0.55;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.messageGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+// ── Bubbles ─────────────────────────────────────────────────────────
+.messageBubble {
+    max-width: 100%;
+    padding: 9px 14px;
+    border-radius: 18px;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+
+    p {
+        margin: 0;
+    }
+}
+
+.bubbleOwn {
+    background: #101113;
+    color: #fff;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+
+    [dir='rtl'] & {
+        border-bottom-right-radius: 18px;
+        border-bottom-left-radius: 6px;
+    }
+}
+
+.bubbleOther {
+    background: #ffffff;
+    color: #131416;
+    border-bottom-left-radius: 6px;
+    border: 1px solid rgba(15, 18, 20, 0.05);
+    box-shadow: 0 1px 3px rgba(15, 18, 20, 0.08);
+
+    [dir='rtl'] & {
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 6px;
+    }
+}
+
+.imageBubble {
+    display: block;
+    padding: 4px;
+    overflow: hidden;
+
+    img {
+        display: block;
+        max-width: 190px;
+        max-height: 190px;
+        border-radius: 14px;
+        object-fit: cover;
+    }
+}
+
+.fileBubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    text-decoration: none;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+// ── Voice pill ──────────────────────────────────────────────────────
+.voicePill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 13px 6px 6px;
+    border: none;
+    border-radius: 999px;
+    background: #101113;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    min-height: 44px;
+
+    [dir='rtl'] & {
+        padding: 6px 6px 6px 13px;
+    }
+
+    &:hover {
+        background: #1d1f23;
+    }
+}
+
+.voicePlayBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    color: #101113;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.voicePlayIcon {
+    margin-left: 2px;
+
+    [dir='rtl'] & {
+        margin-left: 0;
+        margin-right: 2px;
+    }
+}
+
+.voiceWave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 20px;
+}
+
+.voiceBar {
+    width: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.42);
+    transition: background 0.15s linear;
+
+    &.voiceBarPlayed {
+        background: #ffffff;
+    }
+}
+
+.voiceDuration {
+    font-size: 0.64rem;
+    opacity: 0.75;
+    font-variant-numeric: tabular-nums;
+    min-width: 24px;
+    text-align: center;
+}
+
+// ── Composer ────────────────────────────────────────────────────────
+.composer {
+    padding: 8px 12px 12px;
+}
+
+.pendingAttachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.pendingAttachment {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(128, 128, 128, 0.12);
+    font-size: 0.68rem;
+    max-width: 100%;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    button {
+        border: none;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        display: inline-flex;
+        padding: 1px;
+        border-radius: 50%;
+
+        &:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+    }
+}
+
+.composerRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid var(--input-border-color, rgba(128, 128, 128, 0.25));
+    background: var(--card-background, #fff);
+}
+
+.attachBtn {
+    border: none;
+    background: transparent;
+    color: inherit;
+    opacity: 0.6;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &:hover:not(:disabled) {
+        opacity: 1;
+        background: rgba(128, 128, 128, 0.12);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+.composerTextarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    background: transparent;
+    color: inherit;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    padding: 6px 2px;
+    max-height: 96px;
+    font-family: inherit;
+
+    &::placeholder {
+        color: inherit;
+        opacity: 0.45;
+    }
+}
+
+.sendBtn {
+    border: none;
+    background: #101113;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+
+    &:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+.hiddenInput {
+    display: none;
+}
+
+.spin {
+    animation: commentSpin 0.9s linear infinite;
+}
+
+@keyframes commentSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

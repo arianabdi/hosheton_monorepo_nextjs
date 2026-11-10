@@ -1,0 +1,12 @@
+
+/*Yekanbakh (Persian & English)*/
+@font-face {
+    font-family: "iransansxvf";
+    src: url("./iransansxvf.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+/* Optional utility class (handy for quick testing) */
+.iransansxvf {
+    font-family: 'iransansxvf', sans-serif;
+}

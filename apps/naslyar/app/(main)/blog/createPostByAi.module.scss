@@ -1,0 +1,132 @@
+.customInput{
+  padding: 10px 0px;
+  margin: 0px;
+
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: #666;
+}
+
+.GoogleSearchPreviewContainer{
+  display: flex;
+  justify-content: center;
+  padding: 0px 0px 40px 0px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 40px;
+}
+
+
+
+.promptContainer h6{
+  font-weight: 100;
+}
+
+.promptContainer{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--border-color);
+  background-color: var(--body-background);
+  max-height: 150px;
+  gap: 40px;
+  overflow: hidden;
+  padding: 20px 10px;
+  justify-content: start;
+  align-items: start;
+}
+
+
+.prompt{
+  line-height: 24px;
+  direction: ltr;
+  white-space: pre-line;
+}
+
+
+.postsContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.postItemContainer{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 21px;
+}
+
+.preGenerationTheme{
+  border-right: 11px solid var(--icon-red);
+}
+.generatedTheme{
+  border-right: 11px solid #32df9e;
+}
+.noneTheme{
+  border-right: 6px solid var(--border-color);
+}
+
+.postItemTitle{
+  font-size: 15px;
+  line-height: 14px;
+  background-color: var(--body-background);
+  flex: 1;
+  padding-top: 10px;
+}
+
+.postItemDetail{
+  background-color: var(--card-background);
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+}
+
+
+.postItemDetailData{
+  font-size: 16px;
+  flex: 1;
+}
+
+
+.postItemDetailActions{
+  font-size: 16px;
+}
+
+
+.postItemCreatedAt{
+  font-size: 13px;
+  background-color: var(--card-background);
+  opacity: 0.4;
+}
+
+.postItemVariableItem{
+  background-color: var(--bs-focus-ring-color);
+  font-family: "Cascadia Code", sans-serif;
+  font-size: 11px;
+  flex-direction: row-reverse;
+  display: flex;
+  width: fit-content;
+  gap: 10px;
+  margin: 4px;
+  border: 1px solid var(--border-color);
+  color: var(--link-text-color);
+}
+
+.postState{
+  font-size: 11px;
+  width: fit-content;
+  margin: 6px 0px;
+  padding: 2px 0px;
+  color: var(--body-text-color);
+  opacity: 0.4;
+  letter-spacing: 0px;
+
+}
+.postItemVariableItem .key{
+  flex: 1;
+  border-right: 1px solid var(--border-color);
+}
+.postItemVariableItem .value{
+
+}

@@ -1,0 +1,345 @@
+// استایل ماژول کد معرف — کلاس‌های مشترک هدر/فرم/راهنما از Marketing.module.scss و Hr.module.scss می‌آیند
+$border: var(--plan-card-border-color);
+
+.muted {
+    opacity: 0.65;
+    font-size: 0.75rem;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.spinner {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2.5px solid color-mix(in srgb, var(--brand-color) 20%, transparent);
+    border-top-color: var(--brand-color);
+    animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.emptyState {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    border: 1px dashed $border;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    opacity: 0.8;
+}
+
+// ─── فیلتر بالای فهرست‌ها: وضعیت (تب خطی) + کمپین ───
+.filterBar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    > :first-child {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+.campaignSelect {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    select {
+        min-width: 200px;
+        font-family: inherit;
+        font-size: 0.85rem;
+        padding: 0.45rem 0.6rem;
+        border-radius: 8px;
+        border: 1px solid var(--input-border-color);
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+    }
+}
+
+// ─── جدول داده ───
+.tableWrap {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid $border;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    text-align: right;
+
+    th {
+        padding: 0.8rem 1rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        opacity: 0.75;
+        border-bottom: 1px solid $border;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid $border;
+        vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    tbody tr:hover td {
+        background: color-mix(in srgb, var(--brand-color) 4%, transparent);
+    }
+
+    @media (max-width: 768px) {
+        thead {
+            display: none;
+        }
+
+        tbody tr {
+            display: block;
+            border-bottom: 1px solid $border;
+            padding: 0.6rem 0;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: none;
+            padding: 0.45rem 1rem;
+
+            &::before {
+                content: attr(data-label);
+                font-weight: 700;
+                font-size: 0.75rem;
+                opacity: 0.6;
+            }
+        }
+    }
+}
+
+.userCell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+
+    span {
+        direction: ltr;
+        text-align: right;
+        font-size: 0.72rem;
+        opacity: 0.6;
+    }
+}
+
+.amountCell {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.codeCell {
+    direction: ltr;
+    font-family: monospace;
+    font-size: 0.8rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+// ─── نشان وضعیت ───
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+    background: #94a3b81f;
+
+    &.active,
+    &.paid,
+    &.qualified,
+    &.rewarded {
+        background: #22c55e1f;
+        color: #16a34a;
+    }
+
+    &.approved {
+        background: #3b82f61a;
+        color: #2563eb;
+    }
+
+    &.draft,
+    &.paused,
+    &.pending {
+        background: #f59e0b1f;
+        color: #d97706;
+    }
+
+    &.ended,
+    &.rejected,
+    &.cancelled,
+    &.expired {
+        background: #ef44441a;
+        color: #dc2626;
+    }
+}
+
+// ─── دکمه‌های کوچک ردیف ───
+.actionsCell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.smallBtn {
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    // پرداخت/تأیید
+    &.primary {
+        border-color: var(--brand-color);
+        background: var(--brand-color);
+        color: #fff;
+
+        &:hover:not(:disabled) {
+            color: #fff;
+            opacity: 0.9;
+        }
+    }
+
+    // رد/حذف
+    &.danger {
+        color: #dc2626;
+
+        &:hover:not(:disabled) {
+            border-color: #dc2626;
+        }
+    }
+}
+
+// ─── موارد نیازمند اقدام (نمای کلی) ───
+.actionList {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border-top: 1px solid $border;
+
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid $border;
+        font-size: 0.88rem;
+    }
+}
+
+// ─── فرم کمپین ───
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1rem;
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ruleCard {
+    padding: 1rem 1.1rem 0.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid $border;
+    border-radius: 10px;
+}
+
+.ruleHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.tiers {
+    margin: 0 0 1rem;
+}
+
+.tierRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    input,
+    select {
+        min-width: 0;
+        font-family: inherit;
+        font-size: 0.82rem;
+        padding: 0.45rem 0.55rem;
+        border-radius: 8px;
+        border: 1px solid var(--input-border-color);
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+    }
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.tierHead {
+    font-size: 0.72rem;
+    font-weight: 700;
+    opacity: 0.6;
+}
+
+.addBtn {
+    margin-bottom: 1rem;
+}

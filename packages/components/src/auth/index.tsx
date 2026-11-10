@@ -1,0 +1,5 @@
+export {LoginComponent} from "./login"
+export {OtpComponent} from "./otp"
+export {ForgotPasswordComponent} from "./forgot-password"
+export {RegisterComponent} from "./register"
+export {SmsCodeComponent} from "./sms-code"

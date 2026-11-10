@@ -1,0 +1,157 @@
+.accessRolesGuide {
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+
+    h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.82rem;
+        line-height: 1.75;
+        opacity: 0.9;
+    }
+}
+
+.matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.matrixGroup {
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--plan-card-background-color);
+}
+
+.matrixGroupHead {
+    padding: 0.75rem 1rem;
+    background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    border-bottom: 1px solid var(--plan-card-border-color);
+}
+
+.matrixGroupLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.matrixCount {
+    margin-inline-start: auto;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.matrixItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.5rem;
+    padding: 0.85rem;
+}
+
+.matrixItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+
+    strong {
+        display: block;
+    }
+
+    code {
+        display: block;
+        font-size: 0.72rem;
+        opacity: 0.65;
+        direction: ltr;
+        text-align: left;
+    }
+
+    small {
+        display: block;
+        opacity: 0.65;
+        margin-top: 0.15rem;
+    }
+}
+
+.emptyHint {
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+.formCard {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 10px;
+    padding: 1.25rem;
+}
+
+.field {
+    margin-bottom: 1rem;
+
+    label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        border: 1px solid var(--plan-card-border-color);
+        border-radius: 8px;
+        padding: 0.55rem 0.75rem;
+        background: var(--body-background-color);
+        color: var(--body-text-color);
+    }
+}
+
+.fieldHint {
+    margin: 0.35rem 0 0;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    opacity: 0.75;
+}
+
+.formGuideCard {
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+
+    h2 {
+        margin: 0 0 0.45rem;
+        font-size: 1rem;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.82rem;
+        line-height: 1.75;
+    }
+}
+
+.passwordSection {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--plan-card-border-color);
+}
+
+.sectionTitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+}

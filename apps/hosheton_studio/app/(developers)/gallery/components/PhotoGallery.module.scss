@@ -1,0 +1,449 @@
+.galleryContainer {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+    // در والد ستونی (بدنهٔ گالری) ارتفاع باقی‌مانده را می‌گیرد تا حالت خالی وسط باشد
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.galleryCompact {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.filterSlot {
+    margin-bottom: 12px;
+}
+
+// گالری تمام‌صفحه: ردیف تب لبه‌به‌لبه و چسبیده زیر هدر — padding بدنه (--gallery-pad-*) خنثی می‌شود
+.galleryCompact .filterSlot {
+    margin-top: calc(-1 * var(--gallery-pad-top, 0px));
+    margin-inline: calc(-1 * var(--gallery-pad-x, 0px));
+    margin-bottom: 8px;
+}
+
+.dateGroup {
+    margin-bottom: 28px;
+}
+
+.dateStickySentinel {
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.dateHeader {
+    display: block;
+    box-sizing: border-box;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+    color: color-mix(in srgb, var(--body-text-color, #3c4043) 78%, transparent);
+    margin: 0 0 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--body-background);
+    padding: 8px 0 7px;
+    border-bottom: 1px solid transparent;
+}
+
+.dateHeaderStuck {
+    border-bottom-color: var(--input-border-color);
+}
+
+.galleryCompact .dateHeader {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+    padding-inline: 16px;
+}
+
+// ردیف‌ها مجازی‌اند: ظرف ارتفاع کل را دارد و فقط ردیف‌های نزدیک دید با top مطلق رندر می‌شوند
+.dateGroup .rowsContainer {
+    position: relative;
+}
+
+.row {
+    position: absolute;
+    inset-inline: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    width: 100%;
+}
+
+.photoWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    background-color: color-mix(in srgb, var(--body-text-color, #3c4043) 7%, transparent);
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    display: block;
+    flex-shrink: 0;
+    isolation: isolate;
+}
+
+.photoSelected {
+    box-shadow: 0 0 0 2px #8b5cf6;
+}
+
+// حجم فایل اصلی — پایین راست (فیزیکی، مثل بج هزینه چت)
+.sizeBadge {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    z-index: 7;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.64);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    pointer-events: none;
+}
+
+// افزودن مستقیم به chatinput — پایین چپ؛ دسکتاپ با hover، لمسی/موبایل همیشه
+.quickAdd {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    z-index: 8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(15, 16, 22, 0.72);
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease, background 0.15s ease;
+
+    &:hover:not(:disabled) { background: rgba(15, 16, 22, 0.82); }
+
+    &:disabled { cursor: default; }
+
+    @media (hover: none), (max-width: 575.98px) {
+        opacity: 1;
+    }
+}
+
+.photoWrapper:hover .quickAdd,
+.photoWrapper:focus-within .quickAdd,
+.quickAddDone {
+    opacity: 1;
+}
+
+.quickAddDone {
+    background: var(--brand-color, #8b5cf6);
+    border-color: var(--brand-color, #8b5cf6);
+}
+
+.selectBadge {
+    position: absolute;
+    top: 8px;
+    inset-inline-end: 8px;
+    z-index: 7;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(139, 92, 246, 0.92);
+    color: #fff;
+    pointer-events: none;
+}
+
+/* حالت مرور با انتخاب: دکمه انتخاب گوشه کاشی (کلیک خود کاشی بزرگ می‌کند) */
+.selectToggle {
+    position: absolute;
+    top: 8px;
+    inset-inline-end: 8px;
+    z-index: 7;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.32);
+    color: transparent;
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
+
+    /* ناحیه لمس بزرگ‌تر برای موبایل */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -8px;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.5);
+        color: rgba(255, 255, 255, 0.85);
+    }
+}
+
+.selectToggleOn,
+.selectToggleOn:hover {
+    border-color: #8b5cf6;
+    background: #8b5cf6;
+    color: #fff;
+}
+
+.ghost {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    // سبک برای تعداد زیاد: پس‌زمینه‌ی ثابت (بدون انیمیشن پس‌زمینه که هر فریم repaint می‌خواهد)
+    // + یک اسپینر کوچک که فقط transform می‌چرخد و روی compositor اجرا می‌شود
+    background: color-mix(in srgb, var(--body-text-color, #3c4043) 7%, transparent);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        margin: -9px 0 0 -9px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid color-mix(in srgb, var(--body-text-color, #3c4043) 16%, transparent);
+        border-top-color: color-mix(in srgb, var(--body-text-color, #3c4043) 50%, transparent);
+        animation: galleryGhost 0.8s linear infinite;
+    }
+}
+
+@keyframes galleryGhost {
+    to { transform: rotate(360deg); }
+}
+
+.image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+.imageReady {
+    opacity: 1;
+}
+
+.photoWrapper:hover .imageReady {
+    transform: scale(1.02);
+}
+
+.videoOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.videoVeil {
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    height: 48%;
+    max-height: 80px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+    );
+}
+
+.videoMeta {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px;
+    padding: 0 8px 0 6px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+}
+
+.audioTile {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    color: #5f6368;
+    background: linear-gradient(145deg, #f1f3f4 0%, #e8eaed 100%);
+}
+
+// ویدیوی بدون thumbnail — کاشی ساده (همان پس‌زمینه‌ی کاشی) با آیکون؛ ویدیو بار نمی‌شود
+.videoTile {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--body-text-color, #3c4043);
+    opacity: 0.45;
+}
+
+.audioName {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 100%;
+    color: #202124;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    word-break: break-word;
+}
+
+.lightboxAudio {
+    min-width: min(92vw, 420px);
+    padding: 20px;
+    border-radius: 16px;
+    background: #fff;
+    cursor: default;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    /* بالاتر از شیت موبایل گالری (drawer-content: 1000001) تا نمای بزرگ زیر آن نرود */
+    z-index: 1000100;
+    /* شیت مودال (Radix) روی body pointer-events: none می‌گذارد */
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.82);
+    cursor: zoom-out;
+}
+
+/* انتخاب همین فایل برای افزودن از داخل نمای بزرگ (مخصوصاً موبایل) */
+.lightboxPick {
+    position: absolute;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.22);
+    }
+}
+
+.lightboxPickOn,
+.lightboxPickOn:hover {
+    border-color: #8b5cf6;
+    background: #8b5cf6;
+}
+
+.lightboxClose {
+    position: absolute;
+    top: 16px;
+    inset-inline-end: 16px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.lightboxStage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    max-width: min(96vw, 1400px);
+    max-height: 92vh;
+    cursor: default;
+}
+
+.lightboxThumb,
+.lightboxImage {
+    grid-area: 1 / 1;
+    display: block;
+    max-width: 96vw;
+    max-height: 92vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.lightboxThumb {
+    filter: blur(12px) saturate(1.05);
+    transform: scale(1.04);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.lightboxImage {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.lightboxImage.imageReady {
+    opacity: 1;
+}

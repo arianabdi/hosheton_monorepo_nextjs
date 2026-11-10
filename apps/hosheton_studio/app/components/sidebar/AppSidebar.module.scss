@@ -1,0 +1,246 @@
+.verticalMenu {
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    align-self: flex-start;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    box-sizing: border-box;
+    background: var(--plan-card-background-color);
+
+    @media (min-width: 769px) {
+        border-inline-end: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 768px) {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1200;
+        height: 100vh;
+        height: 100dvh;
+        max-height: none;
+        transform: translateX(100%);
+        width: 280px;
+        background: var(--plan-card-background-color);
+        border-right: 1px solid var(--border-color);
+        border-left: 1px solid var(--border-color);
+        transition: transform 0.3s ease-in-out;
+
+        &.open {
+            transform: translateX(0);
+        }
+    }
+}
+
+.logoWrap {
+    flex-shrink: 0;
+    padding: 18px 18px 10px;
+}
+
+.logoWrapMobile {
+    flex-shrink: 0;
+    height: 52px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    direction: ltr;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logoBtn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    line-height: 0;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.brandLogo {
+    object-fit: contain;
+    width: auto;
+    max-width: 190px;
+    height: 34px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.navScroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 4px 10px 16px;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, var(--body-text-color) 18%, transparent);
+        border-radius: 999px;
+    }
+    @media (max-width: 768px) {
+
+        padding: 24px 10px 16px;
+    }
+}
+
+.menuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sectionTitle {
+    list-style: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: color-mix(in srgb, var(--body-text-color) 48%, transparent);
+    padding: 18px 12px 6px;
+}
+
+.divider {
+    list-style: none;
+    height: 1px;
+    margin: 12px 8px;
+    background: var(--border-color);
+}
+
+.menuItem {
+    border-radius: 12px;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+
+    &.active {
+        background: color-mix(in srgb, var(--body-text-color) 9%, transparent);
+
+        .menuLink {
+            font-weight: 700;
+        }
+    }
+}
+
+.menuLink {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--body-text-color);
+    font-size: 0.88rem;
+    border-radius: 12px;
+    text-align: start;
+}
+
+.ico {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+
+    span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    svg {
+        flex-shrink: 0;
+        opacity: 0.85;
+    }
+}
+
+.externalIcon {
+    opacity: 0.45;
+    flex-shrink: 0;
+}
+
+.submenu {
+    list-style: none;
+    padding: 0 8px 8px;
+    margin: 0;
+}
+
+.submenuLink {
+    width: 100%;
+    border: none;
+    background: none;
+    color: var(--body-text-color);
+    padding: 8px 12px 8px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: start;
+    font-size: 0.82rem;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+}
+
+.mobileOverlay {
+    display: none;
+
+    @media (max-width: 768px) {
+        &.open {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1150;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    body.menuOpen {
+        overflow: hidden;
+    }
+}
+
+
+
+
+/* باکس بنر مربعی پایین سایدبار */
+.bannerSlot {
+    display: block;
+    margin: 8px 10px 12px;
+    flex-shrink: 0;
+}
+
+/* بج کوچک کنار آیتم منو — مثلاً «به‌زودی» */
+.navBadge {
+    flex-shrink: 0;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    line-height: 1.6;
+    white-space: nowrap;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    color: var(--brand-color);
+}

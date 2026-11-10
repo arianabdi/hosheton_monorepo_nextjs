@@ -1,0 +1,17 @@
+.applications{
+  background: var(--card-background);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.applications svg{
+  color: var(--header-icon-color) !important;
+}
+.applist{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.dropdown{
+  min-width: unset !important;
+}

@@ -1,0 +1,166 @@
+.floatingPanel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    background: var(--ve-panel, var(--input-background-color));
+    border: 1px solid var(--ve-border, var(--input-border-color));
+    border-radius: 10px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+
+    .panelHeader {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 30px;
+        padding: 0 8px 0 12px;
+        flex-shrink: 0;
+        cursor: grab;
+        background: var(--ve-header-bar, var(--input-background-color));
+        border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+        touch-action: none;
+        user-select: none;
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        .panelTitle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ve-text, var(--body-text-color));
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+
+            svg {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+            }
+        }
+
+        .headerExtra {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .headerActions {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .headerBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            cursor: pointer;
+
+            svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            &:hover {
+                background: var(--ve-hover, rgba(128, 128, 128, 0.15));
+                color: var(--ve-text, inherit);
+            }
+        }
+    }
+
+    .panelBody {
+        flex: 1;
+        min-height: 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .resizeHandle {
+        position: absolute;
+        z-index: 2;
+        touch-action: none;
+
+        &.n {
+            top: -3px;
+            left: 10px;
+            right: 10px;
+            height: 7px;
+            cursor: ns-resize;
+        }
+
+        &.s {
+            bottom: -3px;
+            left: 10px;
+            right: 10px;
+            height: 7px;
+            cursor: ns-resize;
+        }
+
+        &.e {
+            right: -3px;
+            top: 10px;
+            bottom: 10px;
+            width: 7px;
+            cursor: ew-resize;
+        }
+
+        &.w {
+            left: -3px;
+            top: 10px;
+            bottom: 10px;
+            width: 7px;
+            cursor: ew-resize;
+        }
+
+        &.nw {
+            top: -3px;
+            left: -3px;
+            width: 12px;
+            height: 12px;
+            cursor: nwse-resize;
+        }
+
+        &.ne {
+            top: -3px;
+            right: -3px;
+            width: 12px;
+            height: 12px;
+            cursor: nesw-resize;
+        }
+
+        &.sw {
+            bottom: -3px;
+            left: -3px;
+            width: 12px;
+            height: 12px;
+            cursor: nesw-resize;
+        }
+
+        &.se {
+            bottom: -3px;
+            right: -3px;
+            width: 12px;
+            height: 12px;
+            cursor: nwse-resize;
+        }
+    }
+}

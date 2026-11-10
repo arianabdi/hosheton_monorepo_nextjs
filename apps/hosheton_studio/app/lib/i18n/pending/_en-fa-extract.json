@@ -1,0 +1,2438 @@
+{
+  "templates": {
+    "title": {
+      "en": "Templates",
+      "fa": "قالب‌ها"
+    },
+    "mine": {
+      "en": "My templates",
+      "fa": "قالب‌های من"
+    },
+    "saved": {
+      "en": "Saved",
+      "fa": "نشان‌شده‌ها"
+    },
+    "review": {
+      "en": "Review requests",
+      "fa": "درخواست بررسی"
+    },
+    "analytics": {
+      "en": "Sales analytics",
+      "fa": "آمار فروش"
+    },
+    "messages": {
+      "en": "Messages",
+      "fa": "پیام‌ها"
+    },
+    "new": {
+      "en": "New template",
+      "fa": "قالب جدید"
+    },
+    "create": {
+      "en": "Create template",
+      "fa": "ایجاد قالب"
+    },
+    "edit": {
+      "en": "Edit template",
+      "fa": "ویرایش قالب"
+    },
+    "view": {
+      "en": "View template",
+      "fa": "مشاهده قالب"
+    },
+    "version": {
+      "en": "Version {{version}}",
+      "fa": "نسخه {{version}}"
+    },
+    "save_version": {
+      "en": "Saving will create version {{version}}. After admin approval it will replace the previous version.",
+      "fa": "با ذخیره، نسخه {{version}} ساخته می‌شود. پس از تایید ادمین، جایگزین نسخه قبلی خواهد شد."
+    },
+    "saving": {
+      "en": "Saving...",
+      "fa": "در حال ذخیره..."
+    },
+    "save_version_btn": {
+      "en": "Save version {{version}}",
+      "fa": "ذخیره نسخه {{version}}"
+    },
+    "next_version": {
+      "en": "Template version: {{version}}",
+      "fa": "نسخه قالب: {{version}}"
+    },
+    "existing_versions": {
+      "en": "Previous versions of this project: {{versions}}",
+      "fa": "نسخه‌های قبلی این پروژه: {{versions}}"
+    },
+    "creating": {
+      "en": "Creating...",
+      "fa": "در حال ایجاد..."
+    },
+    "create_version": {
+      "en": "Create template version {{version}}",
+      "fa": "ایجاد قالب نسخه {{version}}"
+    },
+    "hub_mine": {
+      "en": "Manage your workflow and prompt templates and submit them for review to publish.",
+      "fa": "قالب‌های workflow و prompt خود را مدیریت کنید و برای بررسی ارسال کنید تا منتشر شوند."
+    },
+    "hub_saved": {
+      "en": "Templates you bookmarked — access them quickly.",
+      "fa": "قالب‌هایی که نشان کرده‌اید — سریع دسترسی داشته باشید."
+    },
+    "hub_review": {
+      "en": "Track templates submitted for publication.",
+      "fa": "وضعیت ارسال قالب‌ها برای انتشار را پیگیری کنید."
+    },
+    "hub_analytics": {
+      "en": "Analyze views, sales, and revenue for your templates.",
+      "fa": "تحلیل بازدید، فروش و درآمد قالب‌های شما."
+    },
+    "hub_messages": {
+      "en": "Reply to customer questions about your templates.",
+      "fa": "پاسخ به سؤالات مشتریان درباره قالب‌هایتان."
+    },
+    "create_new": {
+      "en": "Create a new template",
+      "fa": "ایجاد قالب جدید"
+    },
+    "load_analytics_error": {
+      "en": "Failed to load analytics",
+      "fa": "خطا در بارگذاری آمار"
+    },
+    "toman_amount": {
+      "en": "{{amount}} Toman",
+      "fa": "{{amount}} تومان"
+    },
+    "views_n": {
+      "en": "{{count}} views",
+      "fa": "{{count}} بازدید"
+    },
+    "sales_n": {
+      "en": "{{count}} sales",
+      "fa": "{{count}} فروش"
+    },
+    "conversion": {
+      "en": "{{rate}}% conversion",
+      "fa": "{{rate}}% تبدیل"
+    },
+    "free": {
+      "en": "Free",
+      "fa": "رایگان"
+    },
+    "load_inbox_error": {
+      "en": "Failed to load conversations",
+      "fa": "خطا در بارگذاری گفتگوها"
+    },
+    "load_messages_error": {
+      "en": "Failed to load messages",
+      "fa": "خطا در بارگذاری پیام‌ها"
+    },
+    "send_reply_error": {
+      "en": "Failed to send reply",
+      "fa": "خطا در ارسال پاسخ"
+    },
+    "conversation": {
+      "en": "Conversation",
+      "fa": "گفتگو"
+    },
+    "reply_placeholder": {
+      "en": "Write your reply...",
+      "fa": "پاسخ خود را بنویسید..."
+    },
+    "send_reply": {
+      "en": "Send reply",
+      "fa": "ارسال پاسخ"
+    },
+    "preview_error": {
+      "en": "Failed to upload preview",
+      "fa": "خطا در آپلود پیش‌نمایش"
+    },
+    "create_error": {
+      "en": "Failed to create template",
+      "fa": "خطا در ایجاد قالب"
+    },
+    "create_title": {
+      "en": "Create a new template",
+      "fa": "ایجاد قالب جدید"
+    },
+    "kind_workflow": {
+      "en": "Workflow (nodes and connections)",
+      "fa": "Workflow (گره‌ها و اتصالات)"
+    },
+    "kind_prompt": {
+      "en": "Prompt (ready-made text)",
+      "fa": "Prompt (متن آماده)"
+    },
+    "no_project": {
+      "en": "No project — metadata only",
+      "fa": "بدون پروژه — فقط متادیتا"
+    },
+    "required": {
+      "en": "(required)",
+      "fa": "(الزامی)"
+    },
+    "optional": {
+      "en": "(optional)",
+      "fa": "(اختیاری)"
+    },
+    "prompt_ph": {
+      "en": "Sample prompt or generation scenario...",
+      "fa": "پرامپت نمونه یا سناریوی تولید..."
+    },
+    "models_ph": {
+      "en": "e.g. Gemini, Seedance, ElevenLabs",
+      "fa": "مثال: Gemini, Seedance, ElevenLabs"
+    },
+    "price_ph": {
+      "en": "e.g. 50000",
+      "fa": "مثال: 50000"
+    },
+    "prompt_only": {
+      "en": "Only prompt templates can be edited.",
+      "fa": "فقط قالب‌های Prompt قابل ویرایش هستند."
+    },
+    "pending_locked": {
+      "en": "A template pending review cannot be edited.",
+      "fa": "قالب در انتظار بررسی قابل ویرایش نیست."
+    },
+    "load_error": {
+      "en": "Failed to load template",
+      "fa": "خطا در بارگذاری قالب"
+    },
+    "save_version_error": {
+      "en": "Failed to save the new version",
+      "fa": "خطا در ذخیره نسخه جدید"
+    },
+    "edit_prompt": {
+      "en": "Edit prompt template",
+      "fa": "ویرایش قالب Prompt"
+    },
+    "not_found": {
+      "en": "Template not found.",
+      "fa": "قالب یافت نشد."
+    },
+    "readonly": {
+      "en": "View only",
+      "fa": "حالت فقط مشاهده"
+    },
+    "edit_prompt_btn": {
+      "en": "Edit prompt",
+      "fa": "ویرایش Prompt"
+    },
+    "load_saved_error": {
+      "en": "Failed to load bookmarks",
+      "fa": "خطا در بارگذاری نشان‌شده‌ها"
+    },
+    "unsave_error": {
+      "en": "Failed to remove bookmark",
+      "fa": "خطا در حذف نشان‌شده"
+    },
+    "col_title": {
+      "en": "Title",
+      "fa": "عنوان"
+    },
+    "col_kind": {
+      "en": "Type",
+      "fa": "نوع"
+    },
+    "col_creator": {
+      "en": "Creator",
+      "fa": "سازنده"
+    },
+    "col_models": {
+      "en": "Models",
+      "fa": "مدل‌ها"
+    },
+    "col_version": {
+      "en": "Version",
+      "fa": "نسخه"
+    },
+    "col_actions": {
+      "en": "Actions",
+      "fa": "عملیات"
+    },
+    "unsave": {
+      "en": "Remove bookmark",
+      "fa": "حذف از نشان‌شده‌ها"
+    },
+    "from_saved": {
+      "en": "Project from bookmark",
+      "fa": "پروژه از نشان‌شده‌ها"
+    },
+    "from_saved_error": {
+      "en": "Failed to create project",
+      "fa": "خطا در ایجاد پروژه"
+    },
+    "all": {
+      "en": "All",
+      "fa": "همه"
+    },
+    "pending": {
+      "en": "Pending",
+      "fa": "در انتظار"
+    },
+    "approved": {
+      "en": "Approved",
+      "fa": "تایید شده"
+    },
+    "rejected": {
+      "en": "Rejected",
+      "fa": "رد شده"
+    },
+    "pending_review": {
+      "en": "Pending review",
+      "fa": "در انتظار بررسی"
+    },
+    "load_requests_error": {
+      "en": "Failed to load requests",
+      "fa": "خطا در بارگذاری درخواست‌ها"
+    },
+    "requests_n": {
+      "en": "{{count}} requests",
+      "fa": "{{count}} درخواست"
+    },
+    "hub_nav_aria": {
+      "en": "Template sections",
+      "fa": "بخش‌های قالب"
+    },
+    "saved_empty": {
+      "en": "You haven't bookmarked any templates yet.",
+      "fa": "هنوز قالبی نشان نکرده‌اید."
+    },
+    "chat": {
+      "en": "Chat",
+      "fa": "چت"
+    },
+    "project": {
+      "en": "Project",
+      "fa": "پروژه"
+    },
+    "loading_preview": {
+      "en": "Loading template preview...",
+      "fa": "در حال بارگذاری پیش‌نمایش قالب..."
+    },
+    "prompt_text": {
+      "en": "Prompt text",
+      "fa": "متن Prompt"
+    },
+    "tags": {
+      "en": "Tags",
+      "fa": "برچسب‌ها"
+    },
+    "no_workflow": {
+      "en": "This workflow template cannot be displayed.",
+      "fa": "این قالب workflow قابل نمایش ندارد."
+    },
+    "create_lead": {
+      "en": "Fill in the template details. You can base it on a project workflow or create a prompt only.",
+      "fa": "اطلاعات قالب را کامل کنید. می‌توانید workflow یک پروژه را مبنا قرار دهید یا فقط یک prompt بسازید."
+    },
+    "title_ph": {
+      "en": "e.g. enhance portrait photo quality",
+      "fa": "مثال: افزایش کیفیت عکس پرتره"
+    },
+    "desc_ph": {
+      "en": "Use cases, tips, expected output...",
+      "fa": "کاربرد قالب، نکات استفاده، خروجی مورد انتظار..."
+    },
+    "kind_label": {
+      "en": "Template type",
+      "fa": "نوع قالب"
+    },
+    "source_project": {
+      "en": "Source project (optional)",
+      "fa": "پروژه مبدا (اختیاری)"
+    },
+    "source_hint": {
+      "en": "If a project is selected, its nodes/edges are stored in the template.",
+      "fa": "اگر پروژه انتخاب شود، nodes/edges آن در قالب ذخیره می‌شود."
+    },
+    "ai_models": {
+      "en": "AI models",
+      "fa": "مدل‌های AI"
+    },
+    "ai_models_used": {
+      "en": "AI models used",
+      "fa": "مدل‌های AI استفاده‌شده"
+    },
+    "models_from_nodes": {
+      "en": "If you pick a source project, models are also extracted from its nodes.",
+      "fa": "اگر پروژه مبدا انتخاب کنید، مدل‌ها از گره‌ها هم استخراج می‌شوند."
+    },
+    "tags_search": {
+      "en": "Tags (for search)",
+      "fa": "برچسب‌ها (برای جستجو)"
+    },
+    "tag_ph": {
+      "en": "e.g. clothing swap",
+      "fa": "مثال: تغییر لباس"
+    },
+    "sell_template": {
+      "en": "Sell this template",
+      "fa": "فروش این قالب"
+    },
+    "sell_hint": {
+      "en": "Until purchased, the workflow and prompt stay hidden from others.",
+      "fa": "تا زمان خرید، workflow و prompt برای دیگران مخفی می‌ماند."
+    },
+    "price_toman": {
+      "en": "Price (Toman)",
+      "fa": "قیمت (تومان)"
+    },
+    "preview_max_2": {
+      "en": "Preview (max 2 files)",
+      "fa": "پیش‌نمایش (حداکثر ۲ فایل)"
+    },
+    "preview_max_2_media": {
+      "en": "Preview (max 2 image/video files)",
+      "fa": "پیش‌نمایش (حداکثر ۲ فایل عکس/ویدیو)"
+    },
+    "preview_media": {
+      "en": "Preview images",
+      "fa": "تصاویر پیش‌نمایش"
+    },
+    "cover": {
+      "en": "Cover",
+      "fa": "کاور"
+    },
+    "cover_hint": {
+      "en": "Use Cover to choose which image appears on Explore cards. Up to 8 items.",
+      "fa": "ستاره‌دار یا دکمه کاور، تصویر اصلی کارت صفحه ایده‌ها را مشخص می‌کند. حداکثر ۸ مورد."
+    },
+    "remove_media": {
+      "en": "Remove",
+      "fa": "حذف"
+    },
+    "no_messages": {
+      "en": "No messages yet.",
+      "fa": "پیامی دریافت نشده است."
+    },
+    "select_conversation": {
+      "en": "Select a conversation",
+      "fa": "یک گفتگو را انتخاب کنید"
+    },
+    "loading_analytics": {
+      "en": "Loading analytics...",
+      "fa": "در حال بارگذاری آمار..."
+    },
+    "kpi_views": {
+      "en": "Total views",
+      "fa": "بازدید کل"
+    },
+    "kpi_sales": {
+      "en": "Sales",
+      "fa": "فروش"
+    },
+    "kpi_revenue": {
+      "en": "Revenue (Toman)",
+      "fa": "درآمد (تومان)"
+    },
+    "kpi_conversion": {
+      "en": "Conversion rate",
+      "fa": "نرخ تبدیل"
+    },
+    "kpi_avg_sale": {
+      "en": "Average per sale",
+      "fa": "میانگین هر فروش"
+    },
+    "kpi_approved": {
+      "en": "Approved templates",
+      "fa": "قالب‌های تاییدشده"
+    },
+    "sales_30d": {
+      "en": "Sales in the last 30 days",
+      "fa": "فروش ۳۰ روز اخیر"
+    },
+    "top_templates": {
+      "en": "Best-selling templates",
+      "fa": "پرفروش‌ترین قالب‌ها"
+    },
+    "all_templates": {
+      "en": "All templates",
+      "fa": "همه قالب‌ها"
+    },
+    "toman_short": {
+      "en": "{{amount}} T",
+      "fa": "{{amount}} ت"
+    },
+    "no_requests_filter": {
+      "en": "No requests match this filter.",
+      "fa": "درخواستی با این فیلتر یافت نشد."
+    },
+    "submitted": {
+      "en": "Submitted",
+      "fa": "ارسال"
+    },
+    "reviewed": {
+      "en": "Reviewed",
+      "fa": "بررسی"
+    },
+    "admin_note": {
+      "en": "Admin note:",
+      "fa": "یادداشت ادمین:"
+    },
+    "desc_what": {
+      "en": "What does this template do?",
+      "fa": "این قالب چه کاری انجام می‌دهد؟"
+    },
+    "purchased": {
+      "en": "Purchased",
+      "fa": "خریداری‌شده‌ها"
+    },
+    "hub_purchased": {
+      "en": "Paid templates you bought from Explore.",
+      "fa": "قالب‌های پولی که از صفحه ایده‌ها خریده‌اید."
+    },
+    "filters": {
+      "en": "Filters",
+      "fa": "فیلترها"
+    },
+    "filters_toggle": {
+      "en": "Toggle filters",
+      "fa": "نمایش یا مخفی کردن فیلترها"
+    },
+    "search_placeholder": {
+      "en": "Search templates…",
+      "fa": "جستجوی قالب…"
+    },
+    "clear_filters": {
+      "en": "Clear filters",
+      "fa": "پاک کردن فیلترها"
+    },
+    "sort": {
+      "en": "Sort by",
+      "fa": "مرتب‌سازی"
+    },
+    "sort_newest": {
+      "en": "Newest",
+      "fa": "جدیدترین"
+    },
+    "sort_oldest": {
+      "en": "Oldest",
+      "fa": "قدیمی‌ترین"
+    },
+    "sort_price_high": {
+      "en": "Most expensive",
+      "fa": "گران‌ترین"
+    },
+    "sort_price_low": {
+      "en": "Cheapest",
+      "fa": "ارزان‌ترین"
+    },
+    "sort_views": {
+      "en": "Most viewed",
+      "fa": "پربازدیدترین"
+    },
+    "sort_usage": {
+      "en": "Most used",
+      "fa": "پراستفاده‌ترین"
+    },
+    "sort_title": {
+      "en": "Title",
+      "fa": "عنوان"
+    },
+    "filter_kind": {
+      "en": "Template type",
+      "fa": "نوع قالب"
+    },
+    "filter_status": {
+      "en": "Status",
+      "fa": "وضعیت"
+    },
+    "filter_category": {
+      "en": "Category",
+      "fa": "دسته‌بندی"
+    },
+    "filter_subject": {
+      "en": "Subject / model",
+      "fa": "دسته‌بندی موضوعی"
+    },
+    "filter_model": {
+      "en": "AI model",
+      "fa": "مدل هوش مصنوعی"
+    },
+    "filter_paid": {
+      "en": "Paid or free",
+      "fa": "پولی یا رایگان"
+    },
+    "filter_pending": {
+      "en": "In review",
+      "fa": "در حال بررسی"
+    },
+    "paid": {
+      "en": "Paid",
+      "fa": "پولی"
+    },
+    "tags_filter_ph": {
+      "en": "Search and add a tag…",
+      "fa": "جستجو و افزودن تگ…"
+    },
+    "gallery_intro_title": {
+      "en": "Your templates",
+      "fa": "قالب‌های شما"
+    },
+    "gallery_intro_body": {
+      "en": "Use filters to find a template by tag, model, type, price, and status. The same filters apply to Mine, Saved, and Purchased.",
+      "fa": "با فیلترها قالب را بر اساس تگ، مدل، نوع، قیمت و وضعیت پیدا کنید. همین فیلترها روی قالب‌های من، نشان‌شده‌ها و خریداری‌شده‌ها اعمال می‌شود."
+    },
+    "filter_media": {
+      "en": "Preview media",
+      "fa": "نوع پیش‌نمایش"
+    },
+    "media_image": {
+      "en": "Image",
+      "fa": "تصویر"
+    },
+    "media_video": {
+      "en": "Video",
+      "fa": "ویدیو"
+    },
+    "draft": {
+      "en": "Draft",
+      "fa": "پیش‌نویس"
+    },
+    "kind_prompt_short": {
+      "en": "Prompt",
+      "fa": "پرامپت"
+    },
+    "kind_workflow_short": {
+      "en": "Workflow",
+      "fa": "ورکفلو"
+    },
+    "actions_menu": {
+      "en": "Actions",
+      "fa": "عملیات"
+    },
+    "use_template": {
+      "en": "Use",
+      "fa": "استفاده"
+    },
+    "submit_review": {
+      "en": "Submit for review",
+      "fa": "ارسال برای بررسی"
+    },
+    "purchased_empty": {
+      "en": "You haven't purchased any templates yet.",
+      "fa": "هنوز قالب پولی نخریده‌اید."
+    },
+    "load_purchased_error": {
+      "en": "Failed to load purchased templates",
+      "fa": "خطا در بارگذاری خریداری‌شده‌ها"
+    },
+    "from_purchased": {
+      "en": "Project from purchase",
+      "fa": "پروژه از خرید"
+    },
+    "from_purchased_error": {
+      "en": "Failed to create project from purchase",
+      "fa": "خطا در ایجاد پروژه از خرید"
+    },
+    "no_filter_results": {
+      "en": "No templates match these filters.",
+      "fa": "قالبی با این فیلترها پیدا نشد."
+    },
+    "form_guide_title": {
+      "en": "Before you save",
+      "fa": "قبل از ذخیره"
+    },
+    "form_guide_body": {
+      "en": "Fill in a clear title, pick a category so the template appears in Explore filters, and add at least one preview image. After you save, submit the template for review from My templates so it can be published.",
+      "fa": "عنوان مشخص بنویسید، دسته را انتخاب کنید تا در فیلتر صفحه ایده‌ها دیده شود و حداقل یک تصویر پیش‌نمایش اضافه کنید. پس از ذخیره، از «قالب‌های من» آن را برای بررسی ارسال کنید تا منتشر شود."
+    },
+    "guide_title": {
+      "en": "How to create a template",
+      "fa": "آموزش ایجاد قالب"
+    },
+    "guide_badge": {
+      "en": "User guide",
+      "fa": "راهنمای کاربر"
+    },
+    "guide_open": {
+      "en": "Show guide",
+      "fa": "نمایش راهنما"
+    },
+    "guide_close": {
+      "en": "Hide guide",
+      "fa": "بستن راهنما"
+    },
+    "guide_intro": {
+      "en": "On this page you fill in the template details and save it <strong>as a draft</strong>. It will not appear on Explore until you submit it for review and it is approved.",
+      "fa": "در این صفحه جزئیات قالب را وارد می‌کنید و آن را <strong>به‌صورت پیش‌نویس</strong> ذخیره می‌کنید. قالب ذخیره‌شده تا وقتی برای بررسی ارسال نشود و تایید نگیرد، در صفحه ایده‌ها دیده نمی‌شود."
+    },
+    "guide_status_title": {
+      "en": "What do the statuses mean?",
+      "fa": "وضعیت‌ها یعنی چه؟"
+    },
+    "guide_status_draft": {
+      "en": "Not submitted for review yet.",
+      "fa": "هنوز برای بررسی ارسال نشده."
+    },
+    "guide_status_pending": {
+      "en": "Submitted and waiting for admin approval or rejection.",
+      "fa": "ارسال شده و منتظر تایید یا رد ادمین است."
+    },
+    "guide_status_approved": {
+      "en": "Published and visible on Explore.",
+      "fa": "منتشر شده و در صفحه ایده‌ها دیده می‌شود."
+    },
+    "guide_status_rejected": {
+      "en": "Not published; you can edit it and submit again.",
+      "fa": "منتشر نشده؛ می‌توانید ویرایش کنید و دوباره بفرستید."
+    },
+    "guide_fill_title": {
+      "en": "Filling in the form",
+      "fa": "پر کردن فرم"
+    },
+    "guide_fill_1": {
+      "en": "Set the title, template type, and category.",
+      "fa": "عنوان، نوع قالب و دسته‌بندی را مشخص کنید."
+    },
+    "guide_fill_2": {
+      "en": "Write the description and prompt text.",
+      "fa": "توضیحات و متن پرامپت را بنویسید."
+    },
+    "guide_fill_3": {
+      "en": "Add AI models and a price if needed.",
+      "fa": "در صورت نیاز مدل‌های هوش مصنوعی و قیمت را اضافه کنید."
+    },
+    "guide_fill_4": {
+      "en": "Upload preview images or videos and pick the cover with the star.",
+      "fa": "تصویر یا ویدیوی پیش‌نمایش را آپلود کنید و کاور را با ستاره مشخص کنید."
+    },
+    "guide_after_title": {
+      "en": "After you save",
+      "fa": "بعد از ذخیره"
+    },
+    "guide_after_1": {
+      "en": "The template appears in My templates as a draft.",
+      "fa": "قالب در «قالب‌های من» به‌صورت پیش‌نویس دیده می‌شود."
+    },
+    "guide_after_2": {
+      "en": "Open the actions menu on that item and submit it for review.",
+      "fa": "از منوی عملیات همان قالب، ارسال برای بررسی را بزنید."
+    },
+    "guide_after_3": {
+      "en": "After admin approval, the template is published on Explore.",
+      "fa": "پس از تایید ادمین، قالب در صفحه ایده‌ها منتشر می‌شود."
+    },
+    "guide_cat_title": {
+      "en": "Category",
+      "fa": "دسته‌بندی"
+    },
+    "guide_cat_1": {
+      "en": "Category drives the horizontal filters at the top of Explore.",
+      "fa": "دسته، فیلترهای افقی بالای صفحه ایده‌ها را می‌سازد."
+    },
+    "guide_cat_2": {
+      "en": "If no category is selected, the template only appears under All.",
+      "fa": "اگر دسته خالی باشد، قالب فقط در «همه» دیده می‌شود."
+    },
+    "guide_cat_3": {
+      "en": "Tags are used for search and should be separated with commas.",
+      "fa": "برچسب‌ها برای جستجو هستند و با ویرگول جدا می‌شوند."
+    },
+    "guide_example_title": {
+      "en": "Worked example",
+      "fa": "مثال عملی"
+    },
+    "guide_example_body": {
+      "en": "Template “Enhance photo quality”, type Prompt + category “Image edit” + two preview images → save draft → submit for review → after approval, users see it on Explore and can use it.",
+      "fa": "قالب «افزایش کیفیت عکس» از نوع Prompt + دسته «ادیت تصویر» + دو تصویر پیش‌نمایش → ذخیره پیش‌نویس → ارسال برای بررسی → پس از تایید، کاربر در صفحه ایده‌ها آن را می‌بیند و استفاده می‌کند."
+    },
+    "guide_note": {
+      "en": "<strong>Note:</strong> Saving this form does not publish the template. You must submit it for review from My templates.",
+      "fa": "<strong>نکته:</strong> ذخیره این فرم قالب را منتشر نمی‌کند. باید از فهرست قالب‌های من آن را برای بررسی ارسال کنید."
+    },
+    "section_identity": {
+      "en": "Template identity",
+      "fa": "هویت قالب"
+    },
+    "section_explore": {
+      "en": "Explore visibility",
+      "fa": "نمایش در صفحه ایده‌ها"
+    },
+    "section_content": {
+      "en": "Content and prompt",
+      "fa": "محتوا و پرامپت"
+    },
+    "section_models": {
+      "en": "AI models",
+      "fa": "مدل‌های هوش مصنوعی"
+    },
+    "section_pricing": {
+      "en": "Pricing",
+      "fa": "قیمت‌گذاری"
+    },
+    "section_preview": {
+      "en": "Preview media",
+      "fa": "مدیاهای پیش‌نمایش"
+    },
+    "form_title_label": {
+      "en": "Title *",
+      "fa": "عنوان *"
+    },
+    "title_hint": {
+      "en": "The official name shown on the card and details page. Keep it short and specific.",
+      "fa": "نام رسمی که روی کارت و صفحه جزئیات قالب نمایش داده می‌شود. کوتاه، مشخص و بدون پیشوندهای فنی باشد."
+    },
+    "kind_hint": {
+      "en": "Prompt is text the user copies or uses. Workflow is for templates built from a Studio project with nodes.",
+      "fa": "Prompt برای قالب متنی است که کاربر کپی یا استفاده می‌کند. Workflow وقتی معنا دارد که قالب از پروژه استودیو با گره ساخته شده باشد."
+    },
+    "kind_prompt_option": {
+      "en": "Prompt — prompt text only",
+      "fa": "Prompt — فقط متن پرامپت"
+    },
+    "kind_workflow_option": {
+      "en": "Workflow — nodes and connections",
+      "fa": "Workflow — گره و اتصال"
+    },
+    "category_label": {
+      "en": "Category",
+      "fa": "دسته‌بندی"
+    },
+    "category_hint": {
+      "en": "Category drives the horizontal filters on Explore. If empty, the template only appears in All.",
+      "fa": "دسته، فیلتر کارت‌های افقی بالای صفحه ایده‌ها را می‌سازد. اگر خالی بماند، قالب فقط در «همه» دیده می‌شود."
+    },
+    "category_none": {
+      "en": "— Not selected —",
+      "fa": "— انتخاب نشده —"
+    },
+    "category_empty": {
+      "en": "— No categories yet —",
+      "fa": "— دسته‌ای ثبت نشده است —"
+    },
+    "tags_hint": {
+      "en": "Search the subject list and add a tag with + or Enter. Only these keys are saved.",
+      "fa": "از فهرست موضوع‌ها جستجو کنید و با دکمه + یا Enter تگ را اضافه کنید. فقط همین کلیدها ذخیره می‌شوند."
+    },
+    "tags_search_ph": {
+      "en": "Search subjects…",
+      "fa": "جستجوی موضوع…"
+    },
+    "tags_add": {
+      "en": "Add tag",
+      "fa": "افزودن تگ"
+    },
+    "tags_no_match": {
+      "en": "No matching subject",
+      "fa": "موضوعی پیدا نشد"
+    },
+    "desc_hint": {
+      "en": "One or two sentences about the result. If the prompt is empty, this text is shown instead.",
+      "fa": "یک یا دو جمله درباره نتیجه قالب. اگر پرامپت خالی باشد، همین متن به‌عنوان جایگزین نمایش داده می‌شود."
+    },
+    "prompt_hint": {
+      "en": "The main template text. For paid templates it stays hidden until purchase.",
+      "fa": "متن اصلی قالب. برای قالب پولی تا قبل از خرید مخفی می‌ماند."
+    },
+    "models_hint": {
+      "en": "Models are loaded from the active provider list. You can add several; their display names appear on the template card.",
+      "fa": "مدل‌ها از فهرست فعال Provider Model لود می‌شوند. می‌توانید چند مدل اضافه کنید؛ نام نمایشی آن‌ها روی کارت قالب دیده می‌شود."
+    },
+    "models_add": {
+      "en": "Add model",
+      "fa": "افزودن مدل"
+    },
+    "models_empty": {
+      "en": "No model selected yet. Optional, but it helps users know which model this template was built with.",
+      "fa": "هنوز مدلی انتخاب نشده است. انتخاب مدل اختیاری است اما به کاربر کمک می‌کند بداند قالب با چه مدلی ساخته شده."
+    },
+    "models_group_other": {
+      "en": "Other",
+      "fa": "سایر"
+    },
+    "price_hint": {
+      "en": "0 means the template is free and can be used immediately. Any amount above 0 makes it paid and hides the prompt until purchase.",
+      "fa": "مقدار ۰ یعنی قالب رایگان است و کاربر می‌تواند بلافاصله استفاده کند. عدد بزرگ‌تر از صفر قالب را پولی می‌کند و پرامپت تا قبل از خرید مخفی می‌ماند."
+    },
+    "preview_hint": {
+      "en": "Select several files at once. Use the cover button to choose the Explore card image. Up to 8 items.",
+      "fa": "چند فایل را همزمان انتخاب کنید. دکمه کاور، تصویر اصلی کارت صفحه ایده‌ها را مشخص می‌کند. حداکثر ۸ مورد."
+    },
+    "form_note_create": {
+      "en": "After save the template is stored as a draft. Submit it for review from My templates so it can appear on Explore.",
+      "fa": "پس از ذخیره، قالب با وضعیت پیش‌نویس ثبت می‌شود. از فهرست قالب‌های من آن را برای بررسی ارسال کنید تا در صفحه ایده‌ها دیده شود."
+    },
+    "form_note_edit": {
+      "en": "Saving creates a new version. After admin approval it replaces the previous published version.",
+      "fa": "با ذخیره، نسخه جدید ساخته می‌شود. پس از تایید ادمین جایگزین نسخه قبلی خواهد شد."
+    },
+    "submit_create": {
+      "en": "Save draft",
+      "fa": "ذخیره پیش‌نویس"
+    },
+    "submit_update": {
+      "en": "Save changes",
+      "fa": "ذخیره تغییرات"
+    },
+    "submit_saving": {
+      "en": "Saving...",
+      "fa": "در حال ذخیره..."
+    },
+    "no_model": {
+      "en": "— No active models —",
+      "fa": "— مدل فعالی ثبت نشده است —"
+    },
+    "models_select": {
+      "en": "— Select model —",
+      "fa": "— انتخاب مدل —"
+    },
+    "title_required": {
+      "en": "Template title is required.",
+      "fa": "عنوان قالب الزامی است."
+    },
+    "max_media": {
+      "en": "You can add up to 8 media items.",
+      "fa": "حداکثر ۸ مدیا می‌توانید اضافه کنید."
+    },
+    "max_media_remaining": {
+      "en": "Only {{count}} more file(s) can be added.",
+      "fa": "فقط {{count}} فایل دیگر می‌توان اضافه کرد."
+    },
+    "upload_named_error": {
+      "en": "Upload of “{{name}}” failed.",
+      "fa": "آپلود «{{name}}» ناموفق بود."
+    },
+    "thumb_missing": {
+      "en": "No thumbnail was created for “{{name}}”.",
+      "fa": "برای «{{name}}» thumbnail ساخته نشد."
+    },
+    "remove_media_error": {
+      "en": "Could not remove the media.",
+      "fa": "حذف ناموفق بود."
+    },
+    "create_success": {
+      "en": "Template saved as a draft.",
+      "fa": "قالب به‌صورت پیش‌نویس ذخیره شد."
+    },
+    "update_success": {
+      "en": "Template updated.",
+      "fa": "قالب به‌روزرسانی شد."
+    },
+    "set_cover": {
+      "en": "Set as cover",
+      "fa": "انتخاب به‌عنوان پوشش اصلی"
+    },
+    "is_cover": {
+      "en": "Cover image",
+      "fa": "پوشش اصلی"
+    },
+    "open_thumb": {
+      "en": "Open thumbnail",
+      "fa": "باز کردن thumbnail"
+    },
+    "open_original": {
+      "en": "Open original",
+      "fa": "باز کردن تصویر اصلی"
+    },
+    "col_status": {
+      "en": "Status",
+      "fa": "وضعیت"
+    },
+    "col_price": {
+      "en": "Price",
+      "fa": "قیمت"
+    },
+    "col_revenue": {
+      "en": "Revenue",
+      "fa": "درآمد"
+    },
+    "col_views": {
+      "en": "Views",
+      "fa": "بازدید"
+    },
+    "col_sales": {
+      "en": "Sales",
+      "fa": "فروش"
+    },
+    "no_sales_data": {
+      "en": "No sales data yet.",
+      "fa": "هنوز داده فروشی ثبت نشده است."
+    }
+  },
+  "support": {
+    "title": {
+      "en": "Support & tickets",
+      "fa": "پشتیبانی و تیکت‌ها"
+    },
+    "new_ticket": {
+      "en": "New ticket",
+      "fa": "تیکت جدید"
+    },
+    "tickets": {
+      "en": "Tickets",
+      "fa": "تیکت‌ها"
+    },
+    "history": {
+      "en": "Ticket history",
+      "fa": "تاریخچه تیکت‌ها"
+    },
+    "reply": {
+      "en": "Reply",
+      "fa": "پاسخ"
+    },
+    "subject": {
+      "en": "Subject",
+      "fa": "موضوع"
+    },
+    "message": {
+      "en": "Message",
+      "fa": "پیام"
+    },
+    "send": {
+      "en": "Send",
+      "fa": "ارسال"
+    },
+    "open": {
+      "en": "Open",
+      "fa": "باز"
+    },
+    "closed": {
+      "en": "Closed",
+      "fa": "بسته"
+    },
+    "pending": {
+      "en": "Pending",
+      "fa": "در انتظار"
+    },
+    "subtitle": {
+      "en": "Send technical, billing, or product questions. The Hosheton team will reply as soon as possible.",
+      "fa": "سوالات فنی، مالی یا پیشنهادات خود را ارسال کنید. تیم هوشتون در سریع‌ترین زمان پاسخگوی شماست."
+    },
+    "recent": {
+      "en": "Recent request history",
+      "fa": "تاریخچه درخواست‌های اخیر"
+    },
+    "loading_tickets": {
+      "en": "Loading tickets...",
+      "fa": "در حال بارگذاری تیکت‌ها..."
+    },
+    "ticket_count": {
+      "en": "Tickets ({{count}})",
+      "fa": "تعداد تیکت‌ها ({{count}})"
+    },
+    "add_ticket": {
+      "en": "Add a new ticket",
+      "fa": "افزودن تیکت جدید"
+    },
+    "loading_data": {
+      "en": "Loading...",
+      "fa": "در حال دریافت اطلاعات..."
+    },
+    "empty": {
+      "en": "No tickets found. Create your first ticket.",
+      "fa": "هیچ تیکتی یافت نشد. اولین تیکت خود را ثبت کنید."
+    },
+    "id": {
+      "en": "Ticket ID",
+      "fa": "شناسه تیکت"
+    },
+    "priority": {
+      "en": "Priority",
+      "fa": "اولویت"
+    },
+    "last_update": {
+      "en": "Last updated",
+      "fa": "آخرین بروزرسانی"
+    },
+    "urgent": {
+      "en": "Urgent",
+      "fa": "⚠️ فوری"
+    },
+    "low": {
+      "en": "Low",
+      "fa": "کم"
+    },
+    "medium": {
+      "en": "Medium",
+      "fa": "متوسط"
+    },
+    "reviewing": {
+      "en": "In review",
+      "fa": "در حال بررسی"
+    },
+    "resolved": {
+      "en": "Replied",
+      "fa": "پاسخ داده شده"
+    },
+    "closed_status": {
+      "en": "Closed",
+      "fa": "بسته شده"
+    },
+    "dept_tech": {
+      "en": "Studio technical support",
+      "fa": "پشتیبانی فنی استودیو"
+    },
+    "dept_billing": {
+      "en": "Billing and wallet top-up",
+      "fa": "مالی و شارژ کیف پول"
+    },
+    "dept_sales": {
+      "en": "Sales and business plans",
+      "fa": "فروش و پلن‌های تجاری"
+    },
+    "subject_placeholder": {
+      "en": "e.g. Error running a video generation node",
+      "fa": "مثال: خطا در اجرای گره تولید ویدیو"
+    },
+    "urgent_critical": {
+      "en": "Urgent / critical",
+      "fa": "فوری / بحرانی"
+    },
+    "related_placeholder": {
+      "en": "e.g. projectId or node name",
+      "fa": "مثال: projectId یا نام گره"
+    },
+    "sending_ticket": {
+      "en": "Sending ticket...",
+      "fa": "در حال ارسال تیکت..."
+    },
+    "send_ticket": {
+      "en": "Send ticket to Hosheton",
+      "fa": "ارسال تیکت به هوشتون"
+    },
+    "ticket_title": {
+      "en": "Ticket: {{title}}",
+      "fa": "تیکت: {{title}}"
+    },
+    "thread_subtitle": {
+      "en": "Conversation history and replies from Hosheton support",
+      "fa": "تاریخچه گفتگو و پاسخ‌های تیم پشتیبانی هوشتون"
+    },
+    "back_to_list": {
+      "en": "Back to list",
+      "fa": "بازگشت به لیست"
+    },
+    "agent": {
+      "en": "Hosheton support",
+      "fa": "پشتیبان هوشتون"
+    },
+    "you": {
+      "en": "You",
+      "fa": "شما"
+    },
+    "view_attachment": {
+      "en": "View attached file",
+      "fa": "مشاهده فایل پیوست شده"
+    },
+    "reply_placeholder": {
+      "en": "Write your reply...",
+      "fa": "پاسخ خود را بنویسید..."
+    },
+    "coming_soon": {
+      "en": "Coming soon",
+      "fa": "به‌زودی"
+    },
+    "studio_hint": {
+      "en": "For media studio issues, include the project ID or the node name that failed in the ticket.",
+      "fa": "برای مشکلات مربوط به استودیو رسانه، شناسه پروژه یا نام گره‌ای که خطا دارد را در متن تیکت ذکر کنید."
+    },
+    "ticket_status": {
+      "en": "Ticket status:",
+      "fa": "وضعیت تیکت:"
+    },
+    "loading_messages": {
+      "en": "Loading messages...",
+      "fa": "در حال دریافت پیام‌ها..."
+    },
+    "new_request": {
+      "en": "Submit a new support request",
+      "fa": "ارسال درخواست پشتیبانی جدید"
+    },
+    "ticket_subject": {
+      "en": "Ticket subject",
+      "fa": "موضوع تیکت"
+    },
+    "department": {
+      "en": "Department",
+      "fa": "دپارتمان مربوطه"
+    },
+    "priority_level": {
+      "en": "Priority",
+      "fa": "سطح اهمیت (اولویت)"
+    },
+    "related_id": {
+      "en": "Project or node ID (optional)",
+      "fa": "شناسه پروژه یا گره (اختیاری)"
+    },
+    "request_body": {
+      "en": "Your request",
+      "fa": "متن درخواست شما"
+    },
+    "message_placeholder": {
+      "en": "Describe the error or question in full...",
+      "fa": "جزئیات خطا یا سوال خود را به طور کامل بنویسید..."
+    },
+    "dept_prefix": {
+      "en": "[Department: {{dept}}]",
+      "fa": "[دپارتمان: {{dept}}]"
+    },
+    "related_ref": {
+      "en": "[Related ref: {{ref}}]",
+      "fa": "[مرجع مرتبط: {{ref}}]"
+    }
+  },
+  "wallet": {
+    "title": {
+      "en": "Wallet",
+      "fa": "کیف پول"
+    },
+    "add_credit": {
+      "en": "Add credit",
+      "fa": "افزودن اعتبار"
+    },
+    "balance": {
+      "en": "Balance",
+      "fa": "موجودی"
+    },
+    "rial": {
+      "en": "Rial",
+      "fa": "ریال"
+    },
+    "toman": {
+      "en": "Toman",
+      "fa": "تومان"
+    },
+    "amount": {
+      "en": "Amount",
+      "fa": "مبلغ"
+    },
+    "pay": {
+      "en": "Pay",
+      "fa": "پرداخت"
+    },
+    "receipt": {
+      "en": "Receipt",
+      "fa": "رسید"
+    },
+    "upload_receipt": {
+      "en": "Upload receipt for review",
+      "fa": "ارسال رسید برای تأیید"
+    },
+    "uploading": {
+      "en": "Uploading... {{progress}}%",
+      "fa": "در حال ارسال... {{progress}}٪"
+    },
+    "packages": {
+      "en": "Packages",
+      "fa": "بسته‌ها"
+    },
+    "bonus": {
+      "en": "+ {{percent}}% bonus credit",
+      "fa": "+ {{percent}}٪ اعتبار هدیه"
+    },
+    "fx_rate": {
+      "en": "{{label}} rate",
+      "fa": "نرخ {{label}}"
+    },
+    "pending_transfer": {
+      "en": "Pending transfer",
+      "fa": "انتقال در انتظار"
+    },
+    "invoice": {
+      "en": "Invoice",
+      "fa": "فاکتور"
+    },
+    "loading": {
+      "en": "Loading wallet and billing...",
+      "fa": "در حال بارگذاری اطلاعات مالی و کیف پول..."
+    },
+    "page_title": {
+      "en": "Wallet and transactions",
+      "fa": "مدیریت کیف پول و تراکنش‌ها"
+    },
+    "current_balance": {
+      "en": "Current account balance",
+      "fa": "موجودی فعلی حساب شما"
+    },
+    "active_payg": {
+      "en": "Active (pay-as-you-go)",
+      "fa": "فعال (Pay-as-you-go)"
+    },
+    "inactive": {
+      "en": "Inactive",
+      "fa": "غیرفعال"
+    },
+    "invoice_issued": {
+      "en": "Invoice issued for you",
+      "fa": "فاکتور صادر شده برای شما"
+    },
+    "redirecting_gateway": {
+      "en": "Redirecting to the payment gateway…",
+      "fa": "در حال انتقال به درگاه…"
+    },
+    "pay_invoice": {
+      "en": "Pay invoice",
+      "fa": "پرداخت فاکتور"
+    },
+    "bank": {
+      "en": "Bank",
+      "fa": "بانک"
+    },
+    "account_holder": {
+      "en": "Account holder",
+      "fa": "صاحب حساب"
+    },
+    "card_number": {
+      "en": "Card number",
+      "fa": "شماره کارت"
+    },
+    "sheba": {
+      "en": "IBAN",
+      "fa": "شبا"
+    },
+    "transfer_hint": {
+      "en": "Transfer the exact amount card-to-card and upload the receipt. After admin approval, your wallet will be credited.",
+      "fa": "مبلغ دقیق را کارت‌به‌کارت واریز کنید و تصویر رسید را ارسال کنید. پس از تأیید ادمین، کیف پول شارژ می‌شود."
+    },
+    "tracking_optional": {
+      "en": "Tracking / reference number (optional)",
+      "fa": "کد پیگیری / شماره مرجع (اختیاری)"
+    },
+    "tracking_placeholder": {
+      "en": "e.g. bank tracking code",
+      "fa": "مثلاً کد رهگیری بانکی"
+    },
+    "note_optional": {
+      "en": "Note (optional)",
+      "fa": "توضیح (اختیاری)"
+    },
+    "note_placeholder": {
+      "en": "Add a short note if needed",
+      "fa": "اگر لازم است توضیح کوتاه بنویسید"
+    },
+    "receipt_required": {
+      "en": "Payment receipt *",
+      "fa": "رسید پرداخت *"
+    },
+    "pick_receipt": {
+      "en": "Choose an image or PDF receipt",
+      "fa": "انتخاب تصویر یا PDF رسید"
+    },
+    "receipt_preview": {
+      "en": "Receipt preview",
+      "fa": "پیش‌نمایش رسید"
+    },
+    "amount_label": {
+      "en": "Amount:",
+      "fa": "مبلغ:"
+    },
+    "add_credit_title": {
+      "en": "Add credit / top up wallet",
+      "fa": "افزایش اعتبار / شارژ کیف پول"
+    },
+    "pick_packages": {
+      "en": "Choose a quick top-up package",
+      "fa": "انتخاب بسته‌های شارژ سریع"
+    },
+    "amounts_hint": {
+      "en": "(amounts in {{currency}} — gateway charge: {{gateway}})",
+      "fa": "(مبالغ به {{currency}} — پرداخت در درگاه: {{gateway}})"
+    },
+    "rial_toman": {
+      "en": "Rial/Toman",
+      "fa": "ریال/تومان"
+    },
+    "no_bonus": {
+      "en": "No bonus",
+      "fa": "بدون هدیه"
+    },
+    "pay_label": {
+      "en": "Pay: {{amount}}",
+      "fa": "پرداخت: {{amount}}"
+    },
+    "credit_to_wallet": {
+      "en": "Credit to wallet: {{amount}}",
+      "fa": "واریز به کیف: {{amount}}"
+    },
+    "custom_amount": {
+      "en": "Or a custom amount ({{currency}})",
+      "fa": "یا مبلغ دلخواه ({{currency}})"
+    },
+    "example_rial": {
+      "en": "e.g. 100000",
+      "fa": "مثال: ۱۰۰۰۰۰"
+    },
+    "example_fx": {
+      "en": "e.g. 10 {{currency}}",
+      "fa": "مثال: 10 {{currency}}"
+    },
+    "payment_type": {
+      "en": "Payment type",
+      "fa": "نوع پرداخت"
+    },
+    "dest_account": {
+      "en": "Destination account / transfer method",
+      "fa": "حساب مقصد / روش واریز"
+    },
+    "pick_gateway": {
+      "en": "Choose a gateway",
+      "fa": "انتخاب درگاه"
+    },
+    "card_to_card_desc": {
+      "en": "Card-to-card transfer + receipt upload and admin approval",
+      "fa": "واریز کارت‌به‌کارت + آپلود رسید و تأیید ادمین"
+    },
+    "submitting_request": {
+      "en": "Submitting request...",
+      "fa": "در حال ثبت درخواست..."
+    },
+    "connecting_bank": {
+      "en": "Connecting to the bank...",
+      "fa": "در حال اتصال به بانک..."
+    },
+    "submit_card": {
+      "en": "Submit card-to-card request",
+      "fa": "ثبت درخواست واریز کارت‌به‌کارت"
+    },
+    "pay_online": {
+      "en": "Go to gateway and pay online",
+      "fa": "انتقال به درگاه و پرداخت آنلاین"
+    },
+    "card_topup": {
+      "en": "Card-to-card top-up",
+      "fa": "شارژ کارت‌به‌کارت"
+    },
+    "online_topup": {
+      "en": "Online account top-up",
+      "fa": "شارژ آنلاین حساب"
+    },
+    "withdraw": {
+      "en": "Withdrawal / service usage",
+      "fa": "برداشت / مصرف سرویس"
+    },
+    "card_method": {
+      "en": "Card-to-card transfer",
+      "fa": "واریز کارت‌به‌کارت"
+    },
+    "card_method_desc": {
+      "en": "Manual payment with receipt upload and admin approval",
+      "fa": "پرداخت دستی با آپلود رسید و تأیید ادمین"
+    },
+    "pick_gateway_prompt": {
+      "en": "Choose a payment gateway",
+      "fa": "درگاه پرداخت را انتخاب کنید"
+    },
+    "no_pay_link": {
+      "en": "Payment link was not received",
+      "fa": "لینک پرداخت دریافت نشد"
+    },
+    "image_or_pdf": {
+      "en": "Only image or PDF receipts are allowed",
+      "fa": "فقط تصویر یا PDF رسید مجاز است"
+    },
+    "file_too_large": {
+      "en": "File size must not exceed 12 MB",
+      "fa": "حجم فایل نباید بیشتر از ۱۲ مگابایت باشد"
+    },
+    "invalid_amount": {
+      "en": "Enter a valid amount (at least 1,000 Toman/Rial)",
+      "fa": "لطفاً مبلغ معتبری وارد کنید (حداقل ۱,۰۰۰ تومان/ریال)"
+    },
+    "invalid_fx_amount": {
+      "en": "Payment amount is invalid or the FX rate is unavailable (at least 1,000 Toman at the gateway)",
+      "fa": "مبلغ پرداخت معتبر نیست یا نرخ ارز در دسترس نیست (حداقل معادل ۱,۰۰۰ تومان در درگاه)"
+    },
+    "invalid_credit": {
+      "en": "Wallet credit amount is invalid.",
+      "fa": "مبلغ اعتبار کیف پول نامعتبر است."
+    },
+    "pick_gateway_err": {
+      "en": "Please choose a payment gateway",
+      "fa": "لطفاً یک درگاه پرداخت انتخاب کنید"
+    },
+    "pay_request_err": {
+      "en": "Failed to submit the payment request.",
+      "fa": "خطا در ثبت درخواست پرداخت."
+    },
+    "no_transfer_id": {
+      "en": "Transfer request ID was not received.",
+      "fa": "شناسه درخواست واریز دریافت نشد."
+    },
+    "transfer_created": {
+      "en": "Transfer request submitted; upload the receipt",
+      "fa": "درخواست واریز ثبت شد؛ رسید را آپلود کنید"
+    },
+    "bank_link_err": {
+      "en": "Failed to get a payment link from the bank.",
+      "fa": "خطا در دریافت لینک پرداخت از بانک."
+    },
+    "pick_receipt_err": {
+      "en": "Please choose a payment receipt image",
+      "fa": "لطفاً تصویر رسید پرداخت را انتخاب کنید"
+    },
+    "upload_fail": {
+      "en": "Receipt upload failed",
+      "fa": "آپلود رسید ناموفق بود"
+    },
+    "register_fail": {
+      "en": "Failed to register the receipt",
+      "fa": "ثبت رسید ناموفق بود"
+    },
+    "receipt_sent": {
+      "en": "Receipt sent and waiting for admin approval",
+      "fa": "رسید ارسال شد و منتظر تأیید ادمین است"
+    },
+    "status_success": {
+      "en": "Successful",
+      "fa": "موفق"
+    },
+    "status_pending_admin": {
+      "en": "Waiting for admin approval",
+      "fa": "در انتظار تأیید ادمین"
+    },
+    "status_await_receipt": {
+      "en": "Waiting for receipt upload",
+      "fa": "منتظر آپلود رسید"
+    },
+    "status_await_pay": {
+      "en": "Waiting for payment",
+      "fa": "در انتظار پرداخت"
+    },
+    "status_rejected": {
+      "en": "Rejected",
+      "fa": "رد شده"
+    },
+    "status_failed": {
+      "en": "Failed",
+      "fa": "ناموفق"
+    },
+    "status_cancelled": {
+      "en": "Cancelled",
+      "fa": "لغو شده"
+    },
+    "status_expired": {
+      "en": "Expired",
+      "fa": "منقضی شده"
+    },
+    "internal_credit": {
+      "en": "Internal credit",
+      "fa": "اعتبار داخلی"
+    },
+    "aed": {
+      "en": "AED",
+      "fa": "د.إ"
+    },
+    "subtitle": {
+      "en": "Balance in {{currency}} — pay via Rial/Toman gateway; wallet credit uses the settings currency.",
+      "fa": "موجودی به {{currency}} — پرداخت از درگاه ریالی/تومانی؛ اعتبار کیف پول همان واحد تنظیمات است."
+    },
+    "account_status": {
+      "en": "Account status:",
+      "fa": "وضعیت حساب:"
+    },
+    "transfer_title": {
+      "en": "Card-to-card transfer and send receipt",
+      "fa": "واریز کارت‌به‌کارت و ارسال رسید"
+    },
+    "payable_amount": {
+      "en": "Amount to transfer:",
+      "fa": "مبلغ قابل واریز:"
+    },
+    "online_gateway": {
+      "en": "Online gateway",
+      "fa": "درگاه آنلاین"
+    },
+    "online_gateway_desc": {
+      "en": "Shetab and instant",
+      "fa": "شتابی و آنی"
+    },
+    "card_upload_short": {
+      "en": "Manual transfer + receipt upload",
+      "fa": "واریز دستی + آپلود رسید"
+    },
+    "installment": {
+      "en": "Installment",
+      "fa": "پرداخت اقساطی"
+    },
+    "installment_desc": {
+      "en": "No guarantor or cheque",
+      "fa": "بدون ضامن و چک"
+    },
+    "no_gateway": {
+      "en": "No active gateway for this payment type.",
+      "fa": "درگاه فعالی برای این نوع پرداخت وجود ندارد."
+    },
+    "card_steps": {
+      "en": "1) Choose an amount and submit a transfer request. 2) The destination card number is shown — transfer the exact amount. 3) Upload the receipt so the wallet is credited after admin approval.",
+      "fa": "۱) مبلغ را انتخاب کنید و درخواست واریز را ثبت کنید. ۲) شماره کارت مقصد نمایش داده می‌شود و مبلغ دقیق را واریز کنید. ۳) تصویر رسید را آپلود کنید تا پس از تأیید ادمین، کیف پول شارژ شود."
+    },
+    "gateway_charge": {
+      "en": "Gateway charge: {{amount}}",
+      "fa": "پرداخت در درگاه: {{amount}}"
+    },
+    "history_title": {
+      "en": "Recent transaction history",
+      "fa": "تاریخچه آخرین تراکنش‌ها"
+    },
+    "no_transactions": {
+      "en": "No transactions recorded for this account.",
+      "fa": "هیچ تراکنش مالی برای این حساب ثبت نشده است."
+    },
+    "col_id": {
+      "en": "ID",
+      "fa": "شناسه"
+    },
+    "col_datetime": {
+      "en": "Date and time",
+      "fa": "تاریخ و زمان"
+    },
+    "col_purpose": {
+      "en": "For / type",
+      "fa": "بابت / نوع"
+    },
+    "col_amount_usd": {
+      "en": "Amount (USD)",
+      "fa": "مبلغ (USD)"
+    },
+    "col_gateway": {
+      "en": "Gateway",
+      "fa": "درگاه"
+    },
+    "resume_receipt": {
+      "en": "Continue sending receipt",
+      "fa": "ادامه ارسال رسید"
+    }
+  },
+  "usage": {
+    "title": {
+      "en": "AI usage",
+      "fa": "مصرف هوش مصنوعی"
+    },
+    "tabs": {
+      "en": "Usage tabs",
+      "fa": "تب‌های مصرف"
+    },
+    "tab_usage": {
+      "en": "Usage",
+      "fa": "مصرف"
+    },
+    "tab_stats": {
+      "en": "Stats",
+      "fa": "آمار"
+    },
+    "total_cost": {
+      "en": "Total usage cost",
+      "fa": "هزینه مصرف کل"
+    },
+    "runs": {
+      "en": "{{count}} runs",
+      "fa": "{{count}} اجرا"
+    },
+    "run": {
+      "en": "run",
+      "fa": "اجرا"
+    },
+    "succeeded": {
+      "en": "{{count}} succeeded",
+      "fa": "{{count}} موفق"
+    },
+    "failed": {
+      "en": "{{count}} failed",
+      "fa": "{{count}} ناموفق"
+    },
+    "recent": {
+      "en": "Recent transactions",
+      "fa": "تراکنش‌های اخیر"
+    },
+    "no_usage": {
+      "en": "No usage recorded yet.",
+      "fa": "هنوز مصرفی ثبت نشده است."
+    },
+    "load_error": {
+      "en": "Failed to load usage data",
+      "fa": "خطا در بارگذاری اطلاعات مصرف"
+    },
+    "unavailable": {
+      "en": "No data available.",
+      "fa": "داده‌ای در دسترس نیست."
+    },
+    "pagination": {
+      "en": "Run history pagination",
+      "fa": "صفحه‌بندی تاریخچه اجراها"
+    },
+    "textToImage": {
+      "en": "Image generation",
+      "fa": "تولید تصویر"
+    },
+    "textToVideo": {
+      "en": "Video generation",
+      "fa": "تولید ویدیو"
+    },
+    "aiAvatar": {
+      "en": "AI avatar",
+      "fa": "آواتار AI"
+    },
+    "musicSfx": {
+      "en": "Music / SFX",
+      "fa": "موزیک / افکت"
+    },
+    "cost_estimate_unavailable": {
+      "en": "Cost estimate unavailable",
+      "fa": "برآورد هزینه در دسترس نیست"
+    },
+    "generation_cost": {
+      "en": "Generation cost",
+      "fa": "هزینه ساخت"
+    },
+    "loading": {
+      "en": "Loading AI usage...",
+      "fa": "در حال بارگذاری مصرف هوش مصنوعی..."
+    },
+    "subtitle": {
+      "en": "Model run costs, run counts, and image/video generation history in the studio.",
+      "fa": "هزینه اجرای مدل‌ها، تعداد runها و تاریخچه تولید تصویر/ویدیو در استودیو."
+    },
+    "wallet_balance": {
+      "en": "Wallet balance",
+      "fa": "موجودی کیف پول"
+    },
+    "payg": {
+      "en": "Pay-as-you-go",
+      "fa": "Pay-as-you-go"
+    },
+    "wallet_sub": {
+      "en": "USD balance for AI model usage",
+      "fa": "موجودی به دلار برای مصرف مدل‌های AI"
+    },
+    "charge_wallet": {
+      "en": "Top up wallet",
+      "fa": "شارژ کیف پول"
+    },
+    "total_usage_cost": {
+      "en": "Total usage cost",
+      "fa": "مجموع هزینه مصرف"
+    },
+    "billed": {
+      "en": "{{count}} billed runs",
+      "fa": "{{count}} پردازش با کسر هزینه"
+    },
+    "image_est": {
+      "en": "Image generation (estimated)",
+      "fa": "تولید تصویر (تخمینی)"
+    },
+    "cost_colon": {
+      "en": "Cost: {{amount}}",
+      "fa": "هزینه: {{amount}}"
+    },
+    "by_model": {
+      "en": "Usage by model",
+      "fa": "مصرف به تفکیک مدل"
+    },
+    "col_model": {
+      "en": "Model",
+      "fa": "مدل"
+    },
+    "col_type": {
+      "en": "Type",
+      "fa": "نوع"
+    },
+    "col_runs": {
+      "en": "Runs",
+      "fa": "تعداد اجرا"
+    },
+    "col_success_fail": {
+      "en": "Succeeded / failed",
+      "fa": "موفق / ناموفق"
+    },
+    "col_cost": {
+      "en": "Cost (USD)",
+      "fa": "هزینه (USD)"
+    },
+    "history_title": {
+      "en": "Wallet deduction history",
+      "fa": "تاریخچه کسر از کیف پول"
+    },
+    "history_hint": {
+      "en": "Only runs that deducted from the wallet are shown.",
+      "fa": "فقط پردازش‌هایی که هزینه‌ای از کیف پول کسر کرده‌اند نمایش داده می‌شوند."
+    },
+    "col_time": {
+      "en": "Time",
+      "fa": "زمان"
+    },
+    "col_project": {
+      "en": "Project",
+      "fa": "پروژه"
+    },
+    "loading_history": {
+      "en": "Loading history...",
+      "fa": "در حال بارگذاری تاریخچه..."
+    },
+    "no_charges": {
+      "en": "No deductions recorded yet.",
+      "fa": "هنوز کسر هزینه‌ای ثبت نشده است."
+    },
+    "home": {
+      "en": "Home",
+      "fa": "خانه"
+    },
+    "total_tokens": {
+      "en": "Total tokens used",
+      "fa": "کل توکن مصرفی"
+    },
+    "cost_chart": {
+      "en": "Service cost chart",
+      "fa": "نمودار هزینه سرویس"
+    },
+    "busiest_days": {
+      "en": "Busiest days by type",
+      "fa": "پر مصرف ترین روزها بر اساس نوع"
+    },
+    "token_usage": {
+      "en": "Token usage",
+      "fa": "میزان مصرف توکن"
+    },
+    "redirecting_stats": {
+      "en": "Redirecting to usage stats...",
+      "fa": "در حال انتقال به آمار مصرف..."
+    },
+    "catalog_title": {
+      "en": "Models and pricing catalog",
+      "fa": "کاتالوگ مدل‌ها و تعرفه"
+    },
+    "catalog_text": {
+      "en": "Text",
+      "fa": "متن"
+    },
+    "catalog_image": {
+      "en": "Image",
+      "fa": "تصویر"
+    },
+    "catalog_audio": {
+      "en": "Audio",
+      "fa": "صوت"
+    },
+    "catalog_video": {
+      "en": "Video",
+      "fa": "ویدیو"
+    },
+    "catalog_load_error": {
+      "en": "Failed to load providers:",
+      "fa": "خطا در بارگذاری ارائه‌دهندگان:"
+    },
+    "catalog_search_ph": {
+      "en": "Search model name (Enter or search icon)",
+      "fa": "جستجوی نام مدل (Enter یا آیکون جستجو)"
+    },
+    "catalog_all_providers": {
+      "en": "All providers",
+      "fa": "همه ارائه‌دهندگان"
+    },
+    "catalog_all_types": {
+      "en": "All types",
+      "fa": "همه انواع"
+    },
+    "catalog_all": {
+      "en": "All",
+      "fa": "همه"
+    },
+    "catalog_cached": {
+      "en": "Has cache",
+      "fa": "دارای Cache"
+    },
+    "catalog_text_hint": {
+      "en": "Text models: Min and max columns show the cheapest and most expensive token rates.",
+      "fa": "مدل‌های متنی: ستون‌های حداقل و حداکثر بازه ارزان‌ترین تا گران‌ترین نرخ توکن را نشان می‌دهند."
+    },
+    "catalog_cache_hint": {
+      "en": "Models with context caching can cut input cost by about 50–80% on repeated prompts.",
+      "fa": "مدل‌هایی با Context Caching در پرامپت‌های تکراری، هزینه ورودی را تا حدود ۵۰–۸۰٪ کاهش می‌دهند."
+    },
+    "catalog_image_hint": {
+      "en": "Image generation: usually priced per image. If there are quality or resolution tiers, min/max is that range.",
+      "fa": "تولید تصویر: معمولاً قیمت به ازای هر تصویر است. اگر چند سطح کیفیت یا رزولوشن داشته باشد، حداقل و حداکثر همان بازه است."
+    },
+    "catalog_video_hint": {
+      "en": "Video generation: often priced by second. Min/max is the cheapest and most expensive recorded setting.",
+      "fa": "تولید ویدیو: قیمت اغلب بر اساس ثانیه است. ستون حداقل/حداکثر ارزان‌ترین و گران‌ترین ترکیب تنظیمات است."
+    },
+    "catalog_audio_hint": {
+      "en": "Audio generation: usually priced per second or per character.",
+      "fa": "تولید صوت: تعرفه معمولاً به ازای ثانیه یا کاراکتر است."
+    },
+    "catalog_subtitle": {
+      "en": "Search text, image, audio, and video models — price range (min to max) in USD.",
+      "fa": "جستجو در مدل‌های متنی، تصویری، صوتی و ویدیویی — بازه قیمت (حداقل تا حداکثر) به USD."
+    },
+    "catalog_provider": {
+      "en": "Provider",
+      "fa": "ارائه‌دهنده"
+    },
+    "catalog_native": {
+      "en": "(native)",
+      "fa": "(بومی)"
+    },
+    "catalog_model_type": {
+      "en": "Model type",
+      "fa": "نوع مدل"
+    },
+    "catalog_caching": {
+      "en": "Context caching",
+      "fa": "Context Caching"
+    },
+    "catalog_model_name": {
+      "en": "Model name",
+      "fa": "نام مدل"
+    },
+    "catalog_min": {
+      "en": "Min",
+      "fa": "حداقل"
+    },
+    "catalog_max": {
+      "en": "Max",
+      "fa": "حداکثر"
+    },
+    "catalog_no_models": {
+      "en": "No models found.",
+      "fa": "مدلی یافت نشد."
+    },
+    "catalog_page_of": {
+      "en": "Page {{page}} of {{total}}",
+      "fa": "صفحه {{page}} از {{total}}"
+    }
+  },
+  "templateTags": {
+    "human_portrait": {
+      "en": "Human & Portrait",
+      "fa": "انسان و پرتره"
+    },
+    "wildlife_animals": {
+      "en": "Wildlife & Animals",
+      "fa": "حیات وحش و حیوانات"
+    },
+    "pets": {
+      "en": "Pets",
+      "fa": "حیوانات خانگی و اهلی"
+    },
+    "fantasy_creatures": {
+      "en": "Fantasy & Creatures",
+      "fa": "فانتزی و موجودات"
+    },
+    "mythology_folklore": {
+      "en": "Mythology & Folklore",
+      "fa": "اساطیر و فرهنگ عامه"
+    },
+    "nature_landscapes": {
+      "en": "Nature & Landscapes",
+      "fa": "طبیعت و چشم‌اندازها"
+    },
+    "seascapes_oceans": {
+      "en": "Seascapes & Oceans",
+      "fa": "چشم‌اندازهای دریایی و اقیانوس"
+    },
+    "cosmos_space": {
+      "en": "Cosmos & Space",
+      "fa": "کیهان و فضا"
+    },
+    "science_laboratories": {
+      "en": "Science & Laboratories",
+      "fa": "علم و آزمایشگاه"
+    },
+    "robotics_ai": {
+      "en": "Robotics & AI",
+      "fa": "رباتیک و هوش مصنوعی"
+    },
+    "fashion_style": {
+      "en": "Fashion & Style",
+      "fa": "مد و استایل"
+    },
+    "avant_garde_clothing": {
+      "en": "Avant-garde Clothing",
+      "fa": "پوشاک آوانگارد و تک‌ور"
+    },
+    "architecture_interiors": {
+      "en": "Architecture & Interiors",
+      "fa": "معماری و طراحی داخلی"
+    },
+    "biophilic_architecture": {
+      "en": "Biophilic Architecture",
+      "fa": "معماری بیوفیلیک و سبز"
+    },
+    "vehicles_automotive": {
+      "en": "Vehicles & Automotive",
+      "fa": "وسایل نقلیه و خودرو"
+    },
+    "spaceships_space_transport": {
+      "en": "Spaceships & Space Transport",
+      "fa": "سفینه‌ها و ترابری فضایی"
+    },
+    "food_beverage": {
+      "en": "Food & Beverage",
+      "fa": "غذا و نوشیدنی"
+    },
+    "product_commercial": {
+      "en": "Product & Commercial",
+      "fa": "محصولات تجاری و بسته‌بندی"
+    },
+    "collectibles_toys": {
+      "en": "Collectibles & Toys",
+      "fa": "اشیای کلکسیونی و اسباب‌بازی"
+    },
+    "macro_microscopy": {
+      "en": "Macro & Microscopy",
+      "fa": "عکاسی ماکرو و میکروسکوپ"
+    },
+    "ancient_civilizations": {
+      "en": "Ancient Civilizations",
+      "fa": "تمدن‌های باستان و تاریخ"
+    },
+    "cyberpunk_futuristic": {
+      "en": "Cyberpunk & Futuristic",
+      "fa": "سایبرپانک و آینده‌نگر"
+    },
+    "surrealism_dreams": {
+      "en": "Surrealism & Dreams",
+      "fa": "سورئالیسم و دنیای رویا"
+    },
+    "abstract_textures": {
+      "en": "Abstract Art & Textures",
+      "fa": "هنر انتزاعی و بافت‌ها"
+    },
+    "sculpture_installation": {
+      "en": "Sculpture & Installation",
+      "fa": "مجسمه‌سازی و اینستالیشن آرت"
+    },
+    "ui_ux_digital": {
+      "en": "UI/UX & Digital Design",
+      "fa": "رابط کاربری و طراحی دیجیتال"
+    },
+    "gaming_characters": {
+      "en": "Gaming & Game Characters",
+      "fa": "گیمینگ و کاراکترهای بازی"
+    },
+    "animation_cartoon": {
+      "en": "Animation & Cartoon Styles",
+      "fa": "انیمیشن و سبک‌های کارتونی"
+    },
+    "sports_fitness": {
+      "en": "Sports & Fitness",
+      "fa": "ورزش و تناسب اندام"
+    },
+    "atmospheric_phenomena": {
+      "en": "Atmospheric Phenomena",
+      "fa": "پدیده‌های جوی و هواشناسی"
+    },
+    "city_life_street": {
+      "en": "City Life & Street",
+      "fa": "زندگی شهری و خیابان"
+    },
+    "rural_life_farm": {
+      "en": "Rural Life & Farm",
+      "fa": "زندگی روستایی و مزرعه"
+    },
+    "traditional_arts": {
+      "en": "Traditional Arts",
+      "fa": "کارهای هنری باستانی و سنتی"
+    },
+    "computer_hardware": {
+      "en": "Computer Hardware",
+      "fa": "سخت‌افزار و قطعات الکترونیک"
+    },
+    "human_body_anatomy": {
+      "en": "Human Body & Anatomy",
+      "fa": "بدن انسان و آناتومی"
+    },
+    "ethnicities_rituals": {
+      "en": "Ethnicities & Rituals",
+      "fa": "آیین‌ها و اقوام"
+    },
+    "geometric_math": {
+      "en": "Geometric & Math Patterns",
+      "fa": "ژئومتریک و الگوهای ریاضی"
+    },
+    "digital_infrastructure": {
+      "en": "Databases & Digital Infrastructure",
+      "fa": "پایگاه‌های داده و زیرساخت دیجیتال"
+    }
+  },
+  "projects": {
+    "title": {
+      "en": "Projects",
+      "fa": "پروژه‌ها"
+    },
+    "new": {
+      "en": "New project",
+      "fa": "پروژه جدید"
+    },
+    "create_new": {
+      "en": "Create a new project",
+      "fa": "ایجاد پروژه جدید"
+    },
+    "subtitle": {
+      "en": "Create reels, shorts, and ads, and manage assets",
+      "fa": "تولید ریلز، شورت، ویدیوهای تبلیغاتی و مدیریت هوشمند دارایی ها"
+    },
+    "filter_space": {
+      "en": "Filter space",
+      "fa": "فیلتر فضا"
+    },
+    "all_spaces": {
+      "en": "All spaces",
+      "fa": "همه فضاها"
+    },
+    "loading_list": {
+      "en": "Loading projects...",
+      "fa": "در حال بارگذاری پروژه‌ها..."
+    },
+    "empty": {
+      "en": "You don't have any projects yet.",
+      "fa": "هنوز پروژه‌ای ندارید."
+    },
+    "empty_space": {
+      "en": "No projects in this space.",
+      "fa": "در این فضا پروژه‌ای ثبت نشده است."
+    },
+    "create_after_space": {
+      "en": "Create a space first, then a project",
+      "fa": "ابتدا فضا بسازید، سپس پروژه ایجاد کنید"
+    },
+    "col_project": {
+      "en": "Project",
+      "fa": "پروژه"
+    },
+    "col_desc": {
+      "en": "Description",
+      "fa": "توضیحات"
+    },
+    "col_metrics": {
+      "en": "Metrics",
+      "fa": "متریک‌ها"
+    },
+    "col_space": {
+      "en": "Space",
+      "fa": "فضا"
+    },
+    "col_usage": {
+      "en": "Usage",
+      "fa": "مصرف"
+    },
+    "col_deadline": {
+      "en": "Deadline",
+      "fa": "ددلاین"
+    },
+    "col_actions": {
+      "en": "Actions",
+      "fa": "عملیات"
+    },
+    "load_projects_error": {
+      "en": "Failed to load projects",
+      "fa": "خطا در بارگذاری پروژه‌ها"
+    },
+    "delete_confirm": {
+      "en": "Delete project “{{title}}”?",
+      "fa": "پروژه «{{title}}» حذف شود؟"
+    },
+    "delete_error": {
+      "en": "Failed to delete project",
+      "fa": "خطا در حذف پروژه"
+    },
+    "completed": {
+      "en": "Completed",
+      "fa": "تکمیل‌شده"
+    },
+    "in_progress": {
+      "en": "In progress",
+      "fa": "در حال ساخت"
+    },
+    "shared": {
+      "en": "Shared",
+      "fa": "اشتراکی"
+    },
+    "settings": {
+      "en": "Project settings",
+      "fa": "تنظیمات پروژه"
+    },
+    "default_desc": {
+      "en": "System default: no policy or description is set for this media pipeline.",
+      "fa": "توضیحات پیش‌فرض سیستم: هیچ خط مشی یا دیسکریپشنی برای این مدیا پایپلاین ثبت نشده است."
+    },
+    "last_updated_on": {
+      "en": "Last updated: {{date}}",
+      "fa": "آخرین بروز رسانی: {{date}}"
+    },
+    "unspecified": {
+      "en": "Unspecified",
+      "fa": "تعیین‌نشده"
+    },
+    "pick_in_settings": {
+      "en": "Select it in project settings",
+      "fa": "از تنظیمات پروژه انتخاب کنید"
+    },
+    "budget_usage": {
+      "en": "Project budget usage",
+      "fa": "مصرف بودجه پروژه"
+    },
+    "no_budget": {
+      "en": "No budget defined",
+      "fa": "بودجه‌ای تعریف نشده"
+    },
+    "spent_label": {
+      "en": "${{amount}} Spent",
+      "fa": "${{amount}} مصرف‌شده"
+    },
+    "budget_of": {
+      "en": "{{percent}}% of ${{budget}}",
+      "fa": "{{percent}}% از ${{budget}}"
+    },
+    "no_cap": {
+      "en": "No cap defined",
+      "fa": "بدون سقف تعریف‌شده"
+    },
+    "cost_breakdown": {
+      "en": "AI model cost breakdown",
+      "fa": "تفکیک هزینه مدل‌های هوش مصنوعی"
+    },
+    "load_costs_error": {
+      "en": "Failed to load costs",
+      "fa": "خطا در بارگذاری هزینه‌ها"
+    },
+    "no_cost_yet": {
+      "en": "No costs recorded yet",
+      "fa": "هنوز هزینه‌ای ثبت نشده"
+    },
+    "image_gen_est": {
+      "en": "Image generation (estimated):",
+      "fa": "تولید تصویر (تخمینی):"
+    },
+    "deadline_colon": {
+      "en": "Deadline: {{date}}",
+      "fa": "ددلاین: {{date}}"
+    },
+    "editor_tab": {
+      "en": "Editor",
+      "fa": "ایدتور"
+    },
+    "manage_spaces": {
+      "en": "Manage spaces",
+      "fa": "مدیریت فضاها"
+    },
+    "spaces_title": {
+      "en": "Workspaces",
+      "fa": "فضاهای کاری"
+    },
+    "spaces_desc": {
+      "en": "Each space groups related projects — e.g. “Summer campaign” or “Instagram content”.",
+      "fa": "هر فضا گروهی از پروژه‌های مرتبط است — مثلاً «کمپین تابستان» یا «محتوای اینستاگرام»."
+    },
+    "space_count": {
+      "en": "{{count}} projects",
+      "fa": "{{count}} پروژه"
+    },
+    "no_spaces": {
+      "en": "No spaces yet. Create the first one.",
+      "fa": "هنوز فضایی ندارید. اولین فضا را بسازید."
+    },
+    "add_space_title": {
+      "en": "Add a new space",
+      "fa": "افزودن فضای جدید"
+    },
+    "space_name": {
+      "en": "Space name",
+      "fa": "نام فضا"
+    },
+    "space_name_ph": {
+      "en": "e.g. Brand A / educational videos",
+      "fa": "مثلاً: برند A / ویدیوهای آموزشی"
+    },
+    "space_desc_ph": {
+      "en": "Purpose, responsible team, or content type...",
+      "fa": "هدف این فضا، تیم مسئول، یا نوع محتوا..."
+    },
+    "add_space": {
+      "en": "Add space",
+      "fa": "افزودن فضا"
+    },
+    "create_space_error": {
+      "en": "Failed to create space",
+      "fa": "خطا در ایجاد فضا"
+    },
+    "create_title": {
+      "en": "Create a new project",
+      "fa": "ایجاد پروژه جدید"
+    },
+    "create_lead": {
+      "en": "Create a new workspace for media production. Fill in each section carefully so budget, schedule, and workflow are clear from the start.",
+      "fa": "یک ورک‌اسپیس تازه برای تولید محتوای رسانه‌ای بسازید. هر بخش را با دقت پر کنید تا مدیریت بودجه، زمان‌بندی و گردش کار از همان ابتدا شفاف باشد."
+    },
+    "create_error": {
+      "en": "Failed to create project",
+      "fa": "خطا در ایجاد پروژه"
+    },
+    "back_to_list": {
+      "en": "Back to project list",
+      "fa": "بازگشت به لیست پروژه‌ها"
+    },
+    "basics": {
+      "en": "Project basics",
+      "fa": "اطلاعات پایه پروژه"
+    },
+    "basics_desc": {
+      "en": "The name and description appear on the dashboard, in reports, and in team settings.",
+      "fa": "نام و توضیحات پروژه در داشبورد، گزارش‌ها و تنظیمات تیمی نمایش داده می‌شوند."
+    },
+    "name_label": {
+      "en": "Project name",
+      "fa": "نام پروژه"
+    },
+    "name_placeholder": {
+      "en": "e.g. Summer 2026 ad campaign",
+      "fa": "مثلاً: کمپین تبلیغاتی تابستان ۱۴۰۵"
+    },
+    "name_hint": {
+      "en": "Pick a short, recognizable name. You can edit it later in settings.",
+      "fa": "نامی کوتاه و قابل تشخیص انتخاب کنید. بعداً از بخش تنظیمات قابل ویرایش است."
+    },
+    "goals": {
+      "en": "Description and goals",
+      "fa": "توضیحات و اهداف"
+    },
+    "goals_placeholder": {
+      "en": "Project goal, audience, expected outputs (reels, shorts, video banners, …)",
+      "fa": "هدف پروژه، مخاطب، خروجی‌های مورد انتظار (ریلز، شورت، بنر ویدیویی و...)"
+    },
+    "goals_hint": {
+      "en": "This text helps the team understand why the project exists and what should be delivered.",
+      "fa": "این متن به اعضای تیم کمک می‌کند بفهمند پروژه برای چه چیزی ساخته شده و چه خروجی‌هایی باید تحویل شود."
+    },
+    "workspace": {
+      "en": "Workspace",
+      "fa": "فضای کاری"
+    },
+    "workspace_desc": {
+      "en": "Every project belongs to a space so related work can be grouped and filtered.",
+      "fa": "هر پروژه باید در یک فضا قرار بگیرد تا بتوانید پروژه‌های مرتبط را دسته‌بندی و فیلتر کنید."
+    },
+    "need_space": {
+      "en": "Create a space first",
+      "fa": "ابتدا یک فضا بسازید"
+    },
+    "need_space_body": {
+      "en": "You need at least one workspace to create a project. Use Manage spaces above to add a name and description.",
+      "fa": "برای ایجاد پروژه باید حداقل یک فضای کاری داشته باشید. از دکمه «مدیریت فضاها» بالا، فضای جدید با نام و توضیحات تعریف کنید."
+    },
+    "project_space": {
+      "en": "Project space",
+      "fa": "فضای پروژه"
+    },
+    "select_space": {
+      "en": "Select a space...",
+      "fa": "انتخاب فضا..."
+    },
+    "space_hint": {
+      "en": "Projects in this space can be filtered on the project list.",
+      "fa": "پروژه‌های همین فضا در لیست پروژه‌ها با فیلتر فضا قابل مشاهده هستند."
+    },
+    "finance": {
+      "en": "Budget planning",
+      "fa": "برنامه‌ریزی مالی"
+    },
+    "finance_desc": {
+      "en": "Set a cost cap so AI model usage can be tracked.",
+      "fa": "سقف هزینه پروژه را مشخص کنید تا مصرف مدل‌های هوش مصنوعی قابل رصد باشد."
+    },
+    "why_budget": {
+      "en": "Why set a budget?",
+      "fa": "چرا بودجه تعریف کنیم؟"
+    },
+    "why_budget_body": {
+      "en": "AI node costs (text, image, video) are totaled automatically. A budget shows a usage bar on the project list and helps prevent overspend.",
+      "fa": "هزینه اجرای Nodeهای هوش مصنوعی (متن، تصویر، ویدیو) به‌صورت خودکار جمع می‌شود. با تعیین بودجه، نوار پیشرفت مصرف در لیست پروژه‌ها نمایش داده می‌شود و از بیش‌مصرف ناخواسته جلوگیری می‌کنید."
+    },
+    "budget_usd": {
+      "en": "Total project budget (USD)",
+      "fa": "بودجه کل پروژه (USD)"
+    },
+    "budget_placeholder": {
+      "en": "e.g. 500",
+      "fa": "مثلاً 500"
+    },
+    "budget_hint": {
+      "en": "Optional. If empty, there is no cap, but costs are still reported.",
+      "fa": "اختیاری است. اگر خالی بماند، محدودیت سقف اعمال نمی‌شود اما هزینه‌ها همچنان گزارش می‌شوند."
+    },
+    "schedule": {
+      "en": "Delivery schedule",
+      "fa": "زمان‌بندی تحویل"
+    },
+    "schedule_desc": {
+      "en": "A deadline reminds you and the team when the project should be ready.",
+      "fa": "ددلاین به شما و تیم یادآوری می‌کند پروژه تا چه تاریخی باید آماده شود."
+    },
+    "deadline": {
+      "en": "Delivery deadline",
+      "fa": "ددلاین تحویل"
+    },
+    "deadline_hint": {
+      "en": "Shown on the project card and desktop list. You can change it later in settings.",
+      "fa": "در کارت پروژه و نمای لیست دسکتاپ نمایش داده می‌شود. می‌توانید بعداً در تنظیمات تغییرش دهید."
+    },
+    "start_point": {
+      "en": "Workflow starting point",
+      "fa": "نقطه شروع گردش کار"
+    },
+    "start_point_desc": {
+      "en": "Start from scratch or load a ready template with predefined nodes and connections.",
+      "fa": "از صفر شروع کنید یا یک قالب آماده با Nodeها و اتصالات از پیش تعریف‌شده بارگذاری کنید."
+    },
+    "start_diff": {
+      "en": "Blank vs template",
+      "fa": "تفاوت شروع از صفر و قالب"
+    },
+    "start_blank": {
+      "en": "From scratch:",
+      "fa": "از صفر:"
+    },
+    "start_blank_body": {
+      "en": " Empty canvas — best when you design the workflow from the beginning.",
+      "fa": " بوم خالی — مناسب وقتی ساختار workflow از ابتدا طراحی می‌شود."
+    },
+    "start_tpl": {
+      "en": "From a template:",
+      "fa": "از قالب:"
+    },
+    "start_tpl_body": {
+      "en": " Nodes, edges, and initial settings are copied — best for repeating similar campaigns.",
+      "fa": " Nodeها، Edgeها و تنظیمات اولیه کپی می‌شوند — مناسب تکرار کمپین‌های مشابه."
+    },
+    "start_template": {
+      "en": "Starting template (optional)",
+      "fa": "قالب شروع (اختیاری)"
+    },
+    "blank_option": {
+      "en": "Start from scratch — empty canvas",
+      "fa": "از صفر شروع کن — بوم خالی"
+    },
+    "template_meta": {
+      "en": "{{label}} — {{nodes}} nodes / {{edges}} edges",
+      "fa": "{{label}} — {{nodes}} Node / {{edges}} Edge"
+    },
+    "template_preview": {
+      "en": "This template will copy {{nodes}} nodes and {{edges}} edges into the new project.",
+      "fa": "این قالب {{nodes}} Node و {{edges}} Edge به پروژه جدید منتقل می‌کند."
+    },
+    "template_hint": {
+      "en": "Personal templates and public marketplace templates are available here.",
+      "fa": "قالب‌های شخصی و عمومی marketplace در این لیست قابل انتخاب هستند."
+    },
+    "creating_project": {
+      "en": "Creating project...",
+      "fa": "در حال ایجاد پروژه..."
+    },
+    "create_and_open": {
+      "en": "Create project and open editor",
+      "fa": "ایجاد پروژه و ورود به ادیتور"
+    },
+    "public_suffix": {
+      "en": " (public)",
+      "fa": " (عمومی)"
+    },
+    "list": {
+      "en": "Project list",
+      "fa": "لیست پروژه‌ها"
+    }
+  }
+}

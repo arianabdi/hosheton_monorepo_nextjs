@@ -1,0 +1,174 @@
+.wrap {
+    position: relative;
+    display: inline-flex;
+
+    .trigger {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border-radius: 8px;
+        border: 1px solid var(--ve-border, var(--input-border-color));
+        background: var(--ve-toolbar-btn, var(--input-background-color));
+        color: var(--ve-text, var(--body-text-color));
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover {
+            background: color-mix(in srgb, var(--brand-color) 12%, var(--ve-toolbar-btn, var(--input-background-color)));
+            border-color: color-mix(in srgb, var(--brand-color) 35%, var(--ve-border, var(--input-border-color)));
+            color: var(--brand-color);
+        }
+    }
+
+    .triggerOpen {
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        min-width: 14px;
+        height: 14px;
+        padding: 0 3px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: #ef4444;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+    }
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    // Above floating panels (z 4000+) so panels never cover this menu.
+    z-index: 5000;
+    width: 240px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--ve-border, var(--input-border-color));
+    background: var(--ve-panel, var(--input-background-color));
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+
+    .menuTitle {
+        margin: 0 0 6px;
+        padding: 0 4px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--ve-muted, inherit);
+    }
+
+    .menuSection {
+        margin: 6px 0 2px;
+        padding: 0 4px;
+        font-size: 9.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--ve-muted, inherit);
+        opacity: 0.75;
+    }
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 2px 0;
+    }
+
+    .visibilityToggle {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 4px;
+        font-size: 12px;
+        color: var(--ve-text, var(--body-text-color));
+        cursor: pointer;
+        border-radius: 6px;
+
+        &:hover {
+            background: var(--ve-hover, rgba(128, 128, 128, 0.1));
+        }
+
+        input {
+            accent-color: var(--brand-color, #6366f1);
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+    }
+
+    .floatBtn {
+        padding: 4px 8px;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 6px;
+        border: 1px solid var(--ve-border, var(--input-border-color));
+        background: transparent;
+        color: var(--ve-muted, inherit);
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+            color: var(--ve-text, inherit);
+            border-color: color-mix(in srgb, var(--brand-color) 40%, var(--ve-border, var(--input-border-color)));
+        }
+    }
+
+    .floatBtnActive {
+        color: var(--brand-color);
+        border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    }
+
+    .resetBtn {
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 7px 8px;
+        border-radius: 8px;
+        border: 1px dashed var(--ve-border, var(--input-border-color));
+        background: transparent;
+        color: var(--ve-muted, inherit);
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        &:hover {
+            color: var(--brand-color);
+            border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        }
+    }
+}

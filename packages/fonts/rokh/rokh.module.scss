@@ -1,0 +1,55 @@
+
+/*rokh (Persian & English)*/
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Light.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Thin.ttf") format("truetype");
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Medium.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Normal.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Regular.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "rokh";
+    src: url("./Rokh-Black.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
+
+/* Optional utility class (handy for quick testing) */
+.rokh {
+    font-family: 'rokh', sans-serif;
+}

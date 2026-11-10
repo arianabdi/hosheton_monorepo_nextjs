@@ -1,0 +1,306 @@
+// ===== برچسب عمودی روی لبه‌ی ستون چت (لبه‌ی انتهایی: در RTL سمت چپ) =====
+.tab {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 0;
+    z-index: 25;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 6px;
+    border: 1px solid var(--input-border-color);
+    border-inline-end: none;
+    border-start-start-radius: 12px;
+    border-end-start-radius: 12px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 5%, var(--plan-card-background-color));
+    }
+}
+
+.tabActive {
+    color: var(--brand-color, #8b5cf6);
+}
+
+.tabLabel {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.02em;
+}
+
+.tabCount {
+    display: grid;
+    place-items: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 6px;
+    background: var(--brand-color, #8b5cf6);
+    color: #fff;
+    font-size: 10px;
+    line-height: 1;
+    box-sizing: border-box;
+}
+
+// ===== پنل لغزان دسکتاپ — از همان لبه‌ی برچسب =====
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-end: 0;
+    z-index: 31;
+    width: min(420px, 100%);
+    border-inline-start: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color);
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-105%);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.3s;
+}
+
+:global([dir='ltr']) .overlay {
+    transform: translateX(105%);
+}
+
+.overlayOpen,
+:global([dir='ltr']) .overlayOpen {
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+}
+
+// ===== موبایل/چت باریک: پنجرهٔ تمام‌صفحه مثل گالری (GalleryModal .shell)، اسکرول داخلی =====
+.window {
+    position: fixed;
+    inset: 0;
+    z-index: 1000050;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    animation: templateWindowIn 0.16s ease;
+
+    > * {
+        flex: 1;
+        min-height: 0;
+    }
+}
+
+@keyframes templateWindowIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+// ===== محتوای پنل =====
+.panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    color: var(--body-text-color);
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--input-border-color);
+
+    h3 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 4px 0 0;
+        font-size: 12px;
+        line-height: 1.55;
+        opacity: 0.65;
+    }
+}
+
+.scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.draft {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px 16px;
+    border-bottom: 1px solid var(--input-border-color);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    > span:first-child {
+        font-size: 12px;
+        font-weight: 600;
+
+        small {
+            font-weight: 400;
+            opacity: 0.6;
+        }
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 10px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 10px;
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 13px;
+        outline: none;
+
+        &:focus {
+            border-color: var(--brand-color, #8b5cf6);
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        line-height: 1.6;
+    }
+}
+
+// فیلد فقط‌ادمین: خط چین کنار، مثل ابزارهای حالت توسعه‌دهنده
+.staffField {
+    padding-inline-start: 10px;
+    border-inline-start: 2px dashed color-mix(in srgb, var(--brand-color, #8b5cf6) 55%, transparent);
+}
+
+.hint {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.6;
+}
+
+.selectedStrip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.selected {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.selectedCover {
+    border-color: var(--brand-color, #8b5cf6);
+}
+
+.miniBtn {
+    position: absolute;
+    top: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: rgba(15, 16, 22, 0.72);
+    color: #fff;
+    cursor: pointer;
+}
+
+.coverBtn {
+    left: 4px;
+}
+
+.selectedCover .coverBtn {
+    background: var(--brand-color, #8b5cf6);
+
+    svg {
+        fill: currentColor;
+    }
+}
+
+.removeBtn {
+    right: 4px;
+}
+
+.thumbFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: var(--button-background, var(--brand-color, #8b5cf6));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.textBtn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 12px;
+    opacity: 0.6;
+    cursor: pointer;
+
+    &:hover { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .overlay { transition: none; }
+}

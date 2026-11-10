@@ -1,0 +1,818 @@
+/* حالت خالی تب‌های «در حال بررسی»، «نشان‌شده» و «خریداری‌شده» قالب‌ها — هم‌سبک موشن تنظیمات نود
+   (project-view.module.scss → .emptyHint*): نشانگر حوالی ۲۲٪ روی یک دکمه کلیک می‌کند (فشرده شدن، بوم،
+   پرتوها، موج) و نتیجه‌اش در همان صحنه دیده می‌شود. صحنه ۲۳۰×۱۲۰، حلقه ۵ ثانیه (هر ۱٪ = ۵۰ms)؛
+   نقطه کلیک هر تب با --cx/--cy روی .art_<tab> تعیین می‌شود. فقط transform/opacity. */
+
+$text: var(--body-text-color);
+$edge: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+$surface: var(--input-background-color);
+$faint: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+$bar: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+$green: #10b981;
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// از $at ظاهر می‌شود و تا نزدیک پایان حلقه می‌ماند
+@mixin pop($name, $at, $end: 90) {
+    @keyframes #{$name} {
+        0%, #{$at}% { opacity: 0; transform: scale(0.4); }
+        #{$at + 3}%, #{$end}% { opacity: 1; transform: scale(1); }
+        #{$end + 5}%, 100% { opacity: 0; transform: scale(1); }
+    }
+}
+
+// تصویر نمادین (خورشید + کوه)؛ رنگ از --tone
+@mixin picture($sun: 7px) {
+    background: color-mix(in srgb, var(--tone) 24%, $surface);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        right: 14%;
+        top: 16%;
+        width: $sun;
+        height: $sun;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--tone) 65%, transparent);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: color-mix(in srgb, var(--tone) 50%, transparent);
+        clip-path: polygon(0 100%, 0 78%, 30% 42%, 52% 72%, 70% 52%, 100% 86%, 100% 100%);
+    }
+}
+
+// وسط صفحه (افقی و عمودی)
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 50vh;
+    padding: 32px 8px;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    --hint-accent: #3b82f6;
+    --hint-loop: 5s;
+
+    position: relative;
+    width: 230px;
+    height: 120px;
+    margin-bottom: 12px;
+    direction: ltr;
+
+    :where(span, i, b, em) {
+        display: block;
+        font-style: normal;
+    }
+}
+
+.art_pending { --cx: 92px; --cy: 100px; }
+.art_saved { --cx: 130px; --cy: 18px; }
+.art_purchased { --cx: 110px; --cy: 102px; }
+
+.title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 280px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+/* ───────── مشترک ───────── */
+
+.card {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid $edge;
+    background: $surface;
+}
+
+.cover {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 6px;
+    height: 50px;
+    border-radius: 6px;
+    @include picture;
+}
+
+.cardTitle,
+.cardDesc {
+    position: absolute;
+    left: 8px;
+    border-radius: 3px;
+}
+
+.cardTitle {
+    top: 64px;
+    width: 64%;
+    height: 5px;
+    background: $bar;
+}
+
+.cardDesc {
+    top: 74px;
+    width: 46%;
+    height: 4px;
+    background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+}
+
+.btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 7px;
+    background: var(--hint-accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+
+    svg {
+        width: 11px;
+        height: 11px;
+    }
+}
+
+/* ───────── کلیک: نشانگر، موج و پرتوها روی (--cx، --cy) ───────── */
+
+.ripple {
+    position: absolute;
+    left: var(--cx);
+    top: var(--cy);
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: thRipple var(--hint-loop) ease-out infinite;
+}
+
+.burst {
+    position: absolute;
+    left: var(--cx);
+    top: var(--cy);
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: thRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.cursor {
+    position: absolute;
+    left: calc(var(--cx) - 8px);
+    top: calc(var(--cy) - 8px);
+    width: 22px;
+    height: 22px;
+    color: $text;
+    opacity: 0;
+    animation: thCursor var(--hint-loop) ease-in-out infinite;
+}
+
+@keyframes thCursor {
+    0%, 6% { transform: translate(30px, 26px); opacity: 0; }
+    18% { transform: translate(0, 0); opacity: 1; }
+    21.5% { transform: translate(0, 0) scale(0.78); }
+    24%, 40% { transform: translate(0, 0) scale(1); opacity: 1; }
+    52%, 100% { transform: translate(30px, 26px); opacity: 0; }
+}
+
+@keyframes thRipple {
+    0%, 21% { transform: scale(0.4); opacity: 0; }
+    22.5% { opacity: 0.9; }
+    34%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes thRay {
+    0%, 21.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    22.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    31%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+}
+
+/* ═════════ در حال بررسی ═════════
+   ۲۲٪ کلیک «ارسال برای بررسی» → ۲۵٪ برچسب «در انتظار» (اسپینر) روی کاور → ۳۶، ۴۶، ۵۶٪ موارد چک‌لیست
+   بررسی تیک می‌خورند → ۶۶٪ برچسب «تأیید شد» (تیک سبز) و حلقه سبز دور کارت. */
+
+.pdCard {
+    left: 6px;
+    top: 0;
+    width: 110px;
+    height: 120px;
+
+    .cover { --tone: var(--hint-accent); }
+
+    // حلقه «تأیید شد»
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        border-radius: 14px;
+        border: 3px solid color-mix(in srgb, #{$green} 28%, transparent);
+        opacity: 0;
+        animation: thPdRing var(--hint-loop) $ease-pop infinite;
+    }
+}
+
+@keyframes thPdRing {
+    0%, 66% { opacity: 0; transform: scale(1.15); }
+    71%, 90% { opacity: 1; transform: scale(1); }
+    95%, 100% { opacity: 0; transform: scale(1); }
+}
+
+.pdSubmit {
+    left: 8px;
+    right: 8px;
+    top: 88px;
+    height: 24px;
+    animation: thPdSubmit var(--hint-loop) ease-out infinite;
+
+    b {
+        width: 34px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, #fff 80%, transparent);
+    }
+}
+
+// بعد از ارسال، دکمه غیرفعال (کم‌رنگ) می‌شود
+@keyframes thPdSubmit {
+    0%, 21% { transform: scale(1); opacity: 1; }
+    22.5% { transform: scale(0.9); }
+    25% { transform: scale(1); opacity: 1; }
+    29%, 92% { transform: scale(1); opacity: 0.4; }
+    97%, 100% { transform: scale(1); opacity: 1; }
+}
+
+.pdPill {
+    position: absolute;
+    z-index: 1;
+    left: 12px;
+    top: 12px;
+    width: 40px;
+    height: 16px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid $edge;
+    background: $surface;
+    opacity: 0;
+    animation: thPdPill var(--hint-loop) $ease-pop infinite;
+
+    > b {
+        position: absolute;
+        left: 16px;
+        top: 5px;
+        width: 18px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+@include pop(thPdPill, 24);
+
+.pdSpin {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 9px;
+    height: 9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, #f59e0b 30%, transparent);
+    border-top-color: #f59e0b;
+    animation: thSpin 0.8s linear infinite, thPdSpinOn var(--hint-loop) linear infinite;
+}
+
+@keyframes thPdSpinOn {
+    0%, 65% { opacity: 1; }
+    66%, 100% { opacity: 0; }
+}
+
+.pdOk {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 11px;
+    height: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $green;
+    color: #fff;
+    font-size: 8px;
+    opacity: 0;
+    animation: thPdOk var(--hint-loop) $ease-pop infinite;
+}
+
+@include pop(thPdOk, 65);
+
+.pdReview {
+    left: 124px;
+    top: 10px;
+    width: 100px;
+    height: 100px;
+    animation: thPdReview var(--hint-loop) ease-out infinite;
+}
+
+// پنل بررسی تا ارسال قالب کم‌رنگ است
+@keyframes thPdReview {
+    0%, 24% { opacity: 0.45; }
+    28%, 100% { opacity: 1; }
+}
+
+.pdHead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 22px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 8px;
+    border-bottom: 1px solid $edge;
+
+    svg {
+        width: 12px;
+        height: 12px;
+        color: var(--hint-accent);
+    }
+
+    b {
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+.pdRow {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    height: 14px;
+
+    > b {
+        position: absolute;
+        left: 22px;
+        top: 5px;
+        width: 56px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+    }
+
+    @for $i from 1 through 3 {
+        // اولین span پنل، هدر است
+        &:nth-of-type(#{$i + 1}) {
+            top: #{32 + ($i - 1) * 22}px;
+
+            .pdCheck { animation: thPdCheck#{$i} var(--hint-loop) $ease-pop infinite; }
+        }
+    }
+}
+
+// دایره خط‌چین و تیک سبزی که رویش می‌نشیند
+.pdCheck {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $green;
+    color: #fff;
+    font-size: 9px;
+    opacity: 0;
+}
+
+.pdRow::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px dashed $edge;
+}
+
+@for $i from 1 through 3 {
+    @include pop(thPdCheck#{$i}, 34 + ($i - 1) * 10);
+}
+
+@keyframes thSpin {
+    to { rotate: 360deg; }
+}
+
+/* ═════════ نشان‌شده‌ها ═════════
+   ۲۲٪ کلیک روی نشان کارت وسط → نشان پر و آبی می‌شود، کارت کمی بالا می‌آید و حلقه می‌گیرد →
+   ۲۸–۴۰٪ کپی کاورش به سینی «نشان‌شده‌ها» می‌رود و شمار ۰ → ۱ می‌شود. */
+
+.svCard {
+    top: 0;
+    width: 66px;
+    height: 84px;
+
+    &:nth-of-type(1) { left: 6px; .cover { --tone: var(--hint-accent); } }
+    &:nth-of-type(3) { left: 158px; .cover { --tone: #ec4899; } }
+
+    &:nth-of-type(2) {
+        left: 82px;
+        animation: thSvLift var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+
+        .cover { --tone: #10b981; }
+        .svMark { animation: thSvMark var(--hint-loop) linear infinite; }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 14px;
+            border: 3px solid color-mix(in srgb, var(--hint-accent) 24%, transparent);
+            opacity: 0;
+            animation: thSvRing var(--hint-loop) $ease-pop infinite;
+        }
+    }
+
+    .cover {
+        height: 48px;
+    }
+
+    .cardTitle {
+        top: 62px;
+    }
+}
+
+@keyframes thSvLift {
+    0%, 22% { transform: translateY(0); }
+    26%, 88% { transform: translateY(-3px); }
+    94%, 100% { transform: translateY(0); }
+}
+
+@keyframes thSvRing {
+    0%, 22.5% { opacity: 0; transform: scale(1.15); }
+    28%, 88% { opacity: 1; transform: scale(1); }
+    94%, 100% { opacity: 0; transform: scale(1); }
+}
+
+.svMark {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 10px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--input-background-color) 90%, transparent);
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    font-size: 9px;
+}
+
+// نشان کارت وسط پر و آبی می‌شود
+@keyframes thSvMark {
+    0%, 22% { transform: scale(1); background: color-mix(in srgb, var(--input-background-color) 90%, transparent); color: color-mix(in srgb, var(--body-text-color) 55%, transparent); }
+    23% { transform: scale(0.8); }
+    25% { transform: scale(1.3); background: var(--hint-accent); color: #fff; }
+    29%, 88% { transform: scale(1); background: var(--hint-accent); color: #fff; }
+    94%, 100% { transform: scale(1); background: color-mix(in srgb, var(--input-background-color) 90%, transparent); color: color-mix(in srgb, var(--body-text-color) 55%, transparent); }
+}
+
+// کپی کاور کارت وسط که به سینی می‌رود
+.svFly {
+    position: absolute;
+    left: 88px;
+    top: 6px;
+    width: 54px;
+    height: 48px;
+    opacity: 0;
+    transform-origin: center;
+    animation: thSvFly var(--hint-loop) cubic-bezier(0.55, 0, 0.35, 1) infinite;
+
+    .cover {
+        --tone: #10b981;
+        inset: 0;
+        height: auto;
+    }
+}
+
+@keyframes thSvFly {
+    0%, 27% { opacity: 0; transform: translate(0, 0) scale(1); }
+    28% { opacity: 0.9; transform: translate(0, -3px) scale(1); }
+    40% { opacity: 0.9; transform: translate(-2px, 82px) scale(0.22); }
+    41%, 100% { opacity: 0; transform: translate(-2px, 82px) scale(0.22); }
+}
+
+.svTray {
+    position: absolute;
+    left: 85px;
+    top: 96px;
+    width: 60px;
+    height: 22px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 11px;
+    border: 1px solid $edge;
+    background: $surface;
+    animation: thSvTray var(--hint-loop) ease-out infinite;
+
+    > svg {
+        width: 11px;
+        height: 11px;
+        color: var(--hint-accent);
+    }
+}
+
+@keyframes thSvTray {
+    0%, 40% { transform: scale(1); border-color: color-mix(in srgb, var(--body-text-color) 14%, transparent); }
+    42% { transform: scale(1.15); border-color: var(--hint-accent); }
+    46%, 88% { transform: scale(1); border-color: var(--hint-accent); }
+    94%, 100% { transform: scale(1); border-color: color-mix(in srgb, var(--body-text-color) 14%, transparent); }
+}
+
+.svCount {
+    position: relative;
+    width: 8px;
+    height: 14px;
+
+    em {
+        position: absolute;
+        inset: 0;
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 14px;
+        text-align: center;
+        color: $text;
+
+        &:first-child { animation: thSvCount0 var(--hint-loop) linear infinite; }
+        &:last-child { opacity: 0; animation: thSvCount1 var(--hint-loop) $ease-pop infinite; }
+    }
+}
+
+@keyframes thSvCount0 {
+    0%, 40% { opacity: 1; }
+    41%, 93% { opacity: 0; }
+    95%, 100% { opacity: 1; }
+}
+
+@include pop(thSvCount1, 40, 88);
+
+/* ═════════ خریداری‌شده‌ها ═════════
+   ۲۲٪ کلیک روی «خرید $5» → قفل باز و پرده تیره کاور برداشته می‌شود، دکمه به تیک سبز تبدیل می‌شود →
+   ۳۴–۴۶٪ رسید از پشت کارت بیرون می‌آید و ۵۲٪ مهر «پرداخت شد» می‌خورد. */
+
+.puCard {
+    left: 20px;
+    top: 0;
+    width: 110px;
+    height: 120px;
+
+    .cover {
+        --tone: #ec4899;
+        height: 60px;
+    }
+
+    .cardTitle {
+        top: 74px;
+    }
+}
+
+// پرده تیره روی کاور قالب قفل‌شده
+.puVeil {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 6px;
+    height: 60px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.42);
+    animation: thPuVeil var(--hint-loop) ease-out infinite;
+}
+
+@keyframes thPuVeil {
+    0%, 24% { opacity: 1; }
+    32%, 92% { opacity: 0; }
+    97%, 100% { opacity: 1; }
+}
+
+.puLock {
+    position: absolute;
+    left: 44px;
+    top: 25px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: $surface;
+    color: $text;
+    animation: thPuLock var(--hint-loop) $ease-pop infinite;
+
+    svg {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+    }
+}
+
+@keyframes thPuLock {
+    0%, 22% { opacity: 1; transform: scale(1); }
+    25% { transform: scale(1.2); }
+    30% { opacity: 1; transform: scale(1); }
+    36%, 92% { opacity: 0; transform: scale(0.6); }
+    97%, 100% { opacity: 1; transform: scale(1); }
+}
+
+.puLocked {
+    animation: thPuLocked var(--hint-loop) linear infinite;
+}
+
+.puOpen {
+    opacity: 0;
+    color: $green;
+    animation: thPuOpen var(--hint-loop) linear infinite;
+}
+
+@keyframes thPuLocked {
+    0%, 23.5% { opacity: 1; }
+    24%, 95% { opacity: 0; }
+    96%, 100% { opacity: 1; }
+}
+
+@keyframes thPuOpen {
+    0%, 23.5% { opacity: 0; }
+    24%, 95% { opacity: 1; }
+    96%, 100% { opacity: 0; }
+}
+
+.puBuy,
+.puDone {
+    left: 8px;
+    right: 8px;
+    top: 90px;
+    height: 24px;
+}
+
+.puBuy {
+    animation: thPuBuy var(--hint-loop) ease-out infinite;
+}
+
+@keyframes thPuBuy {
+    0%, 21% { opacity: 1; transform: scale(1); }
+    22.5% { transform: scale(0.9); }
+    25% { opacity: 1; transform: scale(1); }
+    27%, 92% { opacity: 0; transform: scale(0.9); }
+    97%, 100% { opacity: 1; transform: scale(1); }
+}
+
+.puDone {
+    background: $green;
+    opacity: 0;
+    animation: thPuDone var(--hint-loop) $ease-pop infinite;
+
+    svg {
+        width: 13px;
+        height: 13px;
+    }
+}
+
+@include pop(thPuDone, 25);
+
+// رسید خرید که از پشت کارت بیرون می‌آید
+.puReceipt {
+    position: absolute;
+    left: 140px;
+    top: 10px;
+    width: 72px;
+    height: 96px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid $edge;
+    background: $faint;
+    opacity: 0;
+    animation: thPuReceipt var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+
+    > b {
+        position: absolute;
+        left: 10px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-text-color) 16%, transparent);
+
+        &:nth-of-type(1) { top: 12px; width: 50px; background: $bar; }
+        &:nth-of-type(2) { top: 22px; width: 40px; }
+        &:nth-of-type(3) { top: 32px; width: 46px; }
+    }
+
+    > em {
+        position: absolute;
+        left: 10px;
+        top: 48px;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 20px;
+        color: $text;
+    }
+}
+
+@keyframes thPuReceipt {
+    0%, 33% { opacity: 0; transform: translateX(-50px); }
+    36% { opacity: 1; }
+    46%, 90% { opacity: 1; transform: translateX(0); }
+    95%, 100% { opacity: 0; transform: translateX(0); }
+}
+
+.puStamp {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $green;
+    color: #fff;
+    font-size: 12px;
+    opacity: 0;
+    animation: thPuStamp var(--hint-loop) $ease-pop infinite;
+}
+
+@include pop(thPuStamp, 51);
+
+// بدون موشن: حالت پایانی هر صحنه را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .pdPill,
+    .pdOk,
+    .pdCheck,
+    .svCount em:last-child,
+    .puDone,
+    .puReceipt,
+    .puStamp,
+    .puOpen {
+        opacity: 1;
+    }
+
+    .pdSpin,
+    .svCount em:first-child,
+    .puVeil,
+    .puLock,
+    .puBuy,
+    .cursor {
+        opacity: 0;
+    }
+}

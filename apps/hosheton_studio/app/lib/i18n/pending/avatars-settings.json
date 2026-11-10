@@ -1,0 +1,530 @@
+{
+  "avatars": {
+    "studio_eyebrow": {
+      "en": "Character studio",
+      "fa": "استودیو کاراکتر"
+    },
+    "page_lead": {
+      "en": "Seedance and BytePlus characters in one list; click a card to manage and verify identity.",
+      "fa": "کاراکترهای Seedance و BytePlus در یک لیست؛ روی هر کارت برای مدیریت و احراز هویت کلیک کنید."
+    },
+    "empty": {
+      "en": "No characters registered yet.",
+      "fa": "هنوز کاراکتری ثبت نشده."
+    },
+    "empty_desc": {
+      "en": "Create your first real avatar.",
+      "fa": "اولین آواتار واقعی خود را بسازید."
+    },
+    "create_character": {
+      "en": "Create character",
+      "fa": "ساخت کاراکتر"
+    },
+    "list_title": {
+      "en": "Avatars",
+      "fa": "آواتارها"
+    },
+    "select_character": {
+      "en": "Select a character",
+      "fa": "یک کاراکتر انتخاب کنید"
+    },
+    "not_found": {
+      "en": "Character not found.",
+      "fa": "کاراکتر یافت نشد."
+    },
+    "character_info": {
+      "en": "Character details",
+      "fa": "اطلاعات کاراکتر"
+    },
+    "character_info_desc": {
+      "en": "Card portrait and platform assets are separate. Assets show a green check after the provider approves them.",
+      "fa": "پرتره کارت و asset پلتفرم جدا هستند. assetها بعد از تایید provider با تیک سبز مشخص می‌شوند."
+    },
+    "activate_verify": {
+      "en": "Activation and verification",
+      "fa": "فعال‌سازی و احراز هویت"
+    },
+    "activate_verify_desc": {
+      "en": "For BytePlus and Seedance, verification happens through H5 — scan the QR with your phone or open the link.",
+      "fa": "برای BytePlus و Seedance، احراز از طریق H5 انجام می‌شود — QR را با موبایل اسکن کنید یا لینک را باز کنید."
+    },
+    "activate_verify_desc_full": {
+      "en": "Complete the steps in order. For BytePlus and Seedance, verification happens through H5 — scan the QR with your phone or open the link.",
+      "fa": "مراحل زیر به ترتیب انجام شوند. برای BytePlus و Seedance، احراز از طریق H5 انجام می‌شود — QR را با موبایل اسکن کنید یا لینک را باز کنید."
+    },
+    "manage_subtitle": {
+      "en": "Manage the profile and activate a real character",
+      "fa": "مدیریت پروفایل و فعال‌سازی کاراکتر واقعی"
+    },
+    "open_verify": {
+      "en": "Open verification page",
+      "fa": "باز کردن صفحه احراز هویت"
+    },
+    "request_pending_info": {
+      "en": "Your request was sent to the support team. After an admin approves the BytePlus API key, you will be notified and can continue verification.",
+      "fa": "درخواست شما به تیم پشتیبانی ارسال شده است. پس از تایید API Key BytePlus توسط ادمین، از طریق اعلان مطلع می‌شوید و می‌توانید احراز هویت را ادامه دهید."
+    },
+    "qr_hint": {
+      "en": "Scan with your phone camera or open the <link>H5 link</link>.",
+      "fa": "با دوربین موبایل اسکن کنید یا <link>لینک H5</link> را باز کنید."
+    },
+    "step_profile": {
+      "en": "Profile",
+      "fa": "پروفایل"
+    },
+    "step_profile_desc": {
+      "en": "Set the character name and internal note.",
+      "fa": "نام و یادداشت داخلی کاراکتر را تنظیم کنید."
+    },
+    "step_verify": {
+      "en": "Identity verification",
+      "fa": "احراز هویت"
+    },
+    "step_verify_desc": {
+      "en": "Match the real face through the H5 link (QR on mobile).",
+      "fa": "تطبیق چهره واقعی از طریق لینک H5 (QR روی موبایل)."
+    },
+    "step_assets": {
+      "en": "Send asset",
+      "fa": "ارسال asset"
+    },
+    "step_assets_desc": {
+      "en": "The character sheet is sent to the destination platform and reviewed.",
+      "fa": "character sheet به پلتفرم مقصد ارسال و وضعیت بررسی می‌شود."
+    },
+    "step_live": {
+      "en": "Active",
+      "fa": "فعال"
+    },
+    "step_live_desc": {
+      "en": "The character can be selected in the avatar video node.",
+      "fa": "کاراکتر در نود ویدیو آواتار قابل انتخاب است."
+    },
+    "platform_once": {
+      "en": "Choose the platform once. After you register, you will be taken to the details page to activate.",
+      "fa": "پلتفرم را یک‌بار انتخاب کنید. بعد از ثبت، برای فعال‌سازی به صفحه جزئیات هدایت می‌شوید."
+    },
+    "platform_locked": {
+      "en": "The platform cannot be changed after creation.",
+      "fa": "پلتفرم بعد از ساخت قابل تغییر نیست."
+    },
+    "name_split_full": {
+      "en": "Split into FN/LN on the card (first word = FN).",
+      "fa": "روی کارت به FN/LN تقسیم می‌شود (اولین کلمه = FN)."
+    },
+    "portrait_help": {
+      "en": "For the ID card display only. Unrelated to verification or sending assets, and can be changed any time.",
+      "fa": "فقط برای نمایش روی کارت شناسایی. به احراز هویت یا ارسال asset ربطی ندارد و هر زمان قابل تغییر است."
+    },
+    "assets_help": {
+      "en": "These images are sent to the platform (Seedance / BytePlus) for approval. A green check appears after the provider confirms them.",
+      "fa": "این تصاویر برای ارسال به پلتفرم (Seedance / BytePlus) و فرایند تایید استفاده می‌شوند. پس از تایید provider، تیک سبز نمایش داده می‌شود."
+    },
+    "assets_readonly_help": {
+      "en": "Only provider-approved images are shown. Upload a new image for a new asset.",
+      "fa": "فقط تصاویر تاییدشده از provider نمایش داده می‌شوند. برای asset جدید، یک تصویر آپلود کنید."
+    },
+    "card_specs": {
+      "en": "Card details (Avatar License)",
+      "fa": "مشخصات روی کارت (Avatar License)"
+    },
+    "card_specs_help": {
+      "en": "These fields appear at the bottom and center of the card (SEX, HAIR, EYES, HGT, WGT, DOB).",
+      "fa": "این فیلدها در پایین و وسط کارت نمایش داده می‌شوند (SEX, HAIR, EYES, HGT, WGT, DOB)."
+    },
+    "dropzone_asset": {
+      "en": "Upload asset — character sheet / real portrait",
+      "fa": "آپلود asset — character sheet / پرتره واقعی"
+    }
+  },
+  "support": {
+    "studio_hint": {
+      "en": "For media studio issues, include the project ID or the node name that failed in the ticket.",
+      "fa": "برای مشکلات مربوط به استودیو رسانه، شناسه پروژه یا نام گره‌ای که خطا دارد را در متن تیکت ذکر کنید."
+    },
+    "ticket_status": {
+      "en": "Ticket status:",
+      "fa": "وضعیت تیکت:"
+    },
+    "loading_messages": {
+      "en": "Loading messages...",
+      "fa": "در حال دریافت پیام‌ها..."
+    },
+    "new_request": {
+      "en": "Submit a new support request",
+      "fa": "ارسال درخواست پشتیبانی جدید"
+    },
+    "ticket_subject": {
+      "en": "Ticket subject",
+      "fa": "موضوع تیکت"
+    },
+    "department": {
+      "en": "Department",
+      "fa": "دپارتمان مربوطه"
+    },
+    "priority_level": {
+      "en": "Priority",
+      "fa": "سطح اهمیت (اولویت)"
+    },
+    "related_id": {
+      "en": "Project or node ID (optional)",
+      "fa": "شناسه پروژه یا گره (اختیاری)"
+    },
+    "request_body": {
+      "en": "Your request",
+      "fa": "متن درخواست شما"
+    },
+    "message_placeholder": {
+      "en": "Describe the error or question in full...",
+      "fa": "جزئیات خطا یا سوال خود را به طور کامل بنویسید..."
+    },
+    "dept_prefix": {
+      "en": "[Department: {{dept}}]",
+      "fa": "[دپارتمان: {{dept}}]"
+    },
+    "related_ref": {
+      "en": "[Related ref: {{ref}}]",
+      "fa": "[مرجع مرتبط: {{ref}}]"
+    }
+  },
+  "settings": {
+    "upload_aborted": {
+      "en": "Upload was aborted",
+      "fa": "آپلود متوقف شد"
+    }
+  },
+  "usage": {
+    "catalog_subtitle": {
+      "en": "Search text, image, audio, and video models — price range (min to max) in USD.",
+      "fa": "جستجو در مدل‌های متنی، تصویری، صوتی و ویدیویی — بازه قیمت (حداقل تا حداکثر) به USD."
+    },
+    "catalog_provider": {
+      "en": "Provider",
+      "fa": "ارائه‌دهنده"
+    },
+    "catalog_native": {
+      "en": "(native)",
+      "fa": "(بومی)"
+    },
+    "catalog_model_type": {
+      "en": "Model type",
+      "fa": "نوع مدل"
+    },
+    "catalog_caching": {
+      "en": "Context caching",
+      "fa": "Context Caching"
+    },
+    "catalog_model_name": {
+      "en": "Model name",
+      "fa": "نام مدل"
+    },
+    "catalog_min": {
+      "en": "Min",
+      "fa": "حداقل"
+    },
+    "catalog_max": {
+      "en": "Max",
+      "fa": "حداکثر"
+    },
+    "catalog_no_models": {
+      "en": "No models found.",
+      "fa": "مدلی یافت نشد."
+    },
+    "catalog_page_of": {
+      "en": "Page {{page}} of {{total}}",
+      "fa": "صفحه {{page}} از {{total}}"
+    }
+  },
+  "legal": {
+    "terms_s1_h": {
+      "en": "1. About the service",
+      "fa": "۱. معرفی سرویس"
+    },
+    "terms_s1_p1": {
+      "en": "Hosheton Studio is the developers and content-creators part of the Hosheton platform. It lets you design AI workflows, generate images, video, and audio, manage projects, templates, and assets, use the API, and other AI-related tools.",
+      "fa": "هوشتون استودیو بخش توسعه‌دهندگان و سازندگان محتوای پلتفرم هوشتون است. این سرویس امکان طراحی ورک‌فلوهای هوش مصنوعی، تولید تصویر، ویدئو و صوت، مدیریت پروژه‌ها، قالب‌ها، دارایی‌ها (Assets)، استفاده از API و سایر ابزارهای مرتبط با هوش مصنوعی را در اختیار شما قرار می‌دهد."
+    },
+    "terms_s1_p2": {
+      "en": "By creating an account, signing in, or using any part of Hosheton Studio, you accept these terms.",
+      "fa": "با ایجاد حساب کاربری، ورود یا استفاده از هر بخشی از هوشتون استودیو، شما این شرایط را می‌پذیرید."
+    },
+    "terms_s2_h": {
+      "en": "2. Account and access",
+      "fa": "۲. حساب کاربری و دسترسی"
+    },
+    "terms_s2_li1": {
+      "en": "You must be at least 13 years old to use the service.",
+      "fa": "برای استفاده از سرویس باید حداقل ۱۳ سال سن داشته باشید."
+    },
+    "terms_s2_li2": {
+      "en": "Registration uses a valid mobile number or email, and you are responsible for account security.",
+      "fa": "ثبت‌نام با شماره موبایل معتبر یا ایمیل انجام می‌شود و امنیت حساب بر عهده کاربر است."
+    },
+    "terms_s2_li3": {
+      "en": "Transferring the account to others or sharing access without permission is not allowed.",
+      "fa": "انتقال حساب به دیگران یا اشتراک‌گذاری دسترسی بدون مجوز مجاز نیست."
+    },
+    "terms_s2_li4": {
+      "en": "If you notice unauthorized use, notify Hosheton support immediately.",
+      "fa": "در صورت مشاهده استفاده غیرمجاز، فوراً به پشتیبانی هوشتون اطلاع دهید."
+    },
+    "terms_s3_h": {
+      "en": "3. Acceptable use",
+      "fa": "۳. استفاده مجاز"
+    },
+    "terms_s3_p1": {
+      "en": "You agree to use Hosheton Studio only for lawful purposes. The following is prohibited:",
+      "fa": "شما متعهد می‌شوید از هوشتون استودیو فقط برای اهداف قانونی استفاده کنید. موارد زیر ممنوع است:"
+    },
+    "terms_s3_li1": {
+      "en": "Creating or publishing illegal, offensive, or violent content, or content that violates others' rights",
+      "fa": "تولید یا انتشار محتوای غیرقانونی، توهین‌آمیز، خشونت‌آمیز یا نقض‌کننده حقوق دیگران"
+    },
+    "terms_s3_li2": {
+      "en": "Using the service for fraud, deception, impersonation, or harmful activity",
+      "fa": "استفاده از سرویس برای فریب، کلاهبرداری، جعل هویت یا فعالیت‌های مخرب"
+    },
+    "terms_s3_li3": {
+      "en": "Reverse engineering, automated data scraping, or bypassing technical limits",
+      "fa": "مهندسی معکوس، استخراج خودکار داده (Scraping) یا دور زدن محدودیت‌های فنی"
+    },
+    "terms_s3_li4": {
+      "en": "Excessive API use or abusing platform resources",
+      "fa": "استفاده بیش از حد از API یا سوءاستفاده از منابع پلتفرم"
+    },
+    "terms_s3_li5": {
+      "en": "Violating the policies of the underlying AI model providers",
+      "fa": "نقض سیاست‌های ارائه‌دهندگان مدل‌های هوش مصنوعی زیربنایی"
+    },
+    "terms_s4_h": {
+      "en": "4. Content and ownership",
+      "fa": "۴. محتوا و مالکیت"
+    },
+    "terms_s4_p1": {
+      "en": "You own your input data (text, images, files, and so on) and are legally responsible for it. Subject to these terms, you are granted the right to use generated outputs for permitted purposes.",
+      "fa": "شما مالک داده‌های ورودی (متن، تصویر، فایل و...) خود هستید و مسئولیت قانونی آن‌ها با شماست. با رعایت این شرایط، حق استفاده از خروجی‌های تولیدشده برای اهداف مجاز به شما واگذار می‌شود."
+    },
+    "terms_s4_p2": {
+      "en": "AI outputs may not be accurate. Human review is recommended before commercial use or publication. Hosheton does not guarantee exclusivity or uniqueness of outputs.",
+      "fa": "خروجی‌های هوش مصنوعی ممکن است دقیق نباشند. پیش از استفاده تجاری یا انتشار، بررسی و بازبینی انسانی توصیه می‌شود. هوشتون انحصار یا یکتایی خروجی‌ها را تضمین نمی‌کند."
+    },
+    "terms_s5_h": {
+      "en": "5. Credit, payment, and refunds",
+      "fa": "۵. اعتبار، پرداخت و بازپرداخت"
+    },
+    "terms_s5_li1": {
+      "en": "Some Hosheton Studio features are offered on a credit or subscription basis.",
+      "fa": "برخی امکانات هوشتون استودیو بر اساس اعتبار (Credit) یا اشتراک ارائه می‌شوند."
+    },
+    "terms_s5_li2": {
+      "en": "Purchases must be made through official Hosheton channels.",
+      "fa": "خرید باید از کانال‌های رسمی هوشتون انجام شود."
+    },
+    "terms_s5_li3": {
+      "en": "If a confirmed technical fault occurs, a refund proportional to unused credit may be possible.",
+      "fa": "در صورت بروز نقص فنی تأییدشده، بازپرداخت متناسب با اعتبار استفاده‌نشده امکان‌پذیر است."
+    },
+    "terms_s5_li4": {
+      "en": "Hosheton reserves the right to review and refuse refund requests in cases of abuse.",
+      "fa": "هوشتون حق بررسی و رد درخواست‌های بازپرداخت در موارد سوءاستفاده را محفوظ می‌دارد."
+    },
+    "terms_s6_h": {
+      "en": "6. API and developers",
+      "fa": "۶. API و توسعه‌دهندگان"
+    },
+    "terms_s6_p1": {
+      "en": "If you use the Hosheton API, keep access keys confidential, respect rate limits, and inform end users in your product that the service is provided by Hosheton.",
+      "fa": "در صورت استفاده از API هوشتون، کلیدهای دسترسی را محرمانه نگه دارید، محدودیت‌های نرخ (Rate Limit) را رعایت کنید و در محصول خود به کاربران نهایی اطلاع دهید که سرویس از هوشتون تأمین می‌شود."
+    },
+    "terms_s7_h": {
+      "en": "7. Suspension and termination",
+      "fa": "۷. تعلیق و خاتمه"
+    },
+    "terms_s7_p1": {
+      "en": "If you violate these terms, Hosheton may limit, suspend, or terminate your access. You may stop using the service at any time. Material changes to this document are announced through the platform, and continued use means you accept the new version.",
+      "fa": "در صورت نقض این شرایط، هوشتون می‌تواند دسترسی شما را محدود، معلق یا قطع کند. شما نیز می‌توانید در هر زمان استفاده از سرویس را متوقف کنید. تغییرات مهم در این سند از طریق پلتفرم اطلاع‌رسانی می‌شود و ادامه استفاده به منزله پذیرش نسخه جدید است."
+    },
+    "terms_s8_h": {
+      "en": "8. Limitation of liability",
+      "fa": "۸. محدودیت مسئولیت"
+    },
+    "terms_s8_p1": {
+      "en": "Hosheton Studio is provided “as is”. To the maximum extent permitted by law, Hosheton’s liability for indirect damages or damages from service outages, third-party API disruptions, or misuse of AI outputs is limited.",
+      "fa": "هوشتون استودیو «همان‌گونه که هست» ارائه می‌شود. در حداکثر مجاز قانونی، مسئولیت هوشتون نسبت به خسارات غیرمستقیم یا ناشی از قطعی سرویس، اختلال API ارائه‌دهندگان ثالث یا استفاده نادرست از خروجی‌های هوش مصنوعی محدود است."
+    },
+    "privacy_s1_h": {
+      "en": "1. Introduction",
+      "fa": "۱. مقدمه"
+    },
+    "privacy_s1_p1": {
+      "en": "Hosheton is committed to protecting the privacy of Hosheton Studio users. This document explains what data is collected, how it is used, and what rights you have.",
+      "fa": "هوشتون متعهد است از حریم خصوصی کاربران هوشتون استودیو محافظت کند. این سند توضیح می‌دهد چه داده‌هایی جمع‌آوری می‌شود، چگونه استفاده می‌شود و چه حقوقی برای شما وجود دارد."
+    },
+    "privacy_s2_h": {
+      "en": "2. Data we collect",
+      "fa": "۲. داده‌هایی که جمع‌آوری می‌کنیم"
+    },
+    "privacy_s2_li1": {
+      "en": "<strong>Account information:</strong> mobile number, email, name, username, and profile photo (if provided)",
+      "fa": "<strong>اطلاعات حساب:</strong> شماره موبایل، ایمیل، نام، نام کاربری و تصویر پروفایل (در صورت ارائه)"
+    },
+    "privacy_s2_li2": {
+      "en": "<strong>User content:</strong> prompts, uploaded files, generated outputs, projects, workflows, and assets stored in the studio",
+      "fa": "<strong>محتوای کاربر:</strong> پرامپت‌ها، فایل‌های آپلودشده، خروجی‌های تولیدشده، پروژه‌ها، ورک‌فلوها و دارایی‌های ذخیره‌شده در استودیو"
+    },
+    "privacy_s2_li3": {
+      "en": "<strong>Technical information:</strong> IP address, browser type, device, access time, and usage logs",
+      "fa": "<strong>اطلاعات فنی:</strong> آدرس IP، نوع مرورگر، دستگاه، زمان دسترسی و لاگ‌های استفاده"
+    },
+    "privacy_s2_li4": {
+      "en": "<strong>Financial information:</strong> transaction history, credit purchases, and subscriptions (Hosheton does not store full bank card details)",
+      "fa": "<strong>اطلاعات مالی:</strong> تاریخچه تراکنش‌ها، خرید اعتبار و اشتراک (بدون نگهداری کامل اطلاعات کارت بانکی توسط هوشتون)"
+    },
+    "privacy_s2_li5": {
+      "en": "<strong>Support communication:</strong> tickets and messages sent to the support team",
+      "fa": "<strong>ارتباط با پشتیبانی:</strong> تیکت‌ها و پیام‌های ارسالی به تیم پشتیبانی"
+    },
+    "privacy_s3_h": {
+      "en": "3. How we use data",
+      "fa": "۳. نحوه استفاده از داده‌ها"
+    },
+    "privacy_s3_p1": {
+      "en": "Your data is used for the following purposes:",
+      "fa": "داده‌های شما برای اهداف زیر استفاده می‌شود:"
+    },
+    "privacy_s3_li1": {
+      "en": "Providing, improving, and supporting Hosheton Studio services",
+      "fa": "ارائه، بهبود و پشتیبانی از سرویس‌های هوشتون استودیو"
+    },
+    "privacy_s3_li2": {
+      "en": "Authentication, account security, and preventing abuse",
+      "fa": "احراز هویت، امنیت حساب و پیشگیری از سوءاستفاده"
+    },
+    "privacy_s3_li3": {
+      "en": "Processing content-generation requests through AI models",
+      "fa": "پردازش درخواست‌های تولید محتوا از طریق مدل‌های هوش مصنوعی"
+    },
+    "privacy_s3_li4": {
+      "en": "Managing payments, credit, and subscriptions",
+      "fa": "مدیریت پرداخت، اعتبار و اشتراک"
+    },
+    "privacy_s3_li5": {
+      "en": "Notifying you about updates, service changes, or security issues",
+      "fa": "اطلاع‌رسانی درباره به‌روزرسانی‌ها، تغییرات سرویس یا مسائل امنیتی"
+    },
+    "privacy_s3_li6": {
+      "en": "Complying with legal requirements",
+      "fa": "رعایت الزامات قانونی"
+    },
+    "privacy_s4_h": {
+      "en": "4. Sharing with third parties",
+      "fa": "۴. اشتراک‌گذاری با اشخاص ثالث"
+    },
+    "privacy_s4_p1": {
+      "en": "Hosheton does not sell your personal information without your consent. Data may be shared with third parties in the following cases:",
+      "fa": "هوشتون اطلاعات شخصی شما را بدون رضایت شما به فروش نمی‌رساند. داده‌ها ممکن است در موارد زیر با اشخاص ثالث به اشتراک گذاشته شود:"
+    },
+    "privacy_s4_li1": {
+      "en": "AI model providers to process your requests",
+      "fa": "ارائه‌دهندگان مدل‌های هوش مصنوعی برای پردازش درخواست‌های شما"
+    },
+    "privacy_s4_li2": {
+      "en": "Payment gateways to complete financial transactions",
+      "fa": "درگاه‌های پرداخت برای انجام تراکنش‌های مالی"
+    },
+    "privacy_s4_li3": {
+      "en": "Cloud infrastructure and hosting providers",
+      "fa": "ارائه‌دهندگان زیرساخت ابری و میزبانی"
+    },
+    "privacy_s4_li4": {
+      "en": "Legal authorities when required by law",
+      "fa": "مراجع قانونی در صورت الزام قانونی"
+    },
+    "privacy_s5_h": {
+      "en": "5. Cookies and similar technologies",
+      "fa": "۵. کوکی‌ها و فناوری‌های مشابه"
+    },
+    "privacy_s5_p1": {
+      "en": "Hosheton Studio uses cookies and similar technologies to keep you signed in, store UI settings, and improve the experience. You can manage cookies in your browser settings, but some features may be unavailable without them.",
+      "fa": "هوشتون استودیو از کوکی‌ها و فناوری‌های مشابه برای نگه‌داری نشست ورود، تنظیمات رابط کاربری و بهبود تجربه استفاده بهره می‌برد. می‌توانید کوکی‌ها را از تنظیمات مرورگر مدیریت کنید، اما برخی امکانات ممکن است بدون آن‌ها در دسترس نباشند."
+    },
+    "privacy_s6_h": {
+      "en": "6. Security and retention",
+      "fa": "۶. امنیت و نگهداری"
+    },
+    "privacy_s6_p1": {
+      "en": "We use appropriate technical and organizational measures to protect data. However, no system is perfectly secure. Data is retained for as long as needed to provide the service or meet legal requirements.",
+      "fa": "ما از اقدامات فنی و سازمانی مناسب برای محافظت از داده‌ها استفاده می‌کنیم. با این حال، هیچ سیستمی امنیت مطلق ندارد. داده‌ها تا زمانی که برای ارائه سرویس یا رعایت الزامات قانونی لازم باشد نگهداری می‌شوند."
+    },
+    "privacy_s7_h": {
+      "en": "7. Your rights",
+      "fa": "۷. حقوق شما"
+    },
+    "privacy_s7_li1": {
+      "en": "Access your personal information",
+      "fa": "دسترسی به اطلاعات شخصی خود"
+    },
+    "privacy_s7_li2": {
+      "en": "Request correction of inaccurate information",
+      "fa": "درخواست اصلاح اطلاعات نادرست"
+    },
+    "privacy_s7_li3": {
+      "en": "Request deletion of your account and related data (subject to legal limits)",
+      "fa": "درخواست حذف حساب و داده‌های مرتبط (با رعایت محدودیت‌های قانونی)"
+    },
+    "privacy_s7_li4": {
+      "en": "Contact Hosheton support to exercise these rights",
+      "fa": "تماس با پشتیبانی هوشتون برای اعمال این حقوق"
+    },
+    "privacy_s8_h": {
+      "en": "8. Changes to this policy",
+      "fa": "۸. تغییرات این سیاست"
+    },
+    "privacy_s8_p1": {
+      "en": "This privacy policy may be updated. The new version is published on this page. For material changes, you will be notified through the platform or by email.",
+      "fa": "ممکن است این سیاست حریم خصوصی به‌روزرسانی شود. نسخه جدید در همین صفحه منتشر می‌شود. در تغییرات مهم، از طریق پلتفرم یا ایمیل به شما اطلاع داده می‌شود."
+    }
+  },
+  "menu": {
+    "dictionary": {
+      "en": "Dictionary",
+      "fa": "دیکشنری"
+    },
+    "feed": {
+      "en": "Feed",
+      "fa": "پیوند ها"
+    },
+    "films": {
+      "en": "Films",
+      "fa": "فیلم ها"
+    },
+    "flashcards": {
+      "en": "Flashcards",
+      "fa": "فلش کارت"
+    },
+    "books": {
+      "en": "Books",
+      "fa": "کتاب ها"
+    },
+    "teacher": {
+      "en": "Teacher",
+      "fa": "استاد زبان"
+    },
+    "apps": {
+      "en": "Apps",
+      "fa": "برنامه ها"
+    },
+    "all_apps": {
+      "en": "All apps",
+      "fa": "همه برنامه‌ها"
+    },
+    "select_app": {
+      "en": "Select app",
+      "fa": "انتخاب برنامه"
+    },
+    "test": {
+      "en": "Test",
+      "fa": "آزمون"
+    }
+  }
+}

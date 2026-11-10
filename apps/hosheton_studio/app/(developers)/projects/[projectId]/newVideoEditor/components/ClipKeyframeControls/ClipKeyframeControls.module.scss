@@ -1,0 +1,292 @@
+.wrap {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+    background: var(--ve-header-bar, transparent);
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+
+        .title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--ve-muted, inherit);
+        }
+
+        .timeBadge {
+            font: 10px/1.4 monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--ve-timecode-bg, #000);
+            color: var(--ve-timecode-text, #38bdf8);
+            white-space: nowrap;
+        }
+
+        .count {
+            font-size: 10px;
+            color: var(--ve-muted, inherit);
+            white-space: nowrap;
+        }
+
+        .clearBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-inline-start: auto;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 5px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            cursor: pointer;
+            font-size: 11px;
+
+            svg {
+                width: 11px;
+                height: 11px;
+            }
+
+            &:hover {
+                color: #f87171;
+                border-color: rgba(248, 113, 113, 0.5);
+            }
+        }
+    }
+
+    .hint {
+        margin: 0 0 6px;
+        font-size: 10px;
+        line-height: 1.55;
+        color: var(--ve-muted, inherit);
+        opacity: 0.85;
+    }
+
+    .group {
+        margin-bottom: 4px;
+
+        summary {
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: var(--ve-muted, inherit);
+            padding: 3px 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            &::before {
+                content: '▸';
+                font-size: 9px;
+                transition: transform 0.15s;
+            }
+
+            &::-webkit-details-marker {
+                display: none;
+            }
+
+            &:hover {
+                color: var(--brand-color, #6366f1);
+            }
+        }
+
+        &[open] summary::before {
+            transform: rotate(90deg);
+        }
+    }
+
+    .rows {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 0;
+        min-height: 26px;
+
+        &.rowAnimated {
+            background: color-mix(in srgb, var(--brand-color, #6366f1) 4%, transparent);
+            border-radius: 5px;
+            padding-inline: 2px;
+        }
+
+        .stopwatch {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            padding: 0;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            cursor: pointer;
+            font-size: 12px;
+
+            svg {
+                width: 13px;
+                height: 13px;
+            }
+
+            &:hover {
+                background: color-mix(in srgb, var(--body-text-color, #fff) 8%, transparent);
+                color: var(--ve-text, inherit);
+            }
+
+            &.stopwatchOn {
+                color: var(--brand-color, #6366f1);
+                border-color: color-mix(in srgb, var(--brand-color, #6366f1) 45%, transparent);
+                background: color-mix(in srgb, var(--brand-color, #6366f1) 12%, transparent);
+            }
+        }
+
+        .navBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 22px;
+            flex-shrink: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            cursor: pointer;
+            font-size: 11px;
+
+            svg {
+                width: 12px;
+                height: 12px;
+            }
+
+            &:hover:not(:disabled) {
+                color: var(--brand-color, #6366f1);
+                background: color-mix(in srgb, var(--body-text-color, #fff) 8%, transparent);
+            }
+
+            &:disabled {
+                opacity: 0.3;
+                cursor: default;
+            }
+        }
+
+        .kfToggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 22px;
+            flex-shrink: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            cursor: pointer;
+            font-size: 11px;
+
+            svg {
+                width: 11px;
+                height: 11px;
+                transform: rotate(0deg);
+            }
+
+            &:hover:not(:disabled) {
+                color: #f59e0b;
+                background: color-mix(in srgb, var(--body-text-color, #fff) 8%, transparent);
+            }
+
+            &:disabled {
+                opacity: 0.3;
+                cursor: default;
+            }
+
+            &.kfToggleOn {
+                color: #f59e0b;
+            }
+        }
+
+        .label {
+            flex: 1;
+            min-width: 0;
+            font-size: 10.5px;
+            color: var(--ve-text, inherit);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .easing {
+            flex-shrink: 0;
+            max-width: 82px;
+            padding: 2px 3px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 5px;
+            background: var(--ve-input-bg, var(--body-background));
+            color: var(--ve-text, var(--body-text-color));
+            font-size: 9.5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .valueField {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+
+            input {
+                width: 58px;
+                padding: 3px 5px;
+                border: 1px solid var(--ve-border, var(--input-border-color));
+                border-radius: 5px;
+                background: var(--ve-input-bg, var(--body-background));
+                color: var(--ve-text, var(--body-text-color));
+                font-size: 10.5px;
+                outline: none;
+                text-align: center;
+
+                &:focus {
+                    border-color: var(--brand-color, #6366f1);
+                }
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    appearance: none;
+                    margin: 0;
+                }
+            }
+
+            .unit {
+                font-size: 9px;
+                color: var(--ve-muted, inherit);
+                min-width: 11px;
+            }
+        }
+
+        .colorInput {
+            width: 30px;
+            height: 22px;
+            flex-shrink: 0;
+            padding: 1px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 5px;
+            background: var(--ve-input-bg, var(--body-background));
+            cursor: pointer;
+        }
+    }
+}

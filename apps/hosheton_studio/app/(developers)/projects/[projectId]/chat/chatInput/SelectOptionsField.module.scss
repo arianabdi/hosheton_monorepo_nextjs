@@ -1,0 +1,544 @@
+$brand: var(--brand-color, #8b5cf6);
+$focus-ring: 2px solid color-mix(in srgb, var(--brand-color, #8b5cf6) 55%, transparent);
+
+.field {
+    margin-bottom: 12px;
+}
+
+/* عنوان فیلد + آیکون راهنما (علامت تعجب) در یک ردیف */
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+.title {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.72;
+}
+
+.titleRow .title {
+    margin-bottom: 0;
+}
+
+.hint {
+    margin: -4px 0 8px;
+    font-size: 10px;
+    line-height: 1.6;
+    opacity: 0.55;
+}
+
+.empty {
+    margin: 6px 8px;
+    font-size: 11px;
+    opacity: 0.55;
+}
+
+/* dir="auto" روی خود متن: عنوان انگلیسی از ته کوتاه می‌شود، نه از سر */
+.label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.placeholder {
+    opacity: 0.55;
+}
+
+/* ─── پیشرفت پخش: پس‌زمینه‌ی عنوان از سمت شروع پر می‌شود ─── */
+.fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: calc(var(--preview-progress, 0) * 100%);
+    background: color-mix(in srgb, #{$brand} 18%, transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ─── دکمه‌ی پخش مینیمال ─── */
+.play {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--body-text-color) 18%, transparent);
+    background: transparent;
+    color: var(--body-text-color);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+
+    svg {
+        width: 10px;
+        height: 10px;
+        fill: currentColor;
+    }
+
+    &:hover {
+        border-color: $brand;
+        color: $brand;
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    &:focus-visible {
+        outline: $focus-ring;
+        outline-offset: 2px;
+    }
+}
+
+.playActive {
+    border-color: $brand;
+    background: $brand;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+/* در حال بارگذاری: حلقه‌ی نازک دور دکمه می‌چرخد */
+.playLoading::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    border-top-color: $brand;
+    animation: previewSpin 0.7s linear infinite;
+}
+
+@keyframes previewSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ─── پیش‌نمایش‌های کوچک ─── */
+.chipIcon {
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    flex-shrink: 0;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.chipThumb {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.thumb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 7px;
+    overflow: hidden;
+    object-fit: cover;
+    background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+}
+
+.thumbIcon :global(svg) {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.thumbLetter {
+    font-size: 11px;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+/* ─── badge / chips ─── */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.chip {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+        border-color: color-mix(in srgb, #{$brand} 45%, var(--input-border-color));
+    }
+
+    &.active {
+        border-color: $brand;
+        color: $brand;
+        background: color-mix(in srgb, #{$brand} 12%, var(--input-background-color));
+    }
+
+    &:has(.chipMain:focus-visible) {
+        outline: $focus-ring;
+        outline-offset: 1px;
+    }
+
+    .play {
+        width: 20px;
+        height: 20px;
+        margin-inline-end: 5px;
+    }
+}
+
+.chipMain {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 6px 9px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    min-height: 35px;
+}
+
+.chip:has(.play) .chipMain {
+    padding-inline-end: 6px;
+}
+
+/* ─── لیست + ردیف‌های منوی select ─── */
+.list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.listScroll {
+    max-height: 264px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+
+.row {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 6px;
+    padding-inline-end: 8px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: var(--body-text-color);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+    }
+
+    &.active {
+        border-color: $brand;
+        color: $brand;
+        background: color-mix(in srgb, #{$brand} 8%, transparent);
+    }
+
+    &:has(.rowMain:focus-visible) {
+        outline: $focus-ring;
+        outline-offset: -1px;
+    }
+}
+
+.rowMain {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 6px 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: start;
+    cursor: pointer;
+    outline: none;
+}
+
+/* ─── select (بازشونده) ─── */
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.selectBox {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 38px;
+    padding-inline-end: 10px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+        border-color: color-mix(in srgb, #{$brand} 45%, var(--input-border-color));
+    }
+
+    &:has(.selectTrigger:focus-visible) {
+        outline: $focus-ring;
+        outline-offset: 1px;
+    }
+}
+
+.selectBoxOpen {
+    border-color: $brand;
+}
+
+.selectTrigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 6px 10px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: start;
+    cursor: pointer;
+    outline: none;
+}
+
+.chevron {
+    display: inline-flex;
+    flex-shrink: 0;
+    opacity: 0.6;
+    transition: transform 0.15s ease;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+    background: var(--plan-card-background-color);
+    scroll-margin-block: 8px;
+}
+
+.panelList {
+    max-height: 232px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+
+.search {
+    position: relative;
+    display: block;
+    margin: 0;
+
+    svg {
+        position: absolute;
+        inset-inline-start: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    input {
+        display: block;
+        width: 100%;
+        height: 32px;
+        box-sizing: border-box;
+        padding-block: 0;
+        padding-inline: 30px 10px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+}
+
+/* ─── grid / کارت ─── */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 6px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+        border-color: color-mix(in srgb, #{$brand} 45%, var(--input-border-color));
+    }
+
+    &.active {
+        border-color: $brand;
+        color: $brand;
+    }
+
+    &:has(.cardLabel:focus-visible) {
+        outline: $focus-ring;
+        outline-offset: 1px;
+    }
+}
+
+.cardVisual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 8%, transparent);
+}
+
+.cardMedia {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.cardIcon {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.cardLetter {
+    font-size: 20px;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--body-text-color) 30%, transparent);
+}
+
+.cardTitle {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    gap: 4px;
+    min-height: 32px;
+    padding-inline-end: 5px;
+
+    .play {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.cardLabel {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 5px 7px;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+
+    /* عنوان کارت تا دو خط */
+    .label {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+
+.cardTitle:has(.play) .cardLabel {
+    text-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .play,
+    .row,
+    .chip,
+    .card,
+    .selectBox,
+    .chevron {
+        transition: none;
+    }
+
+    .playLoading::after {
+        animation-duration: 2s;
+    }
+}

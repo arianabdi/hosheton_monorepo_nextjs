@@ -1,0 +1,428 @@
+// Desktop: content of a ModalHelper (it draws the box and the dim overlay).
+// Phone: fills a full-screen editor window (.screenModal).
+.modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: min(640px, 85vh);
+    color: var(--ve-text, var(--body-text-color));
+    overflow: hidden;
+
+    &.screenModal {
+        height: 100%;
+        max-height: none;
+
+        .footer {
+            padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+
+            .cancelBtn,
+            .applyBtn {
+                flex: 1;
+                justify-content: center;
+                height: 46px;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+        background: var(--ve-header-bar, transparent);
+
+        .title {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+
+            svg {
+                color: var(--brand-color);
+            }
+        }
+
+    }
+
+    .body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sourceRow {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .styleRow {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding: 8px;
+        border: 1px solid var(--ve-border, var(--input-border-color));
+        border-radius: 10px;
+        background: var(--ve-hover, var(--body-background));
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 110px;
+        flex: 1;
+
+        > span {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        }
+
+        select,
+        input[type='number'] {
+            height: 30px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 8px;
+            background: var(--ve-input-bg, var(--body-background));
+            color: var(--ve-text, var(--body-text-color));
+            padding: 0 8px;
+            font-size: 12px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input[type='color'] {
+            height: 30px;
+            padding: 2px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 8px;
+            background: var(--ve-input-bg, var(--body-background));
+            cursor: pointer;
+        }
+    }
+
+    .colorField {
+        flex: 0 1 96px;
+        min-width: 84px;
+    }
+
+    .wordsField {
+        flex: 0 1 92px;
+        min-width: 80px;
+    }
+
+    .generateBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        height: 30px;
+        padding: 0 12px;
+        border: 1px solid color-mix(in srgb, var(--brand-color) 45%, transparent);
+        border-radius: 8px;
+        background: var(--brand-color);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:hover:not(:disabled) {
+            filter: brightness(1.08);
+        }
+
+        &:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+    }
+
+    .replaceRow {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 60%, transparent));
+        cursor: pointer;
+        user-select: none;
+
+        input {
+            accent-color: var(--brand-color);
+        }
+    }
+
+    .hintBox {
+        padding: 22px 12px;
+        border: 1px dashed var(--ve-border, var(--input-border-color));
+        border-radius: 10px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+
+        p {
+            margin: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.7;
+        }
+    }
+
+    .errorLine {
+        margin: 0;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: rgba(239, 68, 68, 0.12);
+        color: #ef4444;
+        font-size: 11.5px;
+    }
+
+    .noteLine {
+        margin: 0;
+        font-size: 11px;
+        color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+    }
+
+    .segmentList {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .listHead {
+            background: transparent;
+            border: none;
+
+            span {
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+            }
+        }
+    }
+
+    .segmentRow {
+        display: grid;
+        grid-template-columns: 76px 76px 1fr 62px;
+        gap: 6px;
+        align-items: center;
+        padding: 4px 6px;
+        border: 1px solid var(--ve-border, var(--input-border-color));
+        border-radius: 8px;
+        background: var(--ve-hover, var(--body-background));
+
+        &.segmentRowOpen {
+            border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        }
+
+        input[type='number'] {
+            height: 26px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background: var(--ve-input-bg, var(--body-background));
+            color: var(--ve-text, var(--body-text-color));
+            font: 11px/1 monospace;
+            padding: 0 6px;
+            outline: none;
+
+            &:focus {
+                border-color: color-mix(in srgb, var(--brand-color) 50%, transparent);
+            }
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background: transparent;
+            color: var(--ve-text, var(--body-text-color));
+            font-size: 12px;
+            font-family: inherit;
+            padding: 4px 6px;
+            resize: vertical;
+            outline: none;
+
+            &:focus {
+                background: var(--ve-input-bg, var(--body-background));
+                border-color: color-mix(in srgb, var(--brand-color) 50%, transparent);
+            }
+        }
+
+        .rowActions {
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 2px;
+
+            .overrideBadge {
+                display: inline-flex;
+                align-items: center;
+                color: var(--brand-color);
+
+                svg {
+                    width: 11px;
+                    height: 11px;
+                }
+            }
+
+            button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                padding: 0;
+                border: none;
+                border-radius: 6px;
+                background: transparent;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+                cursor: pointer;
+
+                svg {
+                    width: 13px;
+                    height: 13px;
+                }
+
+                &:hover {
+                    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+                    color: var(--ve-text, var(--body-text-color));
+                }
+
+                &.deleteRowBtn:hover {
+                    background: rgba(239, 68, 68, 0.14);
+                    color: #ef4444;
+                }
+            }
+        }
+    }
+
+    // Per-row single style editor (opened with the chevron on a row).
+    .rowStyleEditor {
+        margin: -2px 0 2px;
+        padding: 4px 8px 8px;
+        border: 1px solid color-mix(in srgb, var(--brand-color) 30%, var(--ve-border, var(--input-border-color)));
+        border-radius: 8px;
+        background: var(--ve-panel, var(--input-background-color));
+
+        .rowStyleHint {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 2px 0 4px;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        }
+
+        .resetRowStyleBtn {
+            padding: 2px 8px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 6px;
+            background: transparent;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            font-size: 10px;
+            cursor: pointer;
+
+            &:hover:not(:disabled) {
+                color: var(--ve-text, var(--body-text-color));
+            }
+
+            &:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .addRowBtn {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 10px;
+        border: 1px dashed var(--ve-border, var(--input-border-color));
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 60%, transparent));
+        font-size: 11px;
+        cursor: pointer;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        &:hover {
+            color: var(--brand-color);
+            border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        }
+    }
+
+    .footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 10px 14px;
+        border-top: 1px solid var(--ve-border, var(--input-border-color));
+
+        .cancelBtn {
+            height: 30px;
+            padding: 0 12px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 8px;
+            background: transparent;
+            color: var(--ve-text, var(--body-text-color));
+            font-size: 12px;
+            cursor: pointer;
+
+            &:hover {
+                background: var(--ve-hover, var(--body-background));
+            }
+        }
+
+        .applyBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 30px;
+            padding: 0 14px;
+            border: none;
+            border-radius: 8px;
+            background: var(--brand-color);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+
+            &:hover:not(:disabled) {
+                filter: brightness(1.08);
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.spin {
+    animation: captionSpin 1s linear infinite;
+}
+
+@keyframes captionSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

@@ -1,0 +1,228 @@
+// Theme hooks fall back to sensible values so the panel works in any app that
+// doesn't define the workspace CSS variables. Logical properties keep the layout
+// correct in both RTL and LTR documents.
+//
+// Per-app look (set on the `className` you pass; fallbacks = the default look):
+//   --plan-usage-radius          card corners              (12px)
+//   --plan-usage-title-weight    plan name + usage title   (700)
+//   --plan-usage-label-weight    feature names             (600)
+//   --plan-usage-strong-weight   price, numbers, button    (600 / bold)
+//   --plan-usage-name-size       feature name size         (0.85rem)
+//   --plan-usage-row-padding     usage row padding         (12px 0)
+//   --plan-usage-track           progress track color
+//   --plan-usage-on-color        "enabled" color           (#16a34a)
+//   --plan-usage-off-color       "disabled" color          (#dc2626)
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--body-text-color, #1f2937);
+}
+
+.emptyCard {
+    background: var(--card-background, #fff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: var(--plan-usage-radius, 12px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+
+    p {
+        margin: 0;
+    }
+}
+
+.planCard {
+    background: var(--card-background, #fff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: var(--plan-usage-radius, 12px);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.planInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-inline-size: 0;
+}
+
+.planTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.planName {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: var(--plan-usage-title-weight, 700);
+}
+
+.statusBadge {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.12);
+    color: #2563eb;
+
+    &[data-status='active'] {
+        background: rgba(22, 163, 74, 0.12);
+        color: #16a34a;
+    }
+
+    &[data-status='trialing'] {
+        background: rgba(37, 99, 235, 0.12);
+        color: #2563eb;
+    }
+
+    &[data-status='canceled'],
+    &[data-status='expired'],
+    &[data-status='failed'] {
+        background: rgba(220, 38, 38, 0.12);
+        color: #dc2626;
+    }
+}
+
+.testBadge {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(234, 179, 8, 0.16);
+    color: #a16207;
+}
+
+.planPrice {
+    margin: 0;
+    font-weight: var(--plan-usage-strong-weight, 600);
+    font-size: 0.9rem;
+}
+
+.planMeta {
+    margin: 0;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    opacity: 0.75;
+}
+
+.planActions {
+    display: flex;
+    align-items: center;
+}
+
+.primaryBtn {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    font-weight: var(--plan-usage-strong-weight, 600);
+    background: var(--blue-bg, #4b78ff);
+    color: #fff;
+    transition: filter 0.15s ease;
+
+    &:hover {
+        filter: brightness(1.08);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.usageTitle {
+    margin: 6px 0 0;
+    font-size: 0.92rem;
+    font-weight: var(--plan-usage-title-weight, 700);
+}
+
+.usageList {
+    background: var(--card-background, #fff);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: var(--plan-usage-radius, 12px);
+    padding: 6px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.noUsage {
+    padding: 12px 0;
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+.usageRow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--plan-usage-row-padding, 12px 0);
+
+    & + .usageRow {
+        border-block-start: 1px solid var(--border-color, #e5e7eb);
+    }
+}
+
+.usageMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.usageName {
+    font-size: var(--plan-usage-name-size, 0.85rem);
+    font-weight: var(--plan-usage-label-weight, 600);
+}
+
+.usageValue {
+    font-size: 0.8rem;
+    opacity: 0.85;
+
+    strong {
+        font-weight: var(--plan-usage-strong-weight, 700);
+    }
+
+    strong[data-allowed='true'] {
+        color: var(--plan-usage-on-color, #16a34a);
+    }
+
+    strong[data-allowed='false'] {
+        color: var(--plan-usage-off-color, #dc2626);
+    }
+}
+
+.usageReset {
+    font-size: 0.74rem;
+    opacity: 0.6;
+}
+
+.progressTrack {
+    block-size: 6px;
+    border-radius: 999px;
+    background: var(--plan-usage-track, rgba(148, 163, 184, 0.25));
+    overflow: hidden;
+}
+
+.progressFill {
+    block-size: 100%;
+    border-radius: 999px;
+    background: var(--blue-bg, #4b78ff);
+    transition: inline-size 0.3s ease;
+
+    &.warn {
+        background: #f59e0b;
+    }
+}

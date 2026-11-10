@@ -1,0 +1,273 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+
+    /* موبایل: ستون‌ها نزدیک‌تر تا تصاویر بزرگ‌تر شوند */
+    @media (max-width: 767px) { column-gap: 10px; }
+    @media (max-width: 319px) { grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 900px) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (min-width: 1120px) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (min-width: 1480px) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    @media (min-width: 1720px) { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    @media (min-width: 2080px) { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    @media (min-width: 2280px) { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+
+    &.chatOpen {
+        @media (min-width: 900px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 1120px) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        @media (min-width: 1480px) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        @media (min-width: 1720px) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        @media (min-width: 2080px) { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        @media (min-width: 2280px) { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+    }
+}
+
+.masonryColumn {
+    min-width: 0;
+}
+
+.tile {
+    position: relative;
+    break-inside: avoid;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--input-background-color);
+    cursor: pointer;
+    isolation: isolate;
+}
+
+.mediaLink {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.mediaClip {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    position: relative;
+    aspect-ratio: var(--tile-ratio, 0.75);
+    background: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+}
+
+.ghost {
+    position: absolute;
+    inset: 0;
+    // سبک برای تعداد زیاد: پس‌زمینه‌ی ثابت (بدون انیمیشن پس‌زمینه که هر فریم repaint می‌خواهد)
+    // + یک اسپینر کوچک که فقط transform می‌چرخد و روی compositor اجرا می‌شود
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        margin: -9px 0 0 -9px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid color-mix(in srgb, var(--body-text-color) 16%, transparent);
+        border-top-color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+        animation: exploreGhost 0.8s linear infinite;
+    }
+}
+
+@keyframes exploreGhost {
+    to { transform: rotate(360deg); }
+}
+
+.media {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1);
+    transition: transform 0.35s ease, opacity 0.25s ease;
+}
+
+.mediaReady {
+    opacity: 1;
+}
+
+.placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-color);
+    opacity: 0.55;
+}
+
+.priceVeil {
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    z-index: 3;
+    pointer-events: none;
+    padding: 10px 12px 28px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.28) 55%, transparent 100%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.kindBadge {
+    position: absolute;
+    bottom: 10px;
+    inset-inline-start: 10px;
+    z-index: 3;
+    pointer-events: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, #000 46%, transparent);
+    color: #fff;
+    backdrop-filter: blur(8px);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.85rem;
+    background: linear-gradient(180deg, transparent 42%, rgba(0, 0, 0, 0.72) 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+    z-index: 2;
+}
+
+.bottom {
+    width: 100%;
+    display: flex;
+    // نام سازنده جا نشد → لایک/ذخیره به ردیف بعد می‌روند، نه اینکه نام بشکند
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: #fff;
+}
+
+.creator {
+    // فضای باقی‌ماندهٔ ردیف مال نام سازنده است (وگرنه تا یک حرف جمع می‌شد)
+    // basis صفر: شکستن ردیف فقط وقتی که خود نام جا نشود (نه عرض کامل ستون)
+    flex: 1 1 0;
+    // کمتر از عرض نام کامل (یک خط) جمع نشود
+    min-width: min-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+// عکس سازنده کنار نامش
+.creatorRow {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.creatorAvatar {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-sizing: border-box;
+}
+
+.creatorAvatarFallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--brand-color) 55%, #000);
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+.name {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.2;
+    // نام سازنده کامل، همان‌طور که هست و فقط در یک خط (بدون بریدن و بدون شکستن)
+    white-space: nowrap;
+}
+
+.handle {
+    font-size: 0.72rem;
+    opacity: 0.78;
+}
+
+.useBtn {
+    align-self: flex-start;
+    border: none;
+    background: #fff;
+    color: #111;
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+}
+
+.metaBtn {
+    border: none;
+    background: transparent;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.78rem;
+    font-weight: 400;
+    pointer-events: auto;
+}
+
+.tile:hover .media,
+.tile:focus-within .media {
+    transform: scale(1.08);
+}
+
+.tile:hover .overlay,
+.tile:focus-within .overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@media (hover: none), (max-width: 767px) {
+    .overlay {
+        display: none;
+    }
+
+    .tile:hover .media,
+    .tile:focus-within .media {
+        transform: none;
+    }
+}

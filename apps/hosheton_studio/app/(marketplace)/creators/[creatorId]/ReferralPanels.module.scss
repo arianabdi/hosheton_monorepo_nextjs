@@ -1,0 +1,177 @@
+@use '../../../styles/creator-ui' as ui;
+
+/* پنل گزارش دعوت (تب Referral صفحه creator) — کارت hero حالا ReferralCardNew است */
+
+/* ─── پنل تب گزارش دعوت ─── */
+
+.wrap {
+    display: grid;
+    gap: 16px;
+
+    @media (max-width: ui.$mobile) {
+        gap: 0;
+    }
+}
+
+.card {
+    @include ui.panel;
+
+    h3 {
+        @include ui.section-title;
+        margin-bottom: 12px;
+    }
+}
+
+/* آمار: دسکتاپ چهار کادر؛ موبایل جدول دوتایی بی‌قاب با خط جداکننده */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+
+    @media (max-width: ui.$mobile) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
+        border-bottom: 1px solid ui.$divider;
+    }
+}
+
+.statBox {
+    display: grid;
+    gap: 4px;
+    padding: 16px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--input-background-color);
+
+    strong {
+        font-size: 1.2rem;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+    }
+
+    span {
+        font-size: 0.78rem;
+        color: ui.$muted;
+    }
+
+    @media (max-width: ui.$mobile) {
+        padding: 14px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+
+        &:nth-child(n + 3) {
+            border-top: 1px solid ui.$divider;
+        }
+
+        strong {
+            font-size: 1.05rem;
+        }
+    }
+}
+
+.linkRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.linkInput {
+    @include ui.input;
+    flex: 1;
+    min-width: 0;
+    direction: ltr;
+    font-size: 0.84rem;
+    text-overflow: ellipsis;
+}
+
+.copyBtn {
+    @include ui.primary-btn;
+    flex-shrink: 0;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 0.84rem;
+
+    @media (max-width: ui.$mobile) {
+        width: auto;
+    }
+}
+
+.progressTrack {
+    height: 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--brand-color, #7b58fd);
+    transition: width 0.3s ease;
+}
+
+.progressMeta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 6px;
+    font-size: 0.72rem;
+    opacity: 0.6;
+}
+
+.table {
+    display: grid;
+}
+
+.row {
+    @include ui.list-row;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    opacity: 1 !important;
+
+    &.pending {
+        background: #f59e0b1f;
+        color: #d97706;
+    }
+
+    &.approved {
+        background: #22c55e1f;
+        color: #16a34a;
+    }
+
+    &.paid {
+        background: #22c55e1f;
+        color: #16a34a;
+    }
+
+    &.rejected,
+    &.cancelled,
+    &.expired {
+        background: #ef44441f;
+        color: #dc2626;
+    }
+}
+
+.empty {
+    margin: 0;
+    padding: 20px 12px;
+    text-align: center;
+    border: 1px dashed color-mix(in srgb, var(--body-text-color) 15%, transparent);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 400;
+    opacity: 0.55;
+}
+
+/* صفحه‌بندی لیست‌ها — کامپوننت مشترک Pagination */
+.pager {
+    padding-top: 10px;
+}

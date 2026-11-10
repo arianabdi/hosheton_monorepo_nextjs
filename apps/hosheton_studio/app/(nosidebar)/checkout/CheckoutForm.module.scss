@@ -1,0 +1,340 @@
+// متغیرهای رنگی برای هماهنگی با طرح
+$bg-main: #f8fafc;
+$bg-card: #ffffff;
+$border-color: #e2e8f0;
+$primary-blue: #1d63ff;
+$text-dark: var(--body-text-color);
+$text-muted: #64748b;
+$green-success: #10b981;
+.Section {
+    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 0rem 11rem 0rem;
+    //overflow-y: scroll;
+    //height: 100vh;
+}
+.checkoutContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 1140px;
+    margin: 40px auto;
+    padding: 0 16px;
+    font-family: inherit;
+
+    @media (min-width: 992px) {
+        grid-template-columns: 1.6fr 1fr; // دو ستونه در دسکتاپ
+    }
+}
+
+.mainContent {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 16px;
+    padding: 54px 24px;
+    height: max-content;
+
+    @media (max-width: 400px) {
+        padding: 54px 0px;
+    }
+}
+
+.sidebarContent {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 16px;
+    padding: 54px 24px;
+    height: max-content;
+
+    @media (max-width: 400px) {
+        padding: 54px 0px;
+    }
+
+    // اضافه کردن قابلیت استیکی برای دسکتاپ
+    @media (min-width: 992px) {
+        position: sticky;
+        top: 24px; // فاصله‌ای که سایدبار هنگام اسکرول از بالای مرورگر حفظ می‌کند
+        z-index: 10;
+    }
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.sectionSubtitle {
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin-bottom: 24px;
+}
+
+.sectionIntro {
+    font-size: 0.78rem;
+    color: $text-muted;
+    line-height: 1.75;
+    margin: -4px 0 16px;
+}
+
+.fieldHint {
+    font-size: 0.72rem;
+    color: $text-muted;
+    line-height: 1.65;
+    margin-top: 6px;
+}
+
+.freeCheckoutNotice {
+    border: 1px dashed $green-success;
+    background: rgba(16, 185, 129, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.82rem;
+    color: $text-dark;
+    line-height: 1.7;
+    margin-bottom: 8px;
+
+    strong {
+        color: $green-success;
+    }
+}
+
+.sidebarHint {
+    font-size: 0.72rem;
+    color: $text-muted;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.sectionBlock {
+    margin-bottom: 32px;
+    &:last-child { margin-bottom: 0; }
+}
+
+.subHeading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $text-dark;
+    margin-bottom: 12px;
+}
+
+// باکس‌های شکیل انتخاب درگاه و دوره
+.gridOptions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 3px 2px -1px #0000001a;
+    padding: 5px;
+    border-radius: 5px;
+
+    @media (min-width: 480px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+// باکس‌های شکیل انتخاب درگاه و دوره
+.gridOptions2 {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(1, 1fr);
+    border: 1px solid var(--border-color);
+    box-shadow: 0px 3px 2px -1px #0000001a;
+    .Box{
+        border-radius: 0px;
+    }
+}
+
+// باکس‌های شکیل انتخاب درگاه و دوره
+.durationGridOptions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.Box {
+    border-radius: 5px;
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    background-color:  var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+
+    &:hover {
+        border-color: var(--brand-color);
+    }
+
+    &.active {
+        border: 1px solid #137be3;
+        background-color: #0e62ff17;
+    }
+}
+.logo{
+    width: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+
+    img,
+    svg{
+        width: 100%;
+        height: 100%;
+    }
+}
+.labelContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+}
+.active{
+    .boxLabel {
+        span {
+            color: var(--brand-color);
+        }
+    }
+}
+
+.boxLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    span {
+        color: var(--body-text-color);
+        font-size: 1rem;
+    }
+
+    small {
+        font-size: 0.75rem;
+        color: $text-muted;
+    }
+}
+
+.radioCircle {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $border-color;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .active & {
+        border-color:var(--brand-color);
+        &:after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--brand-color);
+            border-radius: 50%;
+        }
+    }
+}
+
+// اینپوت‌ها و بخش کد تخفیف
+.inputGroup {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    margin-top: 8px;
+}
+
+.customerGrid {
+    display: flex;
+    padding: 20px 0px;
+    flex-direction: row;
+    gap: 20px;
+
+    @media (max-width: 640px) {
+        flex-direction: column;
+    }
+}
+
+.customInput {
+    flex: 1;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.9rem;
+    outline: none;
+    background: var(--input-background-color);
+
+    label{
+        font-size: 12px;
+    }
+    &:focus {
+        border-color: var(--brand-color);
+        background: #fff;
+    }
+}
+
+.applyButton {
+    background: var(--settings-button-background);
+    color: var(--body-text-color);
+    border: 1px solid var(--settings-button-border);
+    border-radius: 8px;
+    padding: 0 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+
+}
+
+// سایدبار (خلاصه سفارش)
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--body-text-color);;
+    margin-bottom: 14px;
+
+    &.discountRow {
+        color: $green-success;
+        font-weight: 600;
+    }
+
+    &.totalRow {
+        border-top: 2px dashed var(--border-color);
+        padding-top: 16px;
+        margin-top: 16px;
+        font-size: 1.1rem;
+    }
+}
+
+.submitButton {
+    background: var(--brand-color);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.2s;
+
+    &:hover { background: var(--brand-color); }
+}
+
+.secureBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: $text-muted;
+    margin-top: 16px;
+}

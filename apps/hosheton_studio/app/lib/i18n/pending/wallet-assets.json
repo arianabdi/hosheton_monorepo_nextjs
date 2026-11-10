@@ -1,0 +1,138 @@
+{
+  "wallet": {
+    "subtitle": {
+      "en": "Balance in {{currency}} — pay via Rial/Toman gateway; wallet credit uses the settings currency.",
+      "fa": "موجودی به {{currency}} — پرداخت از درگاه ریالی/تومانی؛ اعتبار کیف پول همان واحد تنظیمات است."
+    },
+    "account_status": {
+      "en": "Account status:",
+      "fa": "وضعیت حساب:"
+    },
+    "transfer_title": {
+      "en": "Card-to-card transfer and send receipt",
+      "fa": "واریز کارت‌به‌کارت و ارسال رسید"
+    },
+    "payable_amount": {
+      "en": "Amount to transfer:",
+      "fa": "مبلغ قابل واریز:"
+    },
+    "online_gateway": {
+      "en": "Online gateway",
+      "fa": "درگاه آنلاین"
+    },
+    "online_gateway_desc": {
+      "en": "Shetab and instant",
+      "fa": "شتابی و آنی"
+    },
+    "card_upload_short": {
+      "en": "Manual transfer + receipt upload",
+      "fa": "واریز دستی + آپلود رسید"
+    },
+    "installment": {
+      "en": "Installment",
+      "fa": "پرداخت اقساطی"
+    },
+    "installment_desc": {
+      "en": "No guarantor or cheque",
+      "fa": "بدون ضامن و چک"
+    },
+    "no_gateway": {
+      "en": "No active gateway for this payment type.",
+      "fa": "درگاه فعالی برای این نوع پرداخت وجود ندارد."
+    },
+    "card_steps": {
+      "en": "1) Choose an amount and submit a transfer request. 2) The destination card number is shown — transfer the exact amount. 3) Upload the receipt so the wallet is credited after admin approval.",
+      "fa": "۱) مبلغ را انتخاب کنید و درخواست واریز را ثبت کنید. ۲) شماره کارت مقصد نمایش داده می‌شود و مبلغ دقیق را واریز کنید. ۳) تصویر رسید را آپلود کنید تا پس از تأیید ادمین، کیف پول شارژ شود."
+    },
+    "gateway_charge": {
+      "en": "Gateway charge: {{amount}}",
+      "fa": "پرداخت در درگاه: {{amount}}"
+    },
+    "history_title": {
+      "en": "Recent transaction history",
+      "fa": "تاریخچه آخرین تراکنش‌ها"
+    },
+    "no_transactions": {
+      "en": "No transactions recorded for this account.",
+      "fa": "هیچ تراکنش مالی برای این حساب ثبت نشده است."
+    },
+    "col_id": {
+      "en": "ID",
+      "fa": "شناسه"
+    },
+    "col_datetime": {
+      "en": "Date and time",
+      "fa": "تاریخ و زمان"
+    },
+    "col_purpose": {
+      "en": "For / type",
+      "fa": "بابت / نوع"
+    },
+    "col_amount_usd": {
+      "en": "Amount (USD)",
+      "fa": "مبلغ (USD)"
+    },
+    "col_gateway": {
+      "en": "Gateway",
+      "fa": "درگاه"
+    },
+    "resume_receipt": {
+      "en": "Continue sending receipt",
+      "fa": "ادامه ارسال رسید"
+    }
+  },
+  "assets": {
+    "load_error": {
+      "en": "Failed to load assets",
+      "fa": "خطا در بارگذاری دارایی‌ها"
+    },
+    "storage_title": {
+      "en": "Storage used",
+      "fa": "میزان حافظه مصرف‌شده"
+    },
+    "storage_used": {
+      "en": "{{used}} of {{max}} used",
+      "fa": "{{used}} از {{max}} مصرف شده"
+    },
+    "add_new": {
+      "en": "Add new",
+      "fa": "افزودن جدید"
+    },
+    "file_type": {
+      "en": "File type and medium",
+      "fa": "نوع و بستر فایل"
+    },
+    "content_folders": {
+      "en": "Content folders",
+      "fa": "پوشه‌بندی محتوا"
+    },
+    "sort_by": {
+      "en": "Sort by",
+      "fa": "مرتب‌سازی بر اساس"
+    },
+    "edit_prompt": {
+      "en": "Edit prompt",
+      "fa": "ویرایش پرامپت"
+    },
+    "prompt_text": {
+      "en": "Prompt text",
+      "fa": "متن پرامپت"
+    },
+    "folders": {
+      "en": "Folders",
+      "fa": "پوشه‌ها"
+    },
+    "show_all_assets": {
+      "en": "Show assets from all folders",
+      "fa": "نمایش دارایی‌های تمام پوشه‌ها"
+    },
+    "loading_files": {
+      "en": "Loading your files and assets...",
+      "fa": "در حال بارگذاری فایل‌ها و دارایی‌های شما..."
+    },
+    "delete_file": {
+      "en": "Delete file",
+      "fa": "حذف فایل"
+    }
+  }
+}

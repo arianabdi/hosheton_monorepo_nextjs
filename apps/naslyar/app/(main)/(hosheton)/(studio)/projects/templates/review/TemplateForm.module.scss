@@ -1,0 +1,289 @@
+.promptArea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.chipRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0 0 1rem;
+}
+
+.tagChipRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0.55rem 0 0;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.22rem 0.35rem 0.22rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    color: var(--brand-color);
+
+    button {
+        border: none;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1;
+        padding: 0 0.2rem;
+        opacity: 0.75;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.mediaStrip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.thumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 2px solid rgba(255, 255, 255, 0.92);
+    border-radius: 14px;
+    overflow: hidden;
+    background: color-mix(in srgb, #000 18%, transparent);
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+
+    img,
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.thumbRemove {
+    position: absolute;
+    top: 3px;
+    inset-inline-start: 3px;
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 2;
+
+    &:disabled {
+        cursor: wait;
+        opacity: 0.7;
+    }
+}
+
+.thumbActions {
+    position: absolute;
+    bottom: 3px;
+    inset-inline-end: 3px;
+    display: flex;
+    gap: 3px;
+    z-index: 2;
+}
+
+.thumbActionBtn {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.82);
+    }
+}
+
+.thumbPending {
+    opacity: 0.72;
+}
+
+.thumbRemoving {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.thumbProgress {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.thumbAdd {
+    width: 64px;
+    height: 64px;
+    border: 2px dashed color-mix(in srgb, var(--body-text-color) 28%, transparent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--body-text-color) 4%, transparent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    color: inherit;
+    opacity: 0.72;
+
+    span {
+        font-size: 1.45rem;
+        line-height: 1;
+        font-weight: 500;
+    }
+
+    input {
+        display: none;
+    }
+
+    &:hover {
+        opacity: 1;
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+}
+
+.thumbCover {
+    border-color: #f5c451;
+    box-shadow: 0 0 0 1px #f5c451, 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+
+.thumbCoverBtn {
+    background: #f5c451;
+    color: #2a1d00;
+}
+
+.listCoverCell {
+    width: 52px;
+    padding-inline-end: 0.4rem !important;
+    vertical-align: middle;
+}
+
+.listCover {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    opacity: 0.85;
+    flex-shrink: 0;
+
+    img,
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.listCoverEmpty {
+    opacity: 0.35;
+}
+
+.tagField {
+    position: relative;
+}
+
+.tagAddBtn {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 6px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    color: var(--body-text-color);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 1;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+    }
+}
+
+.tagField .tagInput {
+    padding-inline-end: 2.4rem;
+}
+
+.tagMenu {
+    position: absolute;
+    top: calc(100% + 4px);
+    inset-inline: 0;
+    z-index: 8;
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--plan-card-background-color, #fff);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.tagMenuEmpty {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.tagOption {
+    display: block;
+    width: 100%;
+    text-align: start;
+    border: none;
+    background: transparent;
+    color: inherit;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.84rem;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    }
+}

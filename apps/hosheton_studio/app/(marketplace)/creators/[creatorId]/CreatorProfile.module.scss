@@ -1,0 +1,741 @@
+@use '../../../styles/creator-ui' as ui;
+
+.page {
+    padding: 2rem 1.5rem 4rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    color: var(--body-text-color);
+
+    button,
+    input,
+    select,
+    textarea {
+        font-family: inherit;
+    }
+
+    @media (max-width: 640px) {
+        padding: 1rem 1rem 3rem;
+    }
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.84rem;
+    opacity: 0.55;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 1.75rem;
+
+    &:hover { opacity: 1; }
+
+    @media (max-width: 640px) {
+        margin-bottom: 1.25rem;
+    }
+}
+
+.loading, .error, .empty {
+    padding: 2.5rem 1rem;
+    text-align: center;
+    opacity: 0.75;
+}
+
+.error { color: #f87171; }
+
+/* حالت لودینگ ساده صفحه — سه نقطه پالس‌دار + متن */
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 40vh;
+}
+
+.loadingDots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.loadingDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brand-color, #7b58fd);
+    animation: creatorLoadPulse 1.1s ease-in-out infinite;
+
+    &:nth-child(2) {
+        animation-delay: 0.18s;
+    }
+
+    &:nth-child(3) {
+        animation-delay: 0.36s;
+    }
+}
+
+.loadingText {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 100;
+    opacity: 0.6;
+}
+
+@keyframes creatorLoadPulse {
+    0%, 100% { opacity: 0.25; transform: scale(0.9); }
+    50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+/* ─── هدر پنل کاربری (صاحب حساب) — هم‌شکل هاب قالب‌ها: عنوان + توضیح تب + دکمه، بعد ردیف تب ─── */
+
+.hubHeader {
+    margin-bottom: 1.75rem;
+}
+
+.hubTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.hubTitle {
+    margin: 0 0 0.35rem;
+    font-size: 1.55rem;
+    font-weight: 500;
+}
+
+.hubSubtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.72;
+    line-height: 1.55;
+    max-width: 560px;
+}
+
+.createBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.65rem 1.15rem;
+    border-radius: 12px;
+    background: var(--brand-color);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.92;
+    }
+}
+
+.tabScroller {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+
+    &.fadeStart::before,
+    &.fadeEnd::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2.75rem;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    &.fadeStart::before {
+        inset-inline-start: 0;
+        background: linear-gradient(
+            to inline-end,
+            color-mix(in srgb, #000 42%, var(--body-background)),
+            transparent
+        );
+    }
+
+    &.fadeEnd::after {
+        inset-inline-end: 0;
+        background: linear-gradient(
+            to inline-start,
+            color-mix(in srgb, #000 42%, var(--body-background)),
+            transparent
+        );
+    }
+}
+
+.tabRow {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 14px;
+    background: var(--input-background-color);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.tabBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--body-text-color);
+    font-size: 0.84rem;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.72;
+    transition: background 0.15s, opacity 0.15s, color 0.15s;
+
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    }
+
+    &.active {
+        opacity: 1;
+        color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    }
+
+    @media (max-width: 640px) {
+        padding: 0.55rem 0.75rem;
+        gap: 6px;
+        font-size: 0.78rem;
+    }
+}
+
+.tabContent {
+    min-height: 200px;
+}
+
+/* موبایل: عنوان/توضیح/دکمه حذف؛ ردیف تب تمام‌عرض و چسبیده زیر نوار بالای اپ (MobileAppBar)
+   — هم‌الگوی تب‌های موبایل تنظیمات (زیرخط‌دار، بدون قاب) */
+@media (max-width: 768px) {
+    .pageHub {
+        padding: 0 1rem 3rem;
+    }
+
+    .hubHeader {
+        position: sticky;
+        top: 0;
+        z-index: 6;
+        margin: 0 -1rem 1rem;
+        background: var(--plan-card-background-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .hubTop {
+        display: none;
+    }
+
+    .tabScroller {
+        border-radius: 0;
+
+        &.fadeStart::before {
+            background: linear-gradient(
+                to inline-end,
+                color-mix(in srgb, #000 30%, var(--plan-card-background-color)),
+                transparent
+            );
+        }
+
+        &.fadeEnd::after {
+            background: linear-gradient(
+                to inline-start,
+                color-mix(in srgb, #000 30%, var(--plan-card-background-color)),
+                transparent
+            );
+        }
+    }
+
+    .tabRow {
+        gap: 0;
+        padding: 0 4px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .tabBtn {
+        padding: 12px 14px;
+        border-radius: 0;
+        border-bottom: 2px solid transparent;
+        font-size: 13px;
+
+        &:hover {
+            background: transparent;
+        }
+
+        &.active {
+            background: transparent;
+            border-bottom-color: var(--brand-color);
+        }
+    }
+
+    /* کارت دعوت در تب خودش هست — در موبایل از معرفی حذف می‌شود */
+    .heroAside {
+        display: none;
+    }
+}
+
+/* ─── معرفی creator — تب «پروژه‌های من» و پروفایل عمومی ─── */
+
+.hero {
+    /* دو ستون: مشخصات creator یک سمت، کارت دعوت/featured سمت دیگر — زیر 860px یک ستون */
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2rem;
+    align-items: center;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+
+    @media (max-width: 1100px) {
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 860px) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.heroCopy {
+    min-width: 0;
+}
+
+.identity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.identityText {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.avatar,
+.avatarPlaceholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    @media (max-width: 640px) {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+.avatar {
+    object-fit: cover;
+}
+
+.avatarPlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+}
+
+.name {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+
+    @media (max-width: 640px) {
+        font-size: 1.15rem;
+    }
+}
+
+.bio {
+    margin: 0 0 1.25rem;
+    font-size: 0.92rem;
+    font-weight: 400;
+    line-height: 1.8;
+    opacity: 0.72;
+    max-width: 60ch;
+    overflow-wrap: break-word;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    font-size: 0.84rem;
+}
+
+.stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.62;
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.primaryBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: var(--brand-color);
+    color: #fff;
+    border-radius: 12px;
+    padding: 0.65rem 1.15rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.92;
+    }
+}
+
+.featured {
+    width: 100%;
+    max-width: 240px;
+    justify-self: center;
+    border: none;
+    padding: 0;
+    background: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4 / 3;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.35s ease;
+    }
+
+    &:hover img {
+        transform: scale(1.04);
+    }
+
+    @media (max-width: 1100px) {
+        max-width: 200px;
+    }
+
+    @media (max-width: 860px) {
+        display: none;
+    }
+}
+
+/* عنوان بخش قالب‌ها در پروفایل عمومی */
+.sectionHead {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+}
+
+.sectionTitle {
+    @include ui.section-title;
+}
+
+.sectionCount {
+    padding: 2px 9px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    opacity: 0.8;
+}
+
+.settingsEmbed {
+    max-width: none;
+    width: 100%;
+}
+
+.squareGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+
+    @media (max-width: 520px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
+
+.saleWrap {
+    display: grid;
+    gap: 16px;
+
+    @media (max-width: ui.$mobile) {
+        gap: 0;
+    }
+}
+
+/* نوار خلاصه فروش — یک قاب، سه سلول با جداکننده عمودی (مثل داشبورد فروش) */
+.summaryStrip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--input-background-color);
+    overflow: hidden;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+
+    /* موبایل: بدون قاب — سه بخش درآمد با خط جداکننده */
+    @media (max-width: ui.$mobile) {
+        border: 0;
+        border-bottom: 1px solid ui.$divider;
+        border-radius: 0;
+        background: transparent;
+    }
+}
+
+.summaryCell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 20px;
+    min-width: 0;
+
+    &:not(:first-child) {
+        border-inline-start: 1px solid color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    }
+
+    @media (max-width: 900px) {
+        &:not(:first-child) {
+            border-inline-start: none;
+            border-top: 1px solid color-mix(in srgb, var(--body-text-color) 8%, transparent);
+        }
+    }
+
+    @media (max-width: ui.$mobile) {
+        padding: 16px 0;
+    }
+
+    .summaryTitle {
+        @include ui.section-title;
+        font-size: 0.85rem;
+    }
+
+    .summaryMain {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .summaryValue {
+        font-size: 1.45rem;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+
+    .summarySpark {
+        flex: 0 0 40%;
+        min-width: 80px;
+        height: 64px;
+    }
+
+    .summaryStats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        padding-top: 10px;
+        border-top: 1px dashed color-mix(in srgb, var(--body-text-color) 12%, transparent);
+    }
+
+    .summaryStat {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        min-width: 0;
+    }
+
+    .summaryStatLabel {
+        font-size: 0.66rem;
+        font-weight: 400;
+        opacity: 0.5;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .summaryStatValue {
+        font-size: 0.78rem;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .summaryUp {
+        color: #16a34a;
+    }
+
+    .summaryDown {
+        color: #ef4444;
+    }
+}
+
+.saleCard {
+    @include ui.panel;
+
+    h3 {
+        @include ui.section-title;
+    }
+}
+
+/* توضیح کوتاه زیر عنوان هر بخش */
+.cardHint {
+    @include ui.section-hint;
+    margin-bottom: 8px;
+}
+
+/* حالت خالی — با آیکون و توضیح، به‌جای متن تنها */
+.saleEmptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 28px 12px;
+    border: 1px dashed color-mix(in srgb, var(--body-text-color) 15%, transparent);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.6;
+
+    svg {
+        flex-shrink: 0;
+        opacity: 0.7;
+    }
+}
+
+/* کارت راهنمای فروش بیشتر */
+.tipsCard {
+    padding: 18px 20px;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 20%, transparent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+
+    @media (max-width: ui.$mobile) {
+        padding: 18px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .tipsHead {
+        @include ui.section-title;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+
+        svg {
+            color: var(--brand-color);
+        }
+    }
+
+    .tipsList {
+        margin: 0;
+        padding-inline-start: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        li {
+            font-size: 0.78rem;
+            font-weight: 400;
+            line-height: 1.8;
+            opacity: 0.75;
+        }
+    }
+}
+
+.saleTable {
+    display: grid;
+}
+
+.saleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    font-weight: 400;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    p {
+        margin: 0 0 2px;
+        font-weight: 400;
+        font-size: 0.86rem;
+    }
+
+    small {
+        font-weight: 400;
+        font-size: 0.75rem;
+        color: ui.$muted;
+    }
+
+    > span {
+        font-size: 0.8rem;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+}

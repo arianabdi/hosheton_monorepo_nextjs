@@ -1,0 +1,127 @@
+.exploreLayout {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    // جهت بیرون رفتن پنل: لبه‌ی inline-end (راست در LTR، چپ در RTL)
+    --chat-panel-offset: 100%;
+
+    &[dir='rtl'] {
+        --chat-panel-offset: -100%;
+    }
+}
+
+.exploreOutlet {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    overflow-y: scroll; // یا auto
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE و Edge قدیمی
+
+    &::-webkit-scrollbar {
+        display: none; // Chrome, Safari, Opera
+    }
+}
+
+/* موبایل: گرید زیر نوار شناور پایین (MobileTabBar) هم اسکرول می‌شود — جای نوار ته خود گرید است،
+   نه padding قاب بیرونی؛ پنل چت کشویی بالای نوار تمام می‌شود تا کادر پیامش زیر آن نرود. */
+@media (max-width: 768px) {
+    .viewUnderBar.viewUnderBar {
+        padding-bottom: 0;
+    }
+
+    .exploreOutlet {
+        box-sizing: border-box;
+        padding-bottom: calc(var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
+    }
+
+    .chatPanel {
+        inset-block-end: calc(var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+/* دسکتاپ: گرید یک‌بار (نه فریم‌به‌فریم) جا برای پنل باز می‌کند — layout.tsx زمانش را تعیین می‌کند */
+@media (min-width: 901px) {
+    .outletDocked {
+        margin-inline-end: 360px;
+    }
+}
+
+/*
+ * پنل همیشه عرض کامل دارد و فقط transform/opacity عوض می‌شود (روی GPU، بدون layout و
+ * repaint در هر فریم). عرض انیمیت نمی‌شود چون هر فریم کل گرید قالب‌ها را دوباره می‌چید.
+ */
+.chatPanel {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    z-index: 50;
+    width: 360px;
+    overflow: hidden;
+    background: var(--body-background);
+    border-inline-start: 1px solid var(--border-color);
+    transform: translate3d(var(--chat-panel-offset), 0, 0);
+    visibility: hidden;
+    contain: layout paint style;
+    will-change: transform;
+    backface-visibility: hidden;
+    // بسته: بعد از پایان کشیدن، پنل از نقاشی خارج می‌شود
+    transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0s linear 0.22s;
+
+    &.open {
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+        transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+            visibility 0s linear 0s;
+    }
+
+    &.instant {
+        transition: none;
+    }
+}
+
+.panelContent {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.chatBackdrop {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .chatBackdrop {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: rgba(0, 0, 0, 0.4);
+        cursor: default;
+        -webkit-tap-highlight-color: transparent;
+        opacity: 0;
+        pointer-events: none;
+        will-change: opacity;
+        transition: opacity 0.22s ease;
+
+        &.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    .chatPanel {
+        width: min(360px, 86vw);
+        background: var(--plan-card-background-color);
+        // سایه ثابت روی لایه‌ی پنل؛ انیمیت نمی‌شود
+        box-shadow: 0 0 32px rgba(0, 0, 0, 0.18);
+    }
+}

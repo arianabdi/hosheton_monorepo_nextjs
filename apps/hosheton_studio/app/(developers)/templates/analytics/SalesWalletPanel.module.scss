@@ -1,0 +1,292 @@
+/* کیف پول فروش — هم‌خانواده کارت دعوت (آبی #3b52e1، سطوح شیشه‌ای روشن روی آبی) */
+.wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    background:
+        radial-gradient(120% 160% at 100% 0%, rgba(255, 255, 255, 0.16) 0%, transparent 46%),
+        linear-gradient(135deg, #3b52e1 0%, #2b3ec9 58%, #2434a8 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(59, 82, 225, 0.28);
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.titleWrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    opacity: 0.92;
+
+    h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        color: #ffffff;
+    }
+}
+
+.balanceBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+}
+
+.balanceLabel {
+    font-size: 0.72rem;
+    color: #dfe4ff;
+}
+
+.balanceValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.2px;
+}
+
+.statsRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    font-size: 0.85rem;
+    color: #e6e9ff;
+
+    > span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    strong {
+        font-weight: 800;
+        color: #ffffff;
+    }
+}
+
+.requestBtn {
+    margin-inline-start: auto;
+    padding: 9px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: #ffffff;
+    color: #2b3ec9;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.emptyHint {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    font-size: 0.82rem;
+    color: #e6e9ff;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.requestRow,
+.ledgerRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.85rem;
+    color: #f3f4ff;
+}
+
+.requestAmount {
+    font-weight: 700;
+}
+
+.requestDate {
+    opacity: 0.75;
+    font-size: 0.75rem;
+    color: #dfe4ff;
+}
+
+.tracking {
+    font-size: 0.75rem;
+    direction: ltr;
+    opacity: 0.85;
+}
+
+.statusBadge {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+
+    &.pending {
+        background: rgba(250, 204, 21, 0.85);
+        color: #713f12;
+    }
+
+    &.approved {
+        background: rgba(147, 197, 253, 0.9);
+        color: #1e3a8a;
+    }
+
+    &.paid {
+        background: rgba(74, 222, 128, 0.9);
+        color: #14532d;
+    }
+
+    &.rejected {
+        background: rgba(248, 113, 113, 0.9);
+        color: #7f1d1d;
+    }
+}
+
+.positive {
+    color: #86efac;
+    font-weight: 600;
+}
+
+.negative {
+    color: #fca5a5;
+    font-weight: 600;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 16px;
+}
+
+.modal {
+    width: min(440px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--background-color, #16171b);
+    color: var(--text-color, #eee);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+
+    input,
+    select,
+    textarea {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(128, 128, 128, 0.35);
+        background: rgba(128, 128, 128, 0.08);
+        color: inherit;
+        font: inherit;
+        outline: none;
+
+        &:focus {
+            border-color: var(--brand-color);
+        }
+    }
+
+    small {
+        opacity: 0.55;
+    }
+}
+
+.ticketNote {
+    margin: 0;
+    font-size: 0.75rem;
+    opacity: 0.55;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    button {
+        padding: 9px 18px;
+        border-radius: 10px;
+        border: 1px solid rgba(128, 128, 128, 0.35);
+        background: none;
+        color: inherit;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}
+
+.primaryBtn {
+    background: var(--brand-color) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

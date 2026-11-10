@@ -1,0 +1,51 @@
+{
+    "name": "hosheton_studio",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "cross-env BUILD_ENV=development next dev",
+        "build": "cross-env BUILD_ENV=production next build",
+        "start": "cross-env BUILD_ENV=development next start",
+        "lint": "eslint",
+        "test:processing": "node --test --experimental-strip-types tests/processing-lifecycle.test.ts",
+        "test:connections": "node --test --experimental-strip-types tests/studio-connections.test.ts",
+        "test:clipboard": "node --test --experimental-strip-types tests/workflow-clipboard.test.ts",
+        "test:costs": "node --test --experimental-strip-types tests/node-cost-history.test.ts",
+        "test:media": "node --test --experimental-strip-types tests/studio-media.test.ts",
+        "test:chat": "node --test --experimental-strip-types --import ./tests/register-alias.mjs tests/chat-attachment-validator.test.ts",
+        "test:mentions": "node --test --experimental-strip-types tests/mention-picker-geometry.test.ts",
+        "test:usage": "node --test --experimental-strip-types tests/chat-usage-rows.test.ts",
+        "test:dock-layout": "node --test --experimental-strip-types tests/dock-layout.test.ts",
+        "i18n:validate": "node scripts/validate-locales.mjs"
+    },
+    "dependencies": {
+        "i18next": "^26.3.6",
+        "react-i18next": "^15.4.1",
+        "@react-three/drei": "^10.7.7",
+        "@react-three/fiber": "^9.6.1",
+        "@types/three": "^0.184.1",
+        "@xyflow/react": "^12.10.0",
+        "framer-motion": "^12.23.26",
+        "lucide-react": "^1.16.0",
+        "next": "16.2.10",
+        "react": "19.2.4",
+        "react-dom": "19.2.4",
+        "react-dropzone": "^11.7.1",
+        "react-icons": "^5.5.0",
+        "react-markdown": "^10.1.0",
+        "react-syntax-highlighter": "^16.1.1",
+        "recharts": "^3.4.1",
+        "socket.io-client": "^4.8.3",
+        "zustand": "^5.0.13"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "16.2.10",
+        "tailwindcss": "^4",
+        "typescript": "^5"
+    }
+}

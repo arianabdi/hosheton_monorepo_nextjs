@@ -1,0 +1,49 @@
+.page {
+    min-height: 100%;
+    color: var(--body-text-color);
+}
+
+.gridSection {
+    padding: 0 0 2rem 1rem;
+
+    @media (max-width: 768px) {
+        padding-left: 0;
+    }
+}
+
+.masonryContainer {
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    /* موبایل: ۱۰px از هر لبه، هم‌تراز نوار جستجو و سرصفحهٔ دسته */
+    @media (max-width: 768px) {
+        padding-left: 10px !important;
+        padding-right: 10px;
+    }
+}
+
+.error {
+    margin: 0 1rem 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, #ef4444 12%, transparent);
+    border: 1px solid color-mix(in srgb, #ef4444 35%, transparent);
+}
+
+.empty {
+    padding: 2rem 1rem;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.loadMore {
+    padding: 1rem;
+    text-align: center;
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+.sentinel {
+    height: 1px;
+    width: 100%;
+}

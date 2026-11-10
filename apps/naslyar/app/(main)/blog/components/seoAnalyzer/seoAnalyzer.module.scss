@@ -1,0 +1,31 @@
+.seoDescription{
+  font-style: italic;
+  color: #b79673;
+  font-weight: 600;
+  font-size: 12px;
+
+}
+
+.seoAnalyzer{
+  border: 1px solid var(--border-color) !important;
+}
+
+.seoAnalyzer h1,
+.seoAnalyzer h2,
+.seoAnalyzer h3
+{
+  font-family: almarai, sans-serif;
+}
+
+
+.good {
+  background-color: #00a32a;
+}
+
+.ok {
+  background-color: #eab308;
+}
+
+.bad {
+  background-color: #dc2626;
+}

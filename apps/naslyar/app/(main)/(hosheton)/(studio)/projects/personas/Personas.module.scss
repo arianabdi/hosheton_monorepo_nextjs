@@ -1,0 +1,116 @@
+// کاربران نمایشی — فقط چیزهایی که در استایل‌های مشترک نیست
+
+.person {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.avatar,
+.avatarFallback {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+}
+
+.avatar {
+    object-fit: cover;
+}
+
+.avatarFallback {
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--body-text-color, #111) 8%, transparent);
+    font-weight: 700;
+}
+
+.personText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+
+    small {
+        font-size: 0.72rem;
+        opacity: 0.6;
+        text-align: start;
+    }
+}
+
+.filterSelect {
+    min-width: 140px;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.linkBtn {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--primary-color, #6366f1);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: default;
+    }
+}
+
+// فرم: عکس پروفایل
+.avatarField {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.avatarPreview {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: color-mix(in srgb, var(--body-text-color, #111) 6%, transparent);
+}
+
+.avatarPlaceholder {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--body-text-color, #111) 6%, transparent);
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.fileInput {
+    display: none;
+}
+
+// ستون «حوزه»: چیپ گوشه‌گرد مربعی
+.domainList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.domainChip {
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--body-text-color, #111) 7%, transparent);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.muted {
+    font-size: 0.78rem;
+    opacity: 0.55;
+}

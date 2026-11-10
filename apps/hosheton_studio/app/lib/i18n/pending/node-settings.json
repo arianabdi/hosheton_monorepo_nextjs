@@ -1,0 +1,32 @@
+{
+  "projects": {
+    "chat": {
+      "en": "Chat",
+      "fa": "چت"
+    },
+    "back_to_workflow": {
+      "en": "Back to workflow",
+      "fa": "بازگشت به ورکفلو"
+    },
+    "no_files_in_category": {
+      "en": "No files found in this category.",
+      "fa": "فایلی در این دسته پیدا نشد."
+    },
+    "no_template_match": {
+      "en": "No template matches this search.",
+      "fa": "قالبی با این عبارت پیدا نشد."
+    },
+    "no_public_templates": {
+      "en": "No approved public templates yet.",
+      "fa": "هنوز قالب عمومی تاییدشده‌ای وجود ندارد."
+    },
+    "import_template": {
+      "en": "Import",
+      "fa": "درون‌ریزی"
+    },
+    "save_timeline_error": {
+      "en": "Failed to save timeline",
+      "fa": "خطا در ذخیره تایم‌لاین"
+    }
+  }
+}

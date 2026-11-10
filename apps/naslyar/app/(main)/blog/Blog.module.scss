@@ -1,0 +1,224 @@
+$primary-blue: var(--brand-color);
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+$border-color: #dadce0;
+$success-color: #137333;
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: $text-dark;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+}
+
+.header {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.mainTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 700px;
+    opacity: 0.85;
+}
+
+.primaryBtn {
+    background-color: $primary-blue;
+    color: white;
+    border: none;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    white-space: nowrap;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.secondaryBtn {
+    background-color: #f1f5f9;
+    color: #334155;
+    border: 1px solid $border-color;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+        background-color: #e2e8f0;
+    }
+}
+
+.headerActions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.tableToolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.tableWrapper {
+    width: 100%;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+    font-size: 0.875rem;
+
+    th {
+        background-color: #7b58fd0d;
+        color: $text-muted;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.8rem;
+        border-bottom: 1px solid var(--plan-card-border-color);
+    }
+
+    td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+        max-width: 260px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+.modelName {
+    font-weight: 600;
+}
+
+.timeText {
+    font-size: 0.8rem;
+    color: $text-muted;
+}
+
+.badge {
+    font-size: 0.7rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background-color: rgba(123, 88, 253, 0.08);
+    color: var(--brand-color);
+    border: 1px solid rgba(123, 88, 253, 0.2);
+}
+
+.badgePublished {
+    composes: badge;
+    background-color: #1373331a;
+    color: $success-color;
+    border-color: #13733340;
+}
+
+/* پست سیستمی قفل‌شده (قوانین/حریم خصوصی) — نارنجی مخصوص قفل */
+.badgeLocked {
+    composes: badge;
+    margin-inline-start: 8px;
+    background-color: #d977061a;
+    color: #d97706;
+    border-color: #d9770640;
+}
+
+.badgeDraft {
+    composes: badge;
+    background-color: #64748b1a;
+    color: #64748b;
+    border-color: #64748b40;
+}
+
+.emptyPlaceholder {
+    text-align: center;
+    padding: 2.5rem !important;
+    color: $text-muted;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.actionButtonsGap {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.editBtn, .deleteBtn {
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.editBtn {
+    background-color: #f1f5f9;
+    color: #334155;
+    &:hover { background-color: #e2e8f0; }
+}
+
+.deleteBtn {
+    background-color: #fef2f2;
+    color: #ef4444;
+    &:hover { background-color: #fee2e2; }
+}
+
+.noticeContainer {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.noticeTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+}
+
+.noticeText {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    opacity: 0.85;
+    margin: 0;
+}

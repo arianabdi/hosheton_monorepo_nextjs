@@ -1,0 +1,90 @@
+.viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.92);
+    color: #fff;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    min-height: 56px;
+    box-sizing: border-box;
+}
+
+.title {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.85;
+}
+
+.counter {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    font-variant-numeric: tabular-nums;
+}
+
+// هم‌اندازه و هم‌شکل ModalCloseButton (مربع گوشه‌گرد) تا ردیف یکدست بماند
+.iconBtn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.08);
+
+    &:hover { background: rgba(255, 255, 255, 0.16); }
+}
+
+.stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 56px 24px;
+
+    @media (max-width: 576px) {
+        padding: 0 0 16px;
+    }
+}
+
+.media {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.nav {
+    position: absolute;
+    top: 50%;
+    width: 42px;
+    height: 42px;
+    margin-top: -21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+
+    &:hover { background: rgba(255, 255, 255, 0.2); }
+}
+
+.navPrev { inset-inline-start: 8px; }
+.navNext { inset-inline-end: 8px; }

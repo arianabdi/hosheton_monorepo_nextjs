@@ -1,0 +1,297 @@
+@use 'sass:list';
+
+/* حالت خالی اکسپلور — هم‌سبک موشن تنظیمات نود (project-view.module.scss → .emptyHint*) و گالری:
+   صحنهٔ ۲۲۰×۱۰۴ بدون قاب؛ ردیف چیپ دسته بالا و گرید masonry کارت قالب پایین (مثل خود صفحه).
+   حلقهٔ ۴.۶ ثانیه: نشانگر روی چیپ وسط کلیک می‌کند (موج + آبی) ← کارت‌ها پشت‌سرهم «بار» می‌شوند ولی
+   خالی می‌مانند و کم‌رنگ می‌شوند ← ذره‌بین وسط گرید سر تکان می‌دهد و «?» نشان می‌دهد. */
+
+$text: var(--body-text-color);
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+$lens: 28px;
+
+// [left, width] چیپ‌ها — چیپ ۲ هدف کلیک است (مرکز ۱۴۸، ۷)
+$chips: (74 44) (124 48) (178 42);
+// [left, top, height] کارت‌ها — چهار ستون ۵۲px با فاصله ۴px، کف همهٔ ستون‌ها ۱۰۴
+$tiles: (0 22 44) (0 72 32) (56 22 30) (56 58 46) (112 22 48) (112 76 28) (168 22 34) (168 62 42);
+// ترتیب «بار شدن» کارت‌ها از راست (RTL) به چپ — تأخیر هر کارت بر حسب ثانیه
+$tile-delays: 0.36 0.42 0.24 0.3 0.12 0.18 0 0.06;
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 56px 16px 32px;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    --hint-accent: #3b82f6;
+    --hint-loop: 4.6s;
+
+    position: relative;
+    width: 220px;
+    height: 104px;
+    margin-bottom: 14px;
+    direction: ltr;
+
+    :where(span, i, em) {
+        display: block;
+        font-style: normal;
+    }
+}
+
+/* ───────── ردیف چیپ دسته ───────── */
+
+.chip {
+    position: absolute;
+    top: 0;
+    height: 14px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: 1.5px solid color-mix(in srgb, $text 16%, transparent);
+    background: color-mix(in srgb, $text 6%, transparent);
+
+    @for $i from 1 through 3 {
+        $c: list.nth($chips, $i);
+
+        &:nth-child(#{$i}) {
+            left: #{list.nth($c, 1)}px;
+            width: #{list.nth($c, 2)}px;
+        }
+    }
+
+    &:nth-child(2) {
+        animation: exHintChip var(--hint-loop) ease-out infinite;
+    }
+}
+
+/* ───────── کارت‌های masonry ───────── */
+
+.tile {
+    position: absolute;
+    width: 52px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1.5px dashed color-mix(in srgb, $text 22%, transparent);
+    animation: exHintTile var(--hint-loop) ease-out infinite;
+
+    // کوه و خورشید کم‌رنگ: جای پیش‌نمایش قالب
+    &::before {
+        content: '';
+        position: absolute;
+        right: 7px;
+        top: 6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: color-mix(in srgb, $text 12%, transparent);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: color-mix(in srgb, $text 8%, transparent);
+        clip-path: polygon(0 100%, 0 80%, 30% 52%, 52% 74%, 70% 58%, 100% 84%, 100% 100%);
+    }
+
+    @for $i from 1 through 8 {
+        $t: list.nth($tiles, $i);
+
+        // ۳ چیپ قبل از کارت‌ها هستند
+        &:nth-child(#{$i + 3}) {
+            left: #{list.nth($t, 1)}px;
+            top: #{list.nth($t, 2)}px;
+            height: #{list.nth($t, 3)}px;
+            animation-delay: #{list.nth($tile-delays, $i)}s;
+        }
+    }
+}
+
+/* ───────── کلیک ───────── */
+
+.ripple {
+    position: absolute;
+    left: 148px;
+    top: 7px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: exHintRipple var(--hint-loop) ease-out infinite;
+}
+
+// نوک نشانگر روی (۱۴۸، ۷) — همان جابه‌جایی ۸px آیکون در موشن تنظیمات نود
+.cursor {
+    position: absolute;
+    left: 140px;
+    top: -1px;
+    width: 20px;
+    height: 20px;
+    color: $text;
+    animation: exHintCursor var(--hint-loop) ease-in-out infinite;
+}
+
+/* ───────── ذره‌بین «پیدا نشد» ───────── */
+
+.lens {
+    position: absolute;
+    // مرکز شیشه روی مرکز گرید (۱۱۰، ۶۳)
+    left: 110px - $lens * 0.5;
+    top: 63px - $lens * 0.5;
+    width: $lens;
+    height: $lens;
+    opacity: 0;
+    transform-origin: 50% 50%;
+    animation:
+        exHintLens var(--hint-loop) $ease-pop infinite,
+        exHintShake var(--hint-loop) ease-in-out infinite;
+}
+
+.glass {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 3px solid color-mix(in srgb, $text 60%, transparent);
+    background: var(--body-background, #fff);
+
+    em {
+        position: absolute;
+        inset: 0;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 22px;
+        text-align: center;
+        color: var(--hint-accent);
+        opacity: 0;
+        animation: exHintQuestion var(--hint-loop) $ease-pop infinite;
+    }
+}
+
+.handle {
+    position: absolute;
+    left: 23px;
+    top: 21px;
+    width: 4px;
+    height: 12px;
+    border-radius: 2px;
+    background: color-mix(in srgb, $text 60%, transparent);
+    rotate: -45deg;
+    transform-origin: 50% 0;
+}
+
+/* ───────── متن ───────── */
+
+.title {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 280px;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    opacity: 0.55;
+}
+
+.action {
+    margin-top: 10px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+}
+
+/* زمان‌بندی روی حلقهٔ ۴.۶ ثانیه — هر ۱٪ ≈ ۴۶ms؛ کلیک حوالی ۱۸٪ */
+@keyframes exHintCursor {
+    0%, 4% { transform: translate(30px, 28px); opacity: 0; }
+    14% { transform: translate(0, 0); opacity: 1; }
+    18% { transform: translate(0, 0) scale(0.78); }
+    22%, 26% { transform: translate(0, 0) scale(1); opacity: 1; }
+    36%, 100% { transform: translate(30px, 28px); opacity: 0; }
+}
+
+@keyframes exHintRipple {
+    0%, 18% { transform: scale(0.4); opacity: 0; }
+    20% { opacity: 0.9; }
+    32%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+@keyframes exHintChip {
+    0%, 18% { border-color: color-mix(in srgb, var(--body-text-color) 16%, transparent); background: color-mix(in srgb, var(--body-text-color) 6%, transparent); }
+    20%, 90% { border-color: var(--hint-accent); background: color-mix(in srgb, var(--hint-accent) 16%, transparent); }
+    96%, 100% { border-color: color-mix(in srgb, var(--body-text-color) 16%, transparent); background: color-mix(in srgb, var(--body-text-color) 6%, transparent); }
+}
+
+// «بار شدن» (لبهٔ آبی کوتاه) ← خالی و کم‌رنگ ← برگشت در انتهای حلقه
+@keyframes exHintTile {
+    0%, 21% { border-color: color-mix(in srgb, var(--body-text-color) 22%, transparent); background: transparent; opacity: 1; }
+    24%, 28% {
+        border-color: var(--hint-accent);
+        background: color-mix(in srgb, var(--hint-accent) 8%, transparent);
+        opacity: 1;
+    }
+    34% { border-color: color-mix(in srgb, var(--body-text-color) 22%, transparent); background: transparent; opacity: 1; }
+    44%, 88% { opacity: 0.4; }
+    96%, 100% { opacity: 1; }
+}
+
+@keyframes exHintLens {
+    0%, 46% { transform: scale(0.4); opacity: 0; }
+    52%, 88% { transform: scale(1); opacity: 1; }
+    94%, 100% { transform: scale(0.9); opacity: 0; }
+}
+
+@keyframes exHintShake {
+    0%, 58% { rotate: 0deg; }
+    61% { rotate: -14deg; }
+    64% { rotate: 12deg; }
+    67% { rotate: -9deg; }
+    70% { rotate: 6deg; }
+    73%, 100% { rotate: 0deg; }
+}
+
+@keyframes exHintQuestion {
+    0%, 60% { transform: scale(0.3); opacity: 0; }
+    66%, 88% { transform: scale(1); opacity: 1; }
+    94%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .cursor,
+    .ripple {
+        opacity: 0;
+    }
+
+    .tile {
+        opacity: 0.4;
+    }
+
+    .lens,
+    .glass em {
+        opacity: 1;
+    }
+}

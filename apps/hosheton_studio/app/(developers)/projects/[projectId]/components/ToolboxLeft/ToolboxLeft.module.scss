@@ -1,0 +1,22 @@
+.toolboxLeft {
+    width: 200px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #ccc;
+    }
+}
+
+.toolButton {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}

@@ -1,0 +1,1294 @@
+// src/components/studio/nodes.module.scss
+
+// ==========================================================================
+// ۱. استایل گره پایه و رفتارهای مشترک (Base Node Skeleton)
+// ==========================================================================
+.baseNode {
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    color: var(--body-text-color) !important;
+    border-radius: 20px;
+    width: 260px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+
+    &.activeNode {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    &.errorNode {
+        border-color: rgba(239, 68, 68, 0.55) !important;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+    }
+
+    &.edgeConnectedNode {
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 4px rgba(139, 92, 246, 0.45), 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .nodeHeader {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--input-border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: start;
+
+        .headerTitle {
+            flex: 1;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            font-size: 14px;
+            display: flex;
+            font-family: system-ui;
+
+            // انیمیشن ظریف برای آیکون‌های جرقه/هوش مصنوعی در هدر
+            .sparkIcon {
+                color: #8b5cf6;
+                animation: pulseSpark 2s infinite ease-in-out;
+            }
+        }
+
+        .headerActions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    }
+
+    .nodeBody {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .nodeCostFooter {
+        padding: 0 12px 10px;
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+
+.nodeErrorBadge {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 8px;
+    z-index: 6;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+    cursor: pointer;
+}
+
+.nodeSuccessBadge {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 8px;
+    z-index: 6;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+}
+
+.duplicateNodeBtn {
+    background: transparent;
+    border: none;
+    color: var(--brand-color, #7b58fd);
+    cursor: pointer;
+    opacity: 0.55;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    padding: 2px;
+    border-radius: 4px;
+    transition: opacity 0.2s, background 0.2s;
+
+    &:hover {
+        opacity: 1;
+        background: rgba(123, 88, 253, 0.1);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+
+        &:hover {
+            opacity: 0.35;
+            background: transparent;
+        }
+    }
+}
+
+.noteActionBtns {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: flex;
+    gap: 2px;
+    z-index: 2;
+
+    .noteDeleteBtn,
+    .duplicateNodeBtn {
+        position: static;
+    }
+}
+
+// دکمه حذف داینامیک گره
+.deleteNodeBtn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    opacity: 0.4;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    padding: 2px;
+    border-radius: 4px;
+    transition: opacity 0.2s, background 0.2s;
+
+    &:hover {
+        opacity: 1;
+        background: rgba(239, 68, 68, 0.08);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+
+        &:hover {
+            opacity: 0.35;
+            background: transparent;
+        }
+    }
+}
+
+.playNodeBtn {
+    background: transparent;
+    border: none;
+    color: #10b981;
+    cursor: pointer;
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    padding: 2px;
+    border-radius: 4px;
+    transition: opacity 0.2s, background 0.2s;
+
+    &:hover:not(:disabled) {
+        opacity: 1;
+        background: rgba(16, 185, 129, 0.1);
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+.refreshNodeBtn {
+    background: transparent;
+    border: none;
+    color: #8b5cf6;
+    cursor: pointer;
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    padding: 2px;
+    border-radius: 4px;
+    transition: opacity 0.2s, background 0.2s;
+
+    &:hover:not(:disabled) {
+        opacity: 1;
+        background: rgba(139, 92, 246, 0.12);
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+.spinIcon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+// ── Handle labels (نام هندل کنار هر اتصال) ──────────────────────────────────
+.handleLabel {
+    position: absolute;
+    transform: translateY(-50%);
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    background: var(--input-background-color);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    padding: 1px 6px;
+    border-radius: 7px;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 5;
+    line-height: 1.5;
+}
+
+.handleLabelLeft { left: 10px; }
+.handleLabelRight { right: 10px; }
+
+@media (max-width: 768px) {
+    .handleLabelLeft { left: 18px; }
+    .handleLabelRight { right: 18px; }
+}
+
+// ── Image Transformer (مبدل تصویر) ──────────────────────────────────────────
+.transformerNode {
+    width: 250px;
+
+    .transformerBody {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .transformerRow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: var(--body-background);
+        border: 1px dashed var(--input-border-color);
+        color: var(--body-text-color);
+
+        svg { color: #8b5cf6; flex-shrink: 0; }
+
+        &.transformerRowOk {
+            border-style: solid;
+            border-color: rgba(16, 185, 129, 0.4);
+            svg { color: #10b981; }
+        }
+    }
+
+    .transformerArrow {
+        text-align: center;
+        font-size: 0.62rem;
+        font-weight: 700;
+        color: #8b5cf6;
+        opacity: 0.75;
+    }
+}
+
+// ── Note Node (n8n style) ──────────────────────────────────────────────────
+.noteNode {
+    --note-bg: var(--note-light-bg);
+    --note-border: var(--note-light-border);
+    --note-text: var(--note-light-text);
+
+    background: var(--note-bg);
+    border: 1px solid var(--note-border);
+    color: var(--note-text);
+    border-radius: 8px;
+    min-width: 180px;
+    min-height: 120px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+
+    :global([data-theme='dark']) & {
+        --note-bg: var(--note-dark-bg);
+        --note-border: var(--note-dark-border);
+        --note-text: var(--note-dark-text);
+    }
+
+    &.noteSelected {
+        box-shadow: 0 0 0 2px var(--note-border);
+    }
+
+    &.edgeConnectedNode {
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 4px rgba(139, 92, 246, 0.45), 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+}
+
+.noteDeleteBtn {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 2;
+    color: inherit !important;
+    opacity: 0.45;
+
+    &:hover {
+        opacity: 0.85;
+        background: rgba(0, 0, 0, 0.06) !important;
+    }
+
+    :global([data-theme='dark']) &:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+}
+
+.noteTextarea {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none !important;
+    background: transparent;
+    resize: none;
+    padding: 10px 12px 10px 32px;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: inherit;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    background: unset !important;
+    user-select: text;
+
+
+    &::placeholder {
+        color: inherit;
+        opacity: 0.45;
+    }
+}
+
+.startTriggerNode {
+    border-color: #10b981 !important;
+
+    .triggerHint {
+        font-size: 0.75rem;
+        opacity: 0.6;
+    }
+}
+
+// ==========================================================================
+// ۲. استایل‌های اختصاصی اجزای داخلی گره‌ها (Node Custom Internals)
+// ==========================================================================
+
+// الف) گره پرامپت (Prompt Node Textarea)
+.promptNode {
+    .nodeBody {
+        .promptTextarea {
+            width: 100%;
+            background: var(--body-background);
+            border: 1px solid var(--input-border-color);
+            border-radius: 10px;
+            padding: 8px;
+            color: var(--body-text-color);
+            font-size: 0.75rem;
+            resize: vertical;
+            outline: none;
+            font-family: inherit;
+            line-height: 1.5;
+            box-sizing: border-box;
+            text-align: start;
+            user-select: text;
+
+            &::placeholder {
+                opacity: 0.45;
+            }
+
+            &:focus {
+                border-color: #8b5cf6;
+                box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+            }
+        }
+
+        .promptEditorWrap {
+            position: relative;
+        }
+
+        .promptTextarea {
+            min-height: 72px;
+            max-height: 160px;
+            overflow: hidden;
+            resize: none;
+        }
+
+        /* لنگر دکمه‌های optimize + expand — روی خود باکس پرامپت، مثل کادر سایدبار */
+        .promptBox {
+            position: relative;
+        }
+
+        /* گوشه بالای باکس (در RTL سمت چپ)، همان چیدمان کادر پرامپت سایدبار */
+        .promptBoxActions {
+            position: absolute;
+            top: 6px;
+            inset-inline-end: 6px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* هم‌قد و هم‌شکل دکمه compact بهینه‌سازی، توپر — مثل expand سایدبار */
+        .promptExpandBtn {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            border: 1px solid var(--input-border-color);
+            border-radius: 999px;
+            background: var(--input-background-color);
+            color: var(--body-text-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color 0.12s ease, color 0.12s ease;
+
+            &:hover {
+                border-color: var(--brand-color, #8b5cf6);
+                color: var(--brand-color, #8b5cf6);
+            }
+        }
+
+        /* یادداشت برای تیم: فقط نمایش متن (ویرایش در سایدبار) */
+        .promptDescriptionText {
+            margin: 0;
+            font-size: 0.7rem;
+            line-height: 1.5;
+            opacity: 0.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            text-align: start;
+        }
+    }
+}
+
+.noteTextarea[readonly],
+.promptTextarea[readonly] {
+    cursor: default;
+    resize: none;
+    opacity: 0.92;
+
+    &:focus {
+        border-color: var(--input-border-color);
+        box-shadow: none;
+    }
+}
+
+// الف-۲) سکشن پرامپت داخلی نودهای تولید (Inline prompt of generation nodes)
+.nodePromptSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.nodePromptHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    min-width: 0;
+}
+
+.nodePromptLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.62rem;
+    line-height: 1.2;
+    opacity: 0.62;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+
+    svg {
+        font-size: 0.72rem;
+    }
+}
+
+.nodePromptComposer {
+    width: 100%;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    color: var(--body-text-color);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    box-sizing: border-box;
+    text-align: start;
+    user-select: text;
+    overflow: hidden;
+
+    &:focus-within {
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+    }
+}
+
+.readOnlyNode {
+    :global(button:disabled),
+    :global(input[readonly]) {
+        cursor: not-allowed;
+    }
+}
+
+// ب) گره ماتریس تصاویر (Image Matrix Node)
+.imageGenNode {
+    .imageGrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+
+        img {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: var(--body-background);
+            border: 1px solid var(--input-border-color);
+        }
+    }
+}
+
+// ج) گره تولید ویدیو / عکس — پیش‌نمایش یک‌تایی
+.generationPreviewEmpty {
+    width: 100%;
+    min-height: 120px;
+    border-radius: 12px;
+    background: var(--body-background);
+    border: 1px dashed var(--input-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8b5cf6;
+    opacity: 0.55;
+
+    svg {
+        font-size: 1.5rem;
+    }
+}
+
+.generationPreviewMedia {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--input-border-color);
+    object-fit: contain;
+    background: var(--body-background);
+    display: block;
+    vertical-align: middle;
+}
+
+.videoGenNode,
+.textToVideoNode {
+    .videoPreviewPlayer,
+    .generationPreviewMedia {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--input-border-color);
+        object-fit: contain;
+        background: var(--body-background);
+        display: block;
+    }
+}
+
+.textToImageNode,
+.textToVideoNode {
+    .generationPreviewEmpty {
+        min-height: 100px;
+    }
+
+    .generationLoading {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background: var(--body-background);
+        border: 1px solid var(--input-border-color);
+        border-radius: 12px;
+        padding: 10px;
+    }
+
+    .connectionLostHint {
+        margin: 0;
+        font-size: 0.68rem;
+        line-height: 1.45;
+        color: #f59e0b;
+        font-weight: 600;
+    }
+
+    .mediaCarousel {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        width: 100%;
+    }
+
+    .carouselBody {
+        flex: 1;
+        min-width: 0;
+        position: relative;
+    }
+
+    .carouselNav {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: var(--body-background);
+        color: #8b5cf6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0.85;
+        transition: opacity 0.2s, background 0.2s;
+
+        &:hover {
+            opacity: 1;
+            background: rgba(139, 92, 246, 0.1);
+        }
+    }
+
+    .carouselCounter {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.62rem;
+        font-weight: 700;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 2px 8px;
+        border-radius: 999px;
+        pointer-events: none;
+    }
+
+    .renderImageButton {
+        border-radius: 12px;
+        width: 100%;
+
+        .generationPreviewMedia {
+            border: none;
+            width: 100%;
+            height: auto;
+            max-height: none;
+        }
+    }
+
+    .renderImagePreview,
+    .generationPreviewMedia {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+}
+
+// د) گره صوتی (Audio TTS Node)
+.audioGenNode {
+    .audioWaveform {
+        background: var(--body-background);
+        height: 44px;
+        border-radius: 12px;
+        border: 1px solid var(--input-border-color);
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        gap: 4px;
+
+        svg {
+            color: #ec4899; // تم صورتی برای بخش‌های صوتی
+            margin-right: 4px;
+        }
+
+        .waveBar {
+            width: 3px;
+            height: 14px;
+            background: #ec4899;
+            border-radius: 2px;
+            animation: wavePulse 1.2s infinite ease-in-out;
+
+            &:nth-child(2) { height: 22px; animation-delay: 0.1s; }
+            &:nth-child(3) { height: 18px; animation-delay: 0.3s; }
+            &:nth-child(4) { height: 26px; animation-delay: 0.2s; }
+            &:nth-child(5) { height: 12px; animation-delay: 0.4s; }
+        }
+    }
+}
+
+// ه) گره منطقی و شرطی (Logic Branching Node)
+.logicNode {
+    .logicCondition {
+        font-size: 0.78rem;
+        background: var(--body-background);
+        padding: 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-align: center;
+        border: 1px dashed var(--input-border-color);
+        color: #f59e0b; // تم نارنجی/زرد منطقی
+    }
+}
+
+// و) گره همگام‌ساز استریم‌ها (AV Sync Node)
+.syncNode {
+    .syncStatus {
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(59, 130, 246, 0.05);
+        color: #3b82f6;
+        padding: 8px;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px solid rgba(59, 130, 246, 0.15);
+    }
+}
+
+// ز) گره رندر و پایپ‌لاین نهایی (Render Delivery Node)
+.renderNode {
+    width: 300px;
+
+    .compileBtn {
+        background: var(--body-background) !important;
+        color: var(--body-text-color) !important;
+        border: 1px dashed var(--input-border-color) !important;
+        padding: 10px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        cursor: default;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        opacity: 0.6;
+    }
+}
+
+.renderProgress {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.renderProgressHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #3b82f6;
+}
+
+.renderProgressBarTrack {
+    width: 100%;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--input-border-color);
+    overflow: hidden;
+}
+
+.renderProgressBarFill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.renderProgressPercent {
+    align-self: flex-end;
+    font-size: 0.68rem;
+    font-weight: 700;
+    opacity: 0.6;
+}
+
+.renderFailed {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.renderFailedHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ef4444;
+}
+
+.renderFailedMessage {
+    margin: 0;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--body-text-color);
+    opacity: 0.85;
+    word-break: break-word;
+}
+
+.renderPreviewWrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chainOutputWrap {
+    position: relative;
+}
+
+.chainOutputBtn {
+    width: 100%;
+    background: rgba(16, 185, 129, 0.08) !important;
+    border: 1px dashed rgba(16, 185, 129, 0.45) !important;
+    color: #10b981 !important;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.2s;
+
+    &:hover {
+        background: rgba(16, 185, 129, 0.15) !important;
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+
+        &:hover {
+            background: rgba(16, 185, 129, 0.08) !important;
+        }
+    }
+}
+
+.chainOutputMenu {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    inset-inline-start: 0;
+    width: 100%;
+    z-index: 20;
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    button {
+        text-align: start;
+        background: transparent;
+        border: none;
+        color: var(--body-text-color);
+        font-size: 0.72rem;
+        padding: 8px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--body-background);
+        }
+    }
+}
+
+// ==========================================================================
+// ۳. گره‌های جدید AI و کنترل
+// ==========================================================================
+
+.assetRefNode {
+    width: 280px;
+}
+
+.modelBadge, .motionTag, .moodTag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: rgba(139, 92, 246, 0.08);
+    color: #8b5cf6;
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    text-align: center;
+}
+
+// آیکون SVG مدل انتخابی در هدر نودهای تولیدی (از iconSvg مدل رندر می‌شود)
+.headerModelIcon {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.headerModelName {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.imageToImageNode, .resultGalleryNode, .imageGenNode {
+    width: 300px;
+
+    .batchMeta {
+        font-size: 0.68rem;
+        opacity: 0.65;
+        text-align: center;
+        padding: 2px 0 4px;
+    }
+}
+
+.resultGalleryNode {
+    width: 320px;
+
+    .imageGrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+}
+
+.textToImageNode, .imageGenNode {
+    .imageGrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    .imagePlaceholder {
+        width: 100%;
+        min-height: 60px;
+        border-radius: 8px;
+        background: var(--body-background);
+        border: 1px solid var(--input-border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8b5cf6;
+        opacity: 0.5;
+        overflow: hidden;
+
+        img { width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+
+        &.tileFailed {
+            border-color: rgba(239, 68, 68, 0.45);
+            background: rgba(239, 68, 68, 0.06);
+            opacity: 1;
+        }
+
+        .tileErrorIcon {
+            color: #ef4444;
+            font-size: 1.1rem;
+            opacity: 1;
+        }
+
+        .spinIcon { opacity: 1; }
+    }
+}
+
+.controlNode {
+    .controlGrid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .controlChip {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: var(--body-background);
+        border: 1px solid var(--input-border-color);
+        &.locked { color: #3b82f6; border-color: rgba(59, 130, 246, 0.3); }
+    }
+}
+
+.inpaintingNode {
+    .maskPreview {
+        position: relative;
+        height: 70px;
+        border-radius: 12px;
+        background: var(--body-background);
+        border: 1px solid var(--input-border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        opacity: 0.7;
+        overflow: hidden;
+    }
+    .maskOverlay {
+        position: absolute;
+        inset: 12px 40px;
+        border: 2px dashed #f59e0b;
+        border-radius: 8px;
+        background: rgba(245, 158, 11, 0.08);
+    }
+}
+
+.audioMixerNode {
+    .mixerChannels { display: flex; flex-direction: column; gap: 8px; }
+    .mixerRow {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 0.72rem; font-weight: 600;
+        span { width: 42px; opacity: 0.6; }
+    }
+    .mixerBar {
+        flex: 1; height: 6px; border-radius: 3px;
+        background: linear-gradient(90deg, #ec4899, #8b5cf6);
+    }
+    .mixerMeta {
+        font-size: 0.68rem; opacity: 0.5; text-align: center; margin-top: 2px;
+    }
+}
+
+.musicSfxNode {
+    .moodTag { background: rgba(236, 72, 153, 0.08); color: #ec4899; border-color: rgba(236, 72, 153, 0.15); }
+
+    .audioPreviewEmpty {
+        background: var(--body-background);
+        min-height: 56px;
+        border-radius: 12px;
+        border: 1px dashed var(--input-border-color);
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        gap: 4px;
+        color: #ec4899;
+        opacity: 0.65;
+
+        svg {
+            margin-left: 4px;
+        }
+
+        .waveBar {
+            width: 3px;
+            height: 14px;
+            background: #ec4899;
+            border-radius: 2px;
+            opacity: 0.5;
+
+            &:nth-child(2) { height: 22px; }
+            &:nth-child(3) { height: 18px; }
+            &:nth-child(4) { height: 12px; }
+        }
+    }
+}
+
+// ==========================================================================
+// ۴. کانتینر گروه با Resize
+// ==========================================================================
+.groupContainerNode {
+    --group-bg: var(--group-light-bg);
+    --group-border: var(--group-light-border);
+    --group-badge-bg: var(--group-accent);
+
+    width: 100%;
+    height: 100%;
+    min-width: 280px;
+    min-height: 200px;
+    background: var(--group-bg);
+    border: 2px dashed var(--group-border);
+    border-radius: 24px;
+    position: relative;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+
+    :global([data-theme='dark']) & {
+        --group-bg: var(--group-dark-bg);
+        --group-border: var(--group-dark-border);
+    }
+
+    &:hover, &.groupSelected {
+        filter: brightness(1.02);
+    }
+
+    &.edgeConnectedNode {
+        border-color: #8b5cf6 !important;
+        box-shadow: 0 0 4px rgba(139, 92, 246, 0.45);
+    }
+
+    .groupHeaderArea {
+        position: absolute;
+        top: -14px;
+        left: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--input-background-color);
+        padding: 4px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--input-border-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        z-index: 2;
+
+        .groupBadge {
+            background: var(--group-badge-bg);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .headerActions {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+    }
+
+    .groupHint {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        font-size: 0.68rem;
+        opacity: 0.45;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        pointer-events: none;
+        line-height: 1.45;
+        text-align: start;
+
+        strong { opacity: 0.85; }
+    }
+}
+
+.groupResizerLine {
+    border-color: #8b5cf6 !important;
+    border-width: 1px !important;
+}
+
+.groupResizerHandle {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 3px !important;
+    background: #8b5cf6 !important;
+    border: 2px solid var(--input-background-color) !important;
+}
+
+// ==========================================================================
+// ۴. کی‌فریم‌های انیمیشن (Micro-Animations Keyframes)
+// ==========================================================================
+@keyframes wavePulse {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.6); }
+}
+
+@keyframes pulseSpark {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.95); }
+}
+/* «زاویه و نور» — نود تولید عکس با چند نما */
+.angleStudioNode {
+    .angleSummary {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+        font-size: 0.72rem;
+        font-weight: 400;
+        color: color-mix(in srgb, var(--body-text-color) 70%, transparent);
+    }
+
+    .angleSummaryTag {
+        padding: 2px 6px;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--brand-color, #7b64cf) 12%, transparent);
+        color: var(--brand-color, #7b64cf);
+    }
+
+    .angleLightSwatch {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        border: 1px solid color-mix(in srgb, var(--body-text-color) 20%, transparent);
+    }
+
+    .angleSummaryModel {
+        margin-inline-start: auto;
+        max-width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .angleEmpty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 110px;
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px dashed var(--input-border-color);
+        background: var(--body-background);
+        color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+        font-size: 0.72rem;
+        text-align: center;
+
+        img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--input-border-color);
+        }
+    }
+}

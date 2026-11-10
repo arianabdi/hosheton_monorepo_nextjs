@@ -1,0 +1,33 @@
+.sidebarRight {
+    width: 300px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    transition: width 0.3s ease;
+
+    &.collapsed {
+        width: 0;
+        border: none;
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+}
+
+.sidebarHeader {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.toggleButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.sidebarContent {
+    padding: 2rem;
+}

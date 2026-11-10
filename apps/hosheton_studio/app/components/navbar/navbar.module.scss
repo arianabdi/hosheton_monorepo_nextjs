@@ -1,0 +1,731 @@
+// Variables
+$primary-color: #3f51b5;
+$primary-light: #7986cb;
+$primary-dark: #303f9f;
+$text-color: #333;
+$text-light: #666;
+$background: #fff;
+$shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+$border-radius: 8px;
+$transition: all 0.3s ease;
+
+// Variables
+$sidebar-width-full: 260px;
+$sidebar-width-mini: 80px;
+$primary-color: #3f51b5;
+$transition-speed: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+.desktopNav {
+    background: var(--header-background, #fff);
+    z-index: 1000;
+    border-left: 1px solid var(--border-color, #eee);
+    flex-direction: column;
+    width: var(--navbar-width);
+    height: 100vh;
+    transition: width .3s cubic-bezier(.4, 0, .2, 1);
+    display: flex;
+    position: fixed;
+    top: calc(var(--header-height) + 1px);
+    right: 0;
+    overflow-x: hidden;
+
+    // Mini Mode State
+    &.collapsed {
+        width: $sidebar-width-mini;
+
+        .label, .appLabel, .appsSubMenu {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .navLink {
+            padding: 12px 15px;
+        }
+    }
+}
+
+.headerAction {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.toggleBtn {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform $transition-speed;
+
+    &:hover { background: #e0e0e0; }
+}
+
+.navList {
+    list-style: none;
+    padding: 0 10px;
+    margin: 0;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px 15px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--body-text-color);
+    transition: $transition-speed;
+    gap: 12px;
+
+    justify-content: start;
+
+    &:hover {
+        background-color: rgba($primary-color, 0.08);
+    }
+
+    .icon {
+        font-size: 1.4rem;
+        min-width: 30px;
+    }
+
+    .label {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        transition: opacity $transition-speed;
+        font-family: var(--font-iransans);
+    }
+}
+
+.active {
+    .navLink {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+        font-weight: 600;
+    }
+}
+
+.appsSubMenu {
+    margin-right: 20px; // Indent for RTL
+    padding: 5px 0;
+    border-right: 2px solid #eee;
+    list-style: none;
+}
+
+.appItem {
+    @extend .navLink;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+
+    .appIcon { font-size: 1.1rem; }
+}
+
+// Hide on Mobile
+@media (max-width: 768px) {
+    .desktopNav { display: none; }
+}
+
+
+
+
+// Mobile Bottom Navbar
+.mobileNav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $background;
+    z-index: 1000;
+    border-top: 1px solid var(--border-color);
+
+    .mobileNavList {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        justify-content: space-around;
+    }
+
+    .mobileNavItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: $transition;
+        color: $text-light;
+        flex: 1;
+        min-width: 0;
+
+        &:hover {
+            background-color: rgba($primary-color, 0.05);
+        }
+
+        &.mobileSelected {
+            color: $primary-color;
+            font-weight: 600;
+        }
+
+        .mobileIcon {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .mobileLabel {
+            font-size: 0.75rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+    }
+
+    .mobileAppsOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .mobileAppsContainer {
+        background: $background;
+        width: 100%;
+        max-height: 70vh;
+        border-radius: $border-radius $border-radius 0 0;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .mobileAppsHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+
+        h3 {
+            margin: 0;
+            color: $primary-color;
+        }
+
+        .closeButton {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: $text-light;
+            padding: 5px;
+            line-height: 1;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .mobileAppsList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .mobileAppItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 10px;
+        background: rgba($primary-color, 0.05);
+        border: none;
+        border-radius: $border-radius;
+        cursor: pointer;
+        width: 100%;
+        transition: $transition;
+
+        &:hover {
+            background: rgba($primary-color, 0.1);
+        }
+
+        &.mobileSelectedApp {
+            background: rgba($primary-color, 0.2);
+            color: $primary-color;
+            font-weight: 600;
+        }
+
+        .mobileAppIcon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .mobileAppLabel {
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .desktopNav {
+        display: none;
+    }
+
+    .mobileNav {
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobileNav {
+        display: none;
+    }
+}
+
+
+// Variables
+$taskbar-height: 64px;
+$taskbar-bg: rgba(30, 30, 35, 0.85);
+$taskbar-blur: 20px;
+$item-border-radius: 12px;
+$item-hover-bg: rgba(255, 255, 255, 0.12);
+$active-bg: rgba(255, 255, 255, 0.18);
+$text-color: #e8e8e8;
+$active-text: #ffffff;
+$gap: 40px;
+$transition: all 0.2s ease;
+
+// Desktop Taskbar Styles
+.taskbarWrapper {
+    position: fixed;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.taskbar {
+
+    pointer-events: auto;
+    scrollbar-width: none;
+    background: var(--taskbar-background);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1040px;
+    min-height: 60px;
+    padding: 16px;
+    display: flex;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.taskbarInner {
+    display: flex;
+    gap: $gap;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.taskbarItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 14px;
+    border-radius: $item-border-radius;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: $transition;
+    color: var(--body-text-color);
+    font-family: inherit;
+    height: 65px;
+    width: 65px;
+
+    &:hover {
+        background: var(--blue-bg);
+        color: var(--body-text-color);
+        .label{
+
+            display: block;
+        }
+        .iconWrapper {
+            svg{
+                color: #fff !important;
+            }
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &.active {
+        background: var(--blue-bg);
+        color: #fff;
+
+        .iconWrapper {
+            transform: scale(1.05);
+            svg{
+                color: #fff !important;
+            }
+        }
+    }
+
+    .label{
+        display: none;
+    }
+}
+
+.iconWrapper {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+}
+
+.label {
+    letter-spacing: .3px;
+    white-space: nowrap;
+    background: var(--body-background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    position: absolute;
+    transform: translateY(-80px);
+    font-weight: 100;
+
+}
+
+// Overflow menu
+.overflowContainer {
+    position: relative;
+}
+
+.overflowBtn {
+    &.overflowOpen {
+        background: $item-hover-bg;
+        color: var(--body-text-color);
+    }
+}
+
+.overflowMenu {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    right: 0;
+    background: rgba(28, 28, 32, 0.95);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 12px;
+    min-width: 220px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    animation: fadeInUp 0.15s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1050;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.overflowMenuHeader {
+    padding: 8px 12px 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+}
+
+.overflowMenuGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 6px;
+    max-height: 320px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+    }
+}
+
+.overflowMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: $transition;
+    color: var(--body-text-color);
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+        background: $item-hover-bg;
+        transform: translateX(2px);
+        color: var(--body-text-color);
+    }
+
+    &.active {
+        background: $active-bg;
+        color: var(--body-text-color);
+    }
+}
+
+.overflowIcon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    color: var(--header-icon-color);
+}
+
+.overflowLabel {
+    font-size: 13px;
+    display: none;
+    font-weight: 500;
+}
+
+
+// Mobile Styles (preserved from original, enhanced)
+.mobileNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(18, 18, 22, 0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px 12px;
+    z-index: 1000;
+}
+
+.mobileNavList {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+}
+
+.mobileNavItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: $transition;
+    color: rgba(255, 255, 255, 0.7);
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    &.mobileActive {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.12);
+    }
+}
+
+.mobileIcon {
+    font-size: 24px;
+}
+
+.mobileLabel {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+// Mobile Apps Overlay
+.mobileAppsOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 1100;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.mobileAppsContainer {
+    background: rgba(28, 28, 32, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 28px 28px 0 0;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.mobileAppsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+}
+
+.closeButton {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: $transition;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.mobileAppsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobileAppItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 14px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: $transition;
+    color: rgba(255, 255, 255, 0.85);
+
+    &:active {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    &.mobileAppActive {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+    }
+}
+
+.mobileAppIcon {
+    font-size: 26px;
+}
+
+.mobileAppLabel {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+    .taskbarItem {
+        padding: 6px 10px;
+        min-width: 56px;
+    }
+
+    .label {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .taskbarWrapper {
+        display: none;
+    }
+}

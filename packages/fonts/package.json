@@ -1,0 +1,82 @@
+{
+    "name": "@my-workspace/fonts",
+    "version": "1.0.0",
+    "main": "index.tsx",
+    "dependencies": {
+        "next": "15.2.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "reactstrap": "^9.2.3"
+    },
+    "exports": {
+        ".": {
+            "types": "./index.tsx",
+            "import": "./index.tsx",
+            "default": "./index.tsx"
+        },
+        "./iransans": {
+            "types": "./iransans/next.tsx",
+            "import": "./iransans/next.tsx",
+            "default": "./iransans/next.tsx"
+        },
+        "./bnazanin": {
+            "types": "./bnazanin/next.tsx",
+            "import": "./bnazanin/next.tsx",
+            "default": "./bnazanin/next.tsx"
+        },
+        "./peyda": {
+            "types": "./peyda/next.tsx",
+            "import": "./peyda/next.tsx",
+            "default": "./peyda/next.tsx"
+        },
+        "./shilia": {
+            "types": "./shilia/next.tsx",
+            "import": "./shilia/next.tsx",
+            "default": "./shilia/next.tsx"
+        },
+        "./yekanbakh": {
+            "types": "./yekanbakh/next.tsx",
+            "import": "./yekanbakh/next.tsx",
+            "default": "./yekanbakh/next.tsx"
+        },
+        "./almari": {
+            "types": "./almari/next.tsx",
+            "import": "./almari/next.tsx",
+            "default": "./almari/next.tsx"
+        },
+        "./dana": {
+            "types": "./dana/next.tsx",
+            "import": "./dana/next.tsx",
+            "default": "./dana/next.tsx"
+        },
+        "./byekan": {
+            "types": "./byekan/next.tsx",
+            "import": "./byekan/next.tsx",
+            "default": "./byekan/next.tsx"
+        },
+        "./morabba": {
+            "types": "./morabba/next.tsx",
+            "import": "./morabba/next.tsx",
+            "default": "./morabba/next.tsx"
+        },
+        "./rokh": {
+            "types": "./rokh/next.tsx",
+            "import": "./rokh/next.tsx",
+            "default": "./rokh/next.tsx"
+        },
+        "./bhoma": {
+            "types": "./bhoma/next.tsx",
+            "import": "./bhoma/next.tsx",
+            "default": "./bhoma/next.tsx"
+        },
+        "./iransansxvf": {
+            "types": "./iransansxvf/next.tsx",
+            "import": "./iransansxvf/next.tsx",
+            "default": "./iransansxvf/next.tsx"
+        }
+    },
+    "sideEffects": [
+        "*.scss",
+        "*.css"
+    ]
+}

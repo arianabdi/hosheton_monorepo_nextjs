@@ -1,0 +1,134 @@
+.shell {
+    color: var(--body-text-color);
+    font-family: inherit;
+
+    // همه‌ی تب‌ها: کنترل‌های فرم هم فونت اصلی پروژه را بگیرند
+    button,
+    input,
+    select,
+    textarea {
+        font-family: inherit;
+    }
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.headerTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.title {
+    margin: 0 0 0.35rem;
+    font-size: 1.55rem;
+    font-weight: 800;
+}
+
+.subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.72;
+    line-height: 1.55;
+    max-width: 560px;
+}
+
+.createBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.65rem 1.15rem;
+    border-radius: 12px;
+    background: var(--brand-color);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.92;
+    }
+}
+
+.tabNav {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 14px;
+    background: var(--input-background-color);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--body-text-color);
+    font-size: 0.84rem;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.72;
+    transition: background 0.15s, opacity 0.15s, color 0.15s;
+
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    }
+}
+
+.tabActive {
+    opacity: 1;
+    color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    box-shadow: 0 1px 3px color-mix(in srgb, #000 8%, transparent);
+}
+
+.content {
+    min-height: 200px;
+}
+
+/* موبایل: مثل تب‌های پروفایل سازنده — ردیف تمام‌عرض زیرخط‌دار، بدون قاب */
+@media (max-width: 768px) {
+    .tabNav {
+        gap: 0;
+        padding: 0 4px;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .tab {
+        padding: 12px 14px;
+        border-radius: 0;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        font-size: 13px;
+
+        &:hover {
+            background: transparent;
+        }
+    }
+
+    .tabActive {
+        background: transparent;
+        box-shadow: none;
+        border-bottom-color: var(--brand-color);
+    }
+}

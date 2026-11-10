@@ -1,0 +1,1383 @@
+@use 'sass:list';
+
+/* صحنه‌های حالت خالی «قالب‌های من» (چیدمان و رنگ‌های --sc-* در FeatureShowcase.module.scss).
+   هر صحنه ۳۶۰×۲۲۰ و چپ‌به‌راست، با یک یا دو باکس ساده هم‌سبک نود؛ هر keyframe درصدی از --loop است.
+   تقریباً فقط transform/opacity. */
+
+$text: var(--body-text-color);
+$edge: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+$surface: var(--input-background-color);
+$faint: color-mix(in srgb, var(--body-text-color) 5%, var(--input-background-color));
+$bar: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+$bar-faint: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+$green: #10b981;
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// پنجره نمایش: قبل از $from پنهان، بین $from و $to دیده می‌شود
+@mixin win($name, $from, $to, $fade: 0.5) {
+    @keyframes #{$name} {
+        0%, #{$from}% { opacity: 0; }
+        #{$from + $fade}%, #{$to - $fade}% { opacity: 1; }
+        #{$to}%, 100% { opacity: 0; }
+    }
+}
+
+// از $at ظاهر می‌شود و تا آخر حلقه می‌ماند (محو شدن پایانی با .box است)
+@mixin pop($name, $at) {
+    @keyframes #{$name} {
+        0%, #{$at}% { opacity: 0; transform: scale(0.4); }
+        #{$at + 3}%, 100% { opacity: 1; transform: scale(1); }
+    }
+}
+
+// تصویر نمادین (خورشید + کوه)؛ رنگ از --tone
+@mixin picture($sun: 8px) {
+    background: color-mix(in srgb, var(--tone) 24%, $surface);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        right: 16%;
+        top: 16%;
+        width: $sun;
+        height: $sun;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--tone) 65%, transparent);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: color-mix(in srgb, var(--tone) 50%, transparent);
+        clip-path: polygon(0 100%, 0 78%, 30% 42%, 52% 72%, 70% 52%, 100% 86%, 100% 100%);
+    }
+}
+
+/* ───────── مشترک ───────── */
+
+.box {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid $edge;
+    background: $surface;
+    animation: tpBox var(--loop) linear infinite;
+}
+
+@keyframes tpBox {
+    0% { opacity: 0; }
+    2%, 95% { opacity: 1; }
+    99%, 100% { opacity: 0; }
+}
+
+.boxHead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 28px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    border-bottom: 1px solid $edge;
+
+    > b {
+        width: 64px;
+        height: 5px;
+        border-radius: 3px;
+        background: $bar;
+    }
+
+    > svg {
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.headAvatar {
+    position: relative;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bg);
+    font-size: 2.1px;
+}
+
+/* ═════════ ۱. قالب بیشتر، مخاطب بیشتر (۱۰ ثانیه) ═════════
+   هر قالب تازه (۸، ۲۶، ۴۴، ۶۲٪) در پروفایل → شمار مخاطب، آواتارها و نوار دسترسی بالا می‌روند. */
+
+$au-runs: 8, 26, 44, 62;
+// لحظه عوض شدن شمار مخاطب (۳٪ بعد از هر قالب)
+$au-count-at: 0, 11, 29, 47, 65, 100;
+// هر آواتار دنبال‌کننده بعد از کدام قالب ظاهر می‌شود
+$au-fan-at: 11, 12, 29, 30, 47, 48, 65;
+$au-tones: var(--sc-accent), var(--sc-tone-b), var(--sc-tone-c), var(--sc-tone-d);
+
+.auBox {
+    left: 40px;
+    top: 18px;
+    width: 280px;
+    height: 184px;
+}
+
+.auSlots {
+    position: absolute;
+    left: 12px;
+    top: 40px;
+    width: 256px;
+    height: 58px;
+}
+
+// جای خالی هر قالب (خط‌چین) تا وقتی قالب واقعی رویش بنشیند
+.auSlot {
+    position: absolute;
+    top: 0;
+    width: 58px;
+    height: 58px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px dashed $edge;
+
+    @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+            left: #{($i - 1) * 66}px;
+
+            .auTpl {
+                --tone: #{list.nth($au-tones, $i)};
+                animation: tpAuTpl#{$i} var(--loop) $ease-pop infinite;
+            }
+        }
+    }
+}
+
+@for $i from 1 through 4 {
+    @include pop(tpAuTpl#{$i}, list.nth($au-runs, $i));
+}
+
+.auTpl {
+    position: absolute;
+    inset: -1px;
+    border-radius: 8px;
+    opacity: 0;
+    @include picture(8px);
+
+    // برچسب نوع قالب
+    i {
+        position: absolute;
+        z-index: 1;
+        left: 6px;
+        bottom: 6px;
+        width: 24px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, #fff 80%, transparent);
+    }
+}
+
+.auStats {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 110px;
+    height: 30px;
+}
+
+.auUsersIcon {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 16px;
+    height: 16px;
+    color: var(--sc-accent);
+}
+
+.auCount {
+    position: absolute;
+    left: 22px;
+    top: 0;
+    width: 80px;
+    height: 30px;
+
+    em {
+        position: absolute;
+        inset: 0;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 30px;
+        font-variant-numeric: tabular-nums;
+        color: $text;
+        opacity: 0;
+    }
+
+    @for $i from 1 through 5 {
+        em:nth-child(#{$i}) { animation: tpAuCount#{$i} var(--loop) linear infinite; }
+    }
+}
+
+@for $i from 1 through 5 {
+    @include win(tpAuCount#{$i}, list.nth($au-count-at, $i), list.nth($au-count-at, $i + 1), 0.4);
+}
+
+.auFans {
+    position: absolute;
+    left: 118px;
+    top: 3px;
+    width: 138px;
+    height: 24px;
+}
+
+.auFan {
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid $surface;
+    background: var(--bg);
+    font-size: 2.8px;
+    opacity: 0;
+
+    @for $i from 1 through 7 {
+        &:nth-child(#{$i}) {
+            left: #{($i - 1) * 16}px;
+            animation: tpAuFan#{$i} var(--loop) $ease-pop infinite;
+        }
+    }
+}
+
+@for $i from 1 through 7 {
+    @include pop(tpAuFan#{$i}, list.nth($au-fan-at, $i));
+}
+
+// نوار دسترسی: با هر قالب جلوتر می‌رود
+.auReach {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 156px;
+    height: 8px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: $faint;
+
+    i {
+        height: 100%;
+        border-radius: inherit;
+        background: var(--sc-accent);
+        transform-origin: left center;
+        animation: tpAuReach var(--loop) cubic-bezier(0.3, 0, 0.2, 1) infinite;
+    }
+}
+
+@keyframes tpAuReach {
+    0%, 10% { transform: scaleX(0.04); }
+    13%, 28% { transform: scaleX(0.25); }
+    31%, 46% { transform: scaleX(0.5); }
+    49%, 64% { transform: scaleX(0.78); }
+    67%, 100% { transform: scaleX(1); }
+}
+
+/* ═════════ ۲. کسب درآمد از قالب پولی (۱۱ ثانیه) ═════════
+   پنجره جزئیات قالب (مثل ExploreDetailModal: مدیا چپ، سایدبار راست، دکمه «خرید» پایین سایدبار) و یک
+   «کاغذ» درآمد که روی گوشه پایین-چپ پنجره افتاده (با برگه دیگری پشتش).
+   سه بار کلیک روی «خرید» (۱۰، ۳۶، ۶۲٪) → سکه روی کمان تا جمع روی کاغذ (۶٪) → جمع با جرقه، رنگ سبز و
+   «+$5» بالا می‌رود و نمودار خطی یک قدم دیگر کشیده می‌شود و نقطه تازه‌اش موج می‌زند. */
+
+$en-clicks: 10, 36, 62;
+// لحظه رسیدن سکه به جمع درآمد
+$en-arrive: 18, 44, 70;
+$en-total-at: 0, 18, 44, 70, 100;
+
+/* ───────── پنجره جزئیات قالب (۲۷۰×۱۷۸) ───────── */
+
+.enWin {
+    left: 86px;
+    top: 4px;
+    width: 270px;
+    height: 178px;
+    animation: tpEnWin var(--loop) ease-out infinite;
+}
+
+// پنجره کمی بزرگ‌شونده باز می‌شود
+@keyframes tpEnWin {
+    0% { opacity: 0; transform: scale(0.94); }
+    4%, 95% { opacity: 1; transform: scale(1); }
+    99%, 100% { opacity: 0; transform: scale(1); }
+}
+
+// مدیای قالب: تصویر یک کاراکتر (خروجی هوش مصنوعی)
+.enStage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 148px;
+    overflow: hidden;
+    border-radius: 11px 0 0 11px;
+    background: var(--bg);
+    font-size: 8.5px;
+
+    // کاراکتر بالاتر می‌نشیند تا کاغذ درآمد صورتش را نپوشاند
+    > span {
+        top: 14px;
+        bottom: auto;
+    }
+}
+
+.enStageBar {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 132px;
+    height: 14px;
+
+    b {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 26px;
+        height: 14px;
+        border-radius: 7px;
+        background: rgba(0, 0, 0, 0.32);
+    }
+
+    i {
+        position: absolute;
+        top: 0;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.75);
+
+        &:nth-of-type(1) { right: 18px; }
+        &:nth-of-type(2) { right: 0; }
+    }
+}
+
+.enTitle {
+    position: absolute;
+    left: 158px;
+    top: 12px;
+    width: 74px;
+    height: 6px;
+    border-radius: 3px;
+    background: $bar;
+}
+
+.enCreator {
+    position: absolute;
+    left: 158px;
+    top: 24px;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bg);
+    font-size: 1.4px;
+}
+
+.enHandle {
+    position: absolute;
+    left: 174px;
+    top: 28px;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: $bar-faint;
+}
+
+.enKind {
+    position: absolute;
+    left: 242px;
+    top: 9px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--sc-accent) 14%, transparent);
+    color: var(--sc-accent);
+    font-size: 11px;
+}
+
+.enSocial {
+    position: absolute;
+    left: 158px;
+    top: 44px;
+    display: flex;
+    gap: 5px;
+
+    i {
+        width: 18px;
+        height: 18px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid $edge;
+        color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+        font-size: 9px;
+    }
+}
+
+// پرامپت قفل‌شده قالب پولی
+.enLocked {
+    position: absolute;
+    left: 158px;
+    top: 68px;
+    width: 102px;
+    height: 40px;
+    border-radius: 7px;
+    background: $faint;
+
+    b {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        width: 70px;
+        height: 3px;
+        border-radius: 2px;
+        background: $bar-faint;
+
+        & + b {
+            top: 15px;
+            width: 50px;
+        }
+    }
+
+    i {
+        position: absolute;
+        left: 43px;
+        top: 21px;
+        width: 16px;
+        height: 16px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid $edge;
+        background: $surface;
+        color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+        font-size: 8px;
+    }
+}
+
+.enMoreLabel {
+    position: absolute;
+    left: 158px;
+    top: 116px;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: $bar-faint;
+}
+
+.enMore {
+    position: absolute;
+    left: 158px;
+    top: 124px;
+    display: flex;
+    gap: 6px;
+
+    i {
+        width: 30px;
+        height: 16px;
+        border-radius: 4px;
+
+        &:nth-child(1) { background: color-mix(in srgb, var(--sc-tone-b) 30%, $surface); }
+        &:nth-child(2) { background: color-mix(in srgb, var(--sc-tone-c) 30%, $surface); }
+        &:nth-child(3) { background: color-mix(in srgb, var(--sc-tone-d) 30%, $surface); }
+    }
+}
+
+// نوار پایین سایدبار: «خرید» و «استفاده به‌عنوان رفرنس»
+.enCta {
+    position: absolute;
+    left: 148px;
+    right: 0;
+    top: 146px;
+    bottom: 0;
+    border-top: 1px solid $edge;
+}
+
+.enBuy {
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    width: 72px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 7px;
+    background: var(--sc-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    animation: tpEnBuy var(--loop) ease-out infinite;
+
+    svg {
+        width: 11px;
+        height: 11px;
+    }
+}
+
+@keyframes tpEnBuy {
+    0%, 9.2%, 11.5%, 35.2%, 37.5%, 61.2%, 63.5%, 100% { transform: scale(1); }
+    10%, 36%, 62% { transform: scale(0.88); }
+}
+
+.enUseRef {
+    position: absolute;
+    left: 86px;
+    top: 6px;
+    width: 26px;
+    height: 22px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    border: 1px solid $edge;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    font-size: 11px;
+}
+
+// نقطه کلیک = سمت راست دکمه خرید (۲۲۰، ۱۶۶ در مختصات پنجره) تا «$5» زیر نشانگر نرود
+.enRipple {
+    position: absolute;
+    left: 220px;
+    top: 166px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--sc-accent);
+    opacity: 0;
+    animation: tpEnRipple var(--loop) ease-out infinite;
+}
+
+@keyframes tpEnRipple {
+    @each $c in $en-clicks {
+        #{$c - 0.2}% { transform: scale(0.4); opacity: 0; }
+        #{$c + 0.4}% { transform: scale(0.5); opacity: 0.9; }
+        #{$c + 5}% { transform: scale(3); opacity: 0; }
+    }
+    0%, 100% { transform: scale(0.4); opacity: 0; }
+}
+
+.enBurst {
+    position: absolute;
+    left: 220px;
+    top: 166px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--sc-accent);
+        opacity: 0;
+        animation: tpEnRay var(--loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+@keyframes tpEnRay {
+    @each $c in $en-clicks {
+        #{$c}% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+        #{$c + 0.6}% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+        #{$c + 4}% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+    }
+    0%, 100% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+}
+
+.enCursor {
+    position: absolute;
+    left: 212px;
+    top: 158px;
+    width: 22px;
+    height: 22px;
+    color: $text;
+    opacity: 0;
+    animation: tpEnCursor var(--loop) ease-in-out infinite;
+}
+
+@keyframes tpEnCursor {
+    0%, 3% { transform: translate(-30px, -40px); opacity: 0; }
+    8% { transform: translate(0, 0); opacity: 1; }
+    10% { transform: translate(0, 0) scale(0.8); }
+    11.5% { transform: translate(0, 0) scale(1); }
+    22% { transform: translate(-6px, -8px); }
+    34% { transform: translate(0, 0) scale(1); }
+    36% { transform: translate(0, 0) scale(0.8); }
+    37.5% { transform: translate(0, 0) scale(1); }
+    48% { transform: translate(-6px, -8px); }
+    60% { transform: translate(0, 0) scale(1); }
+    62% { transform: translate(0, 0) scale(0.8); }
+    63.5%, 68% { transform: translate(0, 0) scale(1); opacity: 1; }
+    76%, 100% { transform: translate(-30px, -40px); opacity: 0; }
+}
+
+/* ───────── کاغذ درآمد روی پنجره (۱۶۴×۱۱۲) ───────── */
+
+.enSheet,
+.enSheetBack {
+    position: absolute;
+    left: 8px;
+    top: 100px;
+    width: 164px;
+    height: 112px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid $edge;
+    animation: tpBox var(--loop) linear infinite;
+}
+
+.enSheet {
+    background: $surface;
+    rotate: -2deg;
+}
+
+// برگه زیرین، کمی جابه‌جا و چرخیده
+.enSheetBack {
+    background: $faint;
+    translate: 6px -5px;
+    rotate: 3deg;
+}
+
+.enEarnIcon {
+    position: absolute;
+    left: 10px;
+    top: 11px;
+    width: 14px;
+    height: 14px;
+    color: $green;
+}
+
+// جمع درآمد: با رسیدن هر سکه کمی بزرگ و سبز می‌شود
+.enTotal {
+    position: absolute;
+    left: 28px;
+    top: 5px;
+    width: 60px;
+    height: 26px;
+    color: $text;
+    transform-origin: 30% 50%;
+    animation: tpEnTotalBump var(--loop) ease-out infinite;
+
+    em {
+        position: absolute;
+        inset: 0;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 26px;
+        font-variant-numeric: tabular-nums;
+        color: inherit;
+        opacity: 0;
+    }
+
+    @for $i from 1 through 4 {
+        em:nth-child(#{$i}) { animation: tpEnTotal#{$i} var(--loop) linear infinite; }
+    }
+}
+
+@for $i from 1 through 4 {
+    @include win(tpEnTotal#{$i}, list.nth($en-total-at, $i), list.nth($en-total-at, $i + 1), 0.4);
+}
+
+@keyframes tpEnTotalBump {
+    @each $a in $en-arrive {
+        #{$a - 0.2}% { transform: scale(1); color: var(--body-text-color); }
+        #{$a + 1}% { transform: scale(1.22); color: #{$green}; }
+        #{$a + 4}% { transform: scale(1); color: #{$green}; }
+        #{$a + 9}% { transform: scale(1); color: var(--body-text-color); }
+    }
+    0%, 100% { transform: scale(1); color: var(--body-text-color); }
+}
+
+// جرقه‌های سبز دور جمع در لحظه رسیدن پول
+.enSparks {
+    position: absolute;
+    left: 48px;
+    top: 18px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1.5px;
+        top: -4px;
+        width: 3px;
+        height: 8px;
+        border-radius: 2px;
+        background: $green;
+        opacity: 0;
+        animation: tpEnSpark var(--loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 6 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 60}deg;
+            }
+        }
+    }
+}
+
+@keyframes tpEnSpark {
+    @each $a in $en-arrive {
+        #{$a}% { transform: rotate(var(--ray-angle)) translateY(-12px) scaleY(0.3); opacity: 0; }
+        #{$a + 0.8}% { transform: rotate(var(--ray-angle)) translateY(-17px) scaleY(1); opacity: 1; }
+        #{$a + 5}% { transform: rotate(var(--ray-angle)) translateY(-30px) scaleY(0.2); opacity: 0; }
+    }
+    0%, 100% { transform: rotate(var(--ray-angle)) translateY(-12px) scaleY(0.3); opacity: 0; }
+}
+
+.enPlus {
+    position: absolute;
+    left: 84px;
+    top: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 16px;
+    color: $green;
+    opacity: 0;
+    animation: tpEnPlus var(--loop) ease-out infinite;
+}
+
+@keyframes tpEnPlus {
+    @each $a in $en-arrive {
+        #{$a - 0.2}% { opacity: 0; transform: translateY(8px) scale(0.8); }
+        #{$a + 1}% { opacity: 1; transform: translateY(0) scale(1.1); }
+        #{$a + 6}% { opacity: 1; transform: translateY(-6px) scale(1); }
+        #{$a + 9}% { opacity: 0; transform: translateY(-12px) scale(1); }
+    }
+    0%, 100% { opacity: 0; transform: translateY(8px) scale(0.8); }
+}
+
+// نشان «رشد» گوشه کاغذ: با اولین فروش ظاهر می‌شود و با هر فروش می‌پرد
+.enTrend {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 26px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: color-mix(in srgb, $green 14%, transparent);
+    color: $green;
+    font-size: 12px;
+    opacity: 0;
+    animation: tpEnTrend var(--loop) $ease-pop infinite;
+}
+
+@keyframes tpEnTrend {
+    0%, 18% { opacity: 0; transform: scale(0.4); }
+    21% { opacity: 1; transform: scale(1); }
+    44%, 70% { transform: scale(1); }
+    45.5%, 71.5% { transform: scale(1.25) translateY(-2px); }
+    48%, 74%, 100% { opacity: 1; transform: scale(1); }
+}
+
+// نمودار خطی درآمد (۱۴۴×۶۲، مختصات یکی با viewBox)
+.enChart {
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    width: 144px;
+    height: 62px;
+
+    svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        fill: none;
+    }
+}
+
+.enGrid {
+    stroke: $edge;
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+}
+
+.enLine {
+    stroke: $green;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    animation: tpEnLine var(--loop) cubic-bezier(0.3, 0, 0.2, 1) infinite;
+}
+
+// هر فروش یک‌سوم خط را می‌کشد (سه پاره‌خط تقریباً هم‌طول‌اند)
+@keyframes tpEnLine {
+    0%, 18% { stroke-dashoffset: 1; }
+    22%, 44% { stroke-dashoffset: 0.667; }
+    48%, 70% { stroke-dashoffset: 0.333; }
+    74%, 100% { stroke-dashoffset: 0; }
+}
+
+.enDot {
+    position: absolute;
+    width: 0;
+    height: 0;
+
+    > i {
+        position: absolute;
+        left: -4.5px;
+        top: -4.5px;
+        width: 9px;
+        height: 9px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid $surface;
+        background: $green;
+    }
+
+    // موج سبز روی نقطه تازه
+    &::before {
+        content: '';
+        position: absolute;
+        left: -6px;
+        top: -6px;
+        width: 12px;
+        height: 12px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid $green;
+        opacity: 0;
+    }
+
+    @for $i from 2 through 4 {
+        $a: list.nth($en-arrive, $i - 1) + 4;
+
+        &:nth-of-type(#{$i}) {
+            > i { animation: tpEnDot#{$i} var(--loop) $ease-pop infinite; }
+            &::before { animation: tpEnDotWave#{$i} var(--loop) ease-out infinite; }
+        }
+
+        @include pop(tpEnDot#{$i}, $a - 1);
+
+        @keyframes tpEnDotWave#{$i} {
+            0%, #{$a}% { opacity: 0; transform: scale(1); }
+            #{$a + 0.5}% { opacity: 0.9; transform: scale(1); }
+            #{$a + 7}%, 100% { opacity: 0; transform: scale(3.2); }
+        }
+    }
+}
+
+// سکه از دکمه خرید روی یک کمان تا جمع درآمد روی کاغذ
+.enCoin {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, #f59e0b 72%, #000);
+    background: #f59e0b;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0;
+}
+
+@for $i from 1 through 3 {
+    $s: list.nth($en-clicks, $i) + 1.5;
+
+    .enCoin#{$i} { animation: tpEnCoin#{$i} var(--loop) ease-in-out infinite; }
+
+    @keyframes tpEnCoin#{$i} {
+        0%, #{$s}% { opacity: 0; transform: translate(297px, 161px) scale(0.6); }
+        #{$s + 0.8}% { opacity: 1; transform: translate(290px, 146px) scale(1); }
+        #{$s + 3.5}% { opacity: 1; transform: translate(190px, 90px) scale(1); }
+        #{$s + 6}% { opacity: 1; transform: translate(47px, 109px) scale(0.9); }
+        #{$s + 6.5}%, 100% { opacity: 0; transform: translate(47px, 109px) scale(0.9); }
+    }
+}
+
+/* ═════════ ۳. دیده شدن در گوگل (۱۲ ثانیه) ═════════
+   چپ: صفحه کوچک قالب (کاور کاراکتر با نشان AI): عنوان (۶–۱۸٪)، توضیح (۲۴–۳۶٪) و تگ‌ها (۴۸–۵۶٪) پر
+   می‌شوند و نوار سئو جلو می‌رود. راست: صفحه بزرگ‌تر جستجوی گوگل که نتیجه همین قالب (با تصویر بندانگشتی)
+   از رتبه ۳ به ۲ (۴۶٪) و ۱ (۶۴٪) می‌رسد. */
+
+$se-pitch: 38px;
+
+.seForm {
+    left: 6px;
+    top: 29px;
+    width: 126px;
+    height: 162px;
+}
+
+.seCover {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 108px;
+    height: 50px;
+}
+
+.seCoverFace {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 7px;
+    background: var(--bg);
+    font-size: 4.6px;
+}
+
+// نشان «ساخته‌شده با هوش مصنوعی»
+.seAi {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--sc-accent);
+    color: #fff;
+    font-size: 10px;
+}
+
+.seField {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid $edge;
+    background: $faint;
+}
+
+.seTitle {
+    top: 64px;
+    height: 16px;
+}
+
+.seDesc {
+    top: 84px;
+    height: 26px;
+}
+
+.seType,
+.seLine {
+    position: absolute;
+    left: 6px;
+    height: 4px;
+    border-radius: 2px;
+    background: $bar;
+    transform-origin: left center;
+    transform: scaleX(0);
+}
+
+.seType {
+    top: 5px;
+    width: 70px;
+    animation: tpSeType var(--loop) steps(10, end) infinite;
+}
+
+@keyframes tpSeType {
+    0%, 6% { transform: scaleX(0); }
+    18%, 100% { transform: scaleX(1); }
+}
+
+.seLine {
+    @for $i from 1 through 2 {
+        &:nth-child(#{$i}) {
+            top: #{6 + ($i - 1) * 9}px;
+            width: #{list.nth((78, 52), $i)}px;
+            animation: tpSeLine#{$i} var(--loop) steps(8, end) infinite;
+        }
+
+        @keyframes tpSeLine#{$i} {
+            0%, #{24 + ($i - 1) * 6}% { transform: scaleX(0); }
+            #{30 + ($i - 1) * 6}%, 100% { transform: scaleX(1); }
+        }
+    }
+}
+
+// تیک سبز «کامل شد» کنار هر فیلد
+.seOk {
+    position: absolute;
+    right: 3px;
+    top: 1px;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $green;
+    color: #fff;
+    font-size: 8px;
+    opacity: 0;
+
+    .seTitle & { animation: tpSeOk1 var(--loop) $ease-pop infinite; }
+    .seDesc & { top: 6px; animation: tpSeOk2 var(--loop) $ease-pop infinite; }
+    .seTags & { right: 0; animation: tpSeOk3 var(--loop) $ease-pop infinite; }
+}
+
+@include pop(tpSeOk1, 18.5);
+@include pop(tpSeOk2, 36.5);
+@include pop(tpSeOk3, 57);
+
+.seTags {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 116px;
+    height: 14px;
+
+    i {
+        position: absolute;
+        top: 0;
+        width: 24px;
+        height: 14px;
+        box-sizing: border-box;
+        border-radius: 7px;
+        border: 1px solid color-mix(in srgb, var(--sc-accent) 40%, transparent);
+        background: color-mix(in srgb, var(--sc-accent) 14%, transparent);
+        opacity: 0;
+
+        @for $i from 1 through 3 {
+            &:nth-child(#{$i}) {
+                left: #{($i - 1) * 28}px;
+                animation: tpSeTag#{$i} var(--loop) $ease-pop infinite;
+            }
+        }
+    }
+}
+
+@for $i from 1 through 3 {
+    @include pop(tpSeTag#{$i}, 46 + ($i - 1) * 4);
+}
+
+.seMeter {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 140px;
+    height: 12px;
+
+    em {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 8px;
+        font-weight: 800;
+        line-height: 12px;
+        color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    }
+
+    span {
+        position: absolute;
+        left: 24px;
+        right: 0;
+        top: 4px;
+        height: 4px;
+        overflow: hidden;
+        border-radius: 2px;
+        background: $faint;
+    }
+
+    i {
+        height: 100%;
+        border-radius: inherit;
+        background: $green;
+        transform-origin: left center;
+        animation: tpSeMeter var(--loop) cubic-bezier(0.3, 0, 0.2, 1) infinite;
+    }
+}
+
+@keyframes tpSeMeter {
+    0%, 17% { transform: scaleX(0.1); }
+    20%, 35% { transform: scaleX(0.4); }
+    38%, 56% { transform: scaleX(0.72); }
+    59%, 100% { transform: scaleX(1); }
+}
+
+/* ───────── صفحه جستجوی گوگل ───────── */
+
+.seGoogle {
+    left: 142px;
+    top: 17px;
+    width: 212px;
+    height: 186px;
+}
+
+.seLogo {
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    font-family: 'Product Sans', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.2px;
+
+    em {
+        display: inline;
+
+        &:nth-child(1), &:nth-child(4) { color: #4285f4; }
+        &:nth-child(2), &:nth-child(6) { color: #ea4335; }
+        &:nth-child(3) { color: #fbbc05; }
+        &:nth-child(5) { color: #34a853; }
+    }
+}
+
+.seSearch {
+    position: absolute;
+    left: 66px;
+    right: 12px;
+    top: 14px;
+    height: 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 9px;
+    border-radius: 12px;
+    border: 1px solid $edge;
+
+    > svg {
+        flex-shrink: 0;
+        width: 12px;
+        height: 12px;
+        color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+    }
+
+    b {
+        width: 70px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+.seSearch > .seMic {
+    margin-inline-start: auto;
+    color: #4285f4;
+}
+
+// ردیف تب‌ها (همه، تصاویر، ...) با زیرخط آبی روی اولی
+.seTabs {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 46px;
+    height: 10px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid $edge;
+
+    b {
+        width: 18px;
+        height: 3px;
+        border-radius: 2px;
+        background: $bar-faint;
+
+        &:first-child { background: #1a73e8; }
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 18px;
+        height: 2px;
+        background: #1a73e8;
+    }
+}
+
+// نتیجه‌ها: رتبه ۱ بالا (top ۶۴)، هر رتبه $se-pitch پایین‌تر
+.seResult {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 64px;
+    height: 34px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid transparent;
+
+    > i {
+        position: absolute;
+        left: 6px;
+        top: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $bar-faint;
+    }
+
+    > b {
+        position: absolute;
+        left: 6px;
+        border-radius: 2px;
+
+        // آدرس سایت
+        &:nth-of-type(1) {
+            left: 18px;
+            top: 6px;
+            width: 46px;
+            height: 3px;
+            background: color-mix(in srgb, var(--body-text-color) 30%, transparent);
+        }
+
+        // عنوان آبی
+        &:nth-of-type(2) {
+            top: 14px;
+            width: 116px;
+            height: 5px;
+            background: color-mix(in srgb, #1a73e8 80%, transparent);
+        }
+
+        // توضیح
+        &:nth-of-type(3) {
+            top: 24px;
+            width: 140px;
+            height: 3px;
+            background: $bar-faint;
+        }
+    }
+}
+
+.seOther1 { animation: tpSeOther1 var(--loop) cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.seOther2 { transform: translateY($se-pitch); animation: tpSeOther2 var(--loop) cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+
+.seMine {
+    border-color: var(--sc-accent);
+    background: color-mix(in srgb, var(--sc-accent) 7%, $surface);
+    transform: translateY($se-pitch * 2);
+    animation: tpSeMine var(--loop) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+
+    > i {
+        background: var(--sc-accent);
+    }
+
+    > b:nth-of-type(2) { width: 104px; }
+    > b:nth-of-type(3) { width: 116px; }
+}
+
+// تصویر بندانگشتی نتیجه = همان کاور قالب
+.seThumb {
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    width: 30px;
+    height: 26px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: var(--bg);
+    font-size: 2.8px;
+}
+
+@keyframes tpSeOther1 {
+    0%, 63% { transform: translateY(0); }
+    67%, 100% { transform: translateY($se-pitch); }
+}
+
+@keyframes tpSeOther2 {
+    0%, 45% { transform: translateY($se-pitch); }
+    49%, 100% { transform: translateY($se-pitch * 2); }
+}
+
+@keyframes tpSeMine {
+    0%, 45% { transform: translateY($se-pitch * 2) scale(1); }
+    47% { transform: translateY($se-pitch * 1.5) scale(1.04); }
+    49%, 63% { transform: translateY($se-pitch) scale(1); }
+    65% { transform: translateY($se-pitch * 0.5) scale(1.04); }
+    67%, 100% { transform: translateY(0) scale(1); }
+}
+
+// فلش «بالا رفتن رتبه» گوشه نتیجه همین قالب
+.seUp {
+    position: absolute;
+    left: -7px;
+    top: -7px;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid $surface;
+    background: $green;
+    color: #fff;
+    font-size: 9px;
+    opacity: 0;
+    animation: tpSeUp var(--loop) $ease-pop infinite;
+}
+
+@keyframes tpSeUp {
+    0%, 45% { opacity: 0; transform: scale(0.4); }
+    48%, 63% { opacity: 1; transform: scale(1); }
+    65.5% { transform: scale(1.3); }
+    68%, 100% { opacity: 1; transform: scale(1); }
+}
+
+// بدون موشن (انیمیشن‌ها در FeatureShowcase.module.scss خاموش می‌شوند): حالت پایانی هر صحنه
+@media (prefers-reduced-motion: reduce) {
+    .auTpl,
+    .auFan,
+    .auCount em:last-child,
+    .enTotal em:last-child,
+    .enTrend,
+    .seOk,
+    .seTags i,
+    .seUp {
+        opacity: 1;
+    }
+
+    .seType,
+    .seLine {
+        transform: none;
+    }
+
+    .enLine {
+        stroke-dashoffset: 0;
+    }
+
+    .seOther1 { transform: translateY($se-pitch); }
+    .seOther2 { transform: translateY($se-pitch * 2); }
+    .seMine { transform: none; }
+}

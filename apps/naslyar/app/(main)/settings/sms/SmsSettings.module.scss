@@ -1,0 +1,542 @@
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.tabBar {
+    display: flex;
+    gap: 1.75rem;
+    border-bottom: 1px solid var(--plan-card-border-color, var(--border-color));
+    margin-bottom: 1.75rem;
+}
+
+.tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 0.5rem 0 0.75rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--body-text-color);
+    opacity: 0.65;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.tabActive {
+    opacity: 1;
+    color: var(--brand-color);
+    border-bottom-color: var(--brand-color);
+}
+
+.pageFullWidth {
+    max-width: none;
+    width: 100%;
+}
+
+.generalStack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: none;
+}
+
+.section {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color, var(--border-color));
+    border-radius: 12px;
+    padding: 1.35rem 1.5rem;
+    color: var(--body-text-color);
+}
+
+.sectionTitle {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.sectionDesc {
+    margin: 0 0 1.15rem;
+    font-size: 0.84rem;
+    line-height: 1.7;
+    opacity: 0.75;
+}
+
+.fieldList {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.fieldRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--plan-card-border-color, var(--border-color));
+
+    &:first-child {
+        border-top: none;
+        padding-top: 0;
+    }
+
+    @media (min-width: 640px) {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+.fieldRowDisabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.fieldLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.fieldName {
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.fieldHint {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    opacity: 0.72;
+}
+
+.select {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--input-border-color, var(--border-color));
+    background: var(--input-background-color, var(--body-background));
+    color: var(--body-text-color);
+    font-family: inherit;
+    font-size: 0.88rem;
+
+    &:focus {
+        outline: none;
+        border-color: var(--brand-color);
+    }
+}
+
+.toggleField {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--plan-card-border-color, var(--border-color));
+    cursor: pointer;
+
+    &:first-of-type {
+        border-top: none;
+    }
+}
+
+.toggleInput {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    accent-color: var(--brand-color);
+    cursor: pointer;
+}
+
+.eventGroup {
+    margin-bottom: 1.25rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.eventGroupTitle {
+    margin: 0 0 0.35rem;
+    padding-bottom: 0.35rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    opacity: 0.85;
+    border-bottom: 1px solid var(--plan-card-border-color, var(--border-color));
+}
+
+.policyGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 0.5rem;
+
+    @media (min-width: 720px) {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+.formFooter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 0.25rem;
+}
+
+.saveBtn {
+    background: var(--brand-color);
+    color: #fff;
+    padding: 0.65rem 1.35rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.88rem;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.footerHint {
+    font-size: 0.78rem;
+    opacity: 0.65;
+    margin: 0;
+}
+
+.providerTypeLine {
+    font-size: 0.78rem;
+    opacity: 0.7;
+    margin: 0.15rem 0 0;
+}
+
+.statusInactive {
+    font-size: 0.75rem;
+    color: #c5221f;
+    margin-top: 0.25rem;
+}
+
+.providersOverview {
+    margin-bottom: 1.5rem;
+    padding: 1.35rem 1.5rem;
+    border-radius: 14px;
+    border: 1px solid var(--plan-card-border-color, var(--border-color));
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--brand-color) 7%, var(--plan-card-background-color)) 0%,
+        var(--plan-card-background-color) 55%
+    );
+    color: var(--body-text-color);
+    display: grid;
+    gap: 1.25rem;
+
+    @media (min-width: 900px) {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        align-items: center;
+    }
+}
+
+.overviewLead {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.overviewIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--brand-color) 22%, transparent);
+}
+
+.overviewTitle {
+    margin: 0 0 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.overviewText {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.75;
+    opacity: 0.8;
+    max-width: 42ch;
+}
+
+.overviewLink {
+    display: inline-flex;
+    margin-top: 0.65rem;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--brand-color);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.statGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+
+    @media (max-width: 520px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.statCard {
+    padding: 0.85rem 0.95rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 3%, transparent);
+    border: 1px solid var(--plan-card-border-color, var(--border-color));
+}
+
+.statValue {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    line-height: 1.2;
+}
+
+.statLabel {
+    font-size: 0.72rem;
+    opacity: 0.72;
+    line-height: 1.45;
+}
+
+.statValueSmall {
+    font-size: 0.88rem;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.patternsToolbar {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.patternsSelectWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: min(320px, 100%);
+    flex: 1 1 260px;
+}
+
+.patternProviderType {
+    font-size: 0.78rem;
+    opacity: 0.7;
+    padding-bottom: 0.6rem;
+}
+
+.patternAddBtn {
+    margin-right: auto;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 35%, transparent);
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    color: var(--brand-color);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    }
+}
+
+.patternAddForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1.15rem;
+    border: 1px dashed var(--plan-card-border-color, var(--border-color));
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 3%, transparent);
+}
+
+.patternAddGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    width: 100%;
+
+    @media (min-width: 720px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.patternField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    label {
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid var(--input-border-color, var(--border-color));
+        background: var(--input-background-color, var(--body-background));
+        color: var(--body-text-color);
+        font-family: inherit;
+        font-size: 0.85rem;
+
+        &:focus {
+            outline: none;
+            border-color: var(--brand-color);
+        }
+    }
+}
+
+.patternRequired {
+    color: #c5221f;
+    margin-right: 2px;
+}
+
+.patternList {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--plan-card-border-color, var(--border-color));
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.patternRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.15rem;
+    border-top: 1px solid var(--plan-card-border-color, var(--border-color));
+    background: var(--plan-card-background-color);
+
+    &:first-child {
+        border-top: none;
+    }
+
+    @media (max-width: 560px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.patternRowActive {
+    background: color-mix(in srgb, var(--brand-color) 8%, var(--plan-card-background-color));
+}
+
+.patternInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.patternTitle {
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.patternActiveBadge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--brand-color);
+    border: 1px solid color-mix(in srgb, var(--brand-color) 40%, transparent);
+    border-radius: 999px;
+    padding: 0.05rem 0.55rem;
+}
+
+.patternCode {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-align: left;
+    word-break: break-all;
+}
+
+.patternVar {
+    font-size: 0.74rem;
+    opacity: 0.65;
+    text-align: left;
+}
+
+.patternActions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.patternSelectBtn {
+    padding: 0.45rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--brand-color);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: default;
+    }
+}
+
+.patternDeleteBtn {
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid var(--plan-card-border-color, var(--border-color));
+    background: none;
+    color: #c5221f;
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+}

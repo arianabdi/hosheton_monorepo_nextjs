@@ -1,0 +1,76 @@
+// منتقل‌شده از .sidebarGroupBar در project-view.module.scss (سایدبار ورک‌فلو) — بدون تغییر ظاهر
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px;
+    margin: 12px 12px 10px;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+    border-radius: 14px;
+    flex-shrink: 0;
+}
+
+.segment {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.55;
+    cursor: pointer;
+    padding: 0;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    &.segmentActive {
+        background: var(--input-background-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+        opacity: 1;
+    }
+}
+
+.divider {
+    width: 1px;
+    height: 18px;
+    background: var(--input-border-color);
+    margin: 0 3px;
+    flex-shrink: 0;
+}
+
+.shortcut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.55;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    &:hover {
+        opacity: 0.9;
+        background: var(--input-background-color);
+    }
+}

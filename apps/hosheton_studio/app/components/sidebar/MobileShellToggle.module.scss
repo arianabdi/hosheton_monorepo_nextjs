@@ -1,0 +1,43 @@
+.toggle {
+    display: none;
+    border: none;
+    background: var(--plan-card-background-color);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+}
+
+.fixed {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1101;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--border-color);
+}
+
+.inline {
+    position: static;
+    z-index: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 10px;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+}
+
+.active {
+    border-color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 12%, var(--plan-card-background-color));
+}

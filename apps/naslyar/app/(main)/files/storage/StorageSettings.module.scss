@@ -1,0 +1,372 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.sectionGap {
+    margin-top: 1.25rem;
+}
+
+.statusRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+}
+
+.statusChip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.statusChipActive {
+    background: color-mix(in srgb, #16a34a 14%, transparent);
+    color: #16a34a;
+}
+
+.statusChipIdle {
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    color: var(--body-text-color);
+}
+
+.statusDetail {
+    font-size: 0.78rem;
+    opacity: 0.7;
+    word-break: break-all;
+}
+
+.checkRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.7rem;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 0.9rem;
+
+    input {
+        width: 1.05rem;
+        height: 1.05rem;
+        accent-color: var(--brand-color);
+    }
+
+    span {
+        flex-basis: 100%;
+        font-weight: 400;
+        margin: 0;
+    }
+}
+
+.fieldWarn {
+    margin: 0.35rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: #ea580c;
+}
+
+.testBox {
+    margin-top: 0.5rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    line-height: 1.8;
+
+    ul {
+        margin: 0.35rem 0 0;
+        padding: 0 1.1rem 0 0;
+    }
+}
+
+.testBoxOk {
+    background: color-mix(in srgb, #16a34a 10%, transparent);
+}
+
+.testBoxFail {
+    background: color-mix(in srgb, #dc2626 10%, transparent);
+}
+
+.testError {
+    display: block;
+    font-size: 0.75rem;
+    opacity: 0.85;
+    word-break: break-word;
+}
+
+/* ---------- استوریج‌های بک‌آپ (فایل‌های قدیمی) ---------- */
+
+.fallbackTable {
+    margin-top: 0.75rem;
+    overflow-x: auto;
+    transition: opacity 0.15s ease;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.82rem;
+    }
+
+    th,
+    td {
+        padding: 0.55rem 0.5rem;
+        text-align: start;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        vertical-align: middle;
+    }
+
+    th {
+        font-weight: 600;
+        opacity: 0.75;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 576px) {
+        thead {
+            display: none;
+        }
+
+        tr {
+            display: block;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--plan-card-border-color);
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            border: none;
+            padding: 0.2rem 0;
+
+            &::before {
+                content: attr(data-label);
+                font-weight: 600;
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+.tableLoading {
+    opacity: 0.55;
+}
+
+.mutedCell {
+    opacity: 0.6;
+}
+
+.ltrText {
+    direction: ltr;
+    unicode-bidi: isolate;
+    word-break: break-all;
+}
+
+.roleActive {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.roleFallback {
+    opacity: 0.8;
+}
+
+.inlineActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.retiredList {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+
+    li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem 1rem;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid var(--plan-card-border-color);
+
+        > div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            min-width: 0;
+        }
+    }
+}
+
+.confirmBody {
+    padding: 0.25rem 0.25rem 0.5rem;
+    padding-inline-end: 44px;
+    font-size: 0.86rem;
+    line-height: 1.8;
+
+    h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* ---------- انتقال، بک‌آپ و کارهای استوریج ---------- */
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.6rem 0.9rem;
+    margin-top: 0.75rem;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    select,
+    input {
+        min-width: 9rem;
+        padding: 0.45rem 0.6rem;
+        border-radius: 8px;
+        border: 1px solid var(--input-border-color);
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        font: inherit;
+        font-weight: 400;
+    }
+}
+
+.toolbarGrow {
+    flex: 1 1 12rem;
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+.toolbarCount {
+    margin-inline-start: auto;
+    font-size: 0.8rem;
+    opacity: 0.75;
+    white-space: nowrap;
+}
+
+.urlCell {
+    max-width: 22rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    a {
+        color: inherit;
+        opacity: 0.8;
+    }
+}
+
+.paginationRow {
+    margin-top: 0.75rem;
+}
+
+.jobList {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+
+    > li {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--plan-card-border-color);
+    }
+}
+
+.jobHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+.jobStatus {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+.job_running,
+.job_queued {
+    color: var(--brand-color);
+}
+
+.job_completed {
+    color: #16a34a;
+}
+
+.job_failed {
+    color: #dc2626;
+}
+
+.progressTrack {
+    position: relative;
+    height: 4px;
+    margin: 0.55rem 0 0.45rem;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    overflow: hidden;
+}
+
+.progressFill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    background: var(--brand-color);
+    transition: width 0.4s ease;
+}
+
+.progressIndeterminate {
+    animation: storageProgress 1.4s ease-in-out infinite;
+}
+
+@keyframes storageProgress {
+    0% { inset-inline-start: -30%; }
+    100% { inset-inline-start: 100%; }
+}
+
+.jobStats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    font-size: 0.76rem;
+    opacity: 0.8;
+}
+
+.failText {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.failureList {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    font-size: 0.76rem;
+
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+        padding: 0.4rem 0;
+        border-bottom: 1px dashed var(--plan-card-border-color);
+    }
+}

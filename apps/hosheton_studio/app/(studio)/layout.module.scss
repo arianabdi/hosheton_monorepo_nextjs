@@ -1,0 +1,73 @@
+.applicationView {
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.outlet{
+    height: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    overflow-y: auto;
+}
+
+.wrapper {
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    gap: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1600px) {
+    .wrapper {
+        width: 100%;
+    }
+
+}
+
+body {
+    color: var(--body-text-color) !important;
+    background: var(--body-background) !important;
+}
+
+:global(h6),
+:global(h5),
+:global(h4),
+:global(h3),
+:global(h2),
+:global(h1) {
+    color: var(--body-text-color) !important;
+}
+
+:global(input),
+:global(select),
+:global(optgroup),
+:global(textarea) {
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+
+}
+
+:global(.modal-content) {
+    background: unset !important;
+}
+
+
+@media (max-width: 768px) {
+    .applicationView {
+        height: 100vh;
+        /* کیبورد iOS روی صفحه: پوسته تا بالای کیبورد (KeyboardInsetSync) */
+        height: calc(100dvh - var(--keyboard-inset, 0px));
+        padding-top: 52px;
+        /* جای نوار پایین (MobileTabBar) */
+        padding-bottom: calc(var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
+        box-sizing: border-box;
+    }
+}

@@ -1,0 +1,28 @@
+# Stage deploy, run by .github/workflows/main.yml on tag "hosheton_studio/<repo>/<version>-stage".
+# The image is built with apps/hosheton_studio/.env.stage over .env.production (stage API URL).
+name: hosheton-studio-nextjs-stage
+
+services:
+  hosheton-studio-nextjs-stage:
+    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${DOCKERHUB_REPOSITORY_VERSION}
+    expose:
+      - "80"
+
+    container_name: hosheton-studio-nextjs-stage
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hosheton_studio_nextjs_stage.rule=Host(`stage-studio.hosheton.com`)"
+      - "traefik.http.routers.hosheton_studio_nextjs_stage.entrypoints=websecure"
+      - "traefik.http.routers.hosheton_studio_nextjs_stage.tls=true"
+      - "traefik.http.services.hosheton_studio_nextjs_stage.loadbalancer.server.port=80"
+      - "traefik.docker.network=traefik-public"
+
+    networks:
+      - traefik-public
+
+    restart: unless-stopped
+
+networks:
+  traefik-public:
+    external: true

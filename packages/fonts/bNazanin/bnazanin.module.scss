@@ -1,0 +1,13 @@
+
+/*Bnazanin (Persian & English)*/
+@font-face {
+    font-family: "bnazanin";
+    src: url("./bnazanin.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Optional utility class (handy for quick testing) */
+.bnazanin {
+    font-family: 'bnazanin', sans-serif;
+}

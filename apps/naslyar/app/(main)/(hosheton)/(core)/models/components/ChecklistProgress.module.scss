@@ -1,0 +1,205 @@
+// کارت وضعیت چک‌لیست مدل‌های فعال — بدون سایه/گرادیان، خط جداکننده بین بخش‌ها
+
+$border-color: var(--plan-card-border-color);
+
+.card {
+    background: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+    direction: rtl;
+    text-align: right;
+}
+
+.skeleton {
+    min-height: 120px;
+    opacity: 0.5;
+}
+
+.stale {
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+}
+
+.empty {
+    margin: 0;
+    font-size: 0.82rem;
+    opacity: 0.7;
+}
+
+.head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.headText {
+    min-width: 0;
+
+    h3 {
+        margin: 0 0 0.2rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.78rem;
+        opacity: 0.7;
+    }
+}
+
+.dot {
+    margin-inline: 0.4rem;
+}
+
+// موبایل: عدد درصد بالای متن، توضیح در دو خط بدون شکستن وسط عبارت
+@media (max-width: 576px) {
+    .head {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+
+    .headText p {
+        line-height: 1.8;
+    }
+
+    .dot {
+        display: none;
+    }
+
+    .headMeta {
+        display: block;
+    }
+}
+
+.headValue {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-shrink: 0;
+
+    strong {
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+}
+
+.status {
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+}
+
+.bar {
+    height: 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.4s ease;
+}
+
+// رنگ وضعیت: سبز = آماده، کهربایی = در حال تکمیل، قرمز = عقب
+.good { --tone: #16a34a; }
+.mid { --tone: #d97706; }
+.low { --tone: #dc2626; }
+
+.fill.good, .fill.mid, .fill.low,
+.itemFill.good, .itemFill.mid, .itemFill.low,
+.swatch.good, .swatch.mid, .swatch.low {
+    background: var(--tone);
+}
+
+.status.good, .status.mid, .status.low {
+    color: var(--tone);
+    background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+.counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    margin-top: 0.65rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid $border-color;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0;
+        border: none;
+        background: none;
+        color: var(--body-text-color);
+        font-family: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--brand-color);
+        }
+    }
+}
+
+.swatch {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+}
+
+.items {
+    list-style: none;
+    margin: 0.7rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem 1.5rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 90px auto;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+}
+
+.itemTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.itemBar {
+    height: 6px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    overflow: hidden;
+}
+
+.itemFill {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.itemCount {
+    opacity: 0.65;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}

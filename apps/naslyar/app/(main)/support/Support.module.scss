@@ -1,0 +1,713 @@
+$brand-color: var(--brand-color, #7b58fd);
+$text-dark: var(--body-text-color, #1e293b);
+$text-slate: #64748b;
+$border-color-soft: var(--plan-card-border-color, #dadce0);
+$bg-card: var(--plan-card-background-color, #ffffff);
+
+$green-success: #10b981;
+$green-light: #ecfdf5;
+$orange-pending: #f59e0b;
+$orange-light: #fffbeb;
+
+.container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: var(--body-text-color);
+    box-sizing: border-box;
+}
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.mainTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: $text-dark;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: $text-slate;
+    line-height: 1.6;
+    max-width: 750px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.viewToggle {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid $border-color-soft;
+}
+
+.viewBtn {
+    background: transparent;
+    border: none;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 6px;
+    color: $text-slate;
+    transition: all 0.2s;
+
+    &.active {
+        background-color: $bg-card;
+        color: $brand-color;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+}
+
+.primaryBtn {
+    background-color: $brand-color;
+    color: #fff;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s;
+    border: none;
+    cursor: pointer;
+
+    &:hover { opacity: 0.9; }
+}
+
+// --- باکس فیلترهای جدید ---
+.filterContainer {
+    background-color: $bg-card;
+    border: 1px solid $border-color-soft;
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.filterGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+}
+
+.filterItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    label {
+        font-size: 0.825rem;
+        font-weight: 600;
+        color: #475569;
+    }
+}
+
+.filterInput, .filterSelect {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid $border-color-soft;
+    background-color: #f8fafc;
+    color: $text-dark;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    outline: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+
+    &:focus {
+        border-color: $brand-color;
+        background-color: $bg-card;
+    }
+}
+
+// --- کامپوننت راهنمای یادگیری رسانه ---
+.noticeContainer {
+    background-color: $bg-card;
+    border: 1px solid $border-color-soft;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.noticeHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $border-color-soft;
+    padding-bottom: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.noticeTitleGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.noticeIcon { font-size: 1.3rem; }
+.noticeTitle { font-size: 1.05rem; font-weight: 700; margin: 0; }
+
+.noticeBadge {
+    background-color: rgba(123, 88, 253, 0.07);
+    color: $brand-color;
+    border: 1px solid rgba(123, 88, 253, 0.15);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
+.noticeGridThreeColumns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 992px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.noticeCard {
+    background-color: rgba(0, 0, 0, 0.005);
+    border: 1px dashed $border-color-soft;
+    border-radius: 8px;
+    padding: 1rem;
+
+    h3 { font-size: 0.9rem; font-weight: 600; margin: 0; }
+    p { font-size: 0.825rem; color: $text-slate; line-height: 1.6; margin-top: 0.5rem; text-align: justify; }
+}
+
+.noticeCardHead {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stepNumber {
+    background-color: $brand-color;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+// --- استایل‌های اختصاصی جدول واژگان ---
+.customTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.slugCode {
+    font-family: monospace;
+    font-size: 0.8rem;
+    background-color: rgba(0,0,0,0.03);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.wordTextMain {
+    font-size: 1.1rem;
+}
+
+.versionBadge {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.statusBadge {
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: .7rem;
+    display: unset;
+    box-sizing: border-box;
+
+    &.approved {
+        color: #009966;
+        background-color: #00bb7436;
+    }
+
+    &.pending {
+        color: #ffa000;
+        background-color: #ffa00033;
+    }
+}
+.tableRow{
+    td{
+        line-height: 21px;
+        padding: 15px 0px;
+    }
+}
+.dateCell {
+    font-size: 0.8rem;
+    color: $text-slate;
+}
+
+.actionGridButtons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btnEdit, .btnDelete {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+.btnEdit {
+    background-color: #f1f5f9;
+    color: #334155;
+    &:hover { background-color: #e2e8f0; }
+}
+
+.btnDelete {
+    background-color: #fef2f2;
+    color: #ef4444;
+    &:hover { background-color: #fee2e2; }
+}
+
+// --- ساختار ریسپانسیو رندر کارتی ---
+.cardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 640px) { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+}
+
+.wordCard {
+    background-color: $bg-card;
+    border: 1px solid $border-color-soft;
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid $border-color-soft;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: $brand-color;
+}
+
+.cardId {
+    font-size: 0.75rem;
+    color: $text-slate;
+    font-family: monospace;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+}
+
+.cardRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+
+    .label { color: $text-slate; }
+    .value { font-weight: 500; }
+}
+
+.statusText {
+    font-weight: 600;
+    &.approvedText { color: $green-success; }
+    &.pendingText { color: $orange-pending; }
+}
+
+.cardActions {
+    display: flex;
+    gap: 0.5rem;
+    border-top: 1px solid $border-color-soft;
+    padding-top: 0.75rem;
+
+    .btnEdit, .btnDelete {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+.emptyState, .noDataWrapper {
+    text-align: center;
+    padding: 3rem;
+    color: $text-slate;
+}
+
+.noDataWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: $bg-card;
+    border: 1px solid $border-color-soft;
+    border-radius: 8px;
+}
+
+.paginationSpace {
+    margin-top: 2rem;
+}
+
+// ==================== نوار ابزار، فیلترها و اکشن‌های تیکت ====================
+
+.secondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: $bg-card;
+    color: $text-dark;
+    border: 1px solid $border-color-soft;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s, background-color 0.15s;
+
+    &:hover {
+        border-color: $brand-color;
+        background-color: rgba(123, 88, 253, 0.05);
+    }
+}
+
+.filtersBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: $brand-color;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s;
+
+    &:hover { opacity: 0.9; }
+}
+
+.filterCount {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    min-width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    padding: 0 6px;
+}
+
+// خلاصه‌ی فیلترهای فعال بالای جدول
+.activeFiltersRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.activeFiltersLabel {
+    font-size: 0.8rem;
+    color: $text-slate;
+    font-weight: 600;
+}
+
+.filterChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: rgba(123, 88, 253, 0.08);
+    color: $brand-color;
+    border: 1px solid rgba(123, 88, 253, 0.25);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    &:hover { background-color: rgba(123, 88, 253, 0.16); }
+}
+
+.clearFiltersBtn {
+    background-color: transparent;
+    color: $text-slate;
+    border: 1px solid $border-color-soft;
+    border-radius: 8px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+
+    &:hover { border-color: #ef4444; color: #ef4444; }
+}
+
+.filtersActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid $border-color-soft;
+}
+
+.filtersBody,
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 0.25rem;
+}
+
+.editHint {
+    font-size: 0.8rem;
+    color: $text-slate;
+    background-color: rgba(245, 158, 11, 0.08);
+    border: 1px dashed rgba(245, 158, 11, 0.4);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    margin: 0;
+}
+
+// نشان دسته‌بندی داخل جدول
+.categoryChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: $text-dark;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid $border-color-soft;
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+.categoryDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.mutedCell {
+    color: $text-slate;
+    opacity: 0.6;
+}
+
+.priorityHigh {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.resolvedBadge {
+    color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+// منوی عملیات سطری — همان الگوی HrRowActionMenu
+.moreBtn {
+    background: transparent;
+    border: 1px solid $border-color-soft;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    color: $text-dark;
+    transition: border-color 0.15s, background-color 0.15s;
+
+    &:hover {
+        border-color: $brand-color;
+        background-color: rgba(123, 88, 253, 0.05);
+    }
+}
+
+.actionMenu {
+    position: absolute;
+    z-index: 100000;
+    min-width: 170px;
+    background-color: $bg-card;
+    border: 1px solid $border-color-soft;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+
+    button {
+        background: none;
+        border: none;
+        text-align: right;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.82rem;
+        font-family: inherit;
+        color: $text-dark;
+        border-radius: 6px;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:hover { background-color: rgba(123, 88, 253, 0.07); }
+    }
+}
+
+.menuDanger {
+    color: #dc2626 !important;
+
+    &:hover { background-color: rgba(220, 38, 38, 0.08) !important; }
+}
+
+// ==================== صفحه مدیریت دسته‌بندی‌ها ====================
+
+.catDotLarge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.catTitleCell {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.countBadge {
+    background-color: rgba(123, 88, 253, 0.08);
+    color: $brand-color;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.colorPreview {
+    width: 60px;
+    height: 24px;
+    border-radius: 6px;
+    border: 1px solid $border-color-soft;
+    display: inline-block;
+}
+
+.colorFieldRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.deleteConfirmBtn {
+    background-color: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s;
+
+    &:hover { opacity: 0.9; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+// ==================== فرم صفحه دسته‌بندی (new / edit) ====================
+
+.colorPickerInput {
+    width: 48px !important;
+    height: 38px;
+    padding: 2px !important;
+    border: 1px solid $border-color-soft;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+}
+
+.colorPresets {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.colorPreset {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.12s, border-color 0.12s;
+
+    &:hover { transform: scale(1.1); }
+}
+
+.colorPresetActive {
+    border-color: $text-dark;
+    box-shadow: 0 0 0 2px $bg-card inset;
+}
+
+.formNoteBox {
+    background-color: rgba(123, 88, 253, 0.05);
+    border: 1px dashed rgba(123, 88, 253, 0.3);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: $text-dark;
+    margin: 0.5rem 0 1.25rem;
+}
+
+.formActionsRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}

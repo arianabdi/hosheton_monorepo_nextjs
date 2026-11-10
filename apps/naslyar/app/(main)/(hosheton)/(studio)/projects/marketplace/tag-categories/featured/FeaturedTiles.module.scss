@@ -1,0 +1,143 @@
+/* قالب‌های ویژهٔ دسته‌ها — ساده، با خط جداکننده؛ ستون‌ها از Featured.module.scss (قالب‌های منتخب چت) */
+
+.headerActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.guide {
+    margin: 0 0 1rem;
+    font-size: 0.82rem;
+    line-height: 1.9;
+    opacity: 0.75;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.field {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 220px;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    select {
+        font-family: inherit;
+        background: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        border-radius: 8px;
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+        font-weight: 400;
+
+        &:focus {
+            outline: none;
+            border-color: var(--brand-color);
+        }
+    }
+}
+
+.path {
+    font-size: 0.78rem;
+    opacity: 0.6;
+    padding-bottom: 0.35rem;
+}
+
+.dirty {
+    font-size: 0.78rem;
+    color: var(--brand-color);
+    padding-bottom: 0.35rem;
+}
+
+.panel {
+    padding: 0.9rem 0 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.panelTitle {
+    flex-shrink: 0;
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.searchRow {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.muted {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.8;
+    opacity: 0.6;
+}
+
+.creator {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    white-space: nowrap;
+
+    @media (max-width: 576px) {
+        display: none;
+    }
+}
+
+.refreshing {
+    opacity: 0.55;
+    transition: opacity 0.15s;
+}
+
+.selectedCell {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.heroBadge {
+    margin-inline-start: 0.4rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 6px;
+    font-size: 0.68rem;
+    color: var(--brand-color);
+    border: 1px solid color-mix(in srgb, var(--brand-color) 45%, transparent);
+}
+
+/* عنوان‌های بلند nowrap جدول را پهن نکنند */
+.selectedWrap {
+    margin-top: 0 !important;
+}
+
+.selectedTable {
+    table-layout: fixed;
+
+    th:first-child {
+        width: 4.6rem;
+    }
+
+    th:last-child {
+        width: 3.6rem;
+    }
+}

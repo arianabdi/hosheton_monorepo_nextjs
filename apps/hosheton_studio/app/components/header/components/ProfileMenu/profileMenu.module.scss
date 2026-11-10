@@ -1,0 +1,310 @@
+.profileContainer {
+    position: relative;
+    display: flex;
+}
+
+.profileContainerOpen {
+    z-index: 1201;
+}
+
+.menuBackdrop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .menuBackdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1150;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: rgba(0, 0, 0, 0.35);
+        cursor: default;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+.profileContainerRail {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.triggerBtn {
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-color);
+    padding: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+        transform: scale(1.04);
+        border-color: color-mix(in srgb, var(--brand-color) 45%, var(--border-color));
+        box-shadow: 0 4px 14px color-mix(in srgb, var(--brand-color) 18%, transparent);
+    }
+}
+
+.triggerBtnRail {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    &:hover {
+        transform: none;
+        border-color: transparent;
+        box-shadow: none;
+        opacity: 0.85;
+    }
+}
+
+.triggerAvatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dropdownPortaled {
+    z-index: 1202;
+}
+
+.dropdown {
+    z-index: 1200;
+    background: var(--plan-card-background-color);
+    border-radius: 14px;
+    width: 300px;
+    animation: slideDown 0.18s ease-out;
+    position: absolute;
+    top: calc(100% + 10px);
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+    padding-bottom: 6px;
+}
+
+.dropdownTop {
+    top: auto;
+    bottom: calc(100% + 10px);
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    width: 244px;
+    animation: slideUp 0.18s ease-out;
+}
+
+.dropdownRail {
+    top: calc(100% + 8px);
+    bottom: auto;
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+    width: 280px;
+    max-height: min(70vh, 480px);
+    overflow-y: auto;
+    animation: slideDown 0.18s ease-out;
+}
+
+.dropdownAlignStart {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--brand-color) 20%, transparent), transparent);
+}
+
+.dropdownAvatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid color-mix(in srgb, var(--brand-color) 35%, transparent);
+}
+
+.dropdownAvatarFallback {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--brand-color) 35%, transparent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--icon-color);
+    background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    flex-shrink: 0;
+}
+
+.userDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.fullName {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email {
+    font-size: 0.76rem;
+    color: color-mix(in srgb, var(--body-text-color) 65%, transparent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    direction: ltr;
+    text-align: start;
+}
+
+.menuGroup {
+    padding: 4px 8px;
+}
+
+.divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 6px 12px;
+}
+
+.menuItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.86rem;
+    color: var(--body-text-color);
+    transition: background-color 0.15s ease, color 0.15s ease;
+    text-align: start;
+
+    &:hover {
+        background-color: color-mix(in srgb, var(--brand-color) 8%, transparent);
+        color: var(--brand-color);
+    }
+}
+
+.menuItemStart {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+// متن کنار آیکون؛ مقدار (تم، زبان) و شمارنده در طرف مقابل ردیف
+.menuItemMeta {
+    margin-inline-start: auto;
+    font-size: 0.74rem;
+    opacity: 0.7;
+}
+
+// شمارندهٔ ساده (بدون چیپ) — هم‌شکل مقدار تم و زبان
+.unreadBadge {
+    margin-inline-start: auto;
+    font-size: 0.74rem;
+    opacity: 0.7;
+    font-variant-numeric: tabular-nums;
+}
+
+.logoutItem {
+    margin: 0 8px 4px;
+    width: calc(100% - 16px);
+    color: #dc2626;
+
+    &:hover {
+        background-color: #fef2f2;
+        color: #dc2626;
+    }
+}
+
+.loginItem {
+    margin: 0 8px 4px;
+    width: calc(100% - 16px);
+    color: var(--brand-color);
+}
+
+.icon {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .dropdown:not(.dropdownTop):not(.dropdownRail) {
+        position: fixed;
+        top: 60px;
+        inset-inline: 12px;
+        width: auto;
+        max-width: none;
+        max-height: calc(100dvh - 84px);
+        overflow-y: auto;
+    }
+
+    .dropdownTop {
+        position: absolute;
+        top: auto;
+        bottom: calc(100% + 8px);
+        /* فوتر سایدبار موبایل — تریگر ۳۸px است؛ پنجره از لبهٔ آن باز شود و در عرض سایدبار جا شود */
+        inset-inline-start: 0;
+        inset-inline-end: auto;
+        width: min(244px, calc(100vw - 48px));
+        max-height: min(70vh, 480px);
+        overflow-y: auto;
+    }
+}
+
+/* پیام خوانده‌نشده: نقطهٔ قرمز گوشهٔ آواتار (بیرون از دکمه چون دکمه overflow: hidden دارد) */
+.unreadDot {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #ef4444;
+    border: 2px solid var(--body-background);
+    pointer-events: none;
+    z-index: 1;
+}
+

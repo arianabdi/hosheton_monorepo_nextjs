@@ -1,0 +1,1245 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// استایل‌های چت استودیو تبلیغات — کامپوننت مستقل ads-chat
+// استخراج‌شده از AdsVideo.module.scss استودیو (ads-video) — هم‌تم با اپلیکیشن.
+// .chatRoot: متغیرهای ads اینجا تعریف می‌شوند (چون پنل چت بیرون از .root ads
+// رندر می‌شود و متغیرها را ارث نمی‌برد).
+// ─────────────────────────────────────────────────────────────────────────────
+
+.chatRoot,
+.chatModalTheme {
+    --ads-accent: #d9480f;
+    --ads-accent-strong: #c2410c;
+    --ads-warn: #a16207;
+    --ads-danger: var(--icon-red, #bb5c5c);
+    --ads-ok: var(--icon-green, #278e67);
+    --ads-accent-soft: color-mix(in srgb, var(--ads-accent) 9%, transparent);
+    --ads-accent-border: color-mix(in srgb, var(--ads-accent) 45%, transparent);
+    --ads-accent-ring: color-mix(in srgb, var(--ads-accent) 30%, transparent);
+    --ads-surface: var(--scrollable-list-item-background, var(--card-background, #fff));
+    --ads-surface-raised: var(--input-background-color, #fff);
+    --ads-surface-sunken: var(--page-view-background-color, #f7f7f7);
+    --ads-border: var(--input-border-color, #e3e3e3);
+    --ads-border-strong: var(--border-color, #cbcbcb);
+    --ads-text: var(--body-text-color, #000);
+    --ads-text-muted: var(--settings-text-muted, #666);
+    --ads-text-faint: color-mix(in srgb, var(--body-text-color, #000) 55%, transparent);
+    --ads-code-bg: var(--code-block-background-color, #f7f7f7);
+    --ads-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+
+    :global([data-theme='dark']) & {
+        --ads-accent: #f78166;
+        --ads-accent-strong: #f78166;
+        --ads-warn: #d29922;
+        --ads-accent-soft: color-mix(in srgb, var(--ads-accent) 12%, transparent);
+        --ads-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    }
+}
+
+
+.spin { animation: adsSpin 0.9s linear infinite; }
+
+@keyframes adsSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modeAuto {
+    color: var(--ads-warn) !important;
+    border-color: var(--ads-warn) !important;
+    background: color-mix(in srgb, var(--ads-warn) 12%, transparent) !important;
+}
+
+.paneEmpty {
+    padding: 14px;
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 10px;
+    color: var(--ads-text-muted);
+    line-height: 1.9;
+    font-size: 12px;
+}
+
+// کامپوزر پایین چت — فشرده: یک ردیف تنظیمات (تب‌ها + سلکت‌ها) و جعبه‌ی پرامپت
+// با ردیف ابزار داخلی؛ ارتفاع کل در حدود دو خط محتوایی
+.chatComposer {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 8px;
+    border: 1px solid var(--ads-border);
+    border-radius: 12px;
+    background: var(--ads-surface);
+}
+
+// ردیف تنظیمات فشرده — همه‌ی کنترل‌ها inline و در عرض کم wrap می‌شوند
+.composerControls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-width: 0;
+}
+
+.composerMode {
+    display: inline-flex;
+    gap: 4px;
+
+    button {
+        padding: 4px 9px;
+        font-size: 11px;
+        border-radius: 7px;
+        border: 1px solid var(--ads-border);
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        font: inherit;
+        white-space: nowrap;
+
+        &:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+    }
+}
+
+// سلکت‌های بدون لیبل — مقدار انتخابی خودش گویا است؛ عنوان با title/aria-label
+.composerSelect {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 150px;
+    padding: 4px 8px;
+    border-radius: 7px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+    color: inherit;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    text-overflow: ellipsis;
+
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+}
+
+.modeActive {
+    color: var(--ads-accent) !important;
+    border-color: var(--ads-accent) !important;
+    background: var(--ads-accent-soft) !important;
+}
+
+// هدف ویرایش — چیپ باریک یک‌خطی به‌جای باکس جدا
+.editTargetCompact {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    min-width: 0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    color: var(--ads-text-muted);
+    background: var(--ads-accent-soft);
+    border: 1px solid var(--ads-accent-border);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    strong {
+        color: var(--ads-accent);
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.chatPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    min-height: 0;
+}
+
+// پیام‌ها — خودش اسکرول می‌شود تا بعد از هر ارسال به پایین برود
+// (چیدمان هم‌سان با چت استودیو: ستونِ turnها با فاصله‌ی ۱۲px)
+.chatMessages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 2px 8px;
+}
+
+// یک turn کامل پیام کاربر — حباب + اکشن‌های hover (کپی/ویرایش)
+.chatTurn {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &:hover .messageActions,
+    &:focus-within .messageActions {
+        opacity: 1;
+    }
+}
+
+// پیام کاربر — همان حباب چت استودیو (حالت text): گرد ۲۶px با دُم، بدون رنگ برند
+.chatUser {
+    align-self: flex-end;
+    max-width: 86%;
+    width: fit-content;
+    padding: 12px 14px;
+    border-radius: 26px;
+    border-end-end-radius: 3px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+// اکشن‌های زیر پیام (کپی/ویرایش) — فقط با hover، مثل چت استودیو
+.messageActions {
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 7px;
+        border: 0;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 11px;
+        opacity: 0.68;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background: var(--input-background-color);
+            opacity: 1;
+        }
+
+        &:disabled {
+            cursor: default;
+            opacity: 0.4;
+        }
+    }
+}
+
+.userActions {
+    align-self: flex-end;
+}
+
+// بندانگشتی پیوست‌های پیام کاربر — همان چیپ ۶۴px چت استودیو
+.chatAttachRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 8px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.chatAttachThumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: color-mix(in srgb, #000 18%, transparent);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    em {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-style: normal;
+        font-size: 20px;
+    }
+}
+
+// بنر «ویرایش پیام» بالای کامپوزر — همان بنر بنفش چت استودیو
+.editModeBanner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 12px;
+    border-radius: 12px;
+    background: color-mix(in srgb, #8b5cf6 9%, var(--body-background));
+    color: var(--body-text-color);
+
+    > span {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+
+        > svg {
+            flex: 0 0 auto;
+            color: #8b5cf6;
+        }
+
+        span {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+    }
+
+    strong {
+        font-size: 12px;
+    }
+
+    small {
+        font-size: 10.5px;
+        opacity: 0.7;
+    }
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        font-size: 11px;
+        cursor: pointer;
+
+        &:hover:not(:disabled) { border-color: #8b5cf6; color: #8b5cf6; }
+        &:disabled { opacity: 0.45; cursor: default; }
+    }
+}
+
+// نشانگر آپلود تصویر پیست‌شده
+.pasteUploading {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--ads-text-muted);
+}
+
+.chatSystem {
+    align-self: stretch;
+    padding: 4px 8px;
+    color: var(--ads-text-faint);
+    font-size: 10.5px;
+    word-break: break-word;
+}
+
+// پاسخ — ساده و تمام‌عرض (همان «مقاله»ی چت متنی): متن + مراحل + المان‌ها، بدون کارت
+.chatAssistant {
+    align-self: stretch;
+    width: 100%;
+    padding: 2px 4px;
+    font-size: 14px;
+
+    p { margin: 0; }
+}
+
+.chatAssistantError {
+    border-inline-start: 3px solid color-mix(in srgb, var(--ads-danger) 55%, transparent);
+    padding-inline-start: 10px;
+}
+
+.chatAssistantText {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 6px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+// مراحل اجرا — نمایش گام‌به‌گام کارها
+.chatSteps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chatSteps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: var(--ads-text-muted);
+
+    > svg, > span { flex-shrink: 0; margin-top: 3px; }
+}
+
+.stepLabel {
+    min-width: 0;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.stepDetail {
+    font-style: normal;
+    font-size: 10.5px;
+    color: var(--ads-text-faint);
+}
+
+.stepPending { color: var(--ads-text-faint); }
+
+.stepDone { color: var(--ads-ok); font-weight: 700; }
+
+.stepError {
+    color: var(--ads-danger);
+    font-weight: 700;
+}
+
+.chatSteps li.step_done { color: var(--ads-text); }
+
+.chatSteps li.step_error {
+    color: var(--ads-danger);
+
+    .stepLabel { color: var(--ads-danger); }
+}
+
+.chatError {
+    margin-top: 6px;
+    color: var(--ads-danger);
+    font-size: 11px;
+    line-height: 1.8;
+    word-break: break-word;
+}
+
+// کات‌های تولیدشده — دکمه‌ی پرش
+.chatCutRefs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.chatCutRef {
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-accent-border);
+    background: var(--ads-accent-soft);
+    color: var(--ads-accent);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+
+    &:hover { border-color: var(--ads-accent); }
+}
+
+.chatMeta {
+    display: block;
+    margin-top: 6px;
+    font-size: 10.5px;
+    color: var(--ads-text-faint);
+}
+
+// جعبه‌ی پرامپت — ادیتور بالا، ردیف ابزار (پیوست/صدا/ارسال) زیر آن
+.chatPromptBox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+    padding: 6px 6px 5px;
+
+    &:focus-within { border-color: var(--ads-accent); }
+
+    // ریشه‌ی ادیتور mention — کل عرض ردیف بالا
+    > div:first-child {
+        flex: 1;
+        min-width: 0;
+        min-height: 0;
+        padding: 0 3px;
+    }
+}
+
+// ردیف ابزار داخل جعبه‌ی پرامپت — دکمه‌های آیکنی چسبیده و باریک
+.promptToolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 3px;
+
+    // پیوست حالت فشرده — wrapper از چیدمان حذف می‌شود تا دکمه/چیپ‌ها
+    // مستقیم آیتم این ردیف شوند (چیپ‌ها در صورت وجود، تمام‌عرض زیر می‌روند)
+    .attachmentPicker {
+        display: contents;
+    }
+
+    .attachmentChips {
+        flex: 1 1 100%;
+        order: 10;
+    }
+
+    .attachmentError {
+        flex: 1 1 100%;
+        order: 11;
+    }
+}
+
+.promptToolbarSpacer {
+    flex: 1;
+    min-width: 8px;
+}
+
+// سوییچ صدا — دکمه‌ی آیکنی با حالت فعال برند
+.soundBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+        color: var(--ads-text);
+        background: var(--ads-accent-soft);
+    }
+
+    &:focus-visible { outline: 2px solid var(--ads-accent-ring); outline-offset: 1px; }
+}
+
+.soundBtnOn {
+    color: var(--ads-accent);
+    border-color: var(--ads-accent-border);
+    background: var(--ads-accent-soft);
+}
+
+.chatSendBtn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-accent-border);
+    background: linear-gradient(135deg, var(--ads-accent-strong), var(--ads-accent));
+    color: #fff;
+    cursor: pointer;
+
+    &:hover:not(:disabled) { filter: brightness(1.08); }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+// ── پیوست‌ها ───────────────────────────────────────────
+.attachmentPicker {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.attachmentAdd {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px dashed var(--ads-border-strong);
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    font: inherit;
+
+    &:hover:not(:disabled) { color: var(--ads-accent); border-color: var(--ads-accent-border); }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+// دکمه‌ی آیکنی پیوست — حالت فشرده در ردیف ابزار کامپوزر
+.attachmentAddIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px dashed var(--ads-border-strong);
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:hover:not(:disabled) { color: var(--ads-accent); border-color: var(--ads-accent-border); }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.attachmentError {
+    color: var(--ads-danger);
+    font-size: 11px;
+}
+
+.attachmentChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.attachmentChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: var(--ads-surface-raised);
+    font-size: 11px;
+    max-width: 190px;
+
+    img {
+        width: 22px;
+        height: 22px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    em { font-style: normal; }
+    span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    button {
+        border: 0;
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        display: inline-flex;
+        padding: 1px;
+
+        &:hover { color: var(--ads-danger); }
+    }
+}
+
+// سوییچ دامنه‌ی ویرایش در چت (این کات / همه‌ی کات‌ها)
+.scopeToggle {
+    display: inline-flex;
+    gap: 4px;
+    align-self: flex-start;
+
+    button {
+        padding: 4px 10px;
+        font-size: 10.5px;
+        border-radius: 7px;
+        border: 1px solid var(--ads-border);
+        background: transparent;
+        color: var(--ads-text-muted);
+        cursor: pointer;
+        font: inherit;
+
+        &:hover { color: var(--ads-text); }
+    }
+}
+
+.scopeActive {
+    color: var(--ads-accent) !important;
+    border-color: var(--ads-accent) !important;
+    background: var(--ads-accent-soft) !important;
+}
+
+.elementPlan {
+    margin-top: 8px;
+    border: 1px solid var(--ads-border, rgba(255, 255, 255, 0.12));
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--ads-accent, #8b5cf6) 6%, transparent);
+    overflow: hidden;
+    font-size: 11px;
+
+    .planHead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 9px;
+        border-bottom: 1px solid var(--ads-border, rgba(255, 255, 255, 0.12));
+        background: color-mix(in srgb, var(--ads-accent, #8b5cf6) 10%, transparent);
+
+        .planTitle {
+            font-weight: 700;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .planApplied {
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .planRevertedTag {
+            color: var(--ads-muted, rgba(255, 255, 255, 0.6));
+            font-weight: 700;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .planToggleAll {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: none;
+            background: transparent;
+            color: var(--ads-muted, inherit);
+            font-size: 10px;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+
+            input {
+                accent-color: var(--ads-accent, #8b5cf6);
+                width: 12px;
+                height: 12px;
+                margin: 0;
+            }
+
+            &:disabled { opacity: 0.5; cursor: not-allowed; }
+        }
+    }
+
+    .planRows {
+        display: flex;
+        flex-direction: column;
+        max-height: 200px;
+        overflow-y: auto;
+
+        .planRow {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 9px;
+            cursor: pointer;
+
+            + .planRow {
+                border-top: 1px solid color-mix(in srgb, var(--ads-border, rgba(255, 255, 255, 0.12)) 60%, transparent);
+            }
+
+            input[type='checkbox'] {
+                accent-color: var(--ads-accent, #8b5cf6);
+                width: 13px;
+                height: 13px;
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            .planRowLabel {
+                min-width: 0;
+                flex: 0 1 auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-weight: 600;
+            }
+
+            .planRowValues {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                min-width: 0;
+                flex: 1;
+                justify-content: flex-end;
+                color: var(--ads-muted, rgba(255, 255, 255, 0.65));
+
+                em { font-style: normal; flex-shrink: 0; }
+            }
+
+            &:hover:not(.planRowLocked) {
+                background: color-mix(in srgb, var(--ads-accent, #8b5cf6) 8%, transparent);
+            }
+
+            &.planRowLocked { cursor: default; }
+        }
+    }
+
+    .planColor {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+
+        i {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            display: inline-block;
+        }
+
+        code { font-size: 10px; direction: ltr; }
+    }
+
+    .planValueText {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+
+    .planApplyBtn,
+    .planRevertBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: calc(100% - 14px);
+        margin: 7px;
+        padding: 6px 8px;
+        border: none;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .planApplyBtn {
+        background: var(--ads-accent, #8b5cf6);
+        color: #fff;
+
+        &:disabled { opacity: 0.45; cursor: not-allowed; }
+    }
+
+    .planRevertBtn {
+        background: color-mix(in srgb, #ef4444 12%, transparent);
+        border: 1px solid color-mix(in srgb, #ef4444 45%, transparent);
+        color: #ef4444;
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
+    &.planReverted { opacity: 0.7; }
+
+    &.planFailed {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 9px;
+    }
+}
+
+.modeQuick {
+    border-color: color-mix(in srgb, var(--ads-accent, #8b5cf6) 55%, transparent);
+    color: var(--ads-accent, #8b5cf6);
+
+    &:disabled { opacity: 0.45; }
+}
+
+// ────────────────────────────── سایدبار کشویی چت ──────────────────────────────
+// الگوی باز/بسته شدن = پنل چت explore (عرض 0 ↔ مقصد، transition نرم، بک‌دراپ
+// موبایل). عرض مقصد با متغیر --side-w کنترل می‌شود تا resize زنده باشد و
+// محتوای داخل پنل در حین انیمیشن reflow نشود.
+
+.sidePanel {
+    position: relative;
+    flex-shrink: 0;
+    width: 0;
+    overflow: hidden;
+    height: 100%;
+    min-height: 0;
+    background: var(--body-background, var(--ads-surface));
+    border-inline-start: 1px solid transparent;
+    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sidePanel.sideOpen {
+    width: var(--side-w, 420px);
+    border-inline-start-color: var(--border-color);
+    z-index: 50;
+}
+
+// در حین کشیدن دستگیره، انیمیشن خاموش است تا resize دقیقاً با موس بیاید
+.sidePanel.sideResizing {
+    transition: none;
+    user-select: none;
+}
+
+.sideBackdrop {
+    display: none;
+}
+
+.sideResizeHandle {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: -4px;
+    width: 9px;
+    cursor: col-resize;
+    z-index: 5;
+    touch-action: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 3px;
+        width: 3px;
+        border-radius: 2px;
+        background: transparent;
+        transition: background 0.2s ease;
+    }
+
+    &:hover::after,
+    &:active::after {
+        background: var(--ads-accent-soft);
+    }
+}
+
+.sideContent {
+    display: flex;
+    flex-direction: column;
+    width: var(--side-w, 420px);
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.sideHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--ads-border);
+    flex-shrink: 0;
+}
+
+.sideTitle {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ads-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sideClose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--ads-accent-soft);
+        color: var(--ads-text);
+    }
+}
+
+// اکشن‌های هدر سایدبار (دکمه‌ی تاریخچه) — قبل از دکمه‌ی بستن
+.sideHeaderActions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-inline-start: auto;
+}
+
+.historyToggleBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--ads-accent-soft);
+        color: var(--ads-text);
+    }
+}
+
+// ── پنل تاریخچه‌ی چت پروژه — صفحه‌ی جایگزین چت در همان سایدبار ──
+.historyPanel {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.historyHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-shrink: 0;
+
+    h3 {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ads-text);
+    }
+}
+
+.historyHeadActions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.historyBackBtn,
+.historyNewBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--ads-border);
+    background: transparent;
+    color: var(--ads-text-muted);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        color: var(--ads-accent);
+        border-color: var(--ads-accent-border);
+        background: var(--ads-accent-soft);
+    }
+}
+
+// فلش بازگشت — در RTL رو به راست (شروع) است و در LTR برعکس می‌شود
+.historyBackBtn svg {
+    :global([dir='ltr']) & {
+        transform: scaleX(-1);
+    }
+}
+
+.historyNewBtn {
+    color: var(--ads-accent);
+    border-color: var(--ads-accent-border);
+    background: var(--ads-accent-soft);
+    font-weight: 600;
+
+    &:hover { color: var(--ads-accent-strong); }
+}
+
+.historyList {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ads-scrollbar, #d3d4d9) transparent;
+}
+
+.historyItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--ads-border);
+    border-radius: 10px;
+    background: var(--ads-surface-raised);
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+
+    &:hover {
+        border-color: var(--ads-accent-border);
+        background: var(--ads-accent-soft);
+    }
+}
+
+.historyItemCurrent {
+    border-color: var(--ads-accent-border);
+    background: var(--ads-accent-soft);
+}
+
+.historyItemBody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.historyItemTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ads-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.historyItemMeta {
+    font-size: 10.5px;
+    color: var(--ads-text-faint);
+    direction: ltr;
+    text-align: end;
+}
+
+.historyItemDelete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--ads-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:hover {
+        color: var(--ads-danger);
+        background: color-mix(in srgb, var(--ads-danger) 10%, transparent);
+    }
+}
+
+.historyEmpty {
+    padding: 24px 14px;
+    border: 1px dashed var(--ads-border-strong);
+    border-radius: 10px;
+    color: var(--ads-text-muted);
+    font-size: 12px;
+    line-height: 1.9;
+    text-align: center;
+}
+
+.sideBody {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 12px 12px;
+}
+
+// جایگاه نوار پروژه در هدر — وقتی صفحه پرش کند، عنوان ثابت هدر کنار می‌رود
+.sideHeaderSlot {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    &:empty {
+        display: none;
+    }
+
+    &:not(:empty) + .sideTitle {
+        display: none;
+    }
+}
+
+// جایگاه کارت‌های بالای چت (برند کیت) — خالی بودن = بدون فاصله
+.sideTopSlot {
+    flex-shrink: 0;
+    padding: 10px 12px 0;
+
+    &:empty {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .sideBackdrop {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: rgba(0, 0, 0, 0.4);
+        cursor: default;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .sidePanel {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-end: 0;
+        z-index: 50;
+        width: 0;
+        pointer-events: none;
+        box-shadow: none;
+
+        &.sideOpen {
+            width: min(var(--side-w, 420px), 86vw);
+            pointer-events: auto;
+            box-shadow: 0 0 32px rgba(0, 0, 0, 0.18);
+        }
+    }
+
+    .sideContent {
+        width: min(var(--side-w, 420px), 86vw);
+    }
+}
+
+// ────────────────────────────── تب شناور بازکردن چت ──────────────────────────────
+// وقتی سایدبار بسته است، layout این تب را در لبه‌ی inline-end صفحه نشان می‌دهد.
+// روی متغیرهای سراسری تم سوار است تا بیرون از .chatRoot هم درست باشد.
+
+.chatToggleTab {
+    position: fixed;
+    inset-inline-end: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 52px;
+    border: 1px solid var(--border-color, #cbcbcb);
+    border-inline-end: none;
+    border-start-start-radius: 12px;
+    border-end-start-radius: 12px;
+    background: var(--card-background, #fff);
+    color: var(--body-text-color, #000);
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.14);
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background: var(--ads-accent, #d9480f);
+        color: #fff;
+    }
+}

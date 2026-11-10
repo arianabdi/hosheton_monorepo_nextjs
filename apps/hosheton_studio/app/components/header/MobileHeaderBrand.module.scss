@@ -1,0 +1,39 @@
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.brandFixed {
+    flex-direction: row-reverse;
+}
+
+.logoBtn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    line-height: 0;
+    min-width: 0;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.brandLogo {
+    height: 22px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+}
+
+.miniMark {
+    width: 22px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+}

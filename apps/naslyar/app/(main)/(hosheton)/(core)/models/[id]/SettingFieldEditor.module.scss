@@ -1,0 +1,1236 @@
+$brand: var(--brand-color, #8b5cf6);
+$border: var(--input-border-color);
+$muted-bg: color-mix(in srgb, var(--body-text-color) 3%, transparent);
+
+/* ───────── لیست فیلدها ───────── */
+
+.listHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0.85rem 0 0.55rem;
+    flex-wrap: wrap;
+}
+
+.listTitle {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.listStats {
+    font-size: 0.7rem;
+    opacity: 0.65;
+}
+
+.guide {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid $border;
+    border-radius: 8px;
+    background: $muted-bg;
+    font-size: 0.74rem;
+    line-height: 1.8;
+
+    svg {
+        flex: 0 0 auto;
+        margin-top: 0.3rem;
+        color: $brand;
+    }
+
+    ul {
+        margin: 0;
+        padding-inline-start: 1rem;
+    }
+}
+
+.addBtn {
+    border: 0;
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    background: $brand;
+    color: #fff;
+    font: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.empty {
+    border: 1px dashed $border;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.76rem;
+    opacity: 0.7;
+}
+
+/* ───────── کارت هر فیلد ───────── */
+
+.card {
+    position: relative;
+    margin-bottom: 0.5rem;
+    border: 1px solid $border;
+    border-radius: 8px;
+    background: var(--plan-card-background-color);
+    scroll-margin-top: 5.5rem;
+}
+
+.cardOpen {
+    border-color: color-mix(in srgb, #{$brand} 45%, #{$border});
+}
+
+/* کارتی که در حال کشیدن است کم‌رنگ می‌ماند؛ خط برند جای رها کردن را نشان می‌دهد */
+.cardDragging {
+    opacity: 0.45;
+}
+
+.dropBefore::before,
+.dropAfter::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: $brand;
+    pointer-events: none;
+}
+
+.dropBefore::before {
+    top: calc(-0.25rem - 2px);
+}
+
+.dropAfter::after {
+    bottom: calc(-0.25rem - 2px);
+}
+
+.dragHandle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 22px;
+    height: 26px;
+    margin-inline-end: -0.25rem;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.4;
+    cursor: grab;
+    touch-action: none;
+
+    &:hover,
+    &:focus-visible {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, #{$brand} 55%, transparent);
+        outline-offset: 1px;
+    }
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.7rem;
+    cursor: pointer;
+    user-select: none;
+    scroll-margin-top: 5.5rem;
+
+    &:hover .chevron {
+        opacity: 0.9;
+    }
+}
+
+.chevron {
+    flex: 0 0 auto;
+    display: inline-flex;
+    opacity: 0.5;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.headTitle {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.headKey {
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    direction: ltr;
+}
+
+.headKeyEmpty {
+    font-size: 0.78rem;
+    font-style: italic;
+    opacity: 0.5;
+}
+
+.headLabel {
+    font-size: 0.76rem;
+    opacity: 0.75;
+}
+
+.typeTag {
+    font-size: 0.65rem;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid $border;
+    border-radius: 4px;
+    opacity: 0.75;
+    direction: ltr;
+}
+
+.headWarn {
+    font-size: 0.66rem;
+    color: #b45309;
+}
+
+.headActions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.sendToggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.68rem;
+    white-space: nowrap;
+}
+
+.sendToggleOff {
+    opacity: 0.6;
+}
+
+.iconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--body-text-color);
+    cursor: pointer;
+    opacity: 0.65;
+
+    &:hover {
+        opacity: 1;
+        border-color: $border;
+    }
+
+    &:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+        border-color: transparent;
+    }
+}
+
+.iconBtnDanger:hover {
+    color: #b91c1c;
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.body {
+    border-top: 1px solid $border;
+    padding: 0 0.85rem 0.35rem;
+}
+
+/* ───────── بخش‌های داخل کارت (جدا با خط، نه کارت) ───────── */
+
+.section {
+    padding: 0.75rem 0;
+
+    & + & {
+        border-top: 1px solid $border;
+    }
+}
+
+.sectionHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.55rem;
+}
+
+.sectionTitle {
+    display: block;
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.sectionHint {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.68rem;
+    line-height: 1.55;
+    opacity: 0.65;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem 0.7rem;
+}
+
+.grid3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.span2 {
+    grid-column: span 2;
+}
+
+.spanAll {
+    grid-column: 1 / -1;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.fieldLabel {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+}
+
+.fieldCode {
+    font-family: monospace;
+    font-size: 0.64rem;
+    font-weight: 400;
+    opacity: 0.5;
+    direction: ltr;
+}
+
+.input,
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid $border;
+    border-radius: 6px;
+    padding: 0.36rem 0.5rem;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 400;
+    outline: none;
+    transition: border-color 0.15s ease;
+
+    &:focus {
+        border-color: $brand;
+    }
+}
+
+.field textarea {
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.ltr {
+    direction: ltr;
+    text-align: left;
+}
+
+.mono {
+    font-family: monospace !important;
+    font-size: 0.74rem !important;
+}
+
+.hint {
+    font-size: 0.66rem;
+    font-weight: 400;
+    line-height: 1.55;
+    opacity: 0.62;
+}
+
+.hintWarn {
+    color: #b45309;
+    opacity: 1;
+}
+
+.ghostBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border: 1px solid $border;
+    border-radius: 6px;
+    padding: 0.28rem 0.6rem;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+        border-color: $brand;
+        color: $brand;
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+}
+
+.linkBtn {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: $brand;
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.note {
+    margin: 0 0 0.55rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    background: $muted-bg;
+    font-size: 0.68rem;
+    line-height: 1.6;
+}
+
+/* سوییچ + محتوایی که فقط وقتی روشن است نمایش داده می‌شود */
+.switchBlock {
+    border: 1px solid $border;
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+}
+
+.switchBlockOn {
+    background: $muted-bg;
+}
+
+.switchBlockBody {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid $border;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.radioRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+}
+
+.radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.74rem;
+    cursor: pointer;
+
+    input {
+        accent-color: $brand;
+    }
+}
+
+/* ───────── جدول گزینه‌ها ───────── */
+
+.optToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.optTable {
+    border: 1px solid $border;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.optGrid {
+    display: grid;
+    grid-template-columns: 1.6rem 2rem minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.3fr) 3.6rem;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.45rem;
+}
+
+.optGridPlain {
+    grid-template-columns: 1.6rem minmax(0, 1fr) minmax(0, 1.2fr) 2rem;
+}
+
+.optHead {
+    background: $muted-bg;
+    border-bottom: 1px solid $border;
+    font-size: 0.64rem;
+    font-weight: 700;
+    opacity: 0.75;
+}
+
+.optRow {
+    border-bottom: 1px solid $border;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+}
+
+.optRowInvalid .optValue {
+    border-color: #f59e0b;
+}
+
+.optIndex {
+    font-size: 0.66rem;
+    text-align: center;
+    opacity: 0.5;
+}
+
+.optIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 1px dashed $border;
+    border-radius: 6px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 0.9rem;
+    opacity: 0.85;
+
+    :global(svg) {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }
+
+    &:hover {
+        border-color: $brand;
+    }
+}
+
+.optIconSet {
+    border-style: solid;
+    opacity: 1;
+}
+
+.optInput {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0.3rem 0.4rem;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.74rem;
+    outline: none;
+
+    &:hover {
+        border-color: $border;
+    }
+
+    &:focus {
+        border-color: $brand;
+        background: var(--input-background-color);
+    }
+
+    &::placeholder {
+        opacity: 0.45;
+    }
+}
+
+.optValue {
+    direction: ltr;
+    text-align: left;
+    font-family: monospace;
+}
+
+.optPreviewCell {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 0;
+}
+
+.kindTag {
+    flex: 0 0 auto;
+    font-size: 0.6rem;
+    padding: 0.05rem 0.3rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+    opacity: 0.85;
+}
+
+.kindTagWarn {
+    color: #b45309;
+    background: #fffbeb;
+}
+
+.optActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.1rem;
+
+    .iconBtn {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.optDetails {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.6rem;
+    padding: 0.55rem 0.65rem 0.65rem;
+    background: $muted-bg;
+    border-top: 1px dashed $border;
+}
+
+.optDetailsMedia {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    img,
+    video {
+        max-width: 100%;
+        max-height: 120px;
+        border-radius: 6px;
+        border: 1px solid $border;
+        object-fit: contain;
+        background: var(--input-background-color);
+    }
+
+    audio {
+        width: 100%;
+        height: 32px;
+    }
+}
+
+.optAdd {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid $border;
+    padding: 0.4rem;
+    background: transparent;
+    color: $brand;
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, #{$brand} 5%, transparent);
+    }
+}
+
+.optAddOnly {
+    border-top: 0;
+}
+
+.bulkArea {
+    width: 100%;
+    min-height: 140px;
+    box-sizing: border-box;
+    border: 1px solid $border;
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-family: monospace;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    direction: ltr;
+    text-align: left;
+    resize: vertical;
+    outline: none;
+
+    &:focus {
+        border-color: $brand;
+    }
+}
+
+/* ───────── نمایش در استودیو ───────── */
+
+.studioBox {
+    border: 1px solid $border;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.studioLabel {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+/* سبک‌های نمایش زیر هم؛ هر ردیف = نام + توضیح + پیش‌نمایش آزمایشی همان سبک */
+.styleList {
+    display: flex;
+    flex-direction: column;
+}
+
+.styleRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.65rem 0.75rem;
+    cursor: pointer;
+    outline: none;
+
+    & + & {
+        border-top: 1px solid $border;
+    }
+
+    &:hover .styleRadio {
+        border-color: $brand;
+    }
+
+    &:focus-visible {
+        box-shadow: inset 0 0 0 2px color-mix(in srgb, #{$brand} 45%, transparent);
+    }
+}
+
+.styleRowActive {
+    background: color-mix(in srgb, #{$brand} 5%, transparent);
+    cursor: default;
+
+    .styleRadio {
+        border-color: $brand;
+        background: $brand;
+        box-shadow: inset 0 0 0 2.5px var(--plan-card-background-color);
+    }
+}
+
+.styleHead {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.styleRadio {
+    flex: 0 0 auto;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid $border;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.styleName {
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.styleResolved {
+    font-weight: 400;
+    opacity: 0.65;
+}
+
+.styleTag {
+    margin-inline-start: auto;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: $brand;
+}
+
+.styleHint {
+    padding-inline-start: 1.4rem;
+    font-size: 0.68rem;
+    line-height: 1.55;
+    opacity: 0.65;
+}
+
+.styleStage {
+    padding-inline-start: 1.4rem;
+    max-width: 30rem;
+}
+
+.studioFooter {
+    padding: 0.7rem 0.75rem;
+    border-top: 1px solid $border;
+    background: $muted-bg;
+}
+
+.previewKinds {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem 0.75rem;
+    margin-bottom: 0.35rem;
+
+    @media (max-width: 760px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.stagePanel {
+    border: 1px solid $border;
+    border-radius: 10px;
+    padding: 0.65rem 0.7rem;
+    background: var(--plan-card-background-color);
+}
+
+.stageTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.45rem;
+}
+
+.stageTitle {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    opacity: 0.72;
+}
+
+.stageHelp {
+    display: inline-flex;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.55;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+        color: $brand;
+    }
+}
+
+.stageEmpty {
+    font-size: 0.7rem;
+    opacity: 0.55;
+    margin: 0.25rem 0;
+}
+
+/* شبیه SelectOptionsField استودیو */
+.pvChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.pvChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    min-height: 32px;
+    padding: 4px 9px;
+    border: 1px solid $border;
+    border-radius: 10px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pvActive {
+    border-color: $brand;
+    color: $brand;
+    background: color-mix(in srgb, #{$brand} 12%, var(--input-background-color));
+}
+
+.pvGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 6px;
+}
+
+.pvCard {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid $border;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+}
+
+.pvCardVisual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+
+    img,
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    :global(svg) {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+.pvCardTitle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 0;
+}
+
+.pvLetter {
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0.45;
+}
+
+.pvList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.pvRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 7px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    color: var(--body-text-color);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+    }
+
+    &.pvActive {
+        border-color: $brand;
+    }
+}
+
+.pvThumb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+    border-radius: 6px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    font-size: 10px;
+    font-weight: 700;
+
+    img,
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    :global(svg) {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.pvChipIcon {
+    display: inline-flex;
+
+    :global(svg) {
+        width: 16px;
+        height: 16px;
+        display: block;
+    }
+}
+
+.pvLabel {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pvPlay {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--body-text-color) 18%, transparent);
+    background: transparent;
+    color: var(--body-text-color);
+    cursor: pointer;
+
+    svg {
+        width: 9px;
+        height: 9px;
+        fill: currentColor;
+    }
+}
+
+.pvPlayOn {
+    border-color: $brand;
+    background: $brand;
+    color: #fff;
+}
+
+.pvSelect {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 9px;
+    border: 1px solid $border;
+    border-radius: 10px;
+    background: var(--input-background-color);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pvSelectOpen {
+    border-color: $brand;
+}
+
+.pvSelectPanel {
+    margin-top: 4px;
+    padding: 4px;
+    border: 1px solid $border;
+    border-radius: 10px;
+    background: var(--plan-card-background-color);
+}
+
+/* ───────── منبع داینامیک (urlSource) ───────── */
+
+.testResult {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid $border;
+    border-radius: 6px;
+    background: var(--plan-card-background-color);
+    font-size: 0.72rem;
+}
+
+.testResultTitle {
+    font-weight: 700;
+}
+
+.pre {
+    margin: 0.3rem 0 0;
+    padding: 0.5rem 0.65rem;
+    max-height: 240px;
+    overflow: auto;
+    border: 1px solid $border;
+    border-radius: 6px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-family: monospace;
+    font-size: 0.7rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    direction: ltr;
+    text-align: left;
+}
+
+/* ───────── فیلد ترکیبی ───────── */
+
+.depChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.depChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border: 1px solid $border;
+    border-radius: 6px;
+    padding: 0.25rem 0.55rem;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.depChipActive {
+    border-color: $brand;
+    color: $brand;
+}
+
+.comboTable {
+    border: 1px solid $border;
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.comboRow {
+    display: grid;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    border-bottom: 1px solid $border;
+    font-size: 0.72rem;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    select {
+        width: 100%;
+        border: 1px solid $border;
+        border-radius: 5px;
+        padding: 0.25rem 0.4rem;
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 0.72rem;
+    }
+}
+
+.comboHead {
+    position: sticky;
+    top: 0;
+    background: var(--plan-card-background-color);
+    font-size: 0.64rem;
+    font-weight: 700;
+    opacity: 0.85;
+}
+
+.comboMissing {
+    opacity: 0.7;
+}
+
+.comboCode {
+    font-family: monospace;
+    font-size: 0.64rem;
+    opacity: 0.5;
+    direction: ltr;
+    margin-inline-start: 0.25rem;
+}
+
+@media (max-width: 760px) {
+    .grid,
+    .grid3,
+    .grid4 {
+        grid-template-columns: 1fr;
+    }
+
+    .span2 {
+        grid-column: auto;
+    }
+
+    .optGrid {
+        grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) 3.6rem;
+    }
+
+    .optGridPlain {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 2rem;
+    }
+
+    .optIndex,
+    .optHead .optHeadPreview,
+    .optPreviewCell {
+        display: none;
+    }
+
+    .optDetails {
+        grid-template-columns: 1fr;
+    }
+
+    .sendToggleText {
+        display: none;
+    }
+}
+
+.sectionAside {
+    flex: 0 0 auto;
+    width: 12rem;
+
+    @media (max-width: 760px) {
+        width: 9rem;
+    }
+}

@@ -1,0 +1,781 @@
+// چت تولید ویدیو ads-2video — الگوی چت Cursor (پیام کاربر در قاب، پاسخ با خط وضعیت
+// زنده، گام‌ها روی یک ریل و چک‌لیست کات‌ها). کامپوزر از ChatInput.module.scss خود
+// چت استودیو می‌آید؛ اینجا فقط تنظیم فشردگی آن برای عرض سایدبار است.
+
+$brand: var(--brand-color, #8b5cf6);
+$text: var(--body-text-color, #16181d);
+$muted: color-mix(in srgb, var(--body-text-color, #16181d) 55%, transparent);
+$faint: color-mix(in srgb, var(--body-text-color, #16181d) 38%, transparent);
+$border: var(--input-border-color, #e3e3e3);
+$surface: var(--body-background, #fff);
+$ok: var(--icon-green, #278e67);
+$danger: var(--icon-red, #c24141);
+
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    min-height: 0;
+    color: $text;
+}
+
+.spin {
+    animation: agentSpin 0.9s linear infinite;
+}
+
+// ── پیام‌ها ──
+.messages {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 4px 2px 8px;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--body-text-color, #16181d) 18%, transparent) transparent;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: auto 0;
+    padding: 24px 16px;
+    text-align: center;
+    color: $muted;
+    font-size: 12px;
+    line-height: 1.8;
+
+    strong {
+        color: $text;
+        font-size: 14px;
+        font-weight: 700;
+    }
+}
+
+.emptyIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 4px;
+    border-radius: 12px;
+    background: color-mix(in srgb, #{$brand} 10%, transparent);
+    color: $brand;
+}
+
+// پیام کاربر — قاب کامل‌عرض مثل Cursor، اکشن‌ها با hover
+.userTurn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &:hover .turnActions,
+    &:focus-within .turnActions {
+        opacity: 1;
+    }
+}
+
+.userBox {
+    padding: 10px 12px;
+    border: 1px solid $border;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--body-text-color, #16181d) 3%, #{$surface});
+}
+
+.userText {
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.userAttachRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.userAttach {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 9px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color, #16181d) 7%, transparent);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    em {
+        font-style: normal;
+        font-size: 18px;
+    }
+}
+
+.turnActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        border-radius: 7px;
+        background: transparent;
+        color: $muted;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background: color-mix(in srgb, var(--body-text-color, #16181d) 6%, transparent);
+            color: $text;
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+    }
+}
+
+// پاسخ دستیار — بدون حباب، تمام‌عرض
+.assistant {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.assistantText {
+    margin: 0;
+    line-height: 1.85;
+    white-space: pre-wrap;
+}
+
+// خط وضعیت — در جریان: نقطه‌ی زنده + متن شیمر؛ پایان: تیک یا خطا + مدت
+.status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: $muted;
+
+    > span:not(.elapsed):not(.liveDot) {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.statusLive {
+    color: $text;
+}
+
+.statusDone > svg {
+    color: $ok;
+}
+
+.statusFailed {
+    color: $danger;
+}
+
+.liveDot {
+    position: relative;
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: $brand;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: inherit;
+        border: 1.5px solid $brand;
+        opacity: 0;
+        animation: agentPulse 1.6s ease-out infinite;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        #{$muted} 0%,
+        #{$muted} 35%,
+        #{$text} 50%,
+        #{$muted} 65%,
+        #{$muted} 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: agentShimmer 2.2s linear infinite;
+}
+
+.elapsed {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    font-size: 11px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: $faint;
+}
+
+// گام‌ها — روی یک ریل باریک، مثل ردیف ابزارهای Cursor
+.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 0;
+    padding-inline-start: 12px;
+    margin-inline-start: 6px;
+    border-inline-start: 1.5px solid $border;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 24px;
+    min-width: 0;
+    font-size: 12.5px;
+    color: $muted;
+}
+
+.step_running {
+    color: $text;
+}
+
+.step_done .stepIcon {
+    color: $ok;
+}
+
+.step_error {
+    color: $danger;
+}
+
+.stepIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.stepDot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: $faint;
+}
+
+.stepLabel {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stepDetail {
+    flex-shrink: 0;
+    font-size: 11px;
+    color: $faint;
+}
+
+// ── چک‌لیست کات‌ها (to-do) ──
+.todo {
+    padding: 10px 10px 6px;
+    border: 1px solid $border;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--body-text-color, #16181d) 2%, #{$surface});
+}
+
+.todoHead {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 4px;
+    font-size: 12px;
+    font-weight: 700;
+
+    > svg {
+        color: $brand;
+    }
+}
+
+.todoCount {
+    margin-inline-start: auto;
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: $muted;
+}
+
+.todoBar {
+    height: 3px;
+    margin: 8px 4px 6px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color, #16181d) 9%, transparent);
+
+    i {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: $brand;
+        transition: width 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+}
+
+.todoList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.todoItem {
+    min-width: 0;
+}
+
+.todoRow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    padding: 5px 4px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+
+    &:is(button) {
+        cursor: pointer;
+
+        &:hover {
+            background: color-mix(in srgb, var(--body-text-color, #16181d) 5%, transparent);
+
+            .todoOpen {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.todoLabel {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12.5px;
+    transition: color 0.2s ease;
+}
+
+.todoDetail {
+    flex-shrink: 0;
+    font-size: 11px;
+    color: $faint;
+    white-space: nowrap;
+}
+
+.todoOpen {
+    flex-shrink: 0;
+    opacity: 0;
+    color: $brand;
+    transition: opacity 0.15s ease;
+}
+
+.todo_done .todoLabel {
+    color: $muted;
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, var(--body-text-color, #16181d) 30%, transparent);
+}
+
+.todo_running .todoLabel {
+    color: $text;
+    font-weight: 600;
+}
+
+.todo_pending .todoLabel {
+    color: $faint;
+}
+
+.todo_error .todoLabel,
+.todo_error .todoDetail {
+    color: $danger;
+}
+
+// چک‌باکس دایره‌ای
+.check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    border: 1.5px solid color-mix(in srgb, var(--body-text-color, #16181d) 28%, transparent);
+    color: #fff;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.check_done {
+    border-color: $brand;
+    background: $brand;
+    animation: agentCheckPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.check_running {
+    border-color: color-mix(in srgb, #{$brand} 25%, transparent);
+    border-top-color: $brand;
+    animation: agentSpin 0.9s linear infinite;
+}
+
+.check_error {
+    border-color: $danger;
+    background: $danger;
+}
+
+.errorLine {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.7;
+    color: $danger;
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+}
+
+.cutRefs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.cutRef {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    padding: 5px 9px;
+    border: 1px solid $border;
+    border-radius: 9px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+
+    span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    svg {
+        flex-shrink: 0;
+        opacity: 0.7;
+    }
+
+    &:hover {
+        border-color: color-mix(in srgb, #{$brand} 55%, #{$border});
+        color: $brand;
+    }
+}
+
+.meta {
+    font-size: 11px;
+    color: $faint;
+}
+
+.systemLine {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    background: color-mix(in srgb, #{$danger} 7%, transparent);
+    color: color-mix(in srgb, #{$danger} 85%, var(--body-text-color, #16181d));
+    font-size: 12px;
+    line-height: 1.7;
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+}
+
+// ── کامپوزر — فقط فشرده‌سازی کامپوزر چت استودیو برای عرض سایدبار ──
+.composer {
+    flex-shrink: 0;
+}
+
+.inputArea {
+    padding: 12px 14px 10px !important;
+}
+
+.textSlot {
+    margin-bottom: 10px !important;
+}
+
+// در عرض سایدبار چیپ‌ها به‌جای کوچک‌شدن و بریده‌شدن، به خط دوم می‌روند
+.chips {
+    flex-wrap: wrap !important;
+    gap: 6px 5px;
+
+    > button {
+        flex: 0 0 auto;
+        max-width: 100%;
+    }
+}
+
+.soundChip {
+    flex: 0 0 32px !important;
+}
+
+.modelSvg {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+// زمینه‌ی ارسال — چیپ کاتِ هدف ویرایش (مثل چیپ فایل در Cursor)
+.contextRow {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.contextChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 3px 8px;
+    border-radius: 7px;
+    background: color-mix(in srgb, #{$brand} 9%, transparent);
+    color: $brand;
+    font-size: 11.5px;
+    font-weight: 600;
+
+    span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    em {
+        flex-shrink: 0;
+        font-style: normal;
+        opacity: 0.7;
+    }
+}
+
+.attachStrip {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.attachThumb {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color, #16181d) 7%, transparent);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    em {
+        font-style: normal;
+        font-size: 18px;
+    }
+
+    button {
+        position: absolute;
+        top: 3px;
+        inset-inline-end: 3px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        cursor: pointer;
+    }
+}
+
+.attachUploading {
+    color: $muted;
+}
+
+.uploadError {
+    margin-bottom: 8px;
+    font-size: 11.5px;
+    color: $danger;
+}
+
+// ── منوی چیپ‌ها ──
+.chipMenuTitle {
+    margin: 4px 8px 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $muted;
+}
+
+.chipOptionIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: color-mix(in srgb, #{$brand} 9%, transparent);
+    color: $brand;
+}
+
+.chipOptionText {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+
+    > span {
+        font-size: 12.5px;
+        font-weight: 600;
+    }
+
+    small {
+        font-size: 10.5px;
+        font-weight: 500;
+        line-height: 1.5;
+        opacity: 0.62;
+    }
+}
+
+@keyframes agentSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes agentPulse {
+    0% {
+        opacity: 0.7;
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.6);
+    }
+}
+
+@keyframes agentShimmer {
+    from {
+        background-position: 110% 0;
+    }
+
+    to {
+        background-position: -110% 0;
+    }
+}
+
+@keyframes agentCheckPop {
+    0% {
+        transform: scale(0.6);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spin,
+    .check_running {
+        animation-duration: 2.4s;
+    }
+
+    .liveDot::after,
+    .shimmer,
+    .check_done {
+        animation: none;
+    }
+
+    .shimmer {
+        background: none;
+        color: $text;
+    }
+
+    .todoBar i,
+    .turnActions,
+    .check,
+    .todoLabel {
+        transition: none;
+    }
+}

@@ -1,0 +1,60 @@
+.tabButtons {
+    display: flex;
+    width: 100%; /* Make the component occupy the full width */
+    padding: 0px 0px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    min-height: 60px;
+    height: 60px;
+}
+
+.TabContent {
+    width: 100%;
+    padding: 0px 0px;
+    height: 100%;
+    margin: unset;
+    position: relative;
+}
+
+.tabButtonsContainer {
+    display: flex;
+    background: #007bff;
+}
+
+.active {
+    opacity: 1;
+    color: var(--selected-item);
+    border-bottom: 2px solid var(--selected-item);
+}
+
+
+.tabButtons button:hover {
+    background: unset !important;
+    opacity: 1;
+}
+
+.tabButtons button {
+    border-radius: 0px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: unset;
+    font-size: 15px;
+    padding: 12px 6px;
+    margin-left: 10px;
+    border-bottom: 2px solid rgba(79, 157, 129, 0);
+    height: 100%;
+    opacity: 0.4;
+    text-transform: capitalize;
+}
+
+.tabButtons button.active {
+    opacity: 1;
+    border-bottom: 2px solid var(--body-text-color);
+}
+
+.tabButtons-container {
+    border-radius: 24px;
+    display: flex;
+}
+

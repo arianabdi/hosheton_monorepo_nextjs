@@ -1,0 +1,160 @@
+.settingsContainer {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    min-height: 0;
+    font-family: iransansxvf, sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
+
+    .sidebar {
+        width: 190px;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex-shrink: 0;
+
+        .navButton {
+            cursor: pointer;
+            text-align: start;
+            background: none;
+            border: none;
+            border-radius: 4px;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 15px;
+            font-size: .95rem;
+            font-weight: 500;
+            transition: all .2s;
+            display: flex;
+            color: var(--body-text-color);
+
+            &:hover {
+                background-color: color-mix(in srgb, var(--brand-color) 8%, transparent);
+            }
+
+            &.active {
+                background-color: color-mix(in srgb, var(--brand-color) 12%, transparent);
+                color: var(--brand-color);
+            }
+        }
+    }
+
+    .mainContent {
+        flex: 1;
+        margin: 0 10px 0 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: var(--plan-card-background-color);
+        border: 1px solid var(--border-color);
+        color: var(--dynamic-text);
+        border-radius: 4px;
+        padding: 32px 28px 18px;
+        box-shadow: 0 1px 1px #0000001a;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        .pageHeader {
+            margin-bottom: 32px;
+
+            h2 {
+                margin: 0 0 8px 0;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--body-text-color, #000);
+            }
+
+            p {
+                margin: 0;
+                color: var(--settings-text-muted);
+                font-size: 0.875rem;
+            }
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color, #eaeaea);
+            margin: 24px 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        margin: 0;
+        min-height: 0;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: visible;
+        width: 100%;
+        max-width: 100%;
+        padding: 12px;
+
+        .sidebar {
+            width: 100%;
+            max-width: 100%;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 0;
+            padding: 0 4px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x proximity;
+            border-bottom: 1px solid var(--border-color);
+            background: transparent;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            box-sizing: border-box;
+
+            scrollbar-width: none;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .navButton {
+                width: auto;
+                flex: 0 0 auto;
+                white-space: nowrap;
+                text-align: center;
+                justify-content: center;
+                padding: 12px 14px;
+                border-radius: 0;
+                border-bottom: 2px solid transparent;
+                font-size: 13px;
+                color: var(--body-text-color);
+                scroll-snap-align: start;
+
+                &:hover {
+                    background-color: transparent;
+                    color: var(--body-text-color);
+                }
+
+                &.active {
+                    background-color: transparent;
+                    color: var(--brand-color);
+                    border-bottom-color: var(--brand-color);
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .mainContent {
+            margin: 12px 0 0;
+            background: var(--plan-card-background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px #0000001a;
+            padding: 16px;
+            overflow-x: hidden;
+            overflow-y: visible;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}

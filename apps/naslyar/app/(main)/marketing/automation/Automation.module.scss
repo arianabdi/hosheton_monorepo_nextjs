@@ -1,0 +1,208 @@
+@import '../Marketing.module.scss';
+
+$text-muted: var(--body-text-color);
+$border-color: var(--plan-card-border-color);
+
+.tableWrap,
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.dataTable,
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    text-align: right;
+
+    th {
+        background-color: #7b58fd0d;
+        color: $text-muted;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        opacity: 0.9;
+    }
+
+    td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+    }
+
+    tbody tr {
+        transition: background-color 0.15s ease;
+
+        &:hover td {
+            background: color-mix(in srgb, var(--brand-color) 4%, transparent);
+        }
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+        thead {
+            display: none;
+        }
+
+        tbody tr {
+            display: block;
+            border-bottom: 1px solid $border-color;
+            padding: 0.75rem 0;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1.25rem;
+            border: none;
+
+            &::before {
+                content: attr(data-label);
+                color: $text-muted;
+                font-size: 0.75rem;
+                opacity: 0.75;
+                flex-shrink: 0;
+            }
+        }
+
+        td.emptyCell {
+            display: block;
+            text-align: center;
+
+            &::before {
+                content: none;
+            }
+        }
+    }
+}
+
+.cellPrimary {
+    font-weight: 600;
+}
+
+.cellMuted {
+    font-size: 0.8rem;
+    opacity: 0.72;
+}
+
+.emptyCell {
+    text-align: center;
+    padding: 2.5rem 1.25rem !important;
+    color: $text-muted;
+    opacity: 0.85;
+}
+
+.rowActions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+}
+
+.statusBadgeSuccess {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.statusBadgeWarning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.tabContent {
+    margin-top: 0;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modalTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+}
+
+.alertBox {
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    color: #b45309;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.stepList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+}
+
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--input-background-color);
+    border-radius: 8px;
+    font-size: 0.82rem;
+}
+
+.inlineActions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.smallBtn {
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}

@@ -1,0 +1,175 @@
+// بنر وضعیت اتصال — رنگ‌ها فقط از توکن‌های تم (globals.css) + یک رنگ تأکید برای هر حالت
+
+.banner {
+    --status-accent: #e5484d;
+    --status-surface: var(--plan-card-background-color, #fff);
+    --status-text: var(--body-text-color, #111);
+    --status-muted: var(--settings-text-muted, #666);
+
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    inset-inline: 0;
+    margin-inline: auto;
+    z-index: 10000; // بالای toastها (react-hot-toast: 9999) و مودال‌ها
+    width: min(560px, calc(100% - 24px));
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding-block: 10px;
+    padding-inline: 12px 10px;
+
+    background: var(--status-surface);
+    color: var(--status-text);
+    border: 1px solid color-mix(in srgb, var(--status-accent) 38%, var(--border-color, #ccc));
+    border-radius: 14px;
+    font-family: inherit;
+    line-height: 1.5;
+
+    &[data-tone='warning'] {
+        --status-accent: #e09b13;
+    }
+
+    &[data-tone='success'] {
+        --status-accent: #22a06b;
+    }
+}
+
+.icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--status-accent) 14%, transparent);
+    color: var(--status-accent);
+    font-size: 19px;
+
+    .banner:not([data-tone='success']) & svg {
+        animation: pulse 1.8s ease-in-out infinite;
+    }
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.message {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--status-muted);
+}
+
+.detail {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+    font-size: 11.5px;
+    font-weight: 400;
+    color: color-mix(in srgb, var(--status-accent) 75%, var(--status-text));
+    font-variant-numeric: tabular-nums;
+}
+
+.retry {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding-inline: 12px;
+    border: 1px solid color-mix(in srgb, var(--status-accent) 35%, transparent);
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--status-accent) 10%, transparent);
+    color: var(--status-text);
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+    svg {
+        font-size: 14px;
+        color: var(--status-accent);
+    }
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--status-accent) 18%, transparent);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--status-accent);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.7;
+    }
+}
+
+.spin {
+    animation: spin 0.9s linear infinite;
+}
+
+// موبایل: دکمه فقط آیکون تا متن جا داشته باشد
+@media (max-width: 420px) {
+    .banner {
+        gap: 10px;
+        padding-block: 9px;
+    }
+
+    .icon {
+        width: 34px;
+        height: 34px;
+        font-size: 17px;
+    }
+
+    .retry {
+        width: 34px;
+        padding: 0;
+        justify-content: center;
+
+        span {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .icon svg,
+    .spin {
+        animation: none !important;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.45;
+    }
+}

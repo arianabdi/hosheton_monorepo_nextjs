@@ -1,0 +1,253 @@
+.page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0.85rem 1rem 5.5rem;
+    box-sizing: border-box;
+    color: var(--body-text-color);
+
+    @media (min-width: 768px) {
+        padding: 1rem 1.15rem 5.5rem;
+    }
+}
+
+.pageHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.titleBlock {
+    min-width: 0;
+}
+
+.title {
+    margin: 0 0 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.description {
+    margin: 0;
+    color: var(--body-text-color);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    opacity: 0.7;
+    max-width: 42rem;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.ghostBtn {
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    }
+}
+
+.tabBarRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem;
+}
+
+.tabBarWrap {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.summaryMobileBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 0.45rem 0.65rem;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+
+    @media (min-width: 960px) {
+        display: none;
+    }
+}
+
+.workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    @media (min-width: 960px) {
+        /* در RTL با row-reverse خلاصه سمت چپ و محتوای تب سمت راست می‌ماند */
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+.summaryColumn {
+    display: none;
+    flex: 0 0 auto;
+
+    @media (min-width: 960px) {
+        display: block;
+        width: 15.5rem;
+        position: sticky;
+        top: 0.35rem;
+        align-self: flex-start;
+        max-height: calc(100dvh - 7rem);
+        overflow-y: auto;
+    }
+}
+
+.tabContentColumn {
+    flex: 1;
+    min-width: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.tabPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.tabPanelHeader {
+    margin-bottom: 0.15rem;
+}
+
+.tabPanelTitle {
+    margin: 0 0 0.15rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.tabPanelSubtitle {
+    margin: 0;
+    font-size: 0.74rem;
+    opacity: 0.68;
+    line-height: 1.45;
+}
+
+.settingCard {
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    scroll-margin-top: 5.5rem;
+}
+
+.settingCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    scroll-margin-top: 5.5rem;
+}
+
+.stickyFooter {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 0.65rem 1.15rem;
+    border-top: 1px solid var(--plan-card-border-color);
+    background: color-mix(in srgb, var(--plan-card-background-color) 94%, transparent);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -4px 18px color-mix(in srgb, var(--body-text-color) 8%, transparent);
+}
+
+.submit {
+    background-color: var(--brand-color);
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.25rem;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 700;
+
+    &:hover:not(:disabled) {
+        opacity: 0.92;
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+}
+
+.footerHint {
+    font-size: 0.72rem;
+    opacity: 0.65;
+}
+
+/* پیش‌نمایش پنجره‌ی راهنمای تنظیمات — فاصله‌ی افقی دو طرف برای دکمه ✕ ModalHelper */
+.helpPreviewText {
+    margin: 0;
+    padding: 20px 56px 22px;
+    font-size: 0.86rem;
+    line-height: 1.85;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+/* هشدار زیر فیلد (مثلاً فرمولی که در مبلغ اثر ندارد) — کنار .hint معمولی */
+.hintWarn {
+    color: #d97706;
+    opacity: 1;
+}
+
+/* انتخاب جدول قیمت (پیش‌فرض / ارائه‌دهنده) بالای تب فرمول */
+.pricingTableSwitch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.7rem;
+    border-bottom: 1px solid var(--input-border-color);
+}

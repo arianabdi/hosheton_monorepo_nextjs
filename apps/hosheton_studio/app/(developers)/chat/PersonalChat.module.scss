@@ -1,0 +1,378 @@
+.pageRoot {
+    height: 100%;
+    min-height: 0;
+}
+.composerStack{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.shell {
+    display: flex;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    background: var(--body-background);
+    color: var(--body-text-color);
+}
+
+.slide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+}
+
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--badged-image-frame, var(--plan-card-background-color, #fff))
+}
+
+.body {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+.toolbar {
+    position: relative;
+    z-index: 8;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 10px 12px 6px;
+    background: transparent;
+    pointer-events: auto;
+}
+
+/* سه دکمه (چت جدید، گالری، تاریخچه) سمت مقابل انتخاب نما */
+.toolbarActions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-inline-start: auto;
+}
+
+/* هم‌شکل دکمه‌های هدر پروژه (ProjectWorkspaceSwitcher .iconBtn): مربع گوشه‌گرد ۳۴px؛
+   پس‌زمینه یکدست (نه شفاف) چون در موبایل روی پیام‌ها شناور است */
+.historyBtn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    background: color-mix(in srgb, var(--body-text-color) 7%, var(--plan-card-background-color));
+    color: var(--body-text-color);
+    opacity: 0.82;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    pointer-events: auto;
+    transition: background 0.16s ease, opacity 0.16s ease;
+
+    &:hover,
+    &.historyBtnActive {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 12%, var(--plan-card-background-color));
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+}
+
+.history {
+    width: 340px;
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-inline-end: -340px;
+    transform: translateX(100%);
+    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+        margin-inline-end 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+    border-inline-start: 1px solid var(--border-color);
+    background: var(--plan-card-background-color);
+    pointer-events: none;
+}
+
+.shell[dir='rtl'] .history {
+    transform: translateX(-100%);
+}
+
+.historyVisible {
+    margin-inline-end: 0;
+    transform: none;
+    pointer-events: auto;
+}
+
+.shell[dir='rtl'] .historyVisible {
+    transform: none;
+}
+
+.historyInner {
+    width: auto;
+    height: 100%;
+}
+
+.historyOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    overflow: hidden;
+    background: var(--plan-card-background-color);
+    pointer-events: none;
+    visibility: hidden;
+    transform: translateX(110%);
+    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.34s;
+}
+
+.shell[dir='rtl'] .historyOverlay {
+    transform: translateX(-110%);
+}
+
+.historyOverlayOpen {
+    pointer-events: auto;
+    visibility: visible;
+    transform: none;
+}
+
+.shell[dir='rtl'] .historyOverlayOpen {
+    transform: none;
+}
+
+// چت پروژه (نه چت اصلی): پس‌زمینه هم‌رنگ هدر پروژه. قاب تصاویر و محوشدگی بالای کادر
+// با همین متغیرها رنگ می‌گیرند تا روی پس‌زمینه جدید لبه سفید نماند.
+.projectSurface {
+    position: relative; // لنگر پنل تاریخچه (مثل .rightControlArea ورک‌فلو)
+    --badged-image-frame: var(--body-background);
+    --page-view-background-color: var(--body-background);
+
+    .main {
+        transition: margin-right 0.3s ease;
+    }
+}
+
+// پنل باز روی دسکتاپ: جای پنل (۳۲۰ + فاصله ۲۵ از لبه + ۱۲ فاصله تا چت) از ستون چت کم می‌شود
+// تا چت در فضای باقی‌مانده کنار پنل وسط بنشیند
+.historyDockedOpen .main {
+    margin-right: calc(320px + 25px + 12px);
+}
+
+// جای پنل تاریخچه چت پروژه — دقیقاً مثل .rightControlArea سایدبار ورک‌فلو
+// (سمت راست فیزیکی در هر زبان، ۲۵px از بالا و راست، ۳۲۰px)
+.historyPanelArea {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 50;
+    width: 320px;
+    height: calc(100% - 4rem);
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(16px);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+
+    &.historyPanelAreaOpen {
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+    }
+
+    // موبایل: مثل سایدبار ورک‌فلو از کنار بیرون می‌آید
+    @media (max-width: 768px) {
+        top: 0;
+        right: -360px;
+        padding: 20px;
+        width: 300px;
+        opacity: 1;
+        transform: none;
+        transition: right 0.3s ease, visibility 0.3s;
+
+        &.historyPanelAreaOpen {
+            right: 0;
+        }
+    }
+}
+
+// باکس داخل پنل — همان .panelBox ورک‌فلو
+.historyPanel {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    // تاریخچه داخل باکس: پس‌زمینه و قاب تصاویرش هم‌رنگ خود باکس
+    --chat-history-bg: var(--input-background-color);
+    --badged-image-frame: var(--input-background-color);
+}
+
+// بدنه تب فعال — مثل .panelBoxBody ورک‌فلو
+.historyPanelBody {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+// موبایل: پس‌زمینه تیره پشت پنل باز — لمسش پنل را می‌بندد (همان .sidebarBackdrop ورک‌فلو)
+.historyBackdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 49;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+}
+
+.sheetBody {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+// موبایل: تاریخچه پنجرهٔ تمام‌صفحه هم‌سبک گالری (GalleryModal .shell / .shellHeader)
+.historyWindow {
+    position: fixed;
+    inset: 0;
+    z-index: 999990;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    animation: historyWindowIn 0.16s ease;
+}
+
+@keyframes historyWindowIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.historyWindowHeader {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 54px;
+    padding: 0 14px;
+    border-bottom: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color, var(--body-background));
+}
+
+.historyWindowTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+
+    h2 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.historyWindowIcon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+}
+
+.historyWindowBody {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.historySheet {
+    height: min(98dvh, 98vh) !important;
+    max-height: min(98dvh, 98vh) !important;
+    padding: 12px 0 0 !important;
+    background: var(--plan-card-background-color) !important;
+    color: var(--body-text-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    &[data-state='open'] {
+        transform: none;
+        will-change: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .history,
+    .historyOverlay,
+    .historyPanelArea,
+    .projectSurface .main {
+        transition: none;
+        animation: none;
+    }
+}
+
+.thread {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+/* صفحهٔ چت موبایل: نوار ابزار روی پیام‌ها شناور است و پیام‌ها زیر آن و زیر نوار پایین هم
+   دیده می‌شوند؛ جای نوار ابزار (--chat-top-space) و نوار پایین (--chat-dock-bottom) را
+   خود ناحیهٔ اسکرول و کادر نوشتن نگه می‌دارند (ChatTranscriptLayout / ChatEmptyStage) */
+@media (max-width: 768px) {
+    .page:not(.projectSurface) {
+        --chat-top-space: 54px;
+        // کادر ۸px بالای نوار پایین (نوار ۵۶ + ۱۲ از لبه؛ پد خود dock ۱۶)
+        --chat-dock-bottom: calc(var(--mobile-tabbar-height) - 20px + env(safe-area-inset-bottom, 0px));
+
+        .toolbar {
+            position: absolute;
+            top: 0;
+            inset-inline: 0;
+            padding: 10px 12px;
+            pointer-events: none;
+        }
+    }
+}

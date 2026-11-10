@@ -1,0 +1,201 @@
+.applicationView {
+    flex: 1;
+    min-width: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+}
+
+.applicationViewFill {
+    overflow: hidden;
+}
+
+/* چت موبایل: صفحه تا ته صفحه زیر نوار شناور پایین ادامه دارد؛ جای نوار را خود چت
+   (--chat-dock-bottom در PersonalChat.module.scss) زیر کادر نوشتن می‌گذارد */
+@media (max-width: 768px) {
+    .applicationViewUnderBar.applicationViewUnderBar {
+        padding-bottom: 0;
+    }
+}
+
+.header{
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 15px;
+    flex-direction: row;
+}
+
+.dropdown{
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--border-color) !important;
+
+    li{
+        border-color: var(--border-color) !important;
+        cursor: pointer;
+    }
+
+    li div,
+    li a,
+    li button:hover{
+        background: unset !important;
+        color: var(--body-text-color);
+
+    }
+}
+
+.outlet{
+    width: 100%;
+    max-width: 1340px;
+    margin-inline-end: auto;
+    box-sizing: border-box;
+    min-height: 100%;
+    margin: auto;
+}
+
+.outletFill {
+    max-width: none;
+    margin-inline-end: 0;
+}
+
+.outletLock {
+    height: 100%;
+}
+
+.wrapper {
+    width: 100%;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: 0;
+    display: flex;
+    gap: 0;
+    box-sizing: border-box;
+    align-items: flex-start;
+}
+
+body {
+    color: var(--body-text-color) !important;
+    background: var(--body-background) !important;
+}
+
+:global(h6),
+:global(h5),
+:global(h4),
+:global(h3),
+:global(h2),
+:global(h1) {
+    color: var(--body-text-color) !important;
+}
+
+:global(input),
+:global(select),
+:global(optgroup),
+:global(textarea) {
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    width: 100%;
+}
+
+:global(.modal-content) {
+    background: unset !important;
+}
+
+
+.editorShell {
+    padding-top: 0;
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    background: var(--body-background);
+}
+
+@media (max-width: 768px) {
+    .applicationView {
+        height: 100vh;
+        /* کیبورد iOS روی صفحه: پوسته تا بالای کیبورد (KeyboardInsetSync) */
+        height: calc(100dvh - var(--keyboard-inset, 0px));
+        padding-top: 52px;
+        /* جای نوار پایین (MobileTabBar) */
+        padding-bottom: calc(var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
+        box-sizing: border-box;
+    }
+
+    .editorShell {
+        padding-top: 52px;
+        height: calc(100dvh - var(--keyboard-inset, 0px));
+    }
+}
+
+.editorOutlet {
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.fullscreenOutlet {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+
+
+// Logo Styles
+.logoContainer {
+    padding: 20px 13px 50px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--body-text-color);
+    text-shadow: 1px 1px var(--body-background);
+    font-size: 15px;
+}
+
+.logo {
+    border-radius: 9px;
+    max-width: 160px;
+    height: auto;
+    display: inline-block;
+    overflow: hidden;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+
+
+.creditContainer {
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.creditContainer .title {
+    font-size: 13px;
+}
+
+.creditContainer .credit {
+
+    font-size: 25px;
+}
+
+.creditContainer .chargeBtn {
+    font-size: 12px;
+    background-color: unset;
+    border-radius: 80px;
+    color: var(--body-text-color);
+    border: 1px solid var(--border-color);
+    height: max-content;
+    padding: 4px 0px;
+}

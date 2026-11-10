@@ -1,0 +1,97 @@
+/* نوار پایین موبایل — شناور روی محتوا: یک قرص ساده برای سه بخش + دایرهٔ جدا برای پروفایل.
+   فضای خالی زیر صفحه‌ها = --mobile-tabbar-height (globals.css) — ارتفاع قرص + فاصله از پایین. */
+
+$pill-height: 56px;
+
+.bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .bar {
+        position: fixed;
+        inset-inline: 16px;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        z-index: 1100;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        pointer-events: none;
+    }
+
+}
+
+.glass {
+    box-sizing: border-box;
+    height: $pill-height;
+    /* ساده: پس‌زمینهٔ یکدست + خط دور، بدون شیشه و تاری */
+    border: 1px solid var(--border-color);
+    background: var(--plan-card-background-color);
+    pointer-events: auto;
+}
+
+.pill {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 999px;
+}
+
+/* فقط آیکون؛ فعال = پس‌زمینهٔ قرصی کم‌رنگ پشت آیکون */
+.item {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.62;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s, background 0.2s;
+
+    &:active {
+        opacity: 0.85;
+    }
+}
+
+.active {
+    opacity: 1;
+    background: color-mix(in srgb, var(--body-text-color) 11%, transparent);
+}
+
+/* پروفایل — دایرهٔ جدا کنار قرص (در RTL سمت چپ، مثل دکمهٔ گرد مرجع) */
+.round {
+    flex: 0 0 $pill-height;
+    width: $pill-height;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--body-text-color);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+}
+
+.roundActive {
+    border-color: var(--brand-color);
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+}

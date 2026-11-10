@@ -1,0 +1,751 @@
+.sidebarContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--ve-panel, var(--input-background-color));
+    border-right: 1px solid var(--ve-border, var(--input-border-color));
+    color: var(--ve-text, var(--body-text-color));
+    font-family: system-ui, -apple-system, sans-serif;
+    user-select: none;
+
+    .tabNav {
+        display: flex;
+        background: var(--ve-panel, var(--input-background-color));
+        padding: 8px;
+        gap: 4px;
+        border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+
+        .tabBtn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 5px 2px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            border: 1px solid transparent;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                color: var(--ve-text, var(--body-text-color));
+                background: var(--ve-hover, var(--body-background));
+            }
+
+            &.active {
+                background: var(--ve-surface, var(--body-background));
+                color: var(--ve-text, var(--body-text-color));
+                border-color: var(--ve-border, var(--input-border-color));
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            }
+
+            svg {
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+
+    .searchFilterArea {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+
+        .sidebarSearch {
+            flex: 1;
+            min-width: 0;
+            min-height: 30px;
+            border-radius: 10px;
+            background: var(--ve-hover, var(--body-background));
+            border-color: transparent;
+
+            &:focus-within {
+                border-color: var(--ve-border, var(--input-border-color));
+            }
+        }
+
+        .viewToggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+
+            .viewBtn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 30px;
+                height: 30px;
+                padding: 0;
+                border: 1px solid transparent;
+                border-radius: 10px;
+                background: var(--ve-hover, var(--body-background));
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+                cursor: pointer;
+                transition: all 0.2s;
+
+                svg {
+                    width: 15px;
+                    height: 15px;
+                }
+
+                &:hover {
+                    color: var(--ve-text, var(--body-text-color));
+                    background: var(--ve-surface, var(--input-background-color));
+                }
+            }
+
+            .columnStepper {
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                border: 1px solid transparent;
+                border-radius: 10px;
+                background: var(--ve-hover, var(--body-background));
+                padding: 2px;
+                min-height: 30px;
+                box-sizing: border-box;
+
+                span {
+                    min-width: 16px;
+                    text-align: center;
+                    font-size: 11px;
+                    font-weight: 700;
+                    font-variant-numeric: tabular-nums;
+                    color: var(--ve-text, var(--body-text-color));
+                }
+
+                button {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 22px;
+                    height: 22px;
+                    padding: 0;
+                    border: none;
+                    border-radius: 7px;
+                    background: transparent;
+                    color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+                    cursor: pointer;
+                    transition: all 0.15s;
+
+                    svg {
+                        width: 12px;
+                        height: 12px;
+                    }
+
+                    &:hover:not(:disabled) {
+                        background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+                        color: var(--brand-color);
+                    }
+
+                    &:disabled {
+                        opacity: 0.35;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+
+        .filterWrap {
+            position: relative;
+        }
+
+        .filterBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 0 10px;
+            min-height: 30px;
+            background: var(--ve-hover, var(--body-background));
+            border: 1px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            transition: all 0.2s;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+
+            &:hover {
+                background: var(--ve-surface, var(--input-background-color));
+                color: var(--ve-text, var(--body-text-color));
+            }
+
+            &.filterActive {
+                border-color: color-mix(in srgb, var(--brand-color) 35%, transparent);
+                color: var(--brand-color);
+                background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+            }
+
+            svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .filterChevron {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        .filterMenu {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            z-index: 20;
+            min-width: 120px;
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            background: var(--ve-surface, var(--input-background-color));
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+            button {
+                display: block;
+                width: 100%;
+                border: none;
+                background: transparent;
+                text-align: start;
+                padding: 8px 10px;
+                border-radius: 8px;
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--ve-text, var(--body-text-color));
+                cursor: pointer;
+
+                &:hover {
+                    background: var(--ve-hover, var(--body-background));
+                }
+
+                &.filterMenuActive {
+                    color: var(--brand-color);
+                    background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+                }
+            }
+        }
+    }
+
+    .contentArea {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 10px 10px;
+
+        .gridContainer {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+
+            .transitionHint {
+                grid-column: 1 / -1;
+                margin: 0 0 4px;
+                font-size: 11px;
+                line-height: 1.5;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            }
+        }
+
+        // Compact single-column list — better for narrow panels.
+        .listContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            .transitionHint {
+                margin: 0 0 4px;
+                font-size: 11px;
+                line-height: 1.5;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            }
+        }
+
+        .mediaRow {
+            display: grid;
+            grid-template-columns: 64px 1fr auto;
+            grid-template-areas: 'thumb title add' 'thumb sub add';
+            align-items: center;
+            column-gap: 10px;
+            padding: 5px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 10px;
+            cursor: grab;
+            background: transparent;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+
+            &:hover {
+                border-color: color-mix(in srgb, var(--brand-color) 40%, transparent);
+                background: var(--ve-hover, var(--body-background));
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+                .rowAddIcon {
+                    opacity: 1;
+                    color: var(--brand-color);
+                    border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+                }
+            }
+
+            &:active {
+                cursor: grabbing;
+            }
+
+            .thumbWrapper {
+                grid-area: thumb;
+                position: relative;
+                width: 64px;
+                height: 44px;
+                border-radius: 7px;
+                overflow: hidden;
+                background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+                flex-shrink: 0;
+
+                img,
+                video {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .audioThumb {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 2px;
+                    background: color-mix(in srgb, var(--brand-color) 8%, var(--ve-hover, var(--body-background)));
+                }
+            }
+
+            .title {
+                grid-area: title;
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--ve-text, var(--body-text-color));
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 0;
+            }
+
+            .subtitle {
+                grid-area: sub;
+                font-size: 9px;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+            }
+
+            .rowAddIcon {
+                grid-area: add;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 24px;
+                height: 24px;
+                border: 1px solid var(--ve-border, var(--input-border-color));
+                border-radius: 50%;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+                opacity: 0.6;
+                transition: all 0.2s;
+
+                svg {
+                    width: 12px;
+                    height: 12px;
+                }
+            }
+        }
+
+        .importRow {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            padding: 8px 10px;
+            background: var(--ve-hover, var(--body-background));
+            border: 1.5px dashed var(--ve-border, var(--input-border-color));
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 54px;
+
+            &:hover:not(:disabled) {
+                border-color: var(--brand-color);
+                background: color-mix(in srgb, var(--brand-color) 5%, transparent);
+
+                span { color: var(--brand-color); }
+                svg { stroke: var(--brand-color); }
+            }
+
+            &:disabled {
+                cursor: progress;
+            }
+
+            svg {
+                width: 20px;
+                height: 20px;
+                stroke: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+                flex-shrink: 0;
+            }
+
+            span {
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            }
+
+            .uploadIcon {
+                stroke: var(--brand-color);
+            }
+
+            .uploadName {
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 10px;
+            }
+
+            .uploadProgressTrack {
+                flex: 1;
+                height: 4px;
+                padding: 0;
+                overflow: hidden;
+                background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+                border-radius: 999px;
+            }
+
+            .uploadProgressFill {
+                display: block;
+                height: 100%;
+                padding: 0;
+                background: var(--brand-color);
+                border-radius: 999px;
+                transition: width 0.2s ease;
+            }
+
+            .uploadProgressLabel {
+                font-size: 9px;
+                font-variant-numeric: tabular-nums;
+            }
+        }
+
+        .presetRow {
+            display: grid;
+            grid-template-columns: 40px 1fr auto;
+            align-items: center;
+            column-gap: 10px;
+            padding: 6px 8px;
+            background: var(--ve-hover, var(--body-background));
+            border-radius: 10px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            transition: all 0.2s;
+
+            &:hover {
+                border-color: var(--brand-color);
+                background: var(--ve-surface, var(--input-background-color));
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+
+            .previewBox {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+                font-size: 17px;
+                font-weight: 700;
+                color: var(--ve-text, var(--body-text-color));
+            }
+
+            .presetTitle {
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--ve-text, var(--body-text-color));
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 0;
+            }
+
+            .presetSub {
+                font-size: 9px;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+                white-space: nowrap;
+            }
+        }
+
+        .clickableRow {
+            cursor: pointer;
+        }
+
+        .hiddenInput {
+            display: none;
+        }
+
+        .stateMessage {
+            margin: 0;
+            padding: 20px 4px;
+            font-size: 12px;
+            opacity: 0.65;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .spinIcon {
+            animation: mediaSidebarSpin 1s linear infinite;
+        }
+
+        .emptyGridHint {
+            grid-column: 1 / -1;
+            margin: 0;
+            padding: 12px 4px;
+            font-size: 12px;
+            opacity: 0.6;
+            text-align: center;
+        }
+
+        .importCard {
+            aspect-ratio: 1;
+            background: var(--ve-hover, var(--body-background));
+            border: 1.5px dashed var(--ve-border, var(--input-border-color));
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 8px;
+
+            &:hover:not(:disabled) {
+                border-color: var(--brand-color);
+                background: color-mix(in srgb, var(--brand-color) 5%, transparent);
+
+                span { color: var(--brand-color); }
+                svg { stroke: var(--brand-color); }
+            }
+
+            &:disabled {
+                cursor: progress;
+            }
+
+            svg {
+                width: 22px;
+                height: 22px;
+                stroke: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+                transition: stroke 0.2s;
+            }
+
+            span {
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            }
+
+            .uploadIcon {
+                stroke: var(--brand-color);
+            }
+
+            .uploadName {
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 10px;
+            }
+
+            .uploadProgressTrack {
+                width: 80%;
+                height: 4px;
+                padding: 0;
+                overflow: hidden;
+                background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+                border-radius: 999px;
+            }
+
+            .uploadProgressFill {
+                display: block;
+                height: 100%;
+                padding: 0;
+                background: var(--brand-color);
+                border-radius: 999px;
+                transition: width 0.2s ease;
+            }
+
+            .uploadProgressLabel {
+                font-size: 9px;
+                font-variant-numeric: tabular-nums;
+            }
+        }
+
+        .mediaItem {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: grab;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 12px;
+            padding: 6px;
+            background: transparent;
+            text-align: left;
+            transition: border-color 0.2s, box-shadow 0.2s;
+
+            &:hover {
+                border-color: color-mix(in srgb, var(--brand-color) 40%, transparent);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            }
+
+            .rowAddIcon {
+                display: none;
+            }
+
+            .thumbWrapper {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 1;
+                border-radius: 8px;
+                overflow: hidden;
+                background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+                flex-shrink: 0;
+
+                img,
+                video {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .audioThumb {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 6px;
+                    background: color-mix(in srgb, var(--brand-color) 8%, var(--ve-hover, var(--body-background)));
+                }
+            }
+
+            .title {
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--ve-text, var(--body-text-color));
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+            }
+
+            .subtitle {
+                font-size: 9px;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+            }
+        }
+
+        .draggableCard {
+            cursor: grab;
+
+            &:active {
+                cursor: grabbing;
+            }
+        }
+
+        .presetCard {
+            aspect-ratio: 1;
+            background: var(--ve-hover, var(--body-background));
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                border-color: var(--brand-color);
+                background: var(--ve-surface, var(--input-background-color));
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                transform: translateY(-2px);
+            }
+
+            .previewBox {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--ve-text, var(--body-text-color));
+            }
+
+            .presetTitle {
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--ve-text, var(--body-text-color));
+                text-align: center;
+            }
+
+            .presetSub {
+                font-size: 9px;
+                color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 50%, transparent));
+            }
+        }
+    }
+}
+
+@keyframes mediaSidebarSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+// Phone window: underlined text tabs like the creator page (no icons, 400,
+// 13px, full-width bottom border); scrolls sideways if it ever overflows.
+.sidebarContainer.mobile {
+    border-right: 0;
+
+    .tabNav {
+        gap: 0;
+        padding: 0 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tabBtn {
+            flex: 1 0 auto;
+            padding: 12px 14px;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 400;
+            white-space: nowrap;
+
+            &:hover {
+                background: transparent;
+            }
+
+            &.active {
+                background: transparent;
+                color: var(--brand-color);
+                border-bottom-color: var(--brand-color);
+                box-shadow: none;
+            }
+        }
+    }
+}

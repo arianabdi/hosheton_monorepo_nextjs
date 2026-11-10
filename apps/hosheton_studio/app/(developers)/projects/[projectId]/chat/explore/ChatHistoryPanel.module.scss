@@ -1,0 +1,471 @@
+.panel {
+    /* میزبان (مثل پنل تاریخچه چت پروژه) می‌تواند هم‌رنگ قاب خودش کند */
+    background: var(--chat-history-bg, var(--plan-card-background-color));
+    height: 100%;
+    min-height: 0;
+    color: var(--body-text-color);
+    flex-direction: column;
+    gap: 18px;
+    padding: 10px 0 10px;
+    display: flex;
+}
+
+.panelOffline {
+    opacity: 0.92;
+}
+
+.connectionBanner {
+    margin: 0 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: color-mix(in srgb, #c2410c 14%, transparent);
+    color: color-mix(in srgb, #c2410c 80%, var(--body-text-color));
+    font-size: 12px;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.searchRow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 10px;
+    flex-shrink: 0;
+}
+
+.closeBtn {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--body-text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    }
+}
+
+.newChat {
+    border: unset !important;
+    color: var(--body-text-color);
+    cursor: pointer;
+    background: none;
+    border-radius: 8px;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    margin: 0 10px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 400;
+    display: flex;
+
+    &:hover:not(:disabled) {
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 15px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: inherit;
+
+    input {
+        min-width: 0;
+        flex: 1;
+        width: auto !important;
+        border: 0 !important;
+        outline: none;
+        box-shadow: none !important;
+        background: transparent !important;
+        border-radius: inherit;
+        color: inherit;
+        font: inherit;
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+}
+
+.list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    position: relative;
+    width: 100%;
+    padding: 0 0 16px;
+    color: var(--body-text-color);
+}
+
+.itemMain {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    text-align: start;
+    cursor: pointer;
+    outline: none;
+
+    > * {
+        margin-inline: 12px;
+    }
+
+    &:focus-visible .dividerDate {
+        opacity: 1;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    &[aria-disabled='true'] {
+        cursor: not-allowed;
+        opacity: 0.65;
+    }
+}
+
+/* Separator line that carries the date and the more button, inset like the thumbnails:
+   date ──────────── ⋯ */
+.divider,
+.ghostDivider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 28px;
+}
+
+.ghostDivider {
+    margin-inline: 12px;
+}
+
+.dividerLine {
+    flex: 1;
+    min-width: 12px;
+    height: 1px;
+    background: var(--border-color);
+    transition: background-color 0.18s ease;
+}
+
+.dividerDate {
+    flex-shrink: 0;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.45;
+    transition: opacity 0.18s ease, color 0.18s ease;
+}
+
+.item:hover,
+.menuOpen {
+    .dividerLine {
+        background: color-mix(in srgb, var(--body-text-color) 22%, transparent);
+    }
+
+    .dividerDate {
+        opacity: 0.8;
+    }
+
+    .moreBtn {
+        opacity: 0.85;
+    }
+}
+
+.itemActions {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.moreBtn {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    opacity: 0.45;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.18s ease, background-color 0.18s ease;
+
+    &:hover,
+    &[aria-expanded='true'] {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    }
+}
+
+.actionMenu {
+    position: absolute;
+    top: 30px;
+    inset-inline-end: 0;
+    z-index: 20;
+    min-width: 120px;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--plan-card-background-color);
+    box-shadow: 0 8px 24px color-mix(in srgb, #000 22%, transparent);
+}
+
+.menuDanger {
+    width: 100%;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: transparent;
+    color: #ef4444;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, #ef4444 12%, transparent);
+    }
+}
+
+/* .item.selected so it outranks the hover state above */
+.item.selected {
+    .dividerLine {
+        background: color-mix(in srgb, var(--brand-color) 45%, transparent);
+    }
+
+    .dividerDate {
+        color: var(--brand-color);
+        font-weight: 500;
+        opacity: 1;
+    }
+
+    .title {
+        color: var(--brand-color);
+    }
+}
+
+.title {
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2px;
+}
+
+.thumb {
+    flex-shrink: 0;
+}
+
+/*
+ * تایل فولدری (به سبک فولدر آیفون) برای درخواست چندخروجی: گرید ۲×۲ با ۳ تامبنیل اول.
+ * خانه چهارم فیزیکی پایین-راست است، جایی که بج مدل (و «+N») می‌نشیند؛ پس تامبنیل سوم
+ * همیشه پایین-چپ است — در RTL ترتیب خواندن: بالا-راست، بالا-چپ، پایین-چپ.
+ * دو کلاس تا بر `.imageWrapper > *` (display: block) در BadgedImage غلبه کند.
+ */
+.folderTile .folderGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+        'a b'
+        'c .';
+    gap: 3px;
+    padding: 4px;
+    box-sizing: border-box;
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+}
+
+// در RTL ستون اول سمت راست است — خانه خالی (زیر بج) باید ستون اولِ ردیف دوم باشد
+.folderTile .folderGrid:dir(rtl) {
+    grid-template-areas:
+        'a b'
+        '. c';
+}
+
+.folderSlot {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+
+    &[data-slot='1'] { grid-area: a; }
+    &[data-slot='2'] { grid-area: b; }
+    &[data-slot='3'] { grid-area: c; }
+}
+
+/* ویدیوی بدون پوستر: فریم اول خود ویدیو (فقط metadata بارگذاری می‌شود) */
+.videoFrame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+}
+
+.audioTile {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--body-text-color);
+    opacity: 0.6;
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+}
+
+.draftBadge {
+    flex-shrink: 0;
+    padding: 1px 6px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0.75;
+}
+
+.meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    min-width: 0;
+    max-width: 100%;
+    opacity: 1;
+}
+
+.modelIcon {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 1;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.modelName {
+    flex-shrink: 0;
+    opacity: 1;
+    font-weight: 500;
+}
+
+.empty {
+    margin: 16px 4px;
+    font-size: 13px;
+    opacity: 0.65;
+    text-align: center;
+}
+
+.ghostList {
+    display: flex;
+    flex-direction: column;
+}
+
+.ghostItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 0 16px;
+}
+
+.ghostMeta,
+.ghostDot,
+.ghostThumb {
+    display: block;
+    border-radius: 6px;
+    // پس‌زمینه‌ی ثابت + تپش opacity (روی compositor) — بدون انیمیشن background که هر فریم repaint می‌خواهد
+    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    animation: historyGhost 1.15s ease-in-out infinite;
+    animation-delay: var(--ghost-delay, 0ms);
+}
+
+.ghostMeta {
+    flex-shrink: 0;
+    height: 9px;
+    opacity: 0.85;
+}
+
+.ghostDot {
+    flex-shrink: 0;
+    width: 18px;
+    height: 6px;
+    margin-inline: 4px;
+    border-radius: 999px;
+}
+
+.ghostThumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2px;
+    margin-inline: 12px;
+}
+
+.ghostThumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+}
+
+@keyframes historyGhost {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ghostMeta,
+    .ghostDot,
+    .ghostThumb {
+        animation: none;
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    }
+}

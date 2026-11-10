@@ -1,0 +1,73 @@
+.panel {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--sidebar-color);
+    color: var(--body-text-color);
+}
+
+.sidebar {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 12px 8px 0;
+}
+
+.sidebarRoot {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabContent {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.gridWrap {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 8px 10px 16px;
+}
+
+.compactGrid {
+    /* `.grid` از ExploreCard روی همین عنصر display:grid و ستون‌های واکنش‌گرا به
+       عرض viewport می‌گذارد؛ داخل پنل باریک همین باعث می‌شد ۴ تا ۸ ستون ریز
+       فشرده شوند (حالت zoom-out). masonry دو ستونه به display:block نیاز دارد. */
+    display: block !important;
+    column-count: 2 !important;
+    column-gap: 10px !important;
+
+    :global(article) {
+        margin-bottom: 10px;
+        border-radius: 12px;
+    }
+}
+
+.error {
+    margin: 8px 10px 0;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    background: color-mix(in srgb, #ef4444 12%, transparent);
+    border: 1px solid color-mix(in srgb, #ef4444 35%, transparent);
+}
+
+.more {
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.sentinel {
+    height: 1px;
+}

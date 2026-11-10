@@ -1,0 +1,610 @@
+/* توضیح گام‌به‌گام فرمول هزینه — خنثی، با خط جداکننده؛ رنگ فقط برای هشدار و سود */
+.explainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--body-text-color);
+}
+
+.mode {
+    margin: 0;
+    font-size: 11px;
+    color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+}
+
+.warnings {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 8px 10px;
+    list-style: none;
+    border-radius: 8px;
+    background: color-mix(in srgb, #d97706 10%, transparent);
+    color: #b45309;
+    font-size: 11px;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+
+        svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+    }
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+}
+
+.sectionTitle {
+    margin: 0 0 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+/* عبارت فرمول با مقادیر واقعی */
+.expressionBox {
+    position: relative;
+}
+
+.expression {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 3%, transparent);
+}
+
+.group {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* پنجره کوچک: یک خط با اسکرول افقی؛ جای دکمه expand سمت راست خالی می‌ماند */
+.expressionLine {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-right: 40px;
+    scrollbar-width: thin;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+
+    > *,
+    .group,
+    .group > * {
+        flex-shrink: 0;
+    }
+
+    .group {
+        flex-wrap: nowrap;
+    }
+
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: color-mix(in srgb, var(--body-text-color) 18%, transparent);
+    }
+}
+
+/* مودال: همان نوار یک‌خطی، با چیپ‌های بزرگ‌تر */
+.expressionLarge {
+    gap: 6px;
+    min-height: 64px;
+    padding: 14px;
+    padding-right: 14px;
+
+    .group {
+        gap: 6px;
+    }
+
+    .term {
+        padding: 5px 10px;
+    }
+
+    .termLabel {
+        max-width: 200px;
+        font-size: 11px;
+    }
+
+    .termValue {
+        font-size: 14px;
+    }
+
+    .operator {
+        font-size: 17px;
+    }
+
+    .equals {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+}
+
+/* پرانتز قابل کلیک (فقط در مودال) */
+.parenBtn {
+    padding: 0 3px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: color 0.12s ease, background-color 0.12s ease;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+        outline: none;
+    }
+}
+
+/* گروه همیشه padding/radius دارد تا با انتخاب شدن، چیدمان جابه‌جا نشود */
+.expressionLarge .group {
+    padding: 3px 4px;
+    border-radius: 10px;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* بخش انتخاب‌شده — رنگ برند پررنگ + قاب دولایه */
+.expressionLarge .groupFocused {
+    background: color-mix(in srgb, var(--brand-color) 20%, transparent);
+    box-shadow: inset 0 0 0 2px var(--brand-color);
+
+    > .parenBtn {
+        color: var(--brand-color);
+        font-weight: 700;
+    }
+
+    .term {
+        border-color: var(--brand-color);
+    }
+}
+
+/* بقیه فرمول کم‌رنگ می‌شود تا تمرکز فقط روی بخش انتخاب‌شده باشد */
+.hasFocus {
+    .term,
+    .operator,
+    .parenBtn,
+    > .equals {
+        opacity: 0.32;
+        transition: opacity 0.15s ease;
+    }
+
+    .groupFocused {
+        .term,
+        .operator,
+        .parenBtn {
+            opacity: 1;
+        }
+    }
+}
+
+/* ساختار مودال */
+.modal {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    color: var(--body-text-color);
+}
+
+.modalHead {
+    padding: 16px 60px 14px 20px;
+    border-bottom: 1px solid var(--border-color, var(--input-border-color));
+
+    :global([dir='rtl']) & {
+        padding: 16px 20px 14px 60px;
+    }
+
+    h4 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    p {
+        margin: 4px 0 0;
+        font-size: 12px;
+        line-height: 1.7;
+        color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    }
+
+    @media (max-width: 576px) {
+        padding: 0 16px 12px;
+
+        :global([dir='rtl']) & {
+            padding: 0 16px 12px;
+        }
+
+        h4 {
+            display: none;
+        }
+    }
+}
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+    padding: 18px 20px 20px;
+    overflow-y: auto;
+
+    @media (max-width: 576px) {
+        padding: 14px 16px 18px;
+    }
+}
+
+/* نوار وضعیت انتخاب — ارتفاع ثابت تا با انتخاب/حذف انتخاب پنجره نپرد */
+.focusBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    border: 1px dashed var(--input-border-color);
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.focusBarActive {
+    border-style: solid;
+    border-color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+}
+
+.focusInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.focusTitle {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand-color);
+}
+
+.focusMath {
+    overflow-x: auto;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.focusClear {
+    flex-shrink: 0;
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 7px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.focusEmpty {
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+/* خلاصه: سه ستون مساوی، عبارت ادمین تمام‌عرض */
+.modalMeta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    overflow: hidden;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        padding: 10px 12px;
+
+        &:not(.modalMetaWide) + div:not(.modalMetaWide) {
+            border-inline-start: 1px solid color-mix(in srgb, var(--body-text-color) 7%, transparent);
+        }
+    }
+
+    dt {
+        font-size: 10.5px;
+        color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    }
+
+    dd {
+        margin: 0;
+        font-size: 13px;
+        font-variant-numeric: tabular-nums;
+        text-align: start;
+        overflow-wrap: anywhere;
+    }
+
+    code {
+        font-size: 11.5px;
+    }
+
+    @media (max-width: 576px) {
+        grid-template-columns: minmax(0, 1fr);
+
+        > div:not(.modalMetaWide) + div:not(.modalMetaWide) {
+            border-inline-start: 0;
+            border-top: 1px solid color-mix(in srgb, var(--body-text-color) 7%, transparent);
+        }
+    }
+}
+
+.modalMetaWide {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 7%, transparent);
+}
+
+.expandBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 7px;
+    background: var(--plan-card-background-color);
+    color: color-mix(in srgb, var(--body-text-color) 70%, transparent);
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--body-text-color);
+        border-color: color-mix(in srgb, var(--body-text-color) 35%, transparent);
+        outline: none;
+    }
+}
+
+.paren {
+    font-size: 16px;
+    font-weight: 300;
+    color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+}
+
+.term {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 34px;
+    padding: 3px 7px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 7px;
+    background: var(--plan-card-background-color);
+}
+
+.termWarn {
+    border-color: #d97706;
+}
+
+.termLabel {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 9.5px;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+.termMatch {
+    margin-inline-start: 2px;
+    color: var(--brand-color);
+}
+
+.termValue {
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.operator {
+    padding: 0 1px;
+    font-size: 14px;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+.equals {
+    padding: 3px 8px;
+    border-radius: 7px;
+    background: var(--body-text-color);
+    color: var(--plan-card-background-color);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.adminText {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    margin: 6px 0 0;
+    font-size: 10.5px;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+
+    code {
+        overflow-wrap: anywhere;
+        font-size: 10.5px;
+        color: var(--body-text-color);
+    }
+}
+
+/* ردیف برچسب/مقدار */
+.row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 7%, transparent);
+}
+
+.rowLabel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    small {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px;
+        font-size: 10px;
+        color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+    }
+
+    code {
+        font-size: 10px;
+        opacity: 0.8;
+    }
+}
+
+.rowValue {
+    flex-shrink: 0;
+    max-width: 60%;
+    text-align: end;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.row_muted .rowValue {
+    color: color-mix(in srgb, var(--body-text-color) 70%, transparent);
+}
+
+.row_profit .rowValue {
+    color: #16a34a;
+}
+
+.row_strong {
+    border-bottom: 0;
+
+    .rowLabel {
+        font-weight: 600;
+    }
+
+    .rowValue {
+        font-size: 14px;
+        font-weight: 700;
+    }
+}
+
+.input {
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 7%, transparent);
+
+    .row {
+        border-bottom: 0;
+    }
+}
+
+.inputWarn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: -2px 0 6px;
+    font-size: 10.5px;
+    color: #b45309;
+}
+
+/* گزینه‌های جدول lookup — گزینه انتخاب‌شده پررنگ */
+.table {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: -2px 0 8px;
+
+    span {
+        padding: 1px 6px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 5px;
+        font-size: 10px;
+        color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+
+        b {
+            font-weight: 600;
+        }
+    }
+
+    .tableActive {
+        border-color: var(--brand-color);
+        color: var(--body-text-color);
+    }
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding-inline-start: 18px;
+
+    li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 2px 8px;
+
+        &::marker {
+            color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+            font-size: 10px;
+        }
+    }
+}
+
+.stepLabel {
+    color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+}
+
+.stepMath {
+    font-variant-numeric: tabular-nums;
+}
+
+.legacy {
+    margin: 0 0 6px;
+    font-size: 11px;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+.trace {
+    display: block;
+    padding: 8px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+    font-size: 10.5px;
+    overflow-wrap: anywhere;
+}

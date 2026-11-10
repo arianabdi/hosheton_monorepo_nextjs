@@ -1,0 +1,30 @@
+.toolboxSearch {
+    position: relative;
+    margin-bottom: 12px;
+
+    input {
+        width: 100%;
+        background: var(--body-background);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        border-radius: 12px;
+        padding: 8px 12px 8px 34px;
+        font-size: 0.82rem;
+        box-sizing: border-box;
+    }
+
+    .searchIcon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.45;
+        font-size: 0.95rem;
+    }
+}
+
+.noResults {
+    font-size: 0.78rem;
+    opacity: 0.5;
+    padding: 8px 4px;
+}

@@ -1,0 +1,22 @@
+{
+    "name": "@my-workspace/utils",
+    "version": "1.0.0",
+    "main": "src/index.tsx",
+    "scripts": {
+        "build": "rm -rf dist && mkdir dist && cp -r src/* dist/",
+        "dev": "npm run build --watch"
+    },
+    "dependencies": {
+        "@material-ui/styles": "^4.11.5",
+        "@my-workspace/components": "*",
+        "jalali-moment": "^3.3.11",
+        "moment": "^2.30.1",
+        "moment-timezone": "^0.5.46",
+        "next": "15.2.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "reactstrap": "^9.2.3"
+    },
+    "keywords": [],
+    "author": ""
+}

@@ -1,0 +1,522 @@
+/* ترکیب استایل‌های JsonEditor با نیازمندی‌های فرم و لیست قسمت‌ها */
+
+.editorContainer {
+    flex-direction: column;
+    gap: 24px;
+    display: flex;
+}
+
+.editorHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 16px;
+
+    .headerInfo {
+        .title {
+            font-size: 1.5rem;
+            color: var(--body-text-color);
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+    }
+
+    .headerActions {
+        display: flex;
+        gap: 12px;
+
+        .backBtn, .btnDanger {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .backBtn {
+            color: var(--body-text-color);
+            background: unset;
+        }
+
+
+        .btnDanger {
+            color: #ff0505;
+            background: #ff000036;
+        }
+
+        .btnDanger:hover {
+            background: #fecaca;
+        }
+    }
+}
+
+.blockTitle {
+    color: var(--body-text-color);
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.typeSelectorGroup {
+    background: var(--header-background);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    border-radius: 8px;
+
+    .radioGroup {
+        display: flex;
+        gap: 16px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
+
+        .radioCard {
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            flex: 1;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            font-weight: 500;
+            transition: all .2s;
+            display: flex;
+            color: var(--body-text-color);
+
+            input {
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            &:hover {
+                border-color: #cbd5e1;
+            }
+
+            &.active {
+                border-color: #3b82f6;
+                background: rgba(0, 112, 255, 0.1);
+                color: #487aff;
+            }
+        }
+    }
+}
+
+.formSection {
+    position: relative;
+
+}
+
+.gridTwoCols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.gridThreeCols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* --- استایل‌های اختصاصی مدیریت سریال (الهام از JsonEditor) --- */
+.seriesManagerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .seriesManagerHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+
+        .bulkActions {
+            display: flex;
+            gap: 12px;
+
+            button {
+                padding: 8px 16px;
+                border-radius: 6px;
+                font-size: 0.9rem;
+                border: none;
+                cursor: pointer;
+                transition: 0.2s;
+
+                &.addBtn {
+                    background: #22c55e;
+                    color: white;
+
+                    &:hover {
+                        background: #16a34a;
+                    }
+                }
+
+                &.bulkBtn {
+                    background: #3b82f6;
+                    color: white;
+
+                    &:hover {
+                        background: #2563eb;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.treeViewport {
+    max-height: 80vh;
+    position: relative;
+    overflow-y: auto;
+}
+
+.sectionGroup {
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.stickyHeader {
+    z-index: 10;
+    background: var(--header-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    display: flex;
+    position: sticky;
+    top: 0;
+
+
+    .headerTitleGroup {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        flex: 1;
+
+        .arrow {
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+            color: #64748b;
+            margin-left: 8px;
+        }
+
+        .arrow.expanded {
+            transform: rotate(90deg) scaleY(-1);
+        }
+
+        /* تنظیم چرخش برای RTL */
+
+        .headerTitle {
+            color: var(--body-text-color);
+            font-size: 1.1rem;
+        }
+
+        .episodeCountBadge {
+            color: #707e91;
+            background: #e2e8f000;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: .75rem;
+        }
+    }
+
+    .seasonActions {
+        display: flex;
+        gap: 8px;
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: .78rem;
+
+            &.actionBtnSuccess {
+                color: #4CAF50;
+                background: #4caf5024;
+
+                &:hover {
+                    background: #bbf7d0;
+                }
+            }
+
+            &.actionBtnDanger {
+                color: #ff1b4e;
+                background: #ff1b1b00;
+
+                &:hover {
+                    background: #fecaca;
+                }
+            }
+        }
+    }
+}
+
+.sectionContent {
+    padding: 12px 20px;
+}
+
+/* --- طراحی ردیف قسمت‌ها مطابق با عکس درخواستی --- */
+.episodesList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.episodeRowContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--header-background);
+    border: 1px solid #86868645;
+    border-radius: 5px;
+}
+
+.episodeRow {
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0px 20px 10px;
+    transition: background .15s;
+    display: flex;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: start;
+    }
+
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    .checkboxWrapper {
+        display: flex;
+        align-items: center;
+
+        input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+    }
+
+    .thumbnailWrapper {
+        width: 80px;
+        height: 45px;
+        border-radius: 4px;
+        overflow: hidden;
+        background: #000;
+        flex-shrink: 0;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .episodeInfo {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .epTitle {
+            font-size: 0.95rem;
+            color: var(--body-text-color);
+            font-weight: 500;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .epMeta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: monospace;
+            font-size: 0.75rem;
+
+            .metaDuration {
+                background: #0f172a;
+                color: #fff;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+
+            .metaId {
+                background: #0099ff33;
+                color: #0369a1;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .episodeControls {
+        display: flex;
+        gap: 8px;
+        @media (max-width: 768px) {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .controlBtn {
+            color: var(--body-text-color);
+            cursor: pointer;
+            background: var(--input-background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: .8rem;
+
+            &:hover {
+                background: #f8fafc;
+                border-color: #94a3b8;
+            }
+        }
+
+        .controlBtnDanger {
+            color: #ff0000;
+            cursor: pointer;
+            background: #ff000045;
+            border: 1px solid #fca5a500;
+            border-radius: 4px;
+            padding: 4px 8px;
+
+            &:hover {
+                background: #fee2e2;
+            }
+        }
+    }
+}
+
+.emptyState {
+    text-align: center;
+    color: #94a3b8;
+    padding: 0;
+    font-size: .9rem;
+    margin: 0px;
+}
+
+.editorActions {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 16px;
+
+    .saveButton {
+        background: #2563eb;
+        color: white;
+        padding: 12px 32px;
+        border-radius: 8px;
+        font-weight: bold;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: iransans, sans-serif;
+
+        &:hover:not(:disabled) {
+            background: #1d4ed8;
+        }
+
+        &:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+    }
+}
+
+
+// آپلود تصاویر و فایل‌ها
+.formContainer {
+    background: var(--header-background);
+    padding: 3rem 1rem 1rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+    }
+}
+
+// آپلود تصاویر و فایل‌ها
+.imageGrid {
+    gap: 0px;
+    display: grid;
+    background: var(--header-background);
+    padding: 0rem 1rem 0rem 0rem;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// آپلود تصاویر و فایل‌ها
+.imagesGrid {
+    gap: 0px;
+    display: grid;
+    background: var(--header-background);
+    padding: 30px 1rem 0rem 0rem;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+
+.uploadCard {
+    border-left: 1px solid var(--border-color);
+    padding: 20px 0px;
+}
+
+
+.filesGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background: var(--header-background);
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+}
+
+.managerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background: var(--header-background);
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    padding: 1rem;
+}

@@ -1,0 +1,97 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--input-border-color, rgba(255, 255, 255, 0.1));
+    padding: 6px;
+    background: var(--body-background, rgba(255, 255, 255, 0.02));
+}
+
+.thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.removeBtn {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+
+    svg { font-size: 0.85rem; }
+
+    &:hover {
+        background: rgba(239, 68, 68, 0.85);
+    }
+}
+
+.fileName {
+    font-size: 0.65rem;
+    opacity: 0.65;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fileIdMeta {
+    font-size: 0.62rem;
+    opacity: 0.45;
+
+    code {
+        direction: ltr;
+        unicode-bidi: embed;
+    }
+}
+
+.urlBadge {
+    font-size: 0.62rem;
+    color: #8b5cf6;
+    align-self: flex-start;
+}
+
+.verifiedBadge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: rgba(22, 163, 74, 0.95);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+    svg {
+        font-size: 0.95rem;
+    }
+}
+
+.providerMeta {
+    font-size: 0.62rem;
+    color: #16a34a;
+    line-height: 1.2;
+}

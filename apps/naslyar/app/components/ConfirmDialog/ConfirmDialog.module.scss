@@ -1,0 +1,76 @@
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    padding-inline-end: 60px; // جای دکمه بستن ModalHelper
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 16px;
+    font-size: 0.88rem;
+    line-height: 1.9;
+}
+
+.reason {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    textarea {
+        font-family: inherit;
+        font-size: 0.88rem;
+        padding: 0.55rem 0.7rem;
+        border-radius: 8px;
+        border: 1px solid var(--input-border-color);
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        resize: vertical;
+
+        &:focus {
+            outline: none;
+            border-color: var(--brand-color);
+        }
+    }
+}
+
+%btn {
+    padding: 0.5rem 1.1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.84rem;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+}
+
+.primary {
+    @extend %btn;
+    border: none;
+    background: var(--brand-color);
+    color: #fff;
+}
+
+.danger {
+    @extend %btn;
+    border: none;
+    background: #dc2626;
+    color: #fff;
+}
+
+.secondary {
+    @extend %btn;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+}

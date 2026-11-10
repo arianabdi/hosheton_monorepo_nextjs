@@ -1,0 +1,262 @@
+// ── پنجره تمام‌صفحه گالری — هم‌سبک جزئیات قالب در explore ─────────────────
+// اندازه از فریم اول ثابت است (inset: 0) تا با رسیدن عکس‌ها «پرش» نداشته باشد.
+// z-index: بالای ModalHelper (مودال 10500 / شیت 1000000) و زیر نمای بزرگ عکس (1000100)
+.shell {
+    position: fixed;
+    inset: 0;
+    z-index: 1000050;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    animation: galleryShellIn 0.16s ease;
+}
+
+@keyframes galleryShellIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.shellHeader {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color, var(--body-background));
+
+    @media (max-width: 575.98px) {
+        height: 54px;
+        padding: 0 14px;
+    }
+}
+
+.shellTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+
+    h2 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.shellIcon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+}
+
+.shellCount {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.55;
+}
+
+.shellTools {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.escHint {
+    font-family: monospace;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border-color);
+    opacity: 0.55;
+}
+
+.selectedStripWrap {
+    flex-shrink: 0;
+    padding: 12px max(16px, calc((100% - 1400px) / 2)) 0;
+    border-bottom: 1px solid var(--input-border-color);
+}
+
+.selectedStrip {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, var(--body-text-color) 22%, transparent);
+        border-radius: 999px;
+    }
+}
+
+.selectedThumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.selectedAudio {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    opacity: 0.8;
+    color: var(--body-text-color);
+}
+
+.selectedVideoBadge {
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    pointer-events: none;
+}
+
+.selectedRemove {
+    position: absolute;
+    top: 4px;
+    inset-inline-end: 4px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.8);
+    }
+}
+
+.modalBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+// عرض بیشینه مثل صفحه explore — در مانیتور عریض عکس‌ها بی‌نهایت کش نمی‌آیند
+.bodyInner {
+    // ردیف تب گالری با همین متغیرها padding را خنثی می‌کند و لبه‌به‌لبه می‌نشیند
+    --gallery-pad-top: 4px;
+    --gallery-pad-x: 20px;
+    margin: 0 auto;
+    padding: var(--gallery-pad-top) var(--gallery-pad-x) 24px;
+    // حداقل ارتفاع تا حالت «در حال بارگذاری/خالی» وسط صفحه باشد نه بالای آن
+    min-height: 100%;
+    box-sizing: border-box;
+    // ستونی تا گالریِ خالی (GalleryEmptyHint) ارتفاع باقی‌مانده را بگیرد و موشن وسط بنشیند
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 575.98px) {
+        --gallery-pad-top: 2px;
+        --gallery-pad-x: 12px;
+        padding: var(--gallery-pad-top) var(--gallery-pad-x) 16px;
+    }
+}
+
+.emptyState {
+    margin: 0;
+    padding: 64px 4px;
+    font-size: 0.82rem;
+    opacity: 0.6;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.spinIcon {
+    animation: galleryModalSpin 1s linear infinite;
+}
+
+@keyframes galleryModalSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.selectionFooter {
+    flex-shrink: 0;
+    border-top: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color, var(--body-background));
+    padding: 12px max(16px, calc((100% - 1400px) / 2));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.8rem;
+
+    button {
+        border: 0;
+        border-radius: 9px;
+        background: var(--button-background, #8b5cf6);
+        color: #fff;
+        padding: 9px 16px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+}

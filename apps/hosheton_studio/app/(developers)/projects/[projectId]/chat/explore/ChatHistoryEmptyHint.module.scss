@@ -1,0 +1,345 @@
+/* حالت خالی تاریخچه چت — هم‌سبک موشن تنظیمات نود (project-view.module.scss → .emptyHint*):
+   تایپ در کامپوزر → کلیک نشانگر روی «ارسال» (فشرده شدن، بوم، پرتوها، موج) → آیتم تاریخچه
+   از کامپوزر بالا می‌رود و در جای خالی اول می‌نشیند، حلقه انتخاب و تصاویرش یکی‌یکی ظاهر می‌شوند.
+   صحنه ۲۰۰×۱۱۸ و چپ‌به‌راست؛ در RTL آینه می‌شود (کامپوزر و ارسال مثل خود چت). فقط transform/opacity. */
+
+$text: var(--body-text-color);
+$line: color-mix(in srgb, var(--body-text-color) 18%, transparent);
+$surface: var(--input-background-color);
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// کل ارتفاع لیست تاریخچه (.list ستون flex است) را می‌گیرد و محتوا را عمودی وسط می‌نشاند
+.empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 16px 8px;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    // همان رنگ انتخاب موشن تنظیمات نود
+    --hint-accent: #3b82f6;
+    --hint-loop: 3.6s;
+
+    position: relative;
+    width: 200px;
+    height: 118px;
+    margin-bottom: 12px;
+    direction: ltr;
+
+    :where(span, i, b) {
+        display: block;
+    }
+
+    &:dir(rtl) {
+        scale: -1 1;
+
+        // نشانگر و فلش ارسال آینه نشوند
+        .cursor,
+        .send svg {
+            scale: -1 1;
+        }
+    }
+}
+
+/* ───────── جاهای خالی تاریخچه ───────── */
+
+.slot {
+    position: absolute;
+    left: 0;
+    width: 200px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid color-mix(in srgb, $text 16%, transparent);
+    background: $surface;
+    opacity: 0.55;
+}
+
+// جای اولین گفتگو: خط‌چین تا وقتی آیتم واقعی رویش بنشیند
+.slotNew {
+    top: 0;
+    height: 40px;
+    border-style: dashed;
+    border-color: color-mix(in srgb, $text 26%, transparent);
+    background: transparent;
+    opacity: 0.9;
+}
+
+.slot2 {
+    top: 46px;
+    height: 16px;
+}
+
+.slot3 {
+    top: 66px;
+    height: 16px;
+    opacity: 0.3;
+}
+
+/* ───────── آیتم تاریخچه که بعد از ارسال ساخته می‌شود ───────── */
+
+.item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid var(--hint-accent);
+    background: $surface;
+    opacity: 0;
+    animation: chHintItem var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+
+    // حلقه انتخاب، مثل نود انتخاب‌شده
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        border-radius: 14px;
+        border: 3px solid color-mix(in srgb, var(--hint-accent) 24%, transparent);
+        opacity: 0;
+        animation: chHintRing var(--hint-loop) $ease-pop infinite;
+    }
+}
+
+.itemHead {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 8px;
+    height: 5px;
+
+    b {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 74px;
+        height: 5px;
+        border-radius: 3px;
+        background: color-mix(in srgb, $text 28%, transparent);
+    }
+
+    i {
+        position: absolute;
+        right: 0;
+        top: 0.5px;
+        width: 28px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, $text 14%, transparent);
+    }
+}
+
+.thumbs {
+    position: absolute;
+    left: 10px;
+    top: 18px;
+    display: flex;
+    gap: 4px;
+
+    i {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        opacity: 0;
+        animation: chHintThumb var(--hint-loop) $ease-pop infinite;
+
+        &:nth-child(1) { background: color-mix(in srgb, #10b981 45%, $surface); }
+        &:nth-child(2) { background: color-mix(in srgb, #f59e0b 45%, $surface); animation-name: chHintThumb2; }
+        &:nth-child(3) { background: color-mix(in srgb, #ec4899 45%, $surface); animation-name: chHintThumb3; }
+    }
+}
+
+/* ───────── کامپوزر ───────── */
+
+.composer {
+    position: absolute;
+    left: 0;
+    top: 90px;
+    width: 200px;
+    height: 28px;
+    box-sizing: border-box;
+    border-radius: 14px;
+    border: 1px solid $line;
+    background: $surface;
+}
+
+.typed {
+    position: absolute;
+    left: 12px;
+    top: 11px;
+    width: 116px;
+    height: 4px;
+    border-radius: 2px;
+    background: color-mix(in srgb, $text 30%, transparent);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: chHintTyped var(--hint-loop) steps(12, end) infinite;
+}
+
+.send {
+    position: absolute;
+    right: 3px;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, $text 22%, transparent);
+    color: #fff;
+    font-size: 13px;
+    animation: chHintSend var(--hint-loop) linear infinite;
+}
+
+/* ───────── نشانگر و «بوم» روی ارسال؛ نقطه کلیک = مرکز ارسال (۱۸۴، ۱۰۳) ───────── */
+
+.ripple {
+    position: absolute;
+    left: 184px;
+    top: 103px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: chHintRipple var(--hint-loop) ease-out infinite;
+}
+
+.burst {
+    position: absolute;
+    left: 184px;
+    top: 103px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: chHintRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.cursor {
+    position: absolute;
+    left: 176px;
+    top: 95px;
+    width: 22px;
+    height: 22px;
+    color: $text;
+    opacity: 0;
+    animation: chHintCursor var(--hint-loop) ease-in-out infinite;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 220px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// زمان‌بندی روی حلقه ۳.۶ ثانیه‌ای — هر ۱٪ ≈ ۳۶ms؛ «بوم» حوالی ۲۷٪
+@keyframes chHintTyped {
+    0%, 4% { transform: scaleX(0); opacity: 1; }
+    20%, 28% { transform: scaleX(1); opacity: 1; }
+    30%, 100% { transform: scaleX(1); opacity: 0; }
+}
+
+@keyframes chHintSend {
+    0%, 18% { background: color-mix(in srgb, var(--body-text-color) 22%, transparent); transform: scale(1); }
+    20%, 25% { background: var(--hint-accent); transform: scale(1); }
+    27% { transform: scale(0.82); }
+    30% { transform: scale(1.12); }
+    34% { background: var(--hint-accent); transform: scale(1); }
+    40%, 100% { background: color-mix(in srgb, var(--body-text-color) 22%, transparent); transform: scale(1); }
+}
+
+@keyframes chHintCursor {
+    0%, 6% { transform: translate(34px, 26px); opacity: 0; }
+    20% { transform: translate(0, 0); opacity: 1; }
+    24% { transform: translate(0, 0) scale(0.78); }
+    28%, 58% { transform: translate(0, 0) scale(1); opacity: 1; }
+    72%, 100% { transform: translate(34px, 26px); opacity: 0; }
+}
+
+@keyframes chHintRipple {
+    0%, 26% { transform: scale(0.4); opacity: 0; }
+    28% { opacity: 0.9; }
+    42%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes chHintRay {
+    0%, 26.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    27.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    37%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+}
+
+// آیتم از روی کامپوزر بالا می‌رود و در جای خالی اول جا می‌افتد
+@keyframes chHintItem {
+    0%, 29% { transform: translateY(78px) scale(0.86); opacity: 0; }
+    31% { opacity: 1; }
+    40% { transform: translateY(-3px) scale(1.03); }
+    45%, 86% { transform: translateY(0) scale(1); opacity: 1; }
+    94%, 100% { transform: translateY(0) scale(1); opacity: 0; }
+}
+
+@keyframes chHintRing {
+    0%, 41% { transform: scale(1.2); opacity: 0; }
+    48%, 82% { transform: scale(1); opacity: 1; }
+    90%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@mixin thumb-pop($name, $at) {
+    @keyframes #{$name} {
+        0%, #{$at}% { transform: scale(0.3); opacity: 0; }
+        #{$at + 5}%, 86% { transform: scale(1); opacity: 1; }
+        94%, 100% { transform: scale(1); opacity: 0; }
+    }
+}
+
+@include thumb-pop(chHintThumb, 44);
+@include thumb-pop(chHintThumb2, 49);
+@include thumb-pop(chHintThumb3, 54);
+
+// بدون موشن: آیتم ساخته‌شده و انتخاب‌شده را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .item,
+    .item::after,
+    .thumbs i {
+        opacity: 1;
+    }
+}

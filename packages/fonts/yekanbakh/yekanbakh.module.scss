@@ -1,0 +1,31 @@
+
+/*Yekanbakh (Persian & English)*/
+@font-face {
+    font-family: "yekanbakh";
+    src: url("./YekanBakh-Hairline.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: "yekanbakh";
+    src: url("./YekanBakh-Light.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: "yekanbakh";
+    src: url("./YekanBakh-Medium.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "yekanbakh";
+    src: url("./YekanBakh-Regular.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* Optional utility class (handy for quick testing) */
+.yekanbakh {
+    font-family: 'yekanbakh', sans-serif;
+}

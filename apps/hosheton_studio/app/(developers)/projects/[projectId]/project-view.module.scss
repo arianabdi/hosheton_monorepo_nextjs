@@ -1,0 +1,1161 @@
+// src/app/studio/media/[projectId]/canvas.module.scss
+
+.canvasContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    background: var(--body-background) !important;
+    color: var(--body-text-color) !important;
+    overflow: hidden;
+    direction: ltr;
+
+    @media (max-width: 768px) {
+        min-height: 0;
+        height: 100%;
+    }
+}
+
+.flowWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    touch-action: none;
+
+    :global(.react-flow),
+    :global(.react-flow__pane),
+    :global(.react-flow__renderer) {
+        touch-action: none;
+    }
+
+    :global(.react-flow__edge.selected .react-flow__edge-path) {
+        stroke: #8b5cf6 !important;
+        stroke-width: 3 !important;
+        filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.45));
+    }
+
+    :global(.react-flow__edge.selected.invalid-edge .react-flow__edge-path) {
+        stroke: #dc2626 !important;
+        filter: drop-shadow(0 0 4px rgba(220, 38, 38, 0.4));
+    }
+
+    &[data-canvas-lod='lite'],
+    &[data-canvas-lod='mini'] {
+        :global(.react-flow__edge.selected .react-flow__edge-path),
+        :global(.react-flow__edge.selected.invalid-edge .react-flow__edge-path) {
+            filter: none;
+        }
+    }
+
+    &[data-canvas-lod='lite'] {
+        :global(.react-flow__handle) {
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
+            min-height: 14px;
+            border-width: 2px;
+        }
+    }
+
+    &[data-canvas-lod='mini'] {
+        :global(.react-flow__handle) {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
+            border-width: 3px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        :global(.react-flow__handle) {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            min-height: 22px;
+            border-width: 3px;
+        }
+    }
+}
+
+// ------------------------------------
+// ریل چپ: تولز
+// ------------------------------------
+.leftRail {
+    --rail-size: 58px;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+    gap: 10px;
+    overflow: visible;
+    max-height: calc(100% - 110px);
+
+    @media (max-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+        top: auto;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        max-width: 92vw;
+        max-height: none;
+    }
+}
+
+.leftToolbox {
+    box-sizing: border-box;
+    width: var(--rail-size);
+    min-height: 0;
+    overflow-y: auto;
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 24px;
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+
+    .toolboxGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .toolIcon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        line-height: 1;
+        color: var(--body-text-color);
+        transition: opacity 0.2s ease, filter 0.2s ease;
+        border: none;
+        background: transparent;
+        padding: 0;
+        font-family: inherit;
+
+        svg {
+            width: 1.27rem;
+            height: 1.3rem;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        &:hover:not(:disabled) {
+            filter: brightness(1.2);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    .toolIconDisabled {
+        opacity: 0.28;
+        filter: none;
+
+        &:hover {
+            opacity: 0.28;
+            filter: none;
+        }
+    }
+
+    .developerToolBtn {
+        background: var(--brand-color);
+        color: white;
+
+        &:hover {
+            background: color-mix(in srgb, var(--brand-color) 90%, black);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--brand-color) 40%, transparent);
+        }
+    }
+
+    .separator {
+        height: 1px;
+        background: var(--input-border-color);
+        margin: 4px 6px;
+    }
+
+    @media (max-width: 768px) {
+        border-radius: 16px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 8px 12px;
+        width: auto;
+        max-width: 92vw;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 12px;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.05),
+            inset 16px 0 12px -12px color-mix(in srgb, var(--body-text-color) 14%, transparent),
+            inset -16px 0 12px -12px color-mix(in srgb, var(--body-text-color) 14%, transparent);
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .toolboxGroup {
+            flex-direction: row;
+            flex-shrink: 0;
+        }
+
+        .separator {
+            width: 1px;
+            height: 28px;
+            margin: 6px 2px;
+            flex-shrink: 0;
+        }
+    }
+}
+
+// ------------------------------------
+// لایه مدیریت کامپوننت‌های سمت راست
+// ------------------------------------
+.rightControlArea {
+    z-index: 50;
+    pointer-events: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    width: 320px;
+    height: calc(100% - 4rem);
+    transition: all .3s;
+    display: flex;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+
+    * { pointer-events: auto; }
+
+    // رفتار تاگل شدن کل لایه سرچ و سایدبار در موبایل
+    @media (max-width: 768px) {
+        right: -360px; // مخفی شدن کامل در پهلو
+        top: 0;
+        padding: 20px;
+        pointer-events: auto;
+        width: 300px;
+
+        &.mobileActive {
+            right: 0; // بیرون آمدن پاپ آپ کامل با زدن دکمه تاگل
+        }
+    }
+}
+
+.sidebarBackdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 49;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+}
+
+// ------------------------------------
+// سایدبار کپسولی مجهز به دکمه اکسترود داخلی
+// ------------------------------------
+.rightSidebar {
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 28px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative; // برای تنظیم ابسولوت دکمه لبه
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.closed {
+        width: 0px !important; // صفر شدن عرض کپسول بدون حذف تگ
+        border: none !important;
+
+        .internalExpandBtn {
+            right: 0px; // دکمه شناور روی هوا در لبه کادر باقی بماند
+        }
+    }
+
+    // دکمه متصل به لبه چپ فیزیکیِ خودِ سایدبار (دقیقاً داخل بدنه)
+    .internalExpandBtn {
+        position: absolute;
+        top: 30px;
+        left: -14px; // چسبیدن دقیق روی خط مرز پهلو
+        z-index: 30;
+        background: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: -2px 4px 10px rgba(0, 0, 0, 0.08);
+        font-size: 1rem;
+
+        &:hover { background: var(--body-background); }
+
+        @media (max-width: 768px) {
+            display: none; // حذف دکمه کوچک در موبایل چون کل منو تاگل است
+        }
+    }
+}
+
+// ------------------------------------
+// دو باکس آکاردئونی مستقل (ویرایشگر / لاگ پردازش)
+// ------------------------------------
+.stackedPanels {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+.panelBox {
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+    transition: flex 0.25s ease;
+    min-height: 0;
+
+    &.panelOpen {
+        flex: 1;
+        min-height: 120px;
+    }
+
+    &.panelClosed {
+        flex: 0 0 auto;
+    }
+}
+
+.panelBoxHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--body-text-color);
+    flex-shrink: 0;
+    text-align: start;
+    width: 100%;
+    border-bottom: 1px solid var(--input-border-color);
+    box-sizing: border-box;
+
+    .panelBoxHeaderTitle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .panelBoxHeaderActions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .panelBoxHeaderIconBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 20px;
+        font-size: 22px;
+        border: none;
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        opacity: 0.75;
+        transition: background 0.2s, opacity 0.2s;
+
+        &:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.06);
+        }
+    }
+}
+
+.panelBoxBody {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebarScrollContent {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* کادر پرامپت/اجرای نود (NodeSettingsPanel با پورتال) — بیرون از ناحیه اسکرول،
+   پس محتوای سایدبار هیچ‌وقت زیر یا روی آن نمی‌آید و تا پایین سایدبار می‌نشیند */
+.sidebarFooterSlot {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
+
+    &:empty {
+        display: none;
+    }
+}
+
+.accordionGroup {
+    width: 100%;
+    .groupHeader {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        color: var(--body-text-color);
+        opacity: 0.7;
+        .arrowIcon, .activeIcon { font-size: 1.1rem; }
+    }
+    .activeHeader { opacity: 1; margin-bottom: 12px; }
+}
+
+.groupContent {
+    border-right: 1px dashed var(--input-border-color);
+    flex-direction: column;
+    margin-right: 6px;
+    padding-right: 12px;
+    display: flex;
+    .subLabel { font-size: 0.7rem; font-weight: 700; opacity: 0.4; margin: 10px 0 6px 0; }
+}
+
+.triggerCard {
+    background: var(--body-background) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 16px;
+    padding: 12px;
+    .cardHeaderRow {
+        display: flex;
+        gap: 10px;
+        .cardIcon { font-size: 1.2rem; background: var(--input-background-color); padding: 6px; border-radius: 10px; display: flex; }
+    }
+    h4 { font-size: 0.85rem; margin: 0 0 3px 0; }
+    p { font-size: 0.75rem; opacity: 0.5; margin: 0; line-height: 1.4; }
+}
+
+.actionItem {
+    display: flex;
+    gap: 12px;
+    padding: 10px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover { background: var(--body-background); }
+
+    .actionIcon { font-size: 1.1rem; opacity: 0.7; display: flex; padding-top: 2px; }
+    h4 { font-size: 0.85rem; margin: 0 0 2px 0; }
+    p { font-size: 0.75rem; opacity: 0.5; margin: 0; line-height: 1.4; }
+}
+
+.templateItem {
+    border: 1px solid transparent;
+    padding: 10px 8px;
+
+    &.templateActive {
+        background: rgba(139, 92, 246, 0.06);
+        border-color: rgba(139, 92, 246, 0.25);
+
+        h4 { color: #8b5cf6; }
+    }
+}
+
+// ------------------------------------
+// نوار افقی تحتانی
+// ------------------------------------
+.bottomNavbar {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 30px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: calc(100% - 40px);
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .navDivider {
+        width: 1px;
+        height: 24px;
+        background: var(--input-border-color);
+        margin: 0 6px;
+        flex-shrink: 0;
+    }
+
+    .runSection {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .backToProjectsLink {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 16px;
+        border-radius: 20px;
+        border: 1px solid var(--input-border-color);
+        background: var(--body-background);
+        color: var(--body-text-color);
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+
+        &:hover {
+            border-color: #8b5cf6;
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.08);
+        }
+    }
+
+    .runBtn {
+        background: #8b5cf6 !important;
+        color: #fff !important;
+        border: none !important;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        &:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+    }
+
+    .navTool {
+        background: transparent;
+        border: none !important;
+        color: var(--body-text-color);
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        opacity: 1;
+        transition: opacity 0.18s ease, background 0.18s ease;
+
+        &:hover:not(:disabled) {
+            background: var(--body-background);
+        }
+
+        &:disabled {
+            opacity: 0.32;
+            cursor: not-allowed;
+        }
+    }
+
+    .centerTools {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        overflow: visible;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .clipboardTools {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .zoomControls {
+        display: flex; background: var(--body-background); border: 1px solid var(--input-border-color); border-radius: 20px; padding: 2px;
+        .zoomBtn {
+            background: transparent; border: none !important; color: var(--body-text-color);
+            width: 32px; height: 32px; cursor: pointer; font-weight: bold; border-radius: 50%;
+            &:hover { background: var(--input-background-color); }
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: calc(100% - 30px);
+        max-width: calc(100% - 30px);
+        bottom: 15px;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.08),
+            inset 16px 0 12px -12px color-mix(in srgb, var(--body-text-color) 14%, transparent),
+            inset -16px 0 12px -12px color-mix(in srgb, var(--body-text-color) 14%, transparent);
+
+        > * {
+            flex-shrink: 0;
+        }
+
+        .zoomControls { display: none; }
+    }
+}
+
+.multiSelectHint {
+    margin: 0 16px 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    color: #8b5cf6;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* حالت خالی تنظیمات نود — یک نود نمادین شبیه نودهای واقعی کانواس (هدر + بدنه،
+   دو ورودی چپ / یک خروجی راست، وصل به دو نود قبلی و یک نود بعدی) که نشانگر رویش کلیک می‌کند:
+   فشرده شدن → «بوم» (فلش + پرتوها + موج) → حلقه انتخاب → روشن شدن handleها → جریان روی edgeها.
+   تقریباً فقط transform/opacity (کامپوزیت GPU)، بدون JS. */
+.nodeSettingsEmpty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 260px;
+    text-align: center;
+    color: var(--body-text-color);
+}
+
+.emptyHintArt {
+    // همان رنگ حالت انتخاب نود واقعی (.activeNode در nodes.module.scss)
+    --hint-accent: #3b82f6;
+    --hint-loop: 2.8s;
+
+    position: relative;
+    width: 220px;
+    height: 104px;
+    margin-bottom: 12px;
+    // کانواس همیشه چپ‌به‌راست است (ورودی چپ، خروجی راست)
+    direction: ltr;
+}
+
+.emptyHintEdges {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+}
+
+.emptyHintEdge {
+    stroke: color-mix(in srgb, var(--body-text-color) 22%, transparent);
+    stroke-width: 1.5;
+}
+
+.emptyHintEdgeFlow {
+    stroke: var(--hint-accent);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-dasharray: 4 5;
+    opacity: 0;
+    animation:
+        emptyHintFlow 0.45s linear infinite,
+        emptyHintEdgeOn var(--hint-loop) ease-out infinite;
+}
+
+.emptyHintEdgeFlowOut {
+    animation-delay: 0s, 0.08s;
+}
+
+.emptyHintGhost {
+    position: absolute;
+    width: 30px;
+    height: 28px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    opacity: 0.7;
+
+    // هدر کوچک نود
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 9px;
+        border-top: 1px solid var(--input-border-color);
+    }
+}
+
+.emptyHintGhostSourceTop {
+    left: 0;
+    top: 6px;
+}
+
+.emptyHintGhostSourceBottom {
+    left: 0;
+    top: 70px;
+}
+
+.emptyHintGhostTarget {
+    left: 190px;
+    top: 38px;
+}
+
+.emptyHintHandle {
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--input-background-color);
+    background: color-mix(in srgb, var(--body-text-color) 65%, transparent);
+}
+
+.emptyHintHandleIn {
+    left: -4px;
+}
+
+.emptyHintHandleOut {
+    right: -4px;
+}
+
+// مثل ورودی‌های prompt / ref نودهای واقعی
+.emptyHintHandleInTop {
+    top: 35%;
+}
+
+.emptyHintHandleInBottom {
+    top: 65%;
+}
+
+.emptyHintNode {
+    position: absolute;
+    left: 66px;
+    top: 22px;
+    width: 90px;
+    height: 60px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 11px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    animation: emptyHintNodeSelect var(--hint-loop) linear infinite;
+
+    // حلقه انتخاب (مثل box-shadow حالت activeNode) — با scale «جا می‌افتد»
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        border-radius: 15px;
+        border: 3px solid color-mix(in srgb, var(--hint-accent) 24%, transparent);
+        opacity: 0;
+        pointer-events: none;
+        animation: emptyHintRing var(--hint-loop) cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    }
+
+    // موج یک‌باره لحظه انتخاب
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: 11px;
+        border: 2px solid var(--hint-accent);
+        opacity: 0;
+        pointer-events: none;
+        animation: emptyHintWave var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+    }
+
+    .emptyHintHandle {
+        animation: emptyHintHandlePop var(--hint-loop) ease-out infinite;
+    }
+
+    .emptyHintHandleOut {
+        animation-delay: 0.08s;
+    }
+}
+
+// فلش خیلی کوتاه روی کل نود در لحظه «بوم»
+.emptyHintFlash {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--hint-accent);
+    opacity: 0;
+    pointer-events: none;
+    animation: emptyHintFlash var(--hint-loop) ease-out infinite;
+}
+
+.emptyHintNodeHeader {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 19px;
+    flex-shrink: 0;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--input-border-color);
+
+    i {
+        width: 8px;
+        height: 8px;
+        border-radius: 3px;
+        background: var(--hint-accent);
+        opacity: 0.3;
+        animation: emptyHintIcon var(--hint-loop) ease-out infinite;
+    }
+
+    b {
+        width: 38px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+    }
+}
+
+.emptyHintNodeBody {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 8px;
+
+    b {
+        display: block;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+
+        &:last-child {
+            width: 60%;
+        }
+    }
+}
+
+// نقطه کلیک = نوک نشانگر (120, 64)
+.emptyHintRipple {
+    position: absolute;
+    left: 120px;
+    top: 64px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: emptyHintRipple var(--hint-loop) ease-out infinite;
+}
+
+// پرتوهای «بوم» از نقطه کلیک به بیرون
+.emptyHintBurst {
+    position: absolute;
+    left: 120px;
+    top: 64px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: emptyHintRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.emptyHintCursor {
+    position: absolute;
+    left: 112px;
+    top: 56px;
+    width: 22px;
+    height: 22px;
+    color: var(--body-text-color);
+    animation: emptyHintCursor var(--hint-loop) ease-in-out infinite;
+}
+
+.emptyHintTitle {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.emptyHintText {
+    margin: 0;
+    max-width: 220px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// زمان‌بندی روی حلقه ۲.۸ ثانیه‌ای — هر ۱٪ ≈ ۲۸ms؛ «بوم» حوالی ۲۸٪
+@keyframes emptyHintCursor {
+    0%, 6% { transform: translate(38px, 30px); opacity: 0; }
+    21% { transform: translate(0, 0); opacity: 1; }
+    25% { transform: translate(0, 0) scale(0.78); }
+    29%, 72% { transform: translate(0, 0) scale(1); opacity: 1; }
+    86%, 100% { transform: translate(38px, 30px); opacity: 0; }
+}
+
+@keyframes emptyHintRipple {
+    0%, 26% { transform: scale(0.4); opacity: 0; }
+    28% { opacity: 0.9; }
+    42%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes emptyHintNodeSelect {
+    0%, 24% { transform: scale(1); border-color: var(--input-border-color); animation-timing-function: ease-in; }
+    27% { transform: scale(0.92); animation-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+    28% { border-color: var(--hint-accent); }
+    30% { transform: scale(1.09); animation-timing-function: ease-out; }
+    34% { transform: scale(0.98); }
+    38%, 100% { transform: scale(1); }
+    80% { border-color: var(--hint-accent); }
+    90%, 100% { border-color: var(--input-border-color); }
+}
+
+@keyframes emptyHintFlash {
+    0%, 27% { opacity: 0; }
+    28.5% { opacity: 0.38; }
+    36%, 100% { opacity: 0; }
+}
+
+@keyframes emptyHintRing {
+    0%, 28% { transform: scale(1.22); opacity: 0; }
+    35%, 80% { transform: scale(1); opacity: 1; }
+    90%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes emptyHintWave {
+    0%, 27.5% { transform: scale(1); opacity: 0; }
+    28.5% { opacity: 0.9; }
+    44%, 100% { transform: scale(1.35, 1.7); opacity: 0; }
+}
+
+@keyframes emptyHintRay {
+    0%, 27.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    28.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    38%, 100% { transform: rotate(var(--ray-angle)) translateY(-28px) scaleY(0.2); opacity: 0; }
+}
+
+@keyframes emptyHintIcon {
+    0%, 28% { opacity: 0.3; }
+    31%, 80% { opacity: 1; }
+    90%, 100% { opacity: 0.3; }
+}
+
+@keyframes emptyHintHandlePop {
+    0%, 29% { transform: scale(1); background: color-mix(in srgb, var(--body-text-color) 65%, transparent); }
+    32% { transform: scale(1.8); background: var(--hint-accent); }
+    37%, 80% { transform: scale(1); background: var(--hint-accent); }
+    90%, 100% { transform: scale(1); background: color-mix(in srgb, var(--body-text-color) 65%, transparent); }
+}
+
+@keyframes emptyHintEdgeOn {
+    0%, 31% { opacity: 0; }
+    36%, 78% { opacity: 1; }
+    88%, 100% { opacity: 0; }
+}
+
+@keyframes emptyHintFlow {
+    to { stroke-dashoffset: -9; }
+}
+
+// بدون موشن: حالت «انتخاب‌شده» را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .emptyHintNode,
+    .emptyHintNode::before,
+    .emptyHintNode::after,
+    .emptyHintNode .emptyHintHandle,
+    .emptyHintNodeHeader i,
+    .emptyHintEdgeFlow,
+    .emptyHintFlash,
+    .emptyHintBurst i,
+    .emptyHintRipple,
+    .emptyHintCursor {
+        animation: none;
+    }
+
+    .emptyHintNode {
+        border-color: var(--hint-accent);
+
+        &::after {
+            opacity: 1;
+        }
+
+        .emptyHintHandle {
+            background: var(--hint-accent);
+        }
+    }
+
+    .emptyHintNodeHeader i,
+    .emptyHintEdgeFlow,
+    .emptyHintCursor {
+        opacity: 1;
+    }
+}
+
+.sidebarTabs {
+    display: flex;
+    gap: 6px;
+    padding: 0 0px 12px;
+    align-items: center;
+
+    button {
+        flex: 1;
+        background: var(--body-background);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        border-radius: 10px;
+        padding: 6px 8px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+
+        &.tabActive {
+            background: rgba(139, 92, 246, 0.12);
+            border-color: rgba(139, 92, 246, 0.35);
+            color: #8b5cf6;
+        }
+    }
+}
+
+// نوار تب بالای پنل سایدبار راست (تنظیمات/پردازش/چت تیم) → components/SidebarTabBar (مشترک با چت پروژه)
+
+.noToolboxResults {
+    font-size: 0.78rem;
+    opacity: 0.5;
+    padding: 8px 4px 16px;
+}
+
+.sideTabContent {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    .rightControlArea {
+
+    }
+}
+
+.loadingOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.04);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.lassoBox {
+    position: fixed;
+    z-index: 35;
+    display: none;
+    pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 80%, #fff);
+    background: color-mix(in srgb, var(--brand-color) 16%, transparent);
+}
+
+.octopusBadge {
+    position: fixed;
+    z-index: 40;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: color-mix(in srgb, var(--brand-color) 88%, #fff);
+    border: 2px solid #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+    transform: translate(-50%, calc(-100% - 22px));
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -11px;
+        border-radius: 50%;
+        background: repeating-conic-gradient(
+            from 12deg,
+            color-mix(in srgb, var(--brand-color) 80%, #fff) 0 14deg,
+            transparent 14deg 45deg
+        );
+        mask: radial-gradient(farthest-side, transparent 52%, #000 53%);
+        opacity: 0.9;
+    }
+}

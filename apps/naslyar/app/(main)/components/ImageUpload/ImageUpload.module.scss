@@ -1,0 +1,128 @@
+.imageUpload {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #2d3748;
+}
+.previewGrid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 60px;
+}
+.screenshotPreviewGrid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.previewContainer {
+    margin-bottom: 0.75rem;
+    position: relative;
+    display: inline-block;
+    height: 120px;
+
+}
+
+.preview {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+
+.screenshotPreview {
+    object-fit: cover;
+    border-radius: 1px;
+    max-width: 200px;
+    max-height: 150px;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.clearBtn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e53e3e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+
+    &:hover {
+        background: #c53030;
+    }
+}
+
+.uploadArea {
+    position: relative;
+}
+
+.fileInput {
+    display: none;
+}
+
+.uploadLabel {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #edf2f7;
+    color: #4a5568;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    box-sizing: border-box;
+
+    &:hover {
+        background: #e2e8f0;
+    }
+}
+
+.uploadProgress {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+    color: #4a5568;
+}
+
+.progressBar {
+    flex: 1;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: #3182ce;
+    transition: width 0.2s ease;
+}
+
+@media (max-width: 640px) {
+    .preview {
+        max-width: 150px;
+        max-height: 120px;
+    }
+
+    .uploadLabel {
+        width: 100%;
+        text-align: center;
+    }
+}

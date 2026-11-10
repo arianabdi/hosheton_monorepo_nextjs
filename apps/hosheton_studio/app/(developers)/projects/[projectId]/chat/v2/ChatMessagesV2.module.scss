@@ -1,0 +1,2396 @@
+// نمای گالری چت (v2) — گرید justified بدون تاریخ + hover preview + placeholder شیمری
+.galleryThread {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 8px 4px 24px;
+}
+
+// فاصله و گردی گوشهٔ تایل‌ها — فاصله هم‌راستا با TILE_GAP در ChatMessagesV2.tsx،
+// گردی هم‌راستا با rx خط‌چین باکس‌های وضعیت (شعاع − ۱)
+.grid {
+    --chat-tile-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 40px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+}
+
+// هر سلول گرید باید دقیقاً همان width/height محاسبه‌شدهٔ justified را نگه دارد.
+// min-size: auto پیش‌فرض فلکس باکس in-progress/خطا را از محتوای متن بزرگ می‌کند
+// و دکمهٔ تایل تصویر را به ارتفاع intrinsic عکس می‌کشاند — ردیف هم‌ارتفاع می‌شکند.
+@mixin gallery-cell {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    min-width: 0;
+    min-height: 0;
+}
+
+// پوشش تایل — نقطه hover برای نمایش اکشن‌ها؛ ابعاد justified روی wrapper است
+.tileWrap {
+    @include gallery-cell;
+    position: relative;
+
+    &:hover {
+        z-index: 3;
+    }
+
+
+    &:hover .imageReady {
+        transform: scale(1.02);
+    }
+
+    &:focus-within .tileActions {
+        opacity: 1;
+    }
+}
+
+.tile {
+    // inset مطلق تا height:100% روی <button> به محتوای عکس وابسته نماند
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    overflow: hidden;
+    border-radius: var(--chat-tile-radius);
+    background: transparent;
+    cursor: zoom-in;
+    padding: 0;
+    border: none;
+    isolation: isolate;
+    --badged-image-frame: var(--page-view-background-color, var(--plan-card-background-color, #fff));
+    --badged-image-radius: var(--chat-tile-radius);
+    transition: box-shadow 0.18s ease;
+
+    &:focus-visible {
+        outline: 2px solid var(--primary-color, #4f8cff);
+        outline-offset: 2px;
+    }
+}
+
+// اکشن‌های hover — ردیف کنار هم در سمت مقابل بج هزینه (بج فیزیکی bottom/right است)
+.tileActions {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    z-index: 7;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    // بج قیمت فیزیکی سمت راست است؛ ترتیب دکمه‌ها هم فیزیکی ثابت می‌ماند
+    direction: ltr;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.16s ease;
+}
+
+.tileWrap:hover .tileActions {
+    opacity: 1;
+}
+
+// تایل باریک: ستون عمودی سمت چپ، از پایین به بالا — تا بج هزینه/حجم دیده شود
+.tileActionsStacked {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+}
+
+// خیلی باریک: بج تقریباً تمام عرض را گرفته → همان ستون، بالا-چپ (دو کلاس تا بر قانون موبایل .tileActions هم غلبه کند)
+.tileActions.tileActionsTop {
+    top: 6px;
+    bottom: auto;
+    flex-direction: column;
+}
+
+// ویدیو: چیپ مدت‌زمان بالای گوشه است — ستون زیر آن شروع شود
+.tileActions.tileActionsTopVideo {
+    top: 38px;
+}
+
+// دانلود سایز اصلی — گوشه بالا-راست تایل (بج هزینه پایین-راست است)؛
+// بالاتر از overlay زوم تا با hover دیده شود. موبایل همیشه نمایان.
+.tileDownload {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    // هم‌رنگ چیپ هزینه (BadgedImage compact) — بدون شیشه، بدون border
+    border: none;
+    border-radius: 7px;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+    cursor: pointer;
+    opacity: 0;
+    transition: background 0.15s ease, opacity 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 18%, var(--input-border-background, var(--input-border-color)));
+    }
+
+    &:focus-visible {
+        opacity: 1;
+    }
+}
+
+.tileWrap:hover .tileDownload {
+    opacity: 1;
+}
+
+@media (max-width: 575.98px) {
+    .tileDownload {
+        opacity: 1;
+    }
+}
+
+// «افزودن به قالب» روی تایل وقتی همین خروجی در قالب است
+.tileAction.tileActionOn,
+.tileAction.tileActionOn:hover:not(:disabled) {
+    background: var(--primary-color, #4f8cff);
+    color: #fff;
+}
+
+// آیکون مدل/گزینه در چیپ «تنظیمات ساخت»
+.detailSettingsChip .detailSettingsIcon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    opacity: 1;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+// منوی «افزودن»: مقصد هر گزینه — چت یا قالب
+.addTarget {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 4px;
+    padding: 3px;
+    border-radius: 11px;
+    background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+}
+
+.addTargetOption {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 30px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.addTargetOn {
+    background: var(--plan-card-background-color);
+    opacity: 1;
+    color: var(--primary-color, #4f8cff);
+}
+
+.tileAction {
+    // از کانتینر (pointer-events: none) ارث نبرد — وگرنه کلیک‌ناپذیر می‌شود
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    // هم‌رنگ چیپ هزینه (BadgedImage compact) — بدون شیشه، بدون border
+    border: none;
+    border-radius: 7px;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+    cursor: pointer;
+    transition: background 0.15s ease, opacity 0.15s ease;
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--body-text-color) 18%, var(--input-border-background, var(--input-border-color)));
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+}
+
+// موبایل: دو آیکون جدا، پایین سمت چپ، بدون نوار مشترک
+@media (max-width: 575.98px) {
+    .tileActions {
+        left: 6px;
+        bottom: 6px;
+        transform: none;
+        padding: 0;
+        gap: 3px;
+        border: none;
+        border-radius: 0;
+        background: none;
+        backdrop-filter: none;
+        opacity: 1;
+    }
+
+    .tileZoom {
+        display: none;
+    }
+}
+
+// زوم به سبک v1 — hover: پرده تیره روی تصویر + دایره سفید با آیکون وسط
+.tileZoom {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    border-radius: var(--chat-tile-radius);
+    background: rgba(0, 0, 0, 0.35);
+    cursor: zoom-in;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.tileWrap:hover .tileZoom {
+    opacity: 1;
+}
+
+.tileZoomIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #111;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.tileFrame {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    max-height: none;
+}
+
+// باکس یک درخواست چندخروجی: سطح کم‌رنگ دور گرید خروجی‌ها + نوار هزینه کل زیر آن.
+// padding و ارتفاع نوار = GROUP_PAD / GROUP_FOOTER_HEIGHT در ChatMessagesV2.tsx
+.groupBox {
+    @include gallery-cell;
+    --chat-group-surface: color-mix(
+        in srgb,
+        var(--body-text-color) 7%,
+        var(--page-view-background-color, var(--plan-card-background-color, #fff))
+    );
+    display: flex;
+    flex-direction: column;
+    padding: 4px 4px 0;
+    border-radius: calc(var(--chat-tile-radius) + 4px);
+    background: var(--chat-group-surface);
+
+    // قاب ۲px تایل‌های داخل گروه هم‌رنگ سطح باکس (نه پس‌زمینه صفحه)
+    .tile {
+        --badged-image-frame: var(--chat-group-surface);
+    }
+}
+
+// ستون‌ها و ارتفاع خانه‌ها inline از groupGridBlock می‌آید؛ جهت چیدمان از dir صفحه
+.groupGrid {
+    display: grid;
+    gap: 8px;
+}
+
+.groupFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    height: 30px;
+    flex: 0 0 30px;
+    padding: 0 4px;
+    min-width: 0;
+}
+
+.groupCount {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+    font-size: 11.5px;
+    color: color-mix(in srgb, var(--body-text-color) 65%, transparent);
+
+    > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+// همان چیپ هزینه تایل‌ها (BadgedImage compact) — مربع گوشه‌گرد، بدون شیشه/سایه
+.groupCost {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 4px 8px;
+    border-radius: 7px;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+    font-size: 11px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    strong {
+        font-weight: 700;
+    }
+}
+
+.groupSize {
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.mediaFill {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.ghost {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    // سبک برای تعداد زیاد: پس‌زمینه‌ی ثابت (بدون انیمیشن پس‌زمینه که هر فریم repaint می‌خواهد)
+    // + یک اسپینر کوچک که فقط transform می‌چرخد و روی compositor اجرا می‌شود
+    background: color-mix(in srgb, var(--body-text-color, #3c4043) 7%, transparent);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        margin: -9px 0 0 -9px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid color-mix(in srgb, var(--body-text-color, #3c4043) 16%, transparent);
+        border-top-color: color-mix(in srgb, var(--body-text-color, #3c4043) 50%, transparent);
+        animation: galleryGhost 0.8s linear infinite;
+    }
+}
+
+@keyframes galleryGhost {
+    to { transform: rotate(360deg); }
+}
+
+.image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+.imageReady {
+    opacity: 1;
+}
+
+.videoOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.videoVeil {
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    height: 48%;
+    max-height: 80px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+    );
+}
+
+.videoMeta {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px;
+    padding: 0 8px 0 6px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+}
+
+/* کاشی صوتی (MiniAudioPlayer variant=tile) داخل قاب کاشی گرید: کل کاشی را پر کند و
+   پایینش جای دکمه‌های روی کاشی (اکشن‌ها و بج هزینه) خالی بماند */
+.mediaFill .audioPlayerTile {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    padding: 12px 12px 40px;
+    border: 0;
+    border-radius: 0;
+}
+
+/* کاشی صوتی div است (دکمه پخش داخلش)؛ ظاهر همان کاشی‌های دیگر، بدون نشانگر زوم */
+.tile.tileAudio {
+    cursor: pointer;
+}
+
+/* جزئیات صوت: کارت پخش‌کننده بزرگ هم‌تم؛ بالای کارت جای دکمه انتخاب مرجع گوشه */
+.detailMedia.detailMediaAudio {
+    display: block; // flex مرکزچین .detailMedia کارت را به اندازه محتوا جمع می‌کرد
+    padding: 48px 16px 16px;
+}
+
+// قاب هم‌شکل باکس بنرها در حالت هایلایت (BannerBox .highlight + .empty): ته‌رنگ ملایم
+// و راه‌راه مورب ثابت با رنگ $accent — بنفش برای «در حال تولید»، قرمز برای خطا.
+// مثل outline-offset بنر، بین خط‌چین (۲px لبه) و پس‌زمینه ۱px فاصله می‌ماند.
+@mixin banner-frame($accent) {
+    --tile-accent: #{$accent};
+    position: relative;
+    isolation: isolate;
+    border-radius: var(--chat-tile-radius, 14px);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 3px;
+        z-index: -1;
+        border-radius: calc(var(--chat-tile-radius, 14px) - 3px);
+        pointer-events: none;
+        background:
+            repeating-linear-gradient(
+                45deg,
+                color-mix(in srgb, $accent 7%, transparent) 0 10px,
+                transparent 10px 20px
+            ),
+            color-mix(in srgb, $accent 6%, var(--input-background-color));
+    }
+}
+
+// ── محتوای باکس «در حال تولید/ناموفق» ─────────────────────────────────────────
+// باکس همیشه دقیقاً نسبت خروجی را دارد؛ هر دو باکس container هستند تا محتوا (نه خود باکس)
+// با اندازه‌ی واقعی آن کوچک/خلاصه شود. padding روی .pendingBody است چون container query
+// فقط فرزندان را تغییر می‌دهد. .pendingBody عمداً positioned نیست تا برچسب نسبت نسبت به خود باکس جا بگیرد.
+@mixin pending-container {
+    container-type: size;
+}
+
+.pendingBody {
+    box-sizing: border-box;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+
+.pendingText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+.failedTile .pendingBody,
+.failedTile .pendingText {
+    gap: 7px;
+}
+
+// ── باکس «در حال تولید» — تایل داخل گرید، اول صف ───────────────────────────
+// فقط transform/opacity انیمیت می‌شوند (بدون background-position/filter) تا روی
+// گوشی‌های ضعیف هم کار روی کامپوزیتور بماند و هر فریم repaint نشود.
+.processingTile {
+    @include gallery-cell;
+    @include banner-frame(var(--brand-color, #7b64cf));
+    @include pending-container;
+    contain: layout paint;
+    text-align: center;
+    animation: processingEnter 0.32s ease;
+}
+
+// خط‌چین هم‌سبک کادر هایلایت بنرها
+.dashFrame {
+    position: absolute;
+    inset: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    z-index: 2;
+    overflow: visible;
+    pointer-events: none;
+
+    rect {
+        fill: none;
+        stroke: color-mix(in srgb, var(--tile-accent) 70%, transparent);
+        stroke-width: 2;
+        stroke-dasharray: 6 5;
+    }
+}
+
+// نسبت یا اندازه‌ی خروجی — هم‌شکل برچسب ابعاد بنرها (BannerBox .devBadge)
+.processingRatio {
+    position: absolute;
+    top: 6px;
+    inset-inline-start: 6px;
+    z-index: 2;
+    max-width: calc(100% - 12px);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #fff;
+    background: var(--tile-accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+// صحنه‌ی کارگاه: چکش از بالا-راست به لبه‌ی لوگو می‌خورد، لوگو تکان می‌خورد، جرقه و
+// سنگ‌ریزه می‌پرد. همه‌ی قطعه‌ها یک چرخه‌ی مشترک دارند و لحظه‌ی ضربه ۵۰٪ آن است.
+// مختصات بر حسب px داخل صحنه‌ی ۹۲×۶۴ است و نقطه‌ی ضربه (62, 21) است.
+$mine-cycle: 1.1s;
+
+.mineStage {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 92px;
+    height: 64px;
+}
+
+.mineLogo {
+    position: absolute;
+    left: 23px;
+    top: 14px;
+    animation: logoHit $mine-cycle ease-out infinite;
+    will-change: transform;
+}
+
+@keyframes logoHit {
+    0%, 49% { transform: none; }
+    53% { transform: translate(-2px, 2px) scale(0.93) rotate(-4deg); }
+    62% { transform: translate(1px, -1px) scale(1.02) rotate(1deg); }
+    72%, 100% { transform: none; }
+}
+
+// LuHammer آینه می‌شود تا دسته پایین-راست و سطح ضربه (پایین-چپ سر چکش) رو به مرکز لوگو
+// باشد؛ چرخش دور دسته (۲۴.۲۵px در آیکون ۳۰px) است و در 0deg سطح ضربه دقیقاً روی (62, 21) است.
+.hammer {
+    position: absolute;
+    left: 57px;
+    top: 4.75px;
+    width: 30px;
+    height: 30px;
+    color: var(--brand-color, #7b64cf);
+    transform-origin: 24.25px 24.25px;
+    animation: hammerSwing $mine-cycle infinite;
+    will-change: transform;
+
+    svg {
+        display: block;
+        transform: scaleX(-1);
+    }
+}
+
+// مثبت = بالا بردن چکش؛ 0deg = لحظه‌ی برخورد
+@keyframes hammerSwing {
+    0% { transform: rotate(26deg); animation-timing-function: ease-out; }
+    36% { transform: rotate(44deg); animation-timing-function: cubic-bezier(0.6, 0, 1, 1); }
+    50% { transform: rotate(0deg); animation-timing-function: ease-out; }
+    58% { transform: rotate(9deg); animation-timing-function: ease-in-out; }
+    66% { transform: rotate(1deg); animation-timing-function: ease-in-out; }
+    100% { transform: rotate(26deg); }
+}
+
+.sparks,
+.chips {
+    position: absolute;
+    left: 62px;
+    top: 21px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+}
+
+.sparks i {
+    left: -2px;
+    top: -2px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #ffc44d;
+    animation: sparkFly $mine-cycle ease-out infinite;
+
+    &:nth-child(1) { --dx: -9px; --dy: -13px; }
+    &:nth-child(2) { --dx: -15px; --dy: -4px; background: var(--brand-color, #7b64cf); }
+    &:nth-child(3) { --dx: 1px; --dy: -17px; width: 3px; height: 3px; }
+}
+
+@keyframes sparkFly {
+    0%, 49% { opacity: 0; transform: translate(0, 0) scale(1); }
+    51% { opacity: 1; transform: translate(0, 0) scale(1.2); }
+    74%, 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3); }
+}
+
+.chips i {
+    left: -1.5px;
+    top: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 1px;
+    background: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+    animation: chipFall $mine-cycle cubic-bezier(0.4, 0, 1, 1) infinite;
+
+    &:nth-child(1) { --dx: 7px; --dy: 30px; --rot: 160deg; }
+    &:nth-child(2) { --dx: 13px; --dy: 24px; --rot: -120deg; width: 2px; height: 2px; }
+}
+
+@keyframes chipFall {
+    0%, 50% { opacity: 0; transform: translate(0, 0) rotate(0); }
+    54% { opacity: 1; }
+    92% { opacity: 0.8; }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
+}
+
+.modelLogo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--body-text-color);
+    background: var(--input-background-color);
+    box-shadow: 0 2px 10px color-mix(in srgb, var(--brand-color, #7b64cf) 22%, transparent);
+
+    svg {
+        width: 24px;
+        height: 24px;
+        display: block;
+    }
+}
+
+.modelLogoSvg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.processingModel {
+    position: relative;
+    z-index: 1;
+    font-size: 11.5px;
+    font-weight: 600;
+    opacity: 0.85;
+    width: 92%;
+    min-width: 0;
+    max-width: 92%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// فقط تایل در حال تولید: اسم کامل روشن می‌ماند، آرام محو می‌شود و به همان آرامی دوباره روشن می‌شود
+.processingTile .processingModel {
+    animation: modelPulse 2.2s infinite;
+}
+
+@keyframes modelPulse {
+    0%, 16% {
+        opacity: 1;
+        animation-timing-function: ease-in;
+    }
+    50% {
+        opacity: 0;
+        animation-timing-function: linear;
+    }
+    60% {
+        opacity: 0;
+        animation-timing-function: ease-out;
+    }
+    100% { opacity: 1; }
+}
+
+// در تایل‌های باریک (۹:۱۶) متن به‌جای بریده‌شدن در دو خط می‌شکند
+.processingLabel {
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 92%;
+    font-size: 10.5px;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--body-text-color) 62%, transparent);
+}
+
+.labelTail {
+    white-space: nowrap;
+}
+
+.dots {
+    display: inline-flex;
+    gap: 2px;
+    margin-inline-start: 3px;
+    vertical-align: baseline;
+
+    span {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--brand-color, #7b64cf);
+        animation: dotBlink 1.2s ease-in-out infinite;
+    }
+
+    span:nth-child(2) { animation-delay: 0.2s; }
+    span:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@keyframes dotBlink {
+    0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-2px); }
+}
+
+@keyframes processingEnter {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+// ── نوبت ناموفق — خطا داخل همان تایلِ گرید (هم‌شکل باکس پردازش، به رنگ قرمز) ──
+.failedTile {
+    @include gallery-cell;
+    @include banner-frame(#ef4444);
+    @include pending-container;
+    text-align: center;
+    animation: processingEnter 0.32s ease;
+}
+
+.failedIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    color: #ef4444;
+    background: color-mix(in srgb, #ef4444 12%, transparent);
+    border: 1px solid color-mix(in srgb, #ef4444 28%, transparent);
+}
+
+.failedMessage {
+    font-size: 10.5px;
+    line-height: 1.45;
+    opacity: 0.78;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.failedActions {
+    display: inline-flex;
+    gap: 6px;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        border: 1px solid var(--border-color);
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        cursor: pointer;
+
+        &:hover:not(:disabled) { opacity: 0.85; }
+        &:disabled { opacity: 0.4; cursor: not-allowed; }
+    }
+
+    .failedRetry {
+        color: #ef4444;
+        border-color: color-mix(in srgb, #ef4444 35%, var(--border-color));
+    }
+
+    // حذف نوبت ناموفق — هم‌شکل دکمه‌های کنارش، قرمز فقط روی hover
+    .failedDelete:hover:not(:disabled) {
+        opacity: 1;
+        color: #dc2626;
+        border-color: color-mix(in srgb, #dc2626 45%, var(--border-color));
+    }
+}
+
+// ── باکس‌های باریک «در حال تولید/ناموفق» ─────────────────────────────────────
+// باکس نسبت واقعی را نگه می‌دارد؛ فقط محتوا پله‌پله کوچک/پنهان می‌شود. بعد از قواعد پایه تا در
+// cascade برنده شود. اولویت ماندن: دکمه‌ی تلاش دوباره/ویرایش > آیکون > پیام خطا > نام مدل > برچسب نسبت.
+// لوگوی کارگاه (۹۲×۶۴) با scale کوچک می‌شود و margin منفی جای اشغالی‌اش را هم کم می‌کند.
+@mixin stage-scale($scale) {
+    transform: scale($scale);
+    margin: (-32px * (1 - $scale)) (-46px * (1 - $scale));
+}
+
+@mixin compact-actions($size, $gap: 4px) {
+    .failedActions {
+        gap: $gap;
+
+        button {
+            width: $size;
+            height: $size;
+        }
+    }
+}
+
+// کوتاه و پهن (مثل 8:1 یا 21:9): یک ردیف افقی؛ برچسب نسبت هم داخل ردیف می‌آید تا روی دکمه‌ها نیفتد
+@container (max-height: 150px) {
+    .pendingBody {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .pendingText {
+        flex: 0 1 auto;
+        align-items: flex-start;
+        gap: 2px;
+        width: auto;
+        text-align: start;
+    }
+
+    .failedTile .pendingText {
+        flex: 1 1 auto;
+        gap: 2px;
+    }
+
+    .processingModel,
+    .processingLabel {
+        width: auto;
+        max-width: 100%;
+    }
+
+    .processingLabel,
+    .failedMessage {
+        -webkit-line-clamp: 1;
+    }
+
+    .processingRatio {
+        position: static;
+        order: 1;
+        flex-shrink: 0;
+        max-width: 38%;
+    }
+
+    .failedIcon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .failedActions {
+        flex-shrink: 0;
+    }
+}
+
+@container (max-height: 96px) {
+    .pendingBody {
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .mineStage {
+        @include stage-scale(0.62);
+    }
+
+    .failedIcon {
+        width: 26px;
+        height: 26px;
+
+        svg { width: 14px; height: 14px; }
+    }
+}
+
+// خیلی کوتاه: فقط یک خط متن (پیام خطا / نام مدل) + دکمه‌های کوچک
+@container (max-height: 64px) {
+    .pendingBody {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+
+    .processingLabel,
+    .failedTile .processingModel {
+        display: none;
+    }
+
+    .mineStage {
+        @include stage-scale(0.45);
+    }
+
+    .failedIcon {
+        width: 22px;
+        height: 22px;
+
+        svg { width: 12px; height: 12px; }
+    }
+
+    @include compact-actions(22px);
+}
+
+@container (max-height: 38px) {
+    .pendingBody {
+        padding: 2px 8px;
+    }
+
+    .failedIcon {
+        display: none;
+    }
+
+    .mineStage {
+        @include stage-scale(0.32);
+    }
+
+    .processingRatio {
+        padding: 0.05rem 0.4rem;
+    }
+
+    @include compact-actions(20px);
+}
+
+// باریک و بلند (مثل 1:3 یا 9:21): متن کمتر، دکمه‌ها زیر هم
+@container (max-width: 110px) {
+    .pendingBody {
+        padding: 8px 6px;
+        gap: 6px;
+    }
+
+    .pendingText {
+        gap: 4px;
+    }
+
+    .failedMessage {
+        -webkit-line-clamp: 2;
+    }
+
+    .mineStage {
+        @include stage-scale(0.75);
+    }
+}
+
+@container (max-width: 84px) {
+    .processingLabel,
+    .failedTile .processingModel {
+        display: none;
+    }
+
+    .failedMessage {
+        -webkit-line-clamp: 3;
+        font-size: 9.5px;
+    }
+
+    .failedIcon {
+        width: 26px;
+        height: 26px;
+
+        svg { width: 14px; height: 14px; }
+    }
+
+    .failedActions {
+        flex-direction: column;
+    }
+
+    .mineStage {
+        @include stage-scale(0.55);
+    }
+}
+
+@container (max-width: 56px) {
+    .pendingBody {
+        padding: 6px 3px;
+    }
+
+    .failedMessage,
+    .processingModel,
+    .processingRatio {
+        display: none;
+    }
+
+    .failedIcon {
+        width: 22px;
+        height: 22px;
+
+        svg { width: 12px; height: 12px; }
+    }
+
+    .mineStage {
+        @include stage-scale(0.36);
+    }
+
+    @include compact-actions(22px);
+}
+
+@container (max-width: 34px) {
+    .pendingBody {
+        padding: 4px 2px;
+    }
+
+    .failedIcon {
+        display: none;
+    }
+
+    .mineStage {
+        @include stage-scale(0.26);
+    }
+
+    @include compact-actions(20px, 3px);
+}
+
+.spinning { animation: v2spin 0.9s linear infinite; }
+@keyframes v2spin { to { transform: rotate(360deg); } }
+
+// ── جزئیات: بدنه اسکرول‌شونده + فوتر ثابت (محتوا زیر نوار انتخاب دیده نمی‌شود)
+.detail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    max-height: min(90vh, 85dvh);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.detailScroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 8px 18px 18px;
+    box-sizing: border-box;
+
+    > * {
+        flex: 0 0 auto;
+    }
+}
+
+.detailToolbar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    padding: 10px 12px 4px;
+}
+
+.detailIconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // هم‌شکل ModalCloseButton کنارش: مربع با گوشه گرد
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--body-text-color);
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    }
+}
+
+.detailMedia {
+    position: relative;
+    margin: 0;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--sidebar-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img, video {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: min(46vh, 420px);
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+}
+
+// قاب تصویر جزئیات (DetailImage): نسبت خروجی از فریم اول؛ تامبنیل و اصل روی هم،
+// اصل تا کامل نشده پنهان می‌ماند
+.detailImage {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    flex-shrink: 0;
+
+    img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        object-fit: contain;
+        transition: opacity 0.2s ease;
+    }
+}
+
+.detailImageLoading {
+    opacity: 0;
+}
+
+// «تنظیمات ساخت» — چیپ‌های فشرده (مربع گوشه‌گرد)، بدون سایه/گرادیان
+.detailSettings {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 6px;
+}
+
+.detailSettingsChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.detailSettingsChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: var(--input-border-background, var(--input-border-color));
+    font-size: 11px;
+    line-height: 1.5;
+
+    span {
+        flex-shrink: 0;
+        opacity: 0.6;
+    }
+
+    strong {
+        min-width: 0;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+// چک‌مارکس انتخاب خروجی اصلی — انتخاب فقط با دکمه «استفاده به‌عنوان مرجع» ارسال می‌شود
+.mediaSelect {
+    position: absolute;
+    top: 10px;
+    inset-inline-start: 10px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &:hover { background: rgba(0, 0, 0, 0.55); }
+}
+
+.mediaSelected {
+    background: var(--primary-color, #4f8cff);
+    border-color: var(--primary-color, #4f8cff);
+}
+
+.detailPromptBlock {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: 4px 0 0;
+}
+
+.detailPromptHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.55;
+
+    strong {
+        font-weight: 700;
+    }
+}
+
+.detailPromptTools {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        background: transparent;
+        color: var(--body-text-color);
+        opacity: 0.72;
+        cursor: pointer;
+        font-size: 11.5px;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
+        padding: 4px 8px;
+        border-radius: 999px;
+
+        &:hover {
+            opacity: 1;
+            background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+        }
+    }
+}
+
+.detailPromptText {
+    font-size: 13.5px;
+    line-height: 1.75;
+    opacity: 0.84;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.promptClamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.promptToggle {
+    align-self: flex-start;
+    border: none;
+    background: none;
+    color: var(--body-text-color);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 2px 0 0;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &:hover { opacity: 1; }
+}
+
+.detailRefs {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.detailRefsHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    strong {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        opacity: 0.55;
+    }
+}
+
+.refsSelectAll {
+    border: none;
+    background: none;
+    color: var(--body-text-color);
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.65;
+
+    &:hover { opacity: 1; }
+}
+
+.detailRefsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.refItem {
+    position: relative;
+    flex: 0 0 auto;
+
+    &:hover .refOpen,
+    &:focus-within .refOpen { opacity: 1; }
+}
+
+// بزرگ‌نمایی/پخش ورودی — گوشه پایین مقابل چک‌مارک؛ موبایل همیشه نمایان (hover نداریم)
+.refOpen {
+    position: absolute;
+    bottom: 6px;
+    inset-inline-end: 6px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    backdrop-filter: blur(6px);
+    transition: opacity 0.15s ease, background 0.15s ease;
+
+    &:hover { background: rgba(0, 0, 0, 0.75); }
+
+    @media (hover: none) { opacity: 1; }
+}
+
+.inputViewer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+
+    video {
+        display: block;
+        max-width: 100%;
+        max-height: 75vh;
+        border-radius: 12px;
+        background: #000;
+    }
+}
+
+.inputViewerAudio {
+    padding: 28px 20px;
+}
+
+.refThumb {
+    position: relative;
+    width: 74px;
+    height: 74px;
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: var(--sidebar-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    img, video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    &:hover { border-color: color-mix(in srgb, var(--primary-color, #4f8cff) 55%, transparent); }
+
+    &.refSelected {
+        border-color: var(--primary-color, #4f8cff);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color, #4f8cff) 25%, transparent);
+    }
+}
+
+.refAudio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+}
+
+.refCheck {
+    position: absolute;
+    top: 4px;
+    inset-inline-start: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    backdrop-filter: blur(6px);
+}
+
+.refSelected .refCheck {
+    background: var(--primary-color, #4f8cff);
+    border-color: var(--primary-color, #4f8cff);
+}
+
+// فوتر ثابت — خارج از اسکرول تا محتوا از زیرش رد نشود
+.detailActions {
+    flex: 0 0 auto;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 18px 14px;
+    border-top: 1px solid var(--border-color);
+    background: var(--plan-card-background-color);
+}
+
+.detailActionsLead {
+    flex: 1 1 160px;
+    min-width: 0;
+}
+
+.selectedChips {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
+}
+
+.selectedChip {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1.5px solid color-mix(in srgb, var(--primary-color, #4f8cff) 70%, transparent);
+    background: var(--sidebar-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    &:hover {
+        border-color: #ef4444;
+        opacity: 0.88;
+    }
+}
+
+.detailActionsHint {
+    font-size: 12.5px;
+    opacity: 0.7;
+    line-height: 1.4;
+}
+
+.primaryAction {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: none;
+    cursor: pointer;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--primary-color, #4f8cff);
+
+    &:hover:not(:disabled) { opacity: 0.9; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+/* منوی «افزودن به چت» — بالای دکمه، هم‌تراز لبه انتهایی */
+.addMenuWrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.addMenuChevron {
+    opacity: 0.85;
+    transition: transform 0.18s ease;
+}
+
+.addMenuChevronOpen {
+    transform: rotate(180deg);
+}
+
+.addMenu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    inset-inline-end: 0;
+    z-index: 20;
+    width: min(300px, calc(100vw - 32px));
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    animation: addMenuIn 0.16s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes addMenuIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.addMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 11px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition: background 0.12s ease;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+        background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+        outline: none;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+/* «انتخاب‌شده‌ها» — کار اصلی وقتی کاربر چیزی را تیک زده */
+.addMenuItemAccent .addMenuIcon {
+    background: var(--primary-color, #4f8cff);
+    color: #fff;
+}
+
+.addMenuIcon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--primary-color, #4f8cff) 12%, transparent);
+    color: var(--primary-color, #4f8cff);
+}
+
+.addMenuText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    strong {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    small {
+        font-size: 11px;
+        opacity: 0.6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* چند تصویر کوچک روی‌هم از ورودی‌ها — معلوم باشد چه چیزی دوباره اضافه می‌شود */
+.addMenuThumbs {
+    flex-shrink: 0;
+    display: flex;
+    direction: ltr;
+
+    img {
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        object-fit: cover;
+        border: 2px solid var(--plan-card-background-color);
+
+        & + img {
+            margin-left: -10px;
+        }
+    }
+}
+
+.addMenuDivider {
+    height: 1px;
+    margin: 4px 8px;
+    background: var(--border-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mineLogo,
+    .processingTile .processingModel,
+    .hammer,
+    .sparks i,
+    .chips i,
+    .dots span,
+    .spinning,
+    .ghost,
+    .ghost::after,
+    .processingTile,
+    .failedTile {
+        animation: none;
+    }
+
+    .image,
+    .tileZoom,
+    .tileActions,
+    .tileWrap:hover .imageReady {
+        transition: none;
+        transform: none;
+    }
+}
+
+// ── منوی «بیشتر» تایل (دانلود / حذف) ─────────────────────────────────────
+// دکمه همان .tileDownload است؛ وقتی منو باز است hover نخواسته نمایان بماند
+.tileDownload.tileMoreOpen {
+    opacity: 1;
+}
+
+.tileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 190px;
+    padding: 6px;
+}
+
+.tileMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 13px;
+    text-align: start;
+    cursor: pointer;
+    transition: background 0.12s ease;
+
+    &:hover,
+    &:focus-visible {
+        background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+        outline: none;
+    }
+}
+
+// موبایل: منو مودال وسط صفحه (ModalHelper mobileCentered) — هم‌سبک پنجرهٔ expand چت
+.tileMenuModal {
+    border-radius: 16px;
+
+    .tileMenu {
+        min-width: 0;
+        padding: 12px 10px 10px;
+    }
+
+    .tileMenuItem {
+        padding: 12px 10px;
+        font-size: 14px;
+    }
+}
+
+// سر منوی موبایل: تصویر کوچک همان خروجی + عنوان؛ جای ✕ شناور ModalHelper خالی می‌ماند
+.tileMenuHead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 6px 10px;
+    padding-inline-end: 44px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 8%, transparent);
+
+    strong {
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.tileMenuThumb {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    object-fit: cover;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+}
+
+.tileMenuItem:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.tileMenuItemDanger {
+    color: #ef4444;
+
+    &:hover,
+    &:focus-visible {
+        background: color-mix(in srgb, #ef4444 10%, transparent);
+    }
+}
+
+// ── پنجره تأیید حذف خروجی (DeleteOutputDialog) ────────────────────────────
+// ساده و هم‌سبک برنامه: بدون سایه/گرادیان؛ رنگ قرمز فقط برای خود عمل حذف
+.deleteDialog {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 24px 22px;
+
+    @media (max-width: 575.98px) {
+        padding: 20px 0px 18px;
+    }
+}
+
+.deleteHead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    // جای دکمه ✕ مشترک ModalHelper در گوشه بالا (سمت انتهای خط: چپ در RTL)
+    padding-inline-end: 44px;
+
+    strong {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+}
+
+.deleteIcon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: color-mix(in srgb, #dc2626 12%, transparent);
+    color: #dc2626;
+}
+
+// پیش‌نمایش همان خروجی که حذف می‌شود
+.deletePreview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--input-border-color);
+}
+
+// پیش‌نمایش نوبت ناموفق: آیکون هشدار روی زمینه قرمز کم‌رنگ
+.deleteThumbFailed {
+    background: color-mix(in srgb, #dc2626 12%, transparent) !important;
+    color: #dc2626 !important;
+}
+
+.deleteThumb {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.deletePreviewText {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 600;
+
+    small {
+        font-size: 11.5px;
+        font-weight: 500;
+        opacity: 0.6;
+    }
+}
+
+.deleteLead {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.8;
+    opacity: 0.85;
+}
+
+.deletePoints {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 12.5px;
+    line-height: 1.7;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        opacity: 0.8;
+
+        svg {
+            flex-shrink: 0;
+            margin-top: 3px;
+            color: #dc2626;
+        }
+    }
+}
+
+.deletePointSafe svg {
+    color: #16a34a !important;
+}
+
+.deleteError {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: color-mix(in srgb, #dc2626 10%, transparent);
+    color: #dc2626;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+// RTL: دکمه حذف سمت راست (اول) و انصراف کنارش؛ موبایل تمام‌عرض و زیر هم
+.deleteActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+
+    button {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        height: 40px;
+        padding: 0 14px;
+        border: none;
+        border-radius: 10px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s ease, opacity 0.15s ease;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+
+        &:focus-visible {
+            outline: 2px solid color-mix(in srgb, var(--brand-color, #8b5cf6) 70%, transparent);
+            outline-offset: 2px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        flex-direction: column;
+    }
+}
+
+.deleteDanger {
+    background: #dc2626;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+        background: #b91c1c;
+    }
+}
+
+.deleteCancel {
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--body-text-color) 14%, var(--input-border-background, var(--input-border-color)));
+    }
+}
+
+// ── وضعیت زنده نوبت در حال تولید (از سوکت) ─────────────────────────────────
+.processingLive {
+    max-width: 100%;
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.processingCheck {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 7px;
+    background: var(--input-border-background, var(--input-border-color));
+    color: var(--body-text-color);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+// نوار پیشرفت پایین تایل — فقط transform (کامپوزیتور)
+.processingBar {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 8px;
+    height: 3px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+
+    span {
+        display: block;
+        height: 100%;
+        background: var(--brand-color, #7b64cf);
+        transform-origin: left center;
+        transition: transform 0.4s ease;
+    }
+}
+
+// ── «بیشتر بدانید» نوبت ناموفق (FailedTurnDetailsDialog) ────────────────────
+.failedReadMore {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.75;
+    cursor: pointer;
+
+    &:hover { opacity: 1; }
+}
+
+// محتوای بلند (فهرست ورودی‌ها + قدم‌ها) داخل کادر ۹۰vh ModalHelper اسکرول بخورد تا دکمه‌ها دیده شوند
+.errorDetailsScroll {
+    max-height: calc(90vh - 2px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+
+    @media (max-width: 575.98px) {
+        max-height: none;
+        overflow: visible;
+    }
+}
+
+.errorDetailsIcon {
+    background: color-mix(in srgb, #f59e0b 14%, transparent);
+    color: #d97706;
+}
+
+.errorDetailsHeadText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+
+    small {
+        font-size: 12px;
+        font-weight: 500;
+        opacity: 0.6;
+    }
+}
+
+.errorDetailsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--input-border-color);
+
+    h4 {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.8;
+        opacity: 0.82;
+    }
+}
+
+.errorDetailsMuted {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-inline-start: auto;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+.errorDetailsBad {
+    margin-inline-start: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: #dc2626;
+}
+
+.errorDetailsSteps {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding-inline-start: 20px;
+    font-size: 13px;
+    line-height: 1.75;
+    opacity: 0.85;
+}
+
+.inputCheckList {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-height: 216px;
+    overflow-y: auto;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--input-border-color) 60%, transparent);
+
+        &:last-child { border-bottom: none; }
+    }
+}
+
+.inputCheckThumb {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--input-border-background, var(--input-border-color));
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.inputCheckName {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inputCheckState {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #16a34a;
+}
+
+.inputBroken {
+    .inputCheckThumb {
+        background: color-mix(in srgb, #dc2626 12%, transparent);
+        color: #dc2626;
+    }
+
+    .inputCheckState {
+        color: #dc2626;
+    }
+}
+
+.errorDetailsPrimary {
+    background: var(--button-background, var(--brand-color, #8b5cf6));
+    color: #fff;
+}
+
+/* ==========================================
+   موبایل — جزئیات خروجی در پنجرهٔ تمام‌صفحه مثل گالری (نه BottomSheet)
+   z-index زیر شیت‌های ModalHelper (۱۰۰۰۰۰۰) تا تأیید حذف رویش باز شود، بالای نوار پایین اپ.
+   نوار ابزار ثابت بالا، محتوا اسکرول داخلی، نوار «افزودن به چت» ثابت پایین.
+   ========================================== */
+.detailWindow {
+    position: fixed;
+    inset: 0;
+    z-index: 999990;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    animation: detailWindowIn 0.16s ease;
+
+    .detail {
+        flex: 1;
+        max-height: none;
+        height: 100%;
+    }
+
+    .detailToolbar {
+        min-height: 54px;
+        padding: 0 12px;
+        gap: 6px;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--plan-card-background-color);
+    }
+
+    .detailIconBtn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .detailScroll {
+        gap: 18px;
+        padding: 14px 16px 20px;
+    }
+
+    .detailMedia {
+        border-radius: 12px;
+
+        img, video {
+            max-height: 42dvh;
+        }
+    }
+
+    // سرتیتر پرامپت: برچسب بالا، ابزارها یک ردیف چیپ (اسکرول افقی، بدون شکستن متن)
+    .detailPromptHead {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        opacity: 1;
+
+        strong {
+            opacity: 0.55;
+        }
+    }
+
+    .detailPromptTools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+
+        button {
+            flex-shrink: 0;
+            white-space: nowrap;
+            padding: 6px 10px;
+            border-radius: 9px;
+            border: 1px solid var(--border-color);
+            font-size: 12px;
+            font-weight: 400;
+            opacity: 0.85;
+        }
+    }
+
+    .detailPromptText {
+        font-size: 13px;
+    }
+
+    .detailActions {
+        flex-wrap: nowrap;
+        gap: 10px;
+        padding: 10px 12px max(10px, env(safe-area-inset-bottom));
+    }
+
+    .detailActionsLead {
+        flex: 1 1 auto;
+    }
+
+    .detailActionsHint {
+        font-size: 11.5px;
+    }
+
+    .primaryAction {
+        flex-shrink: 0;
+        padding: 9px 14px;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+}
+
+.detailToolbarTitle {
+    display: none;
+}
+
+.detailWindow .detailToolbarTitle {
+    display: block;
+    margin-inline-end: auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+@keyframes detailWindowIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

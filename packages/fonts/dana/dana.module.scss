@@ -1,0 +1,20 @@
+
+/*dana (Persian & English)*/
+@font-face {
+    font-family: "dana";
+    src: url("./dana-regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: "dana";
+    src: url("./dana-bold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+/* Optional utility class (handy for quick testing) */
+.dana {
+    font-family: 'dana', sans-serif;
+}

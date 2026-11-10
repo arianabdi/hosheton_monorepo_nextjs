@@ -1,0 +1,14 @@
+
+/*byekan (Persian & English)*/
+@font-face {
+    font-family: "byekan";
+    src: url("./Yekan.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+/* Optional utility class (handy for quick testing) */
+.byekan {
+    font-family: 'byekan', sans-serif;
+}

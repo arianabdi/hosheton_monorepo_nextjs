@@ -1,0 +1,324 @@
+// ─── Wrapper ──────────────────────────────────────────────────────────────────
+
+.wrapper {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+// ─── Trigger bar ──────────────────────────────────────────────────────────────
+
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.85rem 1.1rem;
+    background: color-mix(in srgb, var(--brand-color) 6%, var(--plan-card-background-color));
+    border: 1px dashed color-mix(in srgb, var(--brand-color) 30%, transparent);
+    border-radius: 10px;
+}
+
+.barInfo {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.barIcon {
+    color: var(--brand-color);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.barInfo > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.barTitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+.barHint {
+    font-size: 0.77rem;
+    opacity: 0.72;
+    line-height: 1.55;
+    color: var(--body-text-color);
+}
+
+.triggerBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 40%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    color: var(--brand-color);
+    font: inherit;
+    font-size: 0.83rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--brand-color) 18%, transparent);
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+// ─── Dropdown panel ───────────────────────────────────────────────────────────
+
+.panel {
+    margin-top: 0.5rem;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    background: var(--plan-card-background-color);
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+// ─── Search row ───────────────────────────────────────────────────────────────
+
+.searchRow {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sourceSelect {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--input-border-color, var(--border-color));
+    border-radius: 8px;
+    background: var(--input-background-color, var(--body-background));
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.84rem;
+    cursor: pointer;
+    flex: 1;
+    min-width: 130px;
+
+    &:focus { outline: none; border-color: var(--brand-color); }
+}
+
+.searchBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--brand-color);
+    color: #fff;
+    font: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+    &:not(:disabled):hover { opacity: 0.88; }
+}
+
+.searchHint {
+    font-size: 0.78rem;
+    opacity: 0.65;
+    color: var(--body-text-color);
+    margin: 0;
+
+    code {
+        font-size: 0.75rem;
+        padding: 1px 5px;
+        border-radius: 4px;
+        background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+        color: var(--brand-color);
+    }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.9s linear infinite; }
+
+// ─── Candidates ──────────────────────────────────────────────────────────────
+
+.candidates {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.candidateHint {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin: 0 0 0.3rem;
+    color: var(--body-text-color);
+}
+
+.candidateBtn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    align-items: flex-start;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    text-align: right;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+
+    strong { font-size: 0.87rem; }
+    code { font-size: 0.75rem; opacity: 0.65; }
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color) 7%, transparent);
+        border-color: color-mix(in srgb, var(--brand-color) 30%, transparent);
+    }
+}
+
+// ─── Found box ────────────────────────────────────────────────────────────────
+
+.foundBox {
+    border: 1px solid color-mix(in srgb, #22c55e 30%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, #22c55e 5%, var(--plan-card-background-color));
+    padding: 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.foundHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    strong { font-size: 0.88rem; color: #166534; }
+    span { font-size: 0.78rem; opacity: 0.75; color: var(--body-text-color); }
+
+    code {
+        font-size: 0.74rem;
+        padding: 1px 4px;
+        border-radius: 3px;
+        background: color-mix(in srgb, #22c55e 12%, transparent);
+    }
+}
+
+.foundIcon {
+    color: #22c55e;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+[data-theme='dark'] .foundHeader strong { color: #86efac; }
+
+// ─── Pricing detail ───────────────────────────────────────────────────────────
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.detailMeta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    color: var(--body-text-color);
+}
+
+.sourceLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--brand-color);
+    font-size: 0.78rem;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    direction: ltr;
+    text-align: left;
+
+    th, td {
+        padding: 0.35rem 0.6rem;
+        border: 1px solid var(--plan-card-border-color);
+    }
+
+    th { background: color-mix(in srgb, var(--body-text-color) 5%, transparent); font-weight: 700; }
+    td { color: var(--body-text-color); }
+}
+
+.axesBox {
+    font-size: 0.8rem;
+    color: var(--body-text-color);
+
+    ul { margin: 0.3rem 0 0 1rem; padding: 0; }
+    li { margin-bottom: 0.2rem; }
+    code { font-size: 0.75rem; padding: 1px 4px; border-radius: 3px; background: color-mix(in srgb, var(--brand-color) 10%, transparent); }
+}
+
+.dimsCell {
+    font-family: monospace;
+    font-size: 0.76rem;
+}
+
+// ─── Apply button ─────────────────────────────────────────────────────────────
+
+.applyBtn {
+    align-self: flex-end;
+    padding: 0.55rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--brand-color);
+    color: #fff;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s;
+
+    &:hover { opacity: 0.88; }
+}
+
+// ─── Empty hint ───────────────────────────────────────────────────────────────
+
+.emptyHint {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    color: var(--body-text-color);
+    text-align: center;
+    padding: 0.5rem 0;
+    margin: 0;
+}

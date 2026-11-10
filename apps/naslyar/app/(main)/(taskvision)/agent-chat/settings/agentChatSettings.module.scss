@@ -1,0 +1,191 @@
+.container {
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 32px;
+}
+
+.mainTitle {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--body-text-color);
+}
+
+.subtitle {
+    margin: 8px 0 0;
+    color: var(--muted-text-color, #6b7280);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.overviewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.overviewCard {
+    border: 1px solid var(--border-color, #e5e7eb);
+    background: var(--card-background, #fff);
+    border-radius: 14px;
+    padding: 14px 16px;
+}
+
+.overviewLabel {
+    display: block;
+    font-size: 12px;
+    color: var(--muted-text-color, #6b7280);
+    margin-bottom: 6px;
+}
+
+.overviewValue {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--body-text-color);
+    line-height: 1.6;
+}
+
+.sectionTitle {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--body-text-color);
+}
+
+.capabilityList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.capabilityCard {
+    border: 1px solid var(--border-color, #e5e7eb);
+    background: var(--card-background, #fff);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.capabilityHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.capabilityTitleWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.capabilityName {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--body-text-color);
+}
+
+.capabilityId {
+    font-size: 12px;
+    color: var(--muted-text-color, #6b7280);
+    direction: ltr;
+    text-align: left;
+}
+
+.badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 4px 10px;
+}
+
+.readBadge {
+    composes: badge;
+    color: #2563eb;
+    background: rgba(37, 99, 235, 0.12);
+}
+
+.actionBadge {
+    composes: badge;
+    color: #9333ea;
+    background: rgba(147, 51, 234, 0.12);
+}
+
+.confirmBadge {
+    composes: badge;
+    color: #d97706;
+    background: rgba(217, 119, 6, 0.12);
+}
+
+.capabilitySummary {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--body-text-color);
+}
+
+.capabilityDescription {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted-text-color, #6b7280);
+}
+
+.parameters {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.parameterChip {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(107, 114, 128, 0.12);
+    color: var(--body-text-color);
+    direction: ltr;
+}
+
+.endpointTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.endpointTable th,
+.endpointTable td {
+    padding: 12px 14px;
+    text-align: right;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+    font-size: 13px;
+}
+
+.endpointTable th {
+    background: rgba(107, 114, 128, 0.08);
+    font-weight: 700;
+}
+
+.endpointTable tr:last-child td {
+    border-bottom: none;
+}
+
+.method {
+    direction: ltr;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.path {
+    direction: ltr;
+    text-align: left;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+}

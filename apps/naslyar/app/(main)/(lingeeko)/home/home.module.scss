@@ -1,0 +1,348 @@
+.page {
+    box-sizing: border-box;
+    padding: 2.5rem 1rem 3rem;
+    direction: rtl;
+    color: var(--body-text-color);
+}
+
+// ---------- Header ----------
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.headerText {
+    min-width: 0;
+}
+
+.appBadge {
+    display: inline-block;
+    margin-bottom: 0.6rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+}
+
+.title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.lead {
+    margin: 0;
+    max-width: 44rem;
+    font-size: 0.92rem;
+    line-height: 1.85;
+    opacity: 0.7;
+}
+
+.stats {
+    display: flex;
+    flex-shrink: 0;
+    margin: 0;
+
+    div {
+        padding: 0 1.25rem;
+        text-align: center;
+
+        & + div {
+            border-inline-start: 1px solid var(--border-color);
+        }
+    }
+
+    dt {
+        font-size: 0.75rem;
+        opacity: 0.6;
+    }
+
+    dd {
+        margin: 0.15rem 0 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+}
+
+// ---------- Search ----------
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.5rem 0 0.5rem;
+    padding: 0 0.9rem;
+    height: 48px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--input-background-color);
+    transition: border-color 0.15s;
+
+    > svg {
+        flex-shrink: 0;
+        opacity: 0.5;
+    }
+
+    input {
+        flex: 1;
+        min-width: 0;
+        height: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: inherit;
+        font-size: 0.95rem;
+
+        &::-webkit-search-cancel-button {
+            display: none;
+        }
+    }
+
+    &:focus-within {
+        border-color: var(--brand-color);
+    }
+}
+
+.kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+.clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.6;
+
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+}
+
+.resultLine {
+    margin: 0.25rem 0 0;
+    font-size: 0.82rem;
+    opacity: 0.6;
+}
+
+// ---------- Sections ----------
+
+// Plain columns separated by divider lines (no cards).
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    column-gap: 2.5rem;
+    margin-top: 1rem;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1.25rem 0 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.sectionHead {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover .sectionTitle {
+        color: var(--brand-color);
+    }
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+}
+
+.sectionTitle {
+    flex: 1;
+    min-width: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: color 0.15s;
+}
+
+.sectionCount {
+    font-size: 0.75rem;
+    opacity: 0.5;
+}
+
+.summary {
+    margin: 0.6rem 0 0.75rem;
+    font-size: 0.84rem;
+    line-height: 1.8;
+    opacity: 0.68;
+}
+
+.links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-inline: -0.5rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 6px;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: background-color 0.15s, color 0.15s;
+
+    // Faint brand dot before each page name.
+    > span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-width: 0;
+
+        &::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: color-mix(in srgb, var(--brand-color) 40%, transparent);
+            transition: background-color 0.15s;
+        }
+    }
+
+    &:hover > span::before,
+    &:focus-visible > span::before {
+        background: var(--brand-color);
+    }
+
+    svg {
+        flex-shrink: 0;
+        opacity: 0;
+        transform: translateX(4px);
+        transition: opacity 0.15s, transform 0.15s;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 7%, transparent);
+
+        svg {
+            opacity: 1;
+            transform: none;
+        }
+    }
+}
+
+.more {
+    align-self: flex-start;
+    margin-top: 0.4rem;
+    padding: 0.25rem 0;
+    border: none;
+    background: transparent;
+    color: var(--brand-color);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 3rem 1rem;
+    text-align: center;
+
+    p {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    span {
+        font-size: 0.85rem;
+        opacity: 0.6;
+    }
+
+    .more {
+        align-self: center;
+    }
+}
+
+// ---------- Mobile ----------
+
+@media (max-width: 768px) {
+    .page {
+        padding: 1.25rem 0.25rem 2rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .stats div:first-child {
+        padding-inline-start: 0;
+    }
+
+    .stats dd {
+        font-size: 1.25rem;
+    }
+
+    .kbd {
+        display: none;
+    }
+
+    // Touch targets: full-height rows with the arrow always visible.
+    .link {
+        padding-block: 0.65rem;
+
+        svg {
+            opacity: 0.45;
+            transform: none;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+.pageKeyBadge {
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    direction: ltr;
+}
+
+.textarea {
+    min-height: 72px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.8;
+}
+
+.hint {
+    margin: 4px 0 0;
+    font-size: 11px;
+    color: var(--muted-text-color, #6b7280);
+    line-height: 1.8;
+}
+
+.cancelBtn {
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--body-text-color);
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(107, 114, 128, 0.08);
+    }
+}
+
+.noVideoBadge {
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}

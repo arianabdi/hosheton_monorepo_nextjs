@@ -1,0 +1,204 @@
+.container {
+    min-height: 100vh;
+    background: var(--body-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.backgroundOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    color: var(--body-text-color);
+    direction: rtl;
+}
+
+.logo {
+    margin-bottom: 3rem;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.logoText {
+    font-size: 2.5rem;
+    color: var(--body-text-color);
+}
+
+.title {
+    margin-bottom: 1.5rem;
+    font-size: 6rem;
+    font-weight: 400;
+    animation: .8s ease-out fadeInDown;
+    color: var(--body-text-color);
+
+    @media (max-width: 768px) {
+        font-size: 2.5rem;
+    }
+}
+
+.description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+
+    @media (max-width: 768px) {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 7rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+    direction: ltr;
+
+    @media (max-width: 768px) {
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+}
+
+.timeUnit {
+    backdrop-filter: blur(10px);
+    text-align: center;
+    background: var(--taskbar-background);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    min-width: 100px;
+    padding: 1rem;
+    transition: transform .3s;
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    @media (max-width: 768px) {
+        min-width: 70px;
+        padding: 0.75rem;
+    }
+}
+
+.timeNumber {
+    font-size: 2.8rem;
+    display: block;
+    margin-bottom: 0.5rem;
+
+}
+
+.timeLabel {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+
+
+
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.socialLink {
+    width: 45px;
+    height: 45px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-3px) rotate(8deg);
+    }
+}
+
+.contactInfo {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out 1s both;
+}
+
+.contactText {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.contactEmail {
+
+    color: var(--body-text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.5);
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-bottom-color: white;
+        opacity: 0.9;
+    }
+}
+
+// Animations
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Responsive Font Settings for Persian
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .description {
+        font-size: 0.9rem;
+    }
+}

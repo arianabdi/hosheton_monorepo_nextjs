@@ -1,0 +1,181 @@
+// src/app/projects/Workspace.module.scss
+
+// رنگ‌های شاخص داینامیک هماهنگ با هر دو تم لایت و دارک
+$game-accent-light: #059669;  // سبز زمردی تیره برای تم روشن
+$game-accent-dark: #34d399;   // سبز زمردی روشن برای تم تاریک
+
+$media-accent-light: #2563eb; // آبی کاربنی برای تم روشن
+$media-accent-dark: #60a5fa;  // آبی آسمانی برای تم تاریک
+
+$blog-accent-light: #d97706;  // نارنجی کهربایی تیره برای تم روشن
+$blog-accent-dark: #fbbf24;   // زرد/نارنجی روشن برای تم تاریک
+
+.container {
+    width: 100%;
+    max-width: 1600px; // هماهنگ با wrapper سراسری شما
+    margin: 0 auto;
+    padding: 2rem 15px;
+    box-sizing: border-box;
+}
+
+.header {
+    margin-bottom: 3.5rem;
+    text-align: center;
+
+    h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 0.75rem;
+        // استفاده از رنگ متن بادی که فرستادی
+        color: var(--body-text-color) !important;
+    }
+
+    p {
+        // ایجاد یک رنگ میانه هوشمند برای متن فرعی بر اساس رنگ متن اصلی
+        color: var(--body-text-color);
+        opacity: 0.7;
+        font-size: 1.05rem;
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+}
+
+.workspaceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px; // هماهنگ با گپ‌های سیستم شما
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.workspaceCard {
+    // استفاده از رنگ بک‌گراند اینپوت‌ها به عنوان پس‌زمینه کارت برای ایجاد کنتراست ثانویه
+    background-color: var(--input-background-color) !important;
+    // حاشیه هماهنگ با بوردرهای فرم سیستم شما
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-sizing: border-box;
+
+    &:hover {
+        transform: translateY(-5px);
+        // ایجاد سایه نرم متناسب با تم (در تم دارک محو و در تم لایت مشخص است)
+        box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
+    }
+
+    .cardHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        .icon {
+            font-size: 2.5rem;
+        }
+
+        .badge {
+            background-color: var(--body-background) !important;
+            border: 1px solid var(--input-border-color) !important;
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--body-text-color);
+            opacity: 0.9;
+        }
+    }
+
+    .cardBody {
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--body-text-color) !important;
+        }
+
+        p {
+            color: var(--body-text-color);
+            opacity: 0.65;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .cardFooter {
+        border-top: 1px solid var(--input-border-color);
+        padding-top: 1.25rem;
+
+        span {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--body-text-color);
+            opacity: 0.5;
+            transition: all 0.2s ease;
+        }
+    }
+
+    // ----------------------------------------------------
+    // کانفیگ هوشمند رنگ‌های اختصاصی برای هر محیط (Game, Media, Blog)
+    // مجهز به اتصالات داینامیک برای سازگاری کامل با تم Light و Dark
+    // ----------------------------------------------------
+
+    &.game {
+        &:hover {
+            border-color: $game-accent-light !important;
+            :global(.dark) & { border-color: $game-accent-dark !important; }
+
+            .cardFooter span {
+                color: $game-accent-light;
+                :global(.dark) & { color: $game-accent-dark; }
+                padding-right: 6px;
+            }
+        }
+    }
+
+    &.media {
+        &:hover {
+            border-color: $media-accent-light !important;
+            :global(.dark) & { border-color: $media-accent-dark !important; }
+
+            .cardFooter span {
+                color: $media-accent-light;
+                :global(.dark) & { color: $media-accent-dark; }
+                padding-right: 6px;
+            }
+        }
+    }
+
+    &.blog {
+        &:hover {
+            border-color: $blog-accent-light !important;
+            :global(.dark) & { border-color: $blog-accent-dark !important; }
+
+            .cardFooter span {
+                color: $blog-accent-light;
+                :global(.dark) & { color: $blog-accent-dark; }
+                padding-right: 6px;
+            }
+        }
+    }
+}
+
+// بهینه‌سازی واکنش‌گرایی برای موبایل
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem 10px;
+    }
+
+    .header {
+        margin-bottom: 2.5rem;
+        h1 { font-size: 1.8rem; }
+        p { font-size: 0.95rem; }
+    }
+}

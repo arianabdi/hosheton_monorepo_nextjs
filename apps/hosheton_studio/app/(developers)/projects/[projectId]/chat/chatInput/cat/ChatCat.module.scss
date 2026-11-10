@@ -1,0 +1,47 @@
+/* صحنهٔ گربه: دقیقاً روی لبهٔ بالای کارت؛ پایین لبه بریده می‌شود (گربه پشت چت‌باکس پنهان می‌شود)
+   و دو سر لبه محو می‌شوند تا ورود/خروج از کنار طبیعی باشد. فقط خود گربه و توپ کلیک می‌گیرند. */
+
+.stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% - 1px);
+    z-index: 3;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 26px, #000 calc(100% - 26px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 26px, #000 calc(100% - 26px), transparent 100%);
+}
+
+.svg {
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.mute {
+    position: absolute;
+    inset-inline-end: 12px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 50%;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font-size: 13px;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+        opacity: 1;
+    }
+}

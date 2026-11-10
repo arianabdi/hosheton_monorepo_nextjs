@@ -1,0 +1,12 @@
+
+/*Yekanbakh (Persian & English)*/
+@font-face {
+    font-family: "bhoma";
+    src: url("./bhoma.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+/* Optional utility class (handy for quick testing) */
+.bhoma {
+    font-family: 'bhoma', sans-serif;
+}

@@ -1,0 +1,1958 @@
+// صفحهٔ پیام‌ها — ساده و هم‌سبک پنل‌های استودیو: خط جداکننده به‌جای کارت، بدون گرادیان و سایه
+
+$red: #ef4444;
+$green: #10b981;
+$muted: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+$faint: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+$hover: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+$edge: var(--border-color);
+$bp: 820px;
+
+.page {
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 0;
+    color: var(--body-text-color);
+    display: flex;
+    flex-direction: column;
+}
+
+// تمام‌صفحه و چسبیده به لبه‌ها؛ ستون‌های کناری (فهرست، اطلاعات) هم‌رنگ سایدبار اصلی، وسط کمی روشن‌تر
+$side: var(--plan-card-background-color);
+
+// سطح کادر با پس‌زمینهٔ صفحه فرق دارد (روشن: سفید روی خاکستری، تیره: #0d0e12 روی #060608)
+// کمی روشن‌تر از کارت تا کادر در تم تیره هم از پس‌زمینهٔ صفحه جدا شود
+$surface: color-mix(in srgb, var(--body-text-color) 3%, var(--plan-card-background-color));
+// ناحیهٔ پیام‌ها کمی فرورفته‌تر تا حباب‌ها جدا دیده شوند
+$canvas: color-mix(in srgb, var(--body-background) 55%, $surface);
+$bp-info: 1280px;
+
+.layout {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+    overflow: hidden;
+    background: $surface;
+
+    @media (max-width: $bp) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+// پنل اطلاعات: ستون سوم در صفحهٔ پهن؛ کمتر از آن کشوی هم‌سمت روی گفتگو
+.layoutInfoOpen {
+    @media (min-width: $bp-info) {
+        grid-template-columns: minmax(260px, 320px) minmax(0, 1fr) minmax(280px, 330px);
+    }
+}
+
+.infoSlot {
+    min-width: 0;
+    min-height: 0;
+    border-inline-start: 1px solid $edge;
+    background: $side;
+
+    @media (max-width: calc($bp-info - 1px)) {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-end: 0;
+        z-index: 5;
+        width: min(340px, 100%);
+        animation: infoSlideIn 0.18s ease-out;
+    }
+}
+
+.infoBackdrop {
+    display: none;
+
+    @media (max-width: calc($bp-info - 1px)) {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        border: none;
+        padding: 0;
+        background: rgba(0, 0, 0, 0.35);
+        cursor: default;
+    }
+}
+
+@keyframes infoSlideIn {
+    from { opacity: 0; transform: translateX(var(--info-slide, 24px)); }
+    to { opacity: 1; transform: none; }
+}
+
+:global([dir="rtl"]) .infoSlot { --info-slide: -24px; }
+
+/* موبایل: فهرست یا گفتگو — یکی در هر لحظه */
+@media (max-width: $bp) {
+    .layout .thread { display: none; }
+    .layoutThreadOpen .sidebar { display: none; }
+    .layoutThreadOpen .thread { display: flex; }
+}
+
+/* ───────────────────────── فهرست گفتگوها ───────────────────────── */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border-inline-end: 1px solid $edge;
+    background: $side;
+
+    @media (max-width: $bp) {
+        border-inline-end: none;
+    }
+}
+
+// هم‌ارتفاع هدر گفتگو (۶۲px) تا خط زیر دو ستون در یک راستا باشد
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    min-height: 62px;
+    box-sizing: border-box;
+    padding: 0 0.85rem;
+    border-bottom: 1px solid $edge;
+}
+
+// یک کادر واحد؛ input داخلش هیچ قاب/پس‌زمینه‌ای ندارد (استایل سراسری input خنثی می‌شود)
+.search {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding-inline: 12px 6px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    color: $muted;
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    }
+
+    &:focus-within {
+        background: var(--input-background-color);
+        border-color: color-mix(in srgb, var(--brand-color) 65%, transparent);
+        color: var(--body-text-color);
+
+        .searchIcon { color: var(--brand-color); }
+        .searchKbd { opacity: 0; }
+    }
+}
+
+.searchIcon {
+    flex-shrink: 0;
+    transition: color 0.15s ease;
+}
+
+.search .searchInput {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0 !important;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.86rem;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &::placeholder {
+        color: $muted;
+        opacity: 1;
+    }
+
+    // دکمهٔ ✕ بومی مرورگر برای type=search — خودمان یکی داریم
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+        -webkit-appearance: none;
+        display: none;
+    }
+}
+
+.searchCount {
+    flex-shrink: 0;
+    padding: 1px 7px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    color: var(--brand-color);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.searchClear {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: $muted;
+    cursor: pointer;
+
+    &:hover { background: $hover; color: var(--body-text-color); }
+}
+
+.searchKbd {
+    flex-shrink: 0;
+    padding: 2px 6px;
+    border: 1px solid $edge;
+    border-radius: 6px;
+    color: $muted;
+    font-family: inherit;
+    font-size: 0.64rem;
+    direction: ltr;
+    transition: opacity 0.15s ease;
+
+    // روی لمسی میانبر کیبورد معنی ندارد
+    @media (hover: none) { display: none; }
+}
+
+.stateIcon {
+    color: $muted;
+}
+
+.listScroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    transition: opacity 0.2s ease;
+}
+
+.listRefreshing {
+    opacity: 0.6;
+}
+
+.convList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.convItem {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-bottom: 1px solid color-mix(in srgb, $edge 70%, transparent);
+    border-inline-start: 3px solid transparent;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover { background: $hover; }
+    &:focus-visible { outline: 2px solid var(--brand-color); outline-offset: -2px; }
+}
+
+.convActive {
+    background: color-mix(in srgb, var(--brand-color) 9%, transparent);
+    border-inline-start-color: var(--brand-color);
+
+    &:hover { background: color-mix(in srgb, var(--brand-color) 11%, transparent); }
+}
+
+.convBody {
+    flex: 1;
+    min-width: 0;
+}
+
+.convTop,
+.convBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.convTop { margin-bottom: 3px; }
+
+.convName {
+    min-width: 0;
+    font-weight: 400;
+    font-size: 0.87rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.convTime {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: $muted;
+}
+
+.convPreview {
+    min-width: 0;
+    margin: 0;
+    font-size: 0.78rem;
+    color: $muted;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.convTyping {
+    color: var(--brand-color);
+    font-style: italic;
+}
+
+.convUnread {
+    .convPreview { color: var(--body-text-color); }
+    .convTime { color: $red; font-weight: 700; }
+}
+
+.unreadBadge {
+    flex-shrink: 0;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: $red;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.convTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+    margin-top: 5px;
+
+    .convTemplate {
+        margin-top: 0;
+    }
+}
+
+// فقط نمای ادمین: گفتگوی کاربر نمایشی (به‌رنگ برند تا از برچسب قالب جدا شود)
+.convPersona {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--brand-color, #8b5cf6) 14%, transparent);
+    color: var(--brand-color, #8b5cf6);
+    font-size: 0.68rem;
+    font-weight: 600;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.convTemplate {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    margin-top: 5px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: $faint;
+    color: $muted;
+    font-size: 0.68rem;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.listState,
+.threadState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 2.5rem 1.25rem;
+    text-align: center;
+}
+
+.threadState {
+    flex: 1;
+    justify-content: center;
+}
+
+.stateText {
+    margin: 0;
+    font-size: 0.85rem;
+    color: $muted;
+}
+
+/* جای‌نگهدار ثابت (بدون shimmer) */
+.listSkeleton { padding: 0.25rem 0; }
+
+.skeletonRow {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid color-mix(in srgb, $edge 70%, transparent);
+}
+
+.skeletonAvatar {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: $faint;
+}
+
+.skeletonLines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    b {
+        display: block;
+        height: 8px;
+        border-radius: 4px;
+        background: $faint;
+
+        &:first-child { width: 45%; }
+        &:last-child:not(:first-child) { width: 75%; }
+    }
+}
+
+/* ───────────────────────── آواتار ───────────────────────── */
+
+.avatarWrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+}
+
+.avatarSm {
+    width: 34px;
+    height: 34px;
+}
+
+.avatarLg {
+    width: 84px;
+    height: 84px;
+
+    .avatarFallback { font-size: 1.8rem; font-weight: 400; }
+
+    .onlineDot {
+        width: 16px;
+        height: 16px;
+        bottom: 4px;
+        inset-inline-end: 4px;
+        border-width: 3px;
+        border-color: $surface;
+    }
+}
+
+.avatar,
+.avatarFallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.avatar {
+    display: block;
+    object-fit: cover;
+}
+
+.avatarFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    background: color-mix(in srgb, var(--brand-color) 16%, transparent);
+    color: var(--brand-color);
+}
+
+.onlineDot {
+    position: absolute;
+    bottom: 1px;
+    inset-inline-end: 1px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $green;
+    border: 2px solid $surface;
+}
+
+/* ───────────────────────── گفتگو ───────────────────────── */
+
+.thread {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.threadIdle {
+    align-items: center;
+    justify-content: center;
+}
+
+.threadHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 62px;
+    box-sizing: border-box;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid $edge;
+}
+
+.backBtn {
+    display: none;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover { background: $hover; }
+
+    @media (max-width: $bp) {
+        display: inline-flex;
+    }
+}
+
+.peer {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 4px;
+    margin: -4px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover strong { color: var(--brand-color); }
+}
+
+// دکمه‌های آیکونی هدر: مربع گوشه‌گرد هم‌اندازهٔ ⋯
+.headerIconBtn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: $muted;
+    cursor: pointer;
+
+    &:hover { background: $hover; color: var(--body-text-color); }
+}
+
+.headerIconBtnActive {
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+}
+
+.peerText {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    strong {
+        font-size: 0.92rem;
+        font-weight: 400;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.peerStatus {
+    font-size: 0.72rem;
+    color: $muted;
+}
+
+.statusOnline { color: $green; }
+.statusTyping { color: var(--brand-color); }
+
+.reconnecting {
+    padding: 6px 1rem;
+    border-bottom: 1px solid $edge;
+    background: color-mix(in srgb, #f59e0b 12%, transparent);
+    color: #b45309;
+    font-size: 0.76rem;
+
+    :global([data-theme='dark']) & { color: #fbbf24; }
+}
+
+.templateBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 1rem;
+    border-bottom: 1px solid $edge;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { background: $hover; }
+}
+
+.templateCover,
+.templateCoverFallback {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.templateCover { object-fit: cover; }
+
+.templateCoverFallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $faint;
+    color: $muted;
+}
+
+.templateText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+
+    small { font-size: 0.68rem; color: $muted; }
+
+    strong {
+        font-size: 0.82rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.templateCta {
+    flex-shrink: 0;
+    font-size: 0.76rem;
+    color: var(--brand-color);
+    font-weight: 600;
+}
+
+.messagesWrap {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+}
+
+.messages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1rem 1.25rem;
+    background: $canvas;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.2s ease;
+
+    @media (max-width: $bp) {
+        padding: 0.75rem;
+    }
+}
+
+.messagesRefreshing { opacity: 0.75; }
+
+.topSentinel {
+    height: 1px;
+    flex-shrink: 0;
+}
+
+.loadOlder {
+    align-self: center;
+    margin-bottom: 0.75rem;
+    padding: 5px 12px;
+    border: 1px solid $edge;
+    border-radius: 8px;
+    background: transparent;
+    color: $muted;
+    font: inherit;
+    font-size: 0.76rem;
+    cursor: pointer;
+
+    &:hover:not(:disabled) { color: var(--body-text-color); background: $hover; }
+    &:disabled { cursor: default; }
+}
+
+.daySeparator,
+.unreadDivider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0.9rem 0 0.6rem;
+    font-size: 0.72rem;
+    color: $muted;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: $edge;
+    }
+
+    span {
+        padding: 2px 10px;
+        border-radius: 6px;
+        background: $faint;
+    }
+}
+
+.unreadDivider {
+    color: $red;
+
+    &::before,
+    &::after { background: color-mix(in srgb, $red 45%, transparent); }
+
+    span {
+        background: color-mix(in srgb, $red 10%, transparent);
+        font-weight: 700;
+    }
+}
+
+.threadSkeleton {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1.25rem;
+}
+
+.skeletonMine,
+.skeletonTheirs {
+    display: block;
+    height: 36px;
+    border-radius: 12px;
+    background: $faint;
+}
+
+.skeletonMine { align-self: flex-end; }
+.skeletonTheirs { align-self: flex-start; }
+
+/* ───── حباب پیام ───── */
+
+.bubbleRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    margin-top: 8px;
+    max-width: min(82%, 680px);
+
+    @media (max-width: $bp) {
+        max-width: 92%;
+    }
+
+    // ⋯ پیام فقط با هاور/فوکوس (لمسی: همیشه)
+    .bubbleMenu { opacity: 0; align-self: center; }
+
+    &:hover .bubbleMenu,
+    .bubbleMenu:focus-visible,
+    .bubbleMenu[aria-expanded='true'] { opacity: 1; }
+
+    @media (hover: none) {
+        .bubbleMenu { opacity: 0.6; }
+    }
+}
+
+.groupedPrev { margin-top: 2px; }
+
+.rowMine {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.rowTheirs { align-self: flex-start; }
+
+.bubble {
+    min-width: 0;
+    padding: 0.5rem 0.8rem;
+    border-radius: 14px;
+    font-size: 0.88rem;
+}
+
+.mine {
+    background: var(--brand-color);
+    color: #fff;
+    border-end-end-radius: 4px;
+
+    a { color: #fff; }
+}
+
+.theirs {
+    background: var(--input-background-color);
+    border: 1px solid $edge;
+    border-end-start-radius: 4px;
+
+    a { color: var(--brand-color); }
+}
+
+// پیام‌های پشت‌سرهم یک نفر: گوشهٔ دم فقط روی آخرین
+.mine.groupedNext { border-end-end-radius: 14px; }
+.theirs.groupedNext { border-end-start-radius: 14px; }
+
+.bubblePending { opacity: 0.7; }
+
+.bubbleFailed {
+    background: color-mix(in srgb, $red 14%, var(--body-background));
+    color: var(--body-text-color);
+    border: 1px solid color-mix(in srgb, $red 45%, transparent);
+}
+
+.bubbleText {
+    margin: 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    text-align: start;
+
+    a { text-decoration: underline; }
+}
+
+// ساعت + تیک کنار حباب، پایین‌چین؛ در پیام خودم تیک سمت حباب
+.bubbleMeta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding-bottom: 3px;
+    font-size: 0.66rem;
+    color: $muted;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+
+    .rowMine & { flex-direction: row-reverse; }
+}
+
+// پیام خودم در هر جهتی سمت راست؛ در RTL «end» یعنی چپ، پس برعکس می‌کنیم
+:global([dir='rtl']) {
+    .skeletonMine { align-self: flex-start; }
+    .skeletonTheirs { align-self: flex-end; }
+
+    .rowMine { align-self: flex-start; flex-direction: row; }
+    .rowTheirs { align-self: flex-end; flex-direction: row-reverse; }
+
+    .mine { border-end-end-radius: 14px; border-end-start-radius: 4px; }
+    .theirs { border-end-start-radius: 14px; border-end-end-radius: 4px; }
+    .mine.groupedNext { border-end-start-radius: 14px; }
+    .theirs.groupedNext { border-end-end-radius: 14px; }
+
+    .rowMine .bubbleMeta { flex-direction: row; }
+}
+
+.statusIcon {
+    display: inline-flex;
+}
+
+.statusRead {
+    color: var(--brand-color);
+}
+
+.statusFailed {
+    display: inline-flex;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: $red;
+    cursor: pointer;
+}
+
+.typingBubble {
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border-end-start-radius: 4px;
+    background: var(--input-background-color);
+    border: 1px solid $edge;
+
+    i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: $muted;
+        animation: dmTypingDot 1s ease-in-out infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+    }
+}
+
+@keyframes dmTypingDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+    30% { transform: translateY(-3px); opacity: 1; }
+}
+
+.jumpBtn {
+    position: absolute;
+    bottom: 12px;
+    inset-inline-end: 16px;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $edge;
+    border-radius: 10px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+
+    &:hover { background: color-mix(in srgb, var(--body-text-color) 8%, var(--input-background-color)); }
+}
+
+.jumpCount {
+    position: absolute;
+    top: -8px;
+    inset-inline-start: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: $red;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ───── کامپوزر: یک کادر — پیوست | متن | ارسال ───── */
+
+.composer {
+    padding: 0.75rem 1rem 0.9rem;
+    border-top: 1px solid $edge;
+
+    @media (max-width: $bp) {
+        padding: 0.55rem 0.6rem calc(0.55rem + env(safe-area-inset-bottom));
+    }
+}
+
+.composerBox {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $edge;
+    border-radius: 18px;
+    background: var(--input-background-color);
+    transition: border-color 0.15s ease, background 0.15s ease;
+
+    &:hover { border-color: color-mix(in srgb, var(--body-text-color) 22%, transparent); }
+
+    &:focus-within {
+        border-color: color-mix(in srgb, var(--brand-color) 70%, transparent);
+    }
+}
+
+.composerBoxError,
+.composerBoxError:focus-within {
+    border-color: $red;
+}
+
+// دکمه‌ها پایین‌چین تا با چندخطی شدن متن کنار خط آخر بمانند
+.composerRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 5px;
+}
+
+.composerIconBtn {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: $muted;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover { background: $hover; color: var(--brand-color); }
+    &:focus-visible { outline: 2px solid var(--brand-color); outline-offset: -2px; }
+}
+
+.composer .composerInput {
+    flex: 1;
+    min-width: 0;
+    min-height: 38px;
+    max-height: 160px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 6px;
+    border: 0 !important;
+    outline: none;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    resize: none;
+    overflow-y: auto;
+    scrollbar-width: thin;
+
+    &::placeholder {
+        color: $muted;
+        opacity: 1;
+    }
+}
+
+// خالی: آیکون کم‌رنگ؛ آماده: دکمهٔ پر رنگ برند با ورود نرم
+.sendBtn {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: color-mix(in srgb, var(--body-text-color) 35%, transparent);
+    cursor: not-allowed;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+
+    svg { transition: transform 0.18s ease; }
+}
+
+.sendBtnReady {
+    background: var(--brand-color);
+    color: #fff;
+    cursor: pointer;
+
+    &:hover { background: color-mix(in srgb, var(--brand-color) 88%, #000); }
+    &:active { transform: scale(0.94); }
+    &:focus-visible { outline: 2px solid color-mix(in srgb, var(--brand-color) 50%, transparent); outline-offset: 2px; }
+}
+
+.composerMeta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 5px 6px 0;
+    font-size: 0.7rem;
+    color: $muted;
+}
+
+.composerError {
+    flex: 1;
+    color: $red;
+}
+
+.counter { font-variant-numeric: tabular-nums; }
+.counterOver { color: $red; font-weight: 700; }
+
+.flipIcon { transform: scaleX(-1); }
+
+/* ───── دکمه‌ها و دیالوگ ───── */
+
+.ghostBtn,
+.dangerBtn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+}
+
+.ghostBtn {
+    border: 1px solid $edge;
+    background: transparent;
+    color: var(--body-text-color);
+
+    &:hover:not(:disabled) { background: $hover; }
+}
+
+.dangerBtn {
+    border: 1px solid $red;
+    background: $red;
+    color: #fff;
+}
+
+.dialog {
+    padding: 1.25rem;
+    color: var(--body-text-color);
+}
+
+.dialogTitle {
+    margin: 0 0 0.5rem;
+    padding-inline-end: 44px;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.dialogText {
+    margin: 0;
+    font-size: 0.84rem;
+    color: $muted;
+    line-height: 1.7;
+}
+
+.dialogQuote {
+    margin: 0.85rem 0 0;
+    padding: 0.6rem 0.8rem;
+    border-inline-start: 3px solid $edge;
+    background: $faint;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+.dialogActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 1.1rem;
+}
+
+/* ───────────────────────── پیوست‌ها ───────────────────────── */
+
+.previewIcon {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-inline-end: 4px;
+}
+
+.bubbleWithMedia {
+    padding: 4px;
+
+    .bubbleText { padding: 0.35rem 0.55rem 0.2rem; }
+}
+
+// فقط عکس/ویدیو: بدون قاب رنگی دور تصویر (ساعت مثل بقیه کنار حباب است)
+.bubbleMediaOnly {
+    padding: 0;
+    background: transparent !important;
+    border: none !important;
+}
+
+.attachments {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mediaSingle {
+    display: flex;
+}
+
+.mediaGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 140px);
+    gap: 3px;
+
+    @media (max-width: $bp) {
+        grid-template-columns: repeat(2, minmax(0, 120px));
+    }
+
+    .mediaTile { aspect-ratio: 1; }
+}
+
+.mediaTile {
+    position: relative;
+    max-width: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background: $faint;
+    cursor: zoom-in;
+
+    img,
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.playBadge {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+}
+
+.audioRow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px;
+
+    audio {
+        width: min(280px, 70vw);
+        height: 36px;
+    }
+}
+
+.audioName {
+    font-size: 0.78rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fileRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: min(240px, 60vw);
+    max-width: 320px;
+    padding: 6px 8px;
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+}
+
+.fileIcon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+
+    small {
+        font-size: 0.5rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-top: 1px;
+    }
+}
+
+.fileText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: start;
+}
+
+.fileName {
+    font-size: 0.82rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fileMeta {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+.fileDownload {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.dropOverlay {
+    position: absolute;
+    inset: 8px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px dashed var(--brand-color);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--brand-color) 10%, $surface);
+    color: var(--brand-color);
+    font-size: 0.9rem;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+/* ───── پیوست‌های در حال آپلود در کامپوزر ───── */
+
+.uploadList {
+    list-style: none;
+    margin: 0;
+    padding: 8px 8px 2px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.uploadChip {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 210px;
+    padding: 6px;
+    border: 1px solid $edge;
+    border-radius: 10px;
+    overflow: hidden;
+    background: $surface;
+}
+
+.uploadChipError {
+    border-color: color-mix(in srgb, $red 55%, transparent);
+}
+
+.uploadThumb {
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    overflow: hidden;
+    background: $faint;
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.uploadThumbIcon {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    color: #fff;
+}
+
+.uploadThumbFile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-color);
+
+    small {
+        font-size: 0.5rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+}
+
+.uploadText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.uploadName {
+    font-size: 0.76rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.uploadMeta {
+    font-size: 0.66rem;
+    color: $muted;
+
+    .uploadChipError & { color: $red; }
+}
+
+.uploadProgress {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--brand-color);
+    transform-origin: left center;
+    transition: transform 0.2s linear;
+
+    :global([dir="rtl"]) & { transform-origin: right center; }
+}
+
+.chipBtn {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: $muted;
+    cursor: pointer;
+
+    &:hover { background: $hover; color: var(--body-text-color); }
+}
+
+/* ───── مسدود ───── */
+
+.blockedBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid $edge;
+    color: $muted;
+    font-size: 0.84rem;
+    text-align: center;
+}
+
+/* ───── فرم گزارش ───── */
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.reasonList {
+    margin: 0.9rem 0 0;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.reasonOption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid $edge;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover { background: $hover; }
+
+    input { flex: none; width: 16px; height: 16px; accent-color: var(--brand-color); margin: 0; }
+
+    span { flex: 1; min-width: 0; }
+}
+
+.reasonOptionActive {
+    border-color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+}
+
+.dialogField {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 0.9rem;
+    font-size: 0.8rem;
+    color: $muted;
+
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid $edge;
+        border-radius: 10px;
+        background: var(--input-background-color);
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 0.85rem;
+        resize: vertical;
+        outline: none;
+
+        &:focus { border-color: color-mix(in srgb, var(--brand-color) 60%, transparent); }
+    }
+}
+
+.fieldError {
+    margin: 6px 0 0;
+    font-size: 0.75rem;
+    color: $red;
+}
+
+.checkRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0.9rem;
+    font-size: 0.84rem;
+    cursor: pointer;
+
+    input { flex: none; width: 16px; height: 16px; accent-color: $red; margin: 0; }
+}
+
+/* ───── ⋯ ردیف گفتگو، سنجاق، پوشهٔ بایگانی ───── */
+
+// ⋯ روی گوشهٔ ردیف؛ با هاور/فوکوس ساعت و نشان خوانده‌نشده جایشان را به منو می‌دهند
+.convRow {
+    position: relative;
+
+    .convMenu {
+        position: absolute;
+        top: 50%;
+        inset-inline-end: 10px;
+        transform: translateY(-50%);
+        background: $surface;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.12s ease;
+    }
+
+    &:hover .convMenu,
+    &:has(:focus-visible) .convMenu,
+    .convMenu[aria-expanded='true'] {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &:hover .convMeta,
+    &:hover .unreadBadge,
+    &:has(:focus-visible) .convMeta,
+    &:has(:focus-visible) .unreadBadge,
+    &:has(.convMenu[aria-expanded='true']) .convMeta,
+    &:has(.convMenu[aria-expanded='true']) .unreadBadge {
+        visibility: hidden;
+    }
+
+    // لمسی: هاور ندارد — ⋯ همیشه کنار ردیف، متن جای آن را خالی می‌گذارد
+    @media (hover: none) {
+        .convMenu {
+            opacity: 0.75;
+            pointer-events: auto;
+            background: transparent;
+        }
+
+        .convBody { padding-inline-end: 30px; }
+    }
+}
+
+.convMeta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pinIcon {
+    color: $muted;
+    transform: rotate(45deg);
+}
+
+.archiveEntry {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.65rem 1rem;
+    border: none;
+    border-bottom: 1px solid color-mix(in srgb, $edge 70%, transparent);
+    border-inline-start: 3px solid transparent;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover { background: $hover; }
+    &:focus-visible { outline: 2px solid var(--brand-color); outline-offset: -2px; }
+}
+
+.archiveEntryIcon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $faint;
+    color: $muted;
+}
+
+.archiveEntryText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    strong { font-size: 0.87rem; font-weight: 600; }
+    small { font-size: 0.74rem; color: $muted; }
+}
+
+// خوانده‌نشده‌های بایگانی کم‌رنگ (مثل تلگرام) — جلب توجه نکند
+.unreadBadgeMuted {
+    background: color-mix(in srgb, var(--body-text-color) 30%, transparent);
+}
+
+.folderBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0.85rem;
+    border-bottom: 1px solid $edge;
+    background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    font-size: 0.84rem;
+    font-weight: 700;
+
+    small {
+        padding: 0 6px;
+        border-radius: 6px;
+        background: $faint;
+        color: $muted;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+}
+
+.folderBack {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover { background: $hover; }
+}
+
+// ── فقط نمای ادمین: گفتگوی کاربر نمایشی ──────────────────────────────
+.personaChip {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 40%;
+    padding: 3px 9px 3px 4px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-color, #8b5cf6) 12%, transparent);
+    color: var(--brand-color, #8b5cf6);
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    > span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // عرض کم: فقط آواتار پرسونا (متن در title)
+    @media (max-width: $bp) {
+        padding: 3px;
+
+        > span:last-child { display: none; }
+    }
+}
+
+.sentBy {
+    margin-inline-end: 4px;
+    color: var(--brand-color, #8b5cf6);
+    font-weight: 600;
+}
+
+/* ───────────────────────── انتخاب، پاسخ، بازارسال ───────────────────────── */
+
+// هر پیام یک خط تمام‌عرض: پس‌زمینهٔ انتخاب تا لبه‌های ناحیهٔ پیام‌ها کشیده می‌شود
+.msgLine {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    transition: background-color 0.15s ease;
+
+    @media (max-width: $bp) {
+        margin-inline: -0.75rem;
+        padding-inline: 0.75rem;
+    }
+}
+
+// تیک انتخاب همیشه سمت چپ (پیام خودم سمت راست است)
+.msgLineSelecting {
+    cursor: pointer;
+    user-select: none;
+    padding-left: calc(1.25rem + 28px);
+
+    @media (max-width: $bp) {
+        padding-left: calc(0.75rem + 28px);
+    }
+
+    > .selectCheck {
+        position: absolute;
+        left: 12px;
+        bottom: 6px;
+    }
+
+    &:hover { background: $hover; }
+}
+
+.msgLineSelected,
+.msgLineSelected:hover {
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+}
+
+.msgLineFlash {
+    animation: dmMessageFlash 1.4s ease-out;
+}
+
+@keyframes dmMessageFlash {
+    0%, 30% { background: color-mix(in srgb, var(--brand-color) 22%, transparent); }
+    100% { background: transparent; }
+}
+
+// چک‌باکس مربع گوشه‌گرد (نه دایره)
+.selectCheck {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1.5px solid $muted;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.selectCheckOn {
+    background: var(--brand-color);
+    border-color: var(--brand-color);
+}
+
+.selectionBar {
+    gap: 0.4rem;
+}
+
+.selectionCount {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.headerIconDanger {
+    &:hover { color: $red; background: color-mix(in srgb, $red 10%, transparent); }
+}
+
+// «بازارسال از …» بالای حباب
+.forwardedLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    font-size: 0.72rem;
+    opacity: 0.78;
+}
+
+// نقل‌قول پیام اصلی داخل حباب؛ کلیک = پرش به آن
+.replyQuote {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 6px;
+    padding: 2px 8px;
+    border: none;
+    border-inline-start: 2px solid var(--brand-color);
+    border-radius: 3px;
+    background: $faint;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+.mine .replyQuote {
+    border-inline-start-color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.replyQuoteName {
+    font-size: 0.74rem;
+    color: var(--brand-color);
+}
+
+.mine .replyQuoteName { color: #fff; }
+
+.replyQuoteText {
+    max-width: 100%;
+    font-size: 0.78rem;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// نوار «پاسخ به …» بالای کادر پیام
+.replyBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid $edge;
+}
+
+.replyBarIcon {
+    flex-shrink: 0;
+    color: var(--brand-color);
+}
+
+.replyBarText {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.primaryBtn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--brand-color);
+    background: var(--brand-color);
+    color: #fff;
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+}
+
+.forwardSearch {
+    flex: none;
+    margin-top: 0.85rem;
+}
+
+// فهرست مقصدها: خط جداکننده، بدون کارت
+.forwardList {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    max-height: min(340px, 50vh);
+    overflow-y: auto;
+
+    li + li { border-top: 1px solid $edge; }
+}
+
+.forwardRow {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 6px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+
+    &:hover:not(:disabled) { background: $hover; }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.forwardRowOn,
+.forwardRowOn:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+}
+
+.forwardName {
+    flex: 1;
+    min-width: 0;
+    text-align: start;
+    font-size: 0.86rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.forwardEmpty {
+    padding: 1.25rem 0;
+    text-align: center;
+    font-size: 0.82rem;
+    color: $muted;
+}

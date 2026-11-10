@@ -1,0 +1,215 @@
+@use '../../../styles/creator-ui' as ui;
+
+$color-text-main: var(--body-text-color);
+$color-text-muted: var(--settings-text-muted, #666666);
+$color-border: var(--settings-border, var(--input-border-color));
+$color-primary: var(--brand-color);
+$color-success: #16a34a;
+$color-warning: #d97706;
+$font-family: inherit; // فونت اصلی اپ — داخل پروفایل سازنده هم همان
+
+.container {
+    font-family: $font-family;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 8px 0 24px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+
+    @media (min-width: 769px) {
+        padding: 8px 4px 24px;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .headerIcon {
+        border: 1px solid $color-border;
+        border-radius: 8px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-text-muted;
+        background-color: var(--settings-surface-muted, var(--input-background-color));
+    }
+
+    .headerText {
+        h2 {
+            @include ui.section-title;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        p {
+            @include ui.section-hint;
+        }
+    }
+}
+
+.statusBadge {
+    font-size: 0.7rem;
+    font-weight: 400;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+
+    &.verified {
+        color: #fff;
+        background-color: $color-success;
+    }
+
+    &.pending {
+        color: #fff;
+        background-color: $color-warning;
+    }
+}
+
+.divider {
+    border: none;
+    border-top: 1px dotted $color-border;
+    margin: 24px 0;
+}
+
+.loadingState {
+    padding: 40px 0;
+    text-align: center;
+    color: $color-text-muted;
+    font-size: 0.9rem;
+}
+
+.intro {
+    font-size: 0.875rem;
+    line-height: 1.9;
+    color: $color-text-muted;
+    margin: 0 0 8px 0;
+}
+
+.privacyNote {
+    font-size: 0.78rem;
+    line-height: 1.8;
+    color: $color-text-muted;
+    margin: 0;
+}
+
+.sandboxNotice {
+    background: color-mix(in srgb, $color-warning 10%, transparent);
+    border: 1px solid color-mix(in srgb, $color-warning 40%, transparent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: $color-warning;
+    margin-bottom: 8px;
+}
+
+.errorNote {
+    background: color-mix(in srgb, #e11d48 8%, transparent);
+    border: 1px solid color-mix(in srgb, #e11d48 35%, transparent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: #e11d48;
+    margin-bottom: 8px;
+
+    strong {
+        font-weight: 500;
+    }
+}
+
+.verifiedCard {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: color-mix(in srgb, $color-success 6%, transparent);
+    border: 1px solid color-mix(in srgb, $color-success 30%, transparent);
+    border-radius: 10px;
+    padding: 20px;
+
+    .verifiedIcon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: $color-success;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .verifiedBody {
+        min-width: 0;
+        flex: 1;
+
+        .verifiedTitle {
+            margin: 0 0 14px 0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: $color-text-main;
+        }
+    }
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px 24px;
+
+    .infoItem {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .infoLabel {
+            font-size: 0.72rem;
+            color: $color-text-muted;
+        }
+
+        .infoValue {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: $color-text-main;
+            word-break: break-word;
+        }
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.formGroupRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+
+    .label {
+        @include ui.label;
+    }
+}
+
+.input {
+    @include ui.input;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-start;
+
+    .submitBtn {
+        @include ui.primary-btn;
+    }
+}

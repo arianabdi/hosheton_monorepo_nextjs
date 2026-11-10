@@ -1,0 +1,210 @@
+@use 'sass:list';
+@use 'sass:map';
+
+/* حالت خالی گالری — هم‌سبک موشن تنظیمات نود (project-view.module.scss → .emptyHint*):
+   گرید خانه‌های خالی (چیدمان justified مثل خود گالری)؛ ذره‌بین از خانه ۱ به ۳ و ۵ می‌رود و
+   هر خانه زیرش روشن می‌شود، بعد وسط می‌ایستد، سر تکان می‌دهد و «?» ظاهر می‌شود.
+   صحنه ۲۲۰×۹۶؛ حرکت با translate و تکان با rotate (جدا از هم) تا روی هم اثر نگذارند. */
+
+$text: var(--body-text-color);
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+$lens: 26px;
+
+// [left, top, width] هر خانه؛ دو ردیف ۴۴px با فاصله ۶px و جمع عرض ۲۲۰
+$tiles: (0 0 64) (70 0 46) (122 0 98) (0 52 92) (98 52 58) (162 52 58);
+// پنجره روشن شدن خانه‌های ۱، ۳ و ۵ (وقتی ذره‌بین رویشان است)
+$lit: (1: (4, 17), 3: (26, 38), 5: (48, 58));
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 6px;
+    padding: 36px 8px 24px;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    --hint-accent: #3b82f6;
+    --hint-loop: 4s;
+
+    position: relative;
+    width: 220px;
+    height: 96px;
+    margin-bottom: 12px;
+    direction: ltr;
+
+    :where(span, i, em) {
+        display: block;
+        font-style: normal;
+    }
+}
+
+.tile {
+    position: absolute;
+    height: 44px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1.5px dashed color-mix(in srgb, $text 22%, transparent);
+
+    // کوه و خورشید کم‌رنگ: یعنی جای یک تصویر
+    &::before {
+        content: '';
+        position: absolute;
+        right: 9px;
+        top: 7px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: color-mix(in srgb, $text 12%, transparent);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: color-mix(in srgb, $text 8%, transparent);
+        clip-path: polygon(0 100%, 0 78%, 30% 46%, 52% 72%, 70% 54%, 100% 86%, 100% 100%);
+    }
+
+    @for $i from 1 through 6 {
+        $t: list.nth($tiles, $i);
+
+        &:nth-child(#{$i}) {
+            left: #{list.nth($t, 1)}px;
+            top: #{list.nth($t, 2)}px;
+            width: #{list.nth($t, 3)}px;
+
+            @if map.has-key($lit, $i) {
+                animation: glHintTile#{$i} var(--hint-loop) ease-out infinite;
+            }
+        }
+    }
+}
+
+@each $i, $w in $lit {
+    $from: list.nth($w, 1);
+    $to: list.nth($w, 2);
+
+    @keyframes glHintTile#{$i} {
+        0%, #{$from}% { border-color: color-mix(in srgb, var(--body-text-color) 22%, transparent); background: transparent; }
+        #{$from + 2}%, #{$to - 2}% {
+            border-color: var(--hint-accent);
+            background: color-mix(in srgb, var(--hint-accent) 7%, transparent);
+        }
+        #{$to}%, 100% { border-color: color-mix(in srgb, var(--body-text-color) 22%, transparent); background: transparent; }
+    }
+}
+
+/* ───────── ذره‌بین — مرکز شیشه روی مرکز خانه‌ها حرکت می‌کند ───────── */
+
+.lens {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: $lens;
+    height: $lens;
+    opacity: 0;
+    transform-origin: 50% 50%;
+    animation:
+        glHintMove var(--hint-loop) cubic-bezier(0.55, 0, 0.35, 1) infinite,
+        glHintShake var(--hint-loop) ease-in-out infinite;
+}
+
+.glass {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 3px solid color-mix(in srgb, $text 60%, transparent);
+    background: color-mix(in srgb, var(--body-background, #fff) 55%, transparent);
+
+    em {
+        position: absolute;
+        inset: 0;
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 20px;
+        text-align: center;
+        color: var(--hint-accent);
+        opacity: 0;
+        animation: glHintQuestion var(--hint-loop) $ease-pop infinite;
+    }
+}
+
+.handle {
+    position: absolute;
+    left: 21px;
+    top: 19px;
+    width: 4px;
+    height: 12px;
+    border-radius: 2px;
+    background: color-mix(in srgb, $text 60%, transparent);
+    rotate: -45deg;
+    transform-origin: 50% 0;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 240px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// مرکز خانه‌ها: ۱ (۳۲، ۲۲)، ۳ (۱۷۱، ۲۲)، ۵ (۱۲۷، ۷۴)، وسط گرید (۱۱۰، ۴۸) — منهای نصف شیشه
+@function at($x, $y) {
+    @return #{$x - $lens * 0.5} #{$y - $lens * 0.5};
+}
+
+@keyframes glHintMove {
+    0% { translate: at(32px, 30px); opacity: 0; }
+    4%, 16% { translate: at(32px, 22px); opacity: 1; }
+    26%, 38% { translate: at(171px, 22px); opacity: 1; }
+    48%, 58% { translate: at(127px, 74px); opacity: 1; }
+    66%, 86% { translate: at(110px, 48px); opacity: 1; }
+    94%, 100% { translate: at(110px, 54px); opacity: 0; }
+}
+
+// «پیدا نشد»: دو بار به چپ و راست
+@keyframes glHintShake {
+    0%, 66% { rotate: 0deg; }
+    69% { rotate: -14deg; }
+    72% { rotate: 12deg; }
+    75% { rotate: -9deg; }
+    78% { rotate: 6deg; }
+    81%, 100% { rotate: 0deg; }
+}
+
+@keyframes glHintQuestion {
+    0%, 66% { transform: scale(0.3); opacity: 0; }
+    71%, 86% { transform: scale(1); opacity: 1; }
+    92%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .lens {
+        opacity: 1;
+        translate: at(110px, 48px);
+    }
+
+    .glass em {
+        opacity: 1;
+    }
+}

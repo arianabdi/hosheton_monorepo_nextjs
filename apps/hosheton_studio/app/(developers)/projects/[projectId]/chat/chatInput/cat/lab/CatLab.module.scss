@@ -1,0 +1,194 @@
+.page {
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    font-family: system-ui, sans-serif;
+}
+
+.defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.header {
+    max-width: 1200px;
+    margin: 0 auto 16px;
+
+    h1 {
+        margin: 0 0 4px;
+        font-size: 20px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 13px;
+        opacity: 0.7;
+    }
+}
+
+.shelf {
+    fill: var(--plan-card-background-color);
+    stroke: color-mix(in srgb, var(--brand-color) 45%, var(--input-border-color));
+    stroke-width: 1.5;
+}
+
+.live {
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    padding: 0 0 28px;
+    border-bottom: 1px solid var(--input-border-color);
+}
+
+.liveControls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    max-width: 720px;
+    margin: 0 auto 170px;
+    font-size: 12px;
+
+    button {
+        padding: 5px 10px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+    }
+
+    span {
+        opacity: 0.6;
+    }
+}
+
+.liveInput {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    font: inherit;
+    color: inherit;
+}
+
+.liveSend {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        padding: 4px 12px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+    }
+}
+
+.playground {
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--input-border-color);
+}
+
+.playStage {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    touch-action: none;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 900px;
+    margin: 12px auto 0;
+    font-size: 12px;
+
+    button {
+        padding: 5px 10px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+
+        &:hover {
+            background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+        }
+    }
+
+    .active {
+        border-color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 16%, transparent);
+    }
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    select {
+        padding: 3px 6px;
+        border: 1px solid var(--input-border-color);
+        border-radius: 6px;
+        background: transparent;
+        color: inherit;
+    }
+}
+
+.poseRow,
+.toolRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+}
+
+.slider input {
+    width: 180px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--input-border-color);
+    border-inline-start: 1px solid var(--input-border-color);
+}
+
+.card {
+    margin: 0;
+    padding: 10px 10px 12px;
+    border-bottom: 1px solid var(--input-border-color);
+    border-inline-end: 1px solid var(--input-border-color);
+
+    figcaption {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 6px;
+        font-size: 12px;
+
+        span {
+            opacity: 0.6;
+        }
+    }
+}
+
+.cardStage {
+    display: block;
+    width: 100%;
+    height: auto;
+}

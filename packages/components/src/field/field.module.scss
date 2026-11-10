@@ -1,0 +1,226 @@
+.copyIcon {
+    position: absolute;
+    top: 6px;
+    inset-inline-start: 10px;
+    cursor: pointer;
+}
+
+.field {
+    position: relative;
+
+
+
+    :global(input),
+    :global(textarea),
+    input,
+    textarea {
+        background-color: var(--input-background-color);
+        box-sizing: border-box;
+        border: 1px solid var(--input-border-color);
+        border-radius: 6px;
+        padding: 0.8rem;
+        text-align: start;
+        transition: border-color 0.3s;
+        font-size: 14px;
+        width: 100%;
+        position: relative;
+        color: var(--body-text-color);
+    }
+
+
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active ,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    textarea:-webkit-autofill:active ,
+    input:focus-visible,
+    textarea:focus-visible,
+    input:focus,
+    textarea:focus {
+        /* Background color to inherit from your style or set explicitly */
+        -webkit-box-shadow: 0 0 0px 1000px var(--input-background-color) inset !important;
+        box-shadow: 0 0 0px 1000px var(--input-background-color) inset !important;
+        -webkit-text-fill-color: var(--body-text-color) !important; // text color
+
+        border-color: #6576ff !important;
+        color: var(--body-text-color) !important;
+        background-color: var(--input-background-color) !important;
+        outline: 0;
+        box-shadow: 0 0 0 3px rgba(101, 118, 255, 0.1);
+    }
+}
+
+
+.passwordEye {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 12px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.fieldWithEye {
+    input {
+        padding-inline-end: 2.5rem;
+    }
+}
+
+.fieldContainer {
+    width: 100%;
+    margin: 0px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    .label{
+        font-size: 13px;
+        color: var(--body-text-color);
+    }
+
+}
+
+
+
+
+.switchWrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.fieldDescription {
+    color: var(--body-text-color);
+    opacity: 0.5;
+    font-size: 13px;
+    letter-spacing: revert;
+    padding: 6px 0px;
+}
+
+.switchWrapper input {
+    display: none;
+}
+
+
+.track {
+    width: 50px;
+    height: 28px;
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.25s ease;
+    border: 1px solid var(--body-text-color);
+}
+
+
+.thumb {
+    position: absolute;
+    top: 3px;
+    inset-inline-start: 3px; /* off = start side; follows <html dir> */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--body-text-color);
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+
+.switchWrapper input:checked + .track {
+    border: 1px solid var(--border-color-green);
+}
+
+
+.switchWrapper input:checked + .track .thumb {
+    /* on = slides toward the end side (--dir-sign: 1 RTL / -1 LTR, apps without it stay RTL) */
+    transform: translateX(calc(-22px * var(--dir-sign, 1)));
+    background-color: var(--border-color-green);
+}
+
+
+//.label, label {
+//    font-size: 0.875rem;
+//    font-family: var(--font-iransans);
+//    color: var(--body-text-color);
+//}
+
+
+.danger {
+
+}
+
+
+//check-box
+//!* Hide the default checkbox input *!
+.customCheckbox {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0px;
+}
+
+
+//.customCheckbox label {
+//    margin-right: 3px !important;
+//    margin-left: 20px !important;
+//    height: 23px;
+//    align-items: center;
+//    display: flex;
+//}
+
+.customCheckbox input[type=checkbox]:checked + .checkboxMark::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    left: 6px;
+    border-width: 0 2px 2px 0;
+    margin: auto;
+    transform: rotate(45deg);
+}
+
+
+.customCheckbox input[type=checkbox]:checked + .checkboxMark {
+    background-color: var(--brand-color1);
+    border-color: var(--brand-color1);
+}
+
+.customCheckbox .checkboxMark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--brand-color1);
+    display: inline-block;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+}
+
+
+//timepicker
+.customTimePicker .awesome-picker .picker {
+    inset-inline-end: auto;
+    inset-inline-start: 0;
+}
+
+
+//select
+.formControlSelect::after {
+    top: 7px !important;
+    color: #626262 !important;
+    inset-inline-end: 0px;
+    inset-inline-start: unset;
+    position: relative;
+    width: fit-content;
+    padding-inline-end: 2rem;
+    margin: 0px !important;
+}
+

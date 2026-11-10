@@ -1,0 +1,94 @@
+.panelContainer {
+
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.Header {
+    position: relative;
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+    max-height: var(--header-height);
+    height:var(--header-height);
+    justify-content: space-between;
+}
+
+
+.left {
+}
+
+.right {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+.left, .right {
+    width: 0px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: 0.4s cubic-bezier(0, 0.09, 0, 1.05) all;
+    transform: translateX(0vw);
+}
+
+.row {
+
+    width: 100%;
+}
+
+
+.middle {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.sideHeader{
+    display: none;
+}
+
+.closeSide{
+    z-index: 200;
+}
+
+.disablePanel {
+    display: block;
+}
+
+
+@media (max-width: 900px) {
+    .sideHeader {
+        display: block;
+        padding: 10px 20px;
+    }
+
+
+    .disablePanel {
+        display: none;
+    }
+    .left, .middle {
+        width: 100%;
+    }
+    .left, .right{
+        position: fixed;
+        z-index: 1;
+        background: var(--card-background);
+        overflow-y: scroll;
+        height: calc(100vh - var(--header-height));
+        overflow-x: hidden;
+        width: 100vw;
+    }
+    .right{
+        transform: translateX(-100vw);
+    }
+    .left{
+        transform: translateX(100vw);
+    }
+}

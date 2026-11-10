@@ -1,0 +1,116 @@
+.columns {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+    align-items: stretch;
+    height: min(36rem, calc(100dvh - 15rem));
+    min-height: 20rem;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    justify-content: flex-start !important;
+
+    @media (max-width: 900px) {
+        max-height: min(28rem, 70dvh);
+    }
+}
+
+.panelTitle {
+    flex-shrink: 0;
+}
+
+.search {
+    flex-shrink: 0;
+    margin-bottom: 0.75rem;
+}
+
+.panelBody {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    display: grid;
+    gap: 0.65rem;
+    align-content: start;
+}
+
+.panelFooter {
+    flex-shrink: 0;
+    margin-top: 0.75rem;
+    padding-top: 0.35rem;
+    border-top: 1px solid var(--plan-card-border-color, var(--border-color));
+
+    :global(button) {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.75rem;
+    }
+
+    :global(select) {
+        font-size: 0.75rem;
+        padding-block: 0.2rem;
+    }
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    text-align: right;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: inherit;
+    border-radius: 10px;
+    padding: 0.55rem 0.7rem;
+    cursor: pointer;
+}
+
+.rowActive {
+    border-color: var(--brand-color);
+}
+
+.rowTitle {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selectedRow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0;
+}
+
+.index {
+    width: 1.1rem;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.35rem;
+}
+
+.coverLg {
+    width: 48px;
+    height: 48px;
+}
+
+.empty {
+    margin: 0;
+}

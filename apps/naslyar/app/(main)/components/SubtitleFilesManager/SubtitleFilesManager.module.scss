@@ -1,0 +1,230 @@
+.wrapper {
+    padding: .75rem 0rem;
+    font-family: inherit;
+    transition: all .2s;
+
+    &.disabled {
+        opacity: 0.65;
+        background: #f1f5f9;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0px 10px;
+
+    h4 {
+        margin: 0;
+        font-size: 0.85rem;
+        font-weight: 300;
+        color: var(--body-text-color);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+}
+
+.badge {
+    background: #e2e8f0;
+    color: #475569;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2rem;
+}
+
+.alertText {
+    font-size: 0.75rem;
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.actionRow {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.input {
+    color: var(--body-text-color);
+    cursor: pointer;
+    background: var(--input-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: .3rem;
+    outline: none;
+    min-width: 12rem;
+    padding: 0.7rem .5rem;
+    font-size: .8rem;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+
+        max-width: 100%;
+    }
+    &:focus { border-color: #3b82f6; }
+}
+
+.uploadZone {
+    background: var(--input-background-color);
+    border: 1px dashed var(--border-color);
+    border-radius: .5rem;
+    flex: 1;
+    align-items: center;
+    transition: border-color .2s;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+
+    &:hover { border-color: #3b82f6; }
+}
+
+.hiddenInput {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.uploadLabel {
+    color: #64748b;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding: .45rem .75rem;
+    font-size: .8rem;
+    display: block;
+    overflow: hidden;
+}
+
+.previewInfo {
+    color: #0f172a;
+    font-weight: 500;
+}
+
+.clearFile {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    height: 100%;
+    &:hover { color: #ef4444; }
+}
+
+.submitBtn {
+    background: #10b981; // رنگ سبز ملایم برای تمایز بصری جزیی با دکمه ویدیو
+    color: #fff;
+    border: none;
+    padding: 0.45rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) { background: #059669; }
+    &:disabled {
+        color: #94a3b8;
+        cursor: not-allowed;
+        background: #2563eb47;
+
+    }
+}
+
+.tagCloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    flex-direction: column;
+}
+
+.tagSize {
+    color: #0369a1;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: monospace;
+    font-size: .75rem;
+}
+.tagContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.subTag {
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-between;
+    align-items: center;
+    gap: .35rem;
+    font-size: .75rem;
+    display: inline-flex;
+    padding: 10px;
+}
+
+.tagLang {
+    background: #f59e0b; // رنگ نارنجی/آمبر برای نمایش برچسب زبان زیرنویس
+    color: #fff;
+    padding: 0.05rem 0.25rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+}
+
+.tagDelete {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 0 0.1rem;
+    &:hover { color: #ef4444; }
+}
+
+@media (max-width: 640px) {
+    .actionRow { flex-direction: column; align-items: stretch; gap: 0.4rem; }
+    .input, .submitBtn { width: 100%; }
+}
+
+
+
+.progressContainer {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+    height: 9px;
+    position: relative;
+}
+
+.progressBar {
+    height: 100%;
+    background-color: #0070f3; // رنگ نوار پیشرفت
+    width: 0%;
+    transition: width 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progressText {
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.pauseBtn {
+    background-color: #f44336 !important;
+}
+
+.resumeBtn {
+    background-color: #ff9800 !important;
+}

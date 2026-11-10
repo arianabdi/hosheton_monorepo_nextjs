@@ -1,0 +1,374 @@
+$primary-blue: var(--brand-color);
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+
+.rtl {
+    text-align: start;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: $text-dark;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.mainTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+.filterSection {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* وقتی فلگ PRICING_COMING_SOON فعال است فیلترها غیرفعال و کم‌رنگ می‌شوند */
+.filterDisabled {
+    opacity: 0.55;
+
+    input:disabled,
+    select:disabled,
+    button:disabled {
+        cursor: not-allowed;
+    }
+}
+
+.searchBarWrapper {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.mainSearchInput {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 3rem;
+    border: 1px solid var(--plan-card-border-color);
+    background-color: transparent;
+    color: $text-dark;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+
+    &:focus {
+        border-color: $primary-blue;
+    }
+}
+
+.searchIconBtn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.filterGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 576px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 992px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.label {
+    font-size: 0.78rem;
+    opacity: 0.85;
+}
+
+.select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--plan-card-border-color);
+    background-color: transparent;
+    color: $text-dark;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.infoMiniCard {
+    background-color: #7b58fd0a;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+
+    .infoIcon {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+    }
+
+    .infoContent {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+
+        p {
+            margin: 0;
+            opacity: 0.92;
+        }
+    }
+}
+
+/* ---- Coming soon placeholder (pricing table temporarily disabled) ---- */
+
+.comingSoonSection {
+    margin-top: 0.5rem;
+}
+
+.comingSoonCard {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 3.25rem 1.5rem 3rem;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+}
+
+.comingSoonGlow {
+    position: absolute;
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 170px;
+    background: radial-gradient(ellipse at center, rgba(123, 88, 253, 0.16), transparent 70%);
+    pointer-events: none;
+}
+
+.comingSoonIcon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    color: $primary-blue;
+    background: linear-gradient(135deg, rgba(123, 88, 253, 0.16), rgba(123, 88, 253, 0.05));
+    border: 1px solid rgba(123, 88, 253, 0.28);
+    animation: soonPulse 2.6s ease-in-out infinite;
+}
+
+.comingSoonBadge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $primary-blue;
+    background-color: rgba(123, 88, 253, 0.1);
+    border: 1px solid rgba(123, 88, 253, 0.22);
+}
+
+.comingSoonText {
+    position: relative;
+    margin: 0;
+    max-width: 480px;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.9;
+    opacity: 0.9;
+}
+
+.comingSoonShimmer {
+    position: relative;
+    width: 170px;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(123, 88, 253, 0.08), rgba(123, 88, 253, 0.5), rgba(123, 88, 253, 0.08));
+    background-size: 200% 100%;
+    animation: soonShimmer 2.2s linear infinite;
+}
+
+@keyframes soonPulse {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(123, 88, 253, 0.16);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(123, 88, 253, 0);
+    }
+}
+
+@keyframes soonShimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.tableSection {
+    margin-top: 0.5rem;
+}
+
+.tableScroll {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+}
+
+.table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.875rem;
+
+    th {
+        background-color: #7b58fd0d;
+        color: $text-muted;
+        padding: 0.85rem 1rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        text-align: start;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        vertical-align: middle;
+        text-align: start;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    tbody tr:hover td {
+        background-color: rgba(123, 88, 253, 0.03);
+    }
+}
+
+.colName {
+    width: 32%;
+}
+
+.colProvider {
+    width: 22%;
+}
+
+.colType {
+    width: 12%;
+}
+
+.colPrice {
+    width: 17%;
+}
+
+.modelName {
+    font-weight: 600;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.priceValue {
+    font-size: 0.82rem;
+    font-weight: 600;
+    direction: ltr;
+    display: inline-block;
+    unicode-bidi: isolate;
+}
+
+.emptyCell {
+    text-align: center !important;
+    padding: 2rem 1rem !important;
+    opacity: 0.65;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.pageBtn {
+    border: 1px solid var(--plan-card-border-color);
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+}
+
+.pageInfo {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}

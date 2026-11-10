@@ -1,0 +1,2546 @@
+@use 'sass:list';
+
+/* حالت خالی لیست پروژه‌ها — یک صحنه موشن وسط صفحه + فهرست عمودی قابلیت‌ها.
+   صحنه‌ها بدون پس‌زمینه/کادر، ۳۶۰×۲۲۰ و چپ‌به‌راست‌اند؛ هر keyframe درصدی از --loop همان
+   صحنه است (۱٪ از ۱۳.۵ ثانیه = ۱۳۵ms و...). تقریباً فقط transform/opacity. */
+
+$muted: var(--input-border-color);
+$faint: var(--input-background-color);
+$surface: var(--input-background-color);
+$line: var(--input-border-color);
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// پنجره نمایش: قبل از $from پنهان، بین $from و $to دیده می‌شود
+@mixin win($name, $from, $to, $fade: 1.5) {
+    @keyframes #{$name} {
+        0%, #{$from}% { opacity: 0; }
+        #{$from + $fade}%, #{$to - $fade}% { opacity: 1; }
+        #{$to}%, 100% { opacity: 0; }
+    }
+}
+
+// تصویر نمادین (خورشید + کوه) برای تایل‌ها و فریم‌ها؛ رنگ از --tone
+@mixin picture($sun: 9px) {
+    background: color-mix(in srgb, var(--tone) 24%, $surface);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        right: 16%;
+        top: 16%;
+        width: $sun;
+        height: $sun;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--tone) 65%, transparent);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: color-mix(in srgb, var(--tone) 50%, transparent);
+        clip-path: polygon(0 100%, 0 78%, 30% 42%, 52% 72%, 70% 52%, 100% 86%, 100% 100%);
+    }
+}
+
+/* ───────── مشترک صحنه‌ها ───────── */
+
+@keyframes scDash {
+    to { stroke-dashoffset: -9; }
+}
+
+@keyframes scSpin {
+    to { rotate: 360deg; }
+}
+
+/* ───────── کاراکتر فلت — همه اندازه‌ها em در کادر ۱۰em؛ رنگ‌ها از --skin/--hair/--shirt/--hat ───────── */
+
+$skin-shade: color-mix(in srgb, var(--skin) 82%, #7a2e12);
+
+.face {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 10em;
+    height: 10em;
+    margin-left: -5em;
+
+    i {
+        position: absolute;
+        display: block;
+    }
+}
+
+.fShirt {
+    left: 1.8em;
+    right: 1.8em;
+    bottom: 0;
+    height: 1.7em;
+    border-radius: 1.1em 1.1em 0 0;
+    background: var(--shirt);
+}
+
+.fNeck {
+    left: 4.1em;
+    width: 1.8em;
+    bottom: 1.4em;
+    height: 1.5em;
+    background: $skin-shade;
+}
+
+.fEar {
+    left: 2.15em;
+    top: 4.6em;
+    width: 1em;
+    height: 1.3em;
+    border-radius: 50%;
+    background: $skin-shade;
+}
+
+.fEarR { left: 6.85em; }
+
+.fHead {
+    left: 2.6em;
+    top: 2em;
+    width: 4.8em;
+    height: 5.8em;
+    border-radius: 2em 2em 2.3em 2.3em;
+    background: var(--skin);
+}
+
+.fBeard {
+    left: 2.6em;
+    top: 5.3em;
+    width: 4.8em;
+    height: 2.8em;
+    border-radius: 0.5em 0.5em 2.4em 2.4em;
+    background: var(--hair);
+}
+
+.fCheek {
+    left: 3.1em;
+    top: 5.55em;
+    width: 0.85em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: color-mix(in srgb, #f4777a 55%, transparent);
+}
+
+.fCheekR { left: 6.05em; }
+
+.fBrow {
+    left: 3.45em;
+    top: 3.95em;
+    width: 1.05em;
+    height: 0.3em;
+    border-radius: 0.2em;
+    background: color-mix(in srgb, var(--hair) 85%, #000);
+}
+
+.fBrowR { left: 5.5em; }
+
+.fEye {
+    left: 3.85em;
+    top: 4.55em;
+    width: 0.48em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: #26262e;
+}
+
+.fEyeR { left: 5.67em; }
+
+.fNose {
+    left: 4.62em;
+    top: 4.95em;
+    width: 0.76em;
+    height: 1.15em;
+    border-radius: 0.38em;
+    background: $skin-shade;
+}
+
+.fMustache {
+    left: 3.85em;
+    top: 5.9em;
+    width: 2.3em;
+    height: 0.6em;
+    border-radius: 0.45em 0.45em 0.15em 0.15em;
+    background: var(--hair);
+}
+
+.fMouth {
+    left: 4.35em;
+    top: 6.35em;
+    width: 1.3em;
+    height: 0.65em;
+    overflow: hidden;
+    border-radius: 0.12em 0.12em 0.7em 0.7em;
+    background: #7f1d2d;
+    transform-origin: top center;
+
+    // دندان‌ها
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0.12em;
+        right: 0.12em;
+        top: 0;
+        height: 0.22em;
+        border-radius: 0 0 0.1em 0.1em;
+        background: #fff;
+    }
+}
+
+.fLips {
+    left: 4.5em;
+    top: 6.4em;
+    width: 1em;
+    height: 0.48em;
+    border-radius: 0.5em;
+    background: #c0265e;
+
+    &::before { display: none; }
+}
+
+.fGlasses {
+    left: 3.44em;
+    top: 4.13em;
+    width: 3.12em;
+    height: 1.3em;
+    background: linear-gradient(var(--frame), var(--frame)) center 42% / 0.6em 0.18em no-repeat;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 1.3em;
+        height: 1.3em;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 0.17em solid var(--frame);
+        background: var(--lens);
+    }
+
+    &::before { left: 0; }
+    &::after { right: 0; }
+}
+
+.fGlasses_round { --frame: #2a2a33; --lens: rgba(255, 255, 255, 0.28); }
+.fGlasses_sun { --frame: #111; --lens: #1f2937; }
+.fGlasses_gold { --frame: #f5b301; --lens: rgba(255, 214, 102, 0.75); }
+
+// ── مو ──
+
+.fHair_short,
+.fHair_quiff {
+    left: 2.45em;
+    top: 1.5em;
+    width: 5.1em;
+    height: 2.1em;
+    border-radius: 2.3em 2.3em 0.4em 0.4em;
+    background: var(--hair);
+}
+
+.fHair_quiff::after {
+    content: '';
+    position: absolute;
+    right: 0.3em;
+    top: -0.8em;
+    width: 2.6em;
+    height: 1.4em;
+    border-radius: 1.2em 1.4em 0 0.3em;
+    background: var(--hair);
+    transform: skewX(-18deg);
+}
+
+.fHair_bald {
+    left: 2.5em;
+    top: 3.6em;
+    width: 5em;
+    height: 1.5em;
+    box-sizing: border-box;
+    border-left: 0.38em solid var(--hair);
+    border-right: 0.38em solid var(--hair);
+    border-radius: 0.3em;
+}
+
+.fHair_tall {
+    left: 2.6em;
+    top: 0.2em;
+    width: 4.8em;
+    height: 2.9em;
+    border-radius: 0.5em 0.5em 0.1em 0.1em;
+    background:
+        repeating-linear-gradient(90deg, transparent 0 0.9em, color-mix(in srgb, var(--hair) 70%, #fff) 0.9em 1.05em),
+        var(--hair);
+}
+
+.fHair_cap {
+    left: 2.35em;
+    top: 1.05em;
+    width: 5.3em;
+    height: 2.2em;
+    border-radius: 2.6em 2.6em 0.3em 0.3em;
+    background: var(--hat);
+
+    // نوار کلاه
+    &::before {
+        content: '';
+        position: absolute;
+        left: 1.6em;
+        right: 1.6em;
+        top: 0.55em;
+        height: 0.22em;
+        border-radius: 0.1em;
+        background: color-mix(in srgb, var(--hat) 55%, #fff);
+    }
+
+    // لبه
+    &::after {
+        content: '';
+        position: absolute;
+        left: -0.45em;
+        right: -0.45em;
+        bottom: -0.35em;
+        height: 0.6em;
+        border-radius: 0.3em;
+        background: color-mix(in srgb, var(--hat) 80%, #000);
+    }
+}
+
+// مو جلو (چتری) برای موهای بلند
+.fHair_bob,
+.fHair_long,
+.fHair_curly {
+    left: 2.45em;
+    top: 1.55em;
+    width: 5.1em;
+    height: 2.1em;
+    border-radius: 2.5em 2.5em 0.3em 0.3em;
+    background: var(--hair);
+}
+
+.fHair_long {
+    border-radius: 2.5em 2.5em 0.3em 2.5em;
+}
+
+.fHair_curly {
+    top: 1.4em;
+    border-radius: 2.5em 2.5em 1em 1em;
+}
+
+.fHairBack {
+    background: var(--hair);
+}
+
+.fHairBack_bob {
+    left: 1.95em;
+    top: 1.45em;
+    width: 6.1em;
+    height: 5.7em;
+    border-radius: 2.8em 2.8em 0.5em 0.5em;
+}
+
+.fHairBack_long {
+    left: 1.85em;
+    top: 1.4em;
+    width: 6.3em;
+    height: 7em;
+    border-radius: 3em 3em 1.2em 1.2em;
+}
+
+// ابر مو + دو پف کناری
+.fHairBack_curly {
+    left: 1.2em;
+    top: 0.9em;
+    width: 7.6em;
+    height: 4.6em;
+    border-radius: 50%;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 2.8em;
+        width: 2.6em;
+        height: 2.8em;
+        border-radius: 50%;
+        background: var(--hair);
+    }
+
+    &::before { left: -0.8em; }
+    &::after { right: -0.8em; }
+}
+
+// حرف زدن: دهان باز و بسته، پلک زدن
+.faceTalk {
+    .fMouth {
+        animation: scTalk 1.15s linear infinite;
+    }
+
+    .fEye {
+        animation: scBlink 3.4s infinite;
+    }
+}
+
+@keyframes scTalk {
+    0%, 100% { transform: scaleY(0.35); }
+    12% { transform: scaleY(1); }
+    24% { transform: scaleY(0.5); }
+    36% { transform: scaleY(0.95); }
+    46% { transform: scaleY(0.3); }
+    58% { transform: scaleY(0.8); }
+    70% { transform: scaleY(0.45); }
+    84% { transform: scaleY(1); }
+}
+
+@keyframes scBlink {
+    0%, 93%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+}
+
+/* ═════════ ۱. حالت‌های مختلف (۱۶.۵ ثانیه: workflow ۰–۳۳٪، chat ۳۳–۶۶٪، editor ۶۶–۱۰۰٪) ═════════ */
+
+.modeTabs {
+    position: absolute;
+    left: 42px;
+    top: 0;
+    width: 276px;
+    height: 30px;
+    display: flex;
+    box-sizing: border-box;
+    border-radius: 9px;
+    border: 1px solid $line;
+    background-color: var(--input-background-color);
+}
+
+.modePill {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 86px;
+    height: 22px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--sc-accent) 14%, transparent);
+    animation: scModePill var(--loop) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.modeTab {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    font-size: 13px;
+    color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+
+    em {
+        max-width: 54px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    @for $i from 0 through 2 {
+        &:nth-child(#{$i + 2}) {
+            animation: scModeTab#{$i} var(--loop) linear infinite;
+        }
+    }
+}
+
+@keyframes scModePill {
+    0%, 31% { transform: translateX(0); }
+    34.5%, 64% { transform: translateX(92px); }
+    67.5%, 97% { transform: translateX(184px); }
+    100% { transform: translateX(0); }
+}
+
+@for $i from 0 through 2 {
+    $from: $i * 33.33;
+    @keyframes scModeTab#{$i} {
+        0%, #{$from}%, #{$from + 33.33}%, 100% { color: color-mix(in srgb, var(--body-text-color) 50%, transparent); }
+        #{$from + 1.5}%, #{$from + 31.8}% { color: var(--sc-accent); }
+    }
+}
+
+.modeView {
+    position: absolute;
+    left: 0;
+    top: 40px;
+    width: 360px;
+    height: 180px;
+    opacity: 0;
+}
+
+.viewWorkflow { animation: scView0 var(--loop) linear infinite; }
+.viewChat { animation: scView1 var(--loop) linear infinite; }
+.viewEditor { animation: scView2 var(--loop) linear infinite; }
+
+@include win(scView0, 0.01, 33.33);
+@include win(scView1, 33.33, 66.66);
+@include win(scView2, 66.66, 100);
+
+/* ── Workflow (۰–۳۳٪ از ۱۶.۵ ثانیه؛ ۱٪ ≈ ۱۶۵ms):
+   درگ از خروجی پرامپت به نود تولید (۳.۶–۷.۵) → درگ از خروجی تصویر (۱۰.۴–۱۴) → کلیک Play (۱۷.۶)
+   → پیشرفت و جریان روی edgeها → ویدیوی خروجی (۲۵ به بعد) ── */
+
+.wfEdges {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+    stroke: $muted;
+    stroke-width: 1.5;
+}
+
+// edgeهایی که کاربر با درگ می‌کشد (pathLength=1)
+.wfLink {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+}
+
+.wfLink1 { animation: scWfLink1 var(--loop) linear infinite; }
+.wfLink2 { animation: scWfLink2 var(--loop) linear infinite; }
+
+@keyframes scWfLink1 {
+    0%, 3.6% { stroke-dashoffset: 1; }
+    7.5%, 32% { stroke-dashoffset: 0; }
+    33.4%, 100% { stroke-dashoffset: 1; }
+}
+
+@keyframes scWfLink2 {
+    0%, 10.4% { stroke-dashoffset: 1; }
+    14%, 32% { stroke-dashoffset: 0; }
+    33.4%, 100% { stroke-dashoffset: 1; }
+}
+
+.wfFlowIn,
+.wfFlowOut {
+    stroke: var(--sc-accent);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-dasharray: 4 5;
+    opacity: 0;
+}
+
+.wfFlowIn {
+    animation: scDash 0.45s linear infinite, scWfFlowIn var(--loop) ease-out infinite;
+}
+
+.wfFlowOut {
+    animation: scDash 0.45s linear infinite, scWfFlowOut var(--loop) ease-out infinite;
+}
+
+@include win(scWfFlowIn, 18.5, 32.5);
+@include win(scWfFlowOut, 24.5, 32.5);
+
+.wfNode {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border: 1px solid $line;
+    background: $surface;
+}
+
+.wfHeader {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 18px;
+    flex-shrink: 0;
+    padding: 0 6px 0 7px;
+    border-bottom: 1px solid $line;
+
+    > i {
+        width: 9px;
+        height: 9px;
+        border-radius: 3px;
+        background: var(--tone);
+        opacity: 0.85;
+    }
+
+    > b {
+        width: 36px;
+        height: 4px;
+        border-radius: 2px;
+        background: $muted;
+    }
+}
+
+.wfBody {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 8px;
+    min-height: 0;
+
+    > b {
+        height: 3px;
+        border-radius: 2px;
+        background: $faint;
+
+        &:nth-child(2) { width: 80%; }
+        &:nth-child(3) { width: 55%; }
+    }
+}
+
+.wfPrompt { --tone: var(--sc-tone-d); left: 6px; top: 14px; width: 84px; height: 56px; }
+.wfImage { --tone: var(--sc-tone-b); left: 6px; top: 100px; width: 84px; height: 66px; }
+
+.wfOut {
+    --tone: #ef4444;
+    left: 236px;
+    top: 37px;
+    width: 118px;
+    height: 100px;
+    animation: scWfOut var(--loop) linear infinite;
+
+    .wfBody {
+        padding: 6px;
+    }
+}
+
+.wfGen {
+    --tone: var(--sc-accent);
+    left: 118px;
+    top: 46px;
+    width: 88px;
+    height: 82px;
+    animation: scWfSelect var(--loop) linear infinite;
+
+    // حلقه انتخاب (مثل activeNode)
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        border-radius: 14px;
+        border: 3px solid color-mix(in srgb, var(--sc-accent) 24%, transparent);
+        opacity: 0;
+        pointer-events: none;
+        animation: scWfRing var(--loop) $ease-pop infinite;
+    }
+
+    // موج لحظه اجرا
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: 10px;
+        border: 2px solid var(--sc-accent);
+        opacity: 0;
+        pointer-events: none;
+        animation: scWfWave var(--loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+    }
+
+    .wfHeader > i {
+        animation: scWfIcon var(--loop) ease-out infinite;
+    }
+}
+
+// دکمه Play روی هدر نود تولید
+.wfRun {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    margin-left: auto;
+    border-radius: 50%;
+    background: var(--sc-accent);
+    color: #fff;
+    font-size: 7px;
+    animation: scWfRun var(--loop) ease-out infinite;
+
+    svg {
+        margin-left: 1px;
+        fill: currentColor;
+    }
+}
+
+.wfThumb {
+    --tone: var(--sc-tone-b);
+    position: relative;
+    flex: 1;
+    border-radius: 5px;
+    @include picture(7px);
+}
+
+.wfModel {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--sc-accent);
+    font-size: 11px;
+
+    b {
+        flex: 1;
+        height: 4px;
+        border-radius: 2px;
+        background: $muted;
+    }
+}
+
+.wfProgress {
+    height: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: $faint;
+
+    i {
+        height: 100%;
+        background: var(--sc-accent);
+        transform-origin: left center;
+        transform: scaleX(0);
+        animation: scWfProgress var(--loop) linear infinite;
+    }
+}
+
+.wfHandle {
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid $surface;
+    background: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+}
+
+.wfHandleIn { left: -4px; }
+.wfHandleOut { right: -4px; }
+.wfHandleInTop { top: 35%; }
+.wfHandleInBottom { top: 65%; }
+
+// روشن شدن handleها: منبع هنگام گرفتن، مقصد هنگام وصل شدن
+@mixin handle-on($name, $at) {
+    @keyframes #{$name} {
+        0%, #{$at - 0.3}% { transform: scale(1); background: color-mix(in srgb, var(--body-text-color) 60%, transparent); }
+        #{$at + 0.6}% { transform: scale(1.8); background: var(--sc-accent); }
+        #{$at + 1.6}%, 32% { transform: scale(1); background: var(--sc-accent); }
+        33.4%, 100% { transform: scale(1); background: color-mix(in srgb, var(--body-text-color) 60%, transparent); }
+    }
+}
+
+@include handle-on(scWfH1, 3.6);
+@include handle-on(scWfH1t, 7.5);
+@include handle-on(scWfH2, 10.4);
+@include handle-on(scWfH2t, 14);
+@include handle-on(scWfH3, 24.5);
+
+.wfH1 { animation: scWfH1 var(--loop) ease-out infinite; }
+.wfH1t { animation: scWfH1t var(--loop) ease-out infinite; }
+.wfH2 { animation: scWfH2 var(--loop) ease-out infinite; }
+.wfH2t { animation: scWfH2t var(--loop) ease-out infinite; }
+.wfH3 { animation: scWfH3 var(--loop) ease-out infinite; }
+
+// نقطه کلیک روی Play = (197, 56)
+.wfRipple {
+    position: absolute;
+    left: 188px;
+    top: 47px;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--sc-accent);
+    opacity: 0;
+    animation: scWfRipple var(--loop) ease-out infinite;
+}
+
+.wfBurst {
+    position: absolute;
+    left: 197px;
+    top: 56px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--sc-accent);
+        opacity: 0;
+        animation: scWfRay var(--loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) { --ray-angle: #{($i - 1) * 45 + 22.5}deg; }
+        }
+    }
+}
+
+// نوک نشانگر در (8, 8) آیکون است → با left/top منفی، translate مختصات خود نوک است
+.wfCursor {
+    position: absolute;
+    left: -8px;
+    top: -8px;
+    width: 22px;
+    height: 22px;
+    color: var(--body-text-color);
+    opacity: 0;
+    transform-origin: 8px 8px;
+    animation: scWfCursor var(--loop) ease-in-out infinite;
+}
+
+@keyframes scWfCursor {
+    0%, 1.5% { transform: translate(150px, 160px); opacity: 0; }
+    3% { transform: translate(90px, 42px) scale(1); opacity: 1; }
+    3.6% { transform: translate(90px, 42px) scale(0.85); opacity: 1; }
+    7.5% { transform: translate(118px, 75px) scale(0.85); opacity: 1; }
+    8.1% { transform: translate(118px, 75px) scale(1); opacity: 1; }
+    9.8% { transform: translate(90px, 133px) scale(1); opacity: 1; }
+    10.4% { transform: translate(90px, 133px) scale(0.85); opacity: 1; }
+    14% { transform: translate(118px, 99px) scale(0.85); opacity: 1; }
+    14.6% { transform: translate(118px, 99px) scale(1); opacity: 1; }
+    17% { transform: translate(197px, 56px) scale(1); opacity: 1; }
+    17.6% { transform: translate(197px, 56px) scale(0.78); opacity: 1; }
+    18.4%, 23% { transform: translate(197px, 56px) scale(1); opacity: 1; }
+    27%, 100% { transform: translate(250px, 170px) scale(1); opacity: 0; }
+}
+
+@keyframes scWfRun {
+    0%, 17.3% { transform: scale(1); }
+    17.7% { transform: scale(0.72); }
+    18.6% { transform: scale(1.18); }
+    19.6%, 100% { transform: scale(1); }
+}
+
+@keyframes scWfRipple {
+    0%, 17.6% { transform: scale(0.4); opacity: 0; }
+    18.1% { opacity: 0.9; }
+    22%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes scWfRay {
+    0%, 17.9% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    18.4% { transform: rotate(var(--ray-angle)) translateY(-12px) scaleY(1); opacity: 1; }
+    21.5%, 100% { transform: rotate(var(--ray-angle)) translateY(-28px) scaleY(0.2); opacity: 0; }
+}
+
+@keyframes scWfSelect {
+    0%, 17.4% { transform: scale(1); border-color: var(--input-border-color); }
+    17.8% { transform: scale(0.95); }
+    18.1% { border-color: var(--sc-accent); }
+    18.6% { transform: scale(1.05); }
+    19.4% { transform: scale(0.99); }
+    20.2%, 31.5% { transform: scale(1); border-color: var(--sc-accent); }
+    33.3%, 100% { transform: scale(1); border-color: var(--input-border-color); }
+}
+
+@keyframes scWfRing {
+    0%, 18% { transform: scale(1.15); opacity: 0; }
+    20%, 31.5% { transform: scale(1); opacity: 1; }
+    33.3%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes scWfWave {
+    0%, 17.9% { transform: scale(1); opacity: 0; }
+    18.3% { opacity: 0.9; }
+    22.5%, 100% { transform: scale(1.25, 1.45); opacity: 0; }
+}
+
+@keyframes scWfIcon {
+    0%, 18% { opacity: 0.4; }
+    19.5%, 31.5% { opacity: 1; }
+    33.3%, 100% { opacity: 0.4; }
+}
+
+@keyframes scWfProgress {
+    0%, 18.5% { transform: scaleX(0); }
+    25%, 31.5% { transform: scaleX(1); }
+    33.3%, 100% { transform: scaleX(0); }
+}
+
+@keyframes scWfOut {
+    0%, 25.5% { border-color: var(--input-border-color); }
+    26.5%, 31.5% { border-color: #ef4444; }
+    33.3%, 100% { border-color: var(--input-border-color); }
+}
+
+// ── ویدیوی خروجی ──
+
+.wfVideo {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    border-radius: 5px;
+    background: $faint;
+}
+
+.live {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 100% 0 0);
+    animation: scWfReveal var(--loop) ease-out infinite;
+
+    > i,
+    > em,
+    > span {
+        position: absolute;
+    }
+}
+
+.liveWall { left: 0; right: 0; top: 0; bottom: 22px; background: #f7a928; }
+.liveFloor { left: 0; right: 0; bottom: 0; height: 22px; background: #f5e6c4; }
+
+.livePicture {
+    left: 40px;
+    top: -2px;
+    width: 18px;
+    height: 13px;
+    box-sizing: border-box;
+    border: 2px solid #e2543a;
+    background: linear-gradient(to top, #2f7fd8 0 45%, #a8dcf5 45%);
+}
+
+.liveChair {
+    left: 3px;
+    top: 24px;
+    width: 34px;
+    height: 36px;
+    border-radius: 14px 14px 6px 6px;
+    background: #4d8fe0;
+}
+
+// ران‌ها رو به جلو + ساق پا
+.liveLegs {
+    left: 20px;
+    top: 47px;
+    width: 34px;
+    height: 9px;
+    border-radius: 4px;
+    background: #1b1b1f;
+
+    &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 3px;
+        width: 9px;
+        height: 18px;
+        border-radius: 3px;
+        background: #1b1b1f;
+    }
+}
+
+.liveBody {
+    left: 11px;
+    top: 32px;
+    width: 25px;
+    height: 22px;
+    border-radius: 10px 10px 4px 4px;
+    background: #e8502f;
+
+    // پیراهن زرد زیر کت
+    &::before {
+        content: '';
+        position: absolute;
+        left: 9px;
+        top: 0;
+        width: 7px;
+        height: 14px;
+        border-radius: 0 0 3px 3px;
+        background: #f5b400;
+    }
+}
+
+.liveHost {
+    left: 6px;
+    top: 4px;
+    width: 34px;
+    height: 34px;
+    font-size: 3.4px;
+}
+
+// دست در حال حرف زدن/تکان دادن، چرخش از شانه
+.liveArm {
+    left: 36px;
+    top: 31px;
+    width: 5px;
+    height: 13px;
+    border-radius: 3px;
+    background: #e8502f;
+    transform-origin: 50% 100%;
+    animation: scLiveArm 0.9s ease-in-out infinite alternate;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: -1px;
+        top: -5px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #f08cb3;
+    }
+}
+
+.liveRing {
+    left: 64px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.liveTag {
+    left: 72px;
+    top: 17px;
+    padding: 1px 3px;
+    border-radius: 2px;
+    background: #e2382b;
+    color: #fff;
+    font-size: 5px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+    animation: scLiveTag 1s steps(2, jump-none) infinite;
+}
+
+.liveTripod {
+    left: 77px;
+    top: 43px;
+    width: 1.5px;
+    height: 14px;
+    background: #2f6fd6;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        width: 1.5px;
+        height: 8px;
+        background: #2f6fd6;
+        transform-origin: top center;
+    }
+
+    &::before { transform: rotate(30deg); }
+    &::after { transform: rotate(-30deg); }
+}
+
+.livePhone {
+    left: 73px;
+    top: 30px;
+    width: 9px;
+    height: 14px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    border: 1.5px solid #2a3b8f;
+    background: #dbeafe;
+}
+
+.liveTable {
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    height: 10px;
+    background: #d9473a;
+}
+
+// نوار پخش ویدیو
+.wfVideoBar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: color-mix(in srgb, #000 25%, transparent);
+
+    i {
+        height: 100%;
+        background: #ef4444;
+        transform-origin: left center;
+        transform: scaleX(0);
+        animation: scWfVideoBar var(--loop) linear infinite;
+    }
+}
+
+@keyframes scWfReveal {
+    0%, 25% { clip-path: inset(0 100% 0 0); }
+    27%, 31.5% { clip-path: inset(0 0 0 0); }
+    33.3%, 100% { clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes scWfVideoBar {
+    0%, 27% { transform: scaleX(0); }
+    32.5% { transform: scaleX(0.8); }
+    33.3%, 100% { transform: scaleX(0); }
+}
+
+@keyframes scLiveArm {
+    from { transform: rotate(18deg); }
+    to { transform: rotate(48deg); }
+}
+
+@keyframes scLiveTag {
+    50% { opacity: 0.55; }
+}
+
+/* ── Chat v2 (گالری) ── */
+
+// کاشی گالری = پرتره کاراکتر؛ اندازه کاراکتر = ارتفاع کاشی (font-size = ارتفاع / ۱۰)
+.cvTile {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 9px;
+    background: var(--bg);
+    font-size: 6.2px;
+}
+
+.cvRow2 { font-size: 5px; }
+
+.cvA { left: 82px; top: 4px; width: 104px; height: 62px; }
+.cvB { left: 192px; top: 4px; width: 72px; height: 62px; }
+.cvC { left: 270px; top: 4px; width: 76px; height: 62px; }
+.cvD { left: 14px; top: 72px; width: 120px; height: 50px; }
+.cvE { left: 140px; top: 72px; width: 92px; height: 50px; }
+.cvF { left: 238px; top: 72px; width: 108px; height: 50px; }
+
+.cvShift {
+    animation: scCvShift var(--loop) cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.cvNew {
+    left: 14px;
+    top: 4px;
+    width: 62px;
+    height: 62px;
+    opacity: 0;
+    animation: scCvNew var(--loop) ease-out infinite;
+}
+
+.cvProcessing {
+    position: absolute;
+    left: 14px;
+    top: 4px;
+    width: 62px;
+    height: 62px;
+    opacity: 0;
+    animation: scCvProcessing var(--loop) ease-out infinite;
+}
+
+.cvDash {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+
+    rect {
+        fill: none;
+        stroke: color-mix(in srgb, var(--sc-accent) 70%, transparent);
+        stroke-width: 1.5;
+        stroke-dasharray: 5 4;
+        animation: scDash 0.6s linear infinite;
+    }
+}
+
+.cvMine {
+    position: absolute;
+    left: 10px;
+    top: 9px;
+    width: 42px;
+    height: 32px;
+}
+
+.cvLogo {
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sc-accent) 16%, transparent);
+    color: var(--sc-accent);
+    font-size: 11px;
+    animation: scCvLogoHit 0.9s ease-out infinite;
+}
+
+// چکش آینه‌شده — مثل باکس «در حال تولید» چت v2؛ چرخش دور دسته
+.cvHammer {
+    position: absolute;
+    left: 19px;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--sc-accent);
+    font-size: 18px;
+    transform-origin: 14.5px 14.5px;
+    animation: scCvHammer 0.9s infinite;
+
+    svg {
+        display: block;
+        transform: scaleX(-1);
+    }
+}
+
+.cvSparks {
+    position: absolute;
+    left: 22px;
+    top: 12px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1.5px;
+        top: -1.5px;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #ffc44d;
+        opacity: 0;
+        animation: scCvSpark 0.9s ease-out infinite;
+
+        &:nth-child(1) { --dx: -7px; --dy: -9px; }
+        &:nth-child(2) { --dx: -11px; --dy: -2px; background: var(--sc-accent); }
+        &:nth-child(3) { --dx: 1px; --dy: -11px; }
+    }
+}
+
+.cvDots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+
+    i {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--sc-accent);
+        animation: scDotBlink 1s infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+    }
+}
+
+.cvComposer {
+    position: absolute;
+    left: 14px;
+    top: 134px;
+    width: 332px;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid $line;
+    background: $surface;
+}
+
+.cvMention {
+    position: absolute;
+    left: 8px;
+    top: 9px;
+    width: 34px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--sc-accent) 14%, transparent);
+    color: var(--sc-accent);
+    font-size: 11px;
+    opacity: 0;
+    animation: scCvMention var(--loop) $ease-pop infinite;
+}
+
+.cvText {
+    position: absolute;
+    left: 50px;
+    top: 17px;
+    width: 170px;
+    height: 4px;
+    border-radius: 2px;
+    background: $muted;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: scCvText var(--loop) steps(14, end) infinite;
+}
+
+.cvSend {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--sc-accent);
+    color: #fff;
+    font-size: 14px;
+    animation: scCvSend var(--loop) ease-out infinite;
+}
+
+@keyframes scCvShift {
+    0%, 42% { transform: translateX(-68px); }
+    44.5%, 66% { transform: translateX(0); }
+    67%, 100% { transform: translateX(-68px); }
+}
+
+@keyframes scCvProcessing {
+    0%, 42.5% { opacity: 0; transform: scale(0.88); }
+    44.5%, 55% { opacity: 1; transform: scale(1); }
+    57%, 100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes scCvNew {
+    0%, 55% { opacity: 0; transform: scale(0.9); }
+    57.5% { opacity: 1; transform: scale(1.04); }
+    59%, 65% { opacity: 1; transform: scale(1); }
+    67%, 100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes scCvMention {
+    0%, 35.5% { opacity: 0; transform: scale(0.6); }
+    37%, 41.5% { opacity: 1; transform: scale(1); }
+    42.5%, 100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes scCvText {
+    0%, 37% { transform: scaleX(0); }
+    41%, 41.6% { transform: scaleX(1); }
+    41.7%, 100% { transform: scaleX(0); }
+}
+
+@keyframes scCvSend {
+    0%, 41% { transform: scale(1); }
+    41.8% { transform: scale(0.8); }
+    43%, 100% { transform: scale(1); }
+}
+
+@keyframes scCvHammer {
+    0% { transform: rotate(26deg); animation-timing-function: ease-out; }
+    36% { transform: rotate(44deg); animation-timing-function: cubic-bezier(0.6, 0, 1, 1); }
+    50% { transform: rotate(0deg); animation-timing-function: ease-out; }
+    58% { transform: rotate(9deg); }
+    66% { transform: rotate(1deg); }
+    100% { transform: rotate(26deg); }
+}
+
+@keyframes scCvLogoHit {
+    0%, 49% { transform: none; }
+    53% { transform: translate(-1px, 1px) scale(0.92) rotate(-4deg); }
+    62% { transform: scale(1.02); }
+    72%, 100% { transform: none; }
+}
+
+@keyframes scCvSpark {
+    0%, 49% { opacity: 0; transform: translate(0, 0); }
+    51% { opacity: 1; transform: translate(0, 0) scale(1.2); }
+    74%, 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3); }
+}
+
+@keyframes scDotBlink {
+    0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* ── Editor (شبیه Premiere) ── */
+
+.edBin {
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    width: 80px;
+
+    > b {
+        width: 32px;
+        height: 4px;
+        border-radius: 2px;
+        background: $muted;
+    }
+}
+
+.edBinGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 36px);
+    gap: 4px;
+    margin-top: 8px;
+
+}
+
+.edBinThumb {
+    position: relative;
+    height: 22px;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--bg);
+    font-size: 2.2px;
+}
+
+.edMonitor {
+    position: absolute;
+    left: 96px;
+    top: 4px;
+    width: 164px;
+    height: 92px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #0d0d10;
+}
+
+// سه کادربندی از یک گفت‌وگو: مدیوم، کلوزآپ، زاویه دوم
+.edFrame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #2e3b55;
+    font-size: 8.4px;
+}
+
+.edFrame1 {
+    background: #3d2f52;
+    font-size: 14px;
+    opacity: 0;
+    animation: scEdFrame1 var(--loop) linear infinite;
+
+    .face { left: 60%; bottom: -40px; }
+}
+
+.edFrame2 {
+    background: #23413a;
+    opacity: 0;
+    animation: scEdFrame2 var(--loop) linear infinite;
+
+    .face { left: 34%; }
+}
+
+// تیتر روی تصویر وقتی playhead روی کلیپ گرافیکی V2 است
+.edTitle {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 4px 6px;
+    border-radius: 2px;
+    background: color-mix(in srgb, #000 55%, transparent);
+    opacity: 0;
+    animation: scEdTitle var(--loop) linear infinite;
+
+    b {
+        width: 52px;
+        height: 5px;
+        border-radius: 2px;
+        background: #fff;
+
+        &:nth-child(2) {
+            width: 34px;
+            height: 3px;
+            background: var(--sc-tone-e);
+        }
+    }
+}
+
+.edTransport {
+    position: absolute;
+    left: 96px;
+    top: 98px;
+    width: 164px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+    font-size: 8px;
+
+    em {
+        position: absolute;
+        left: 0;
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 7.5px;
+        color: var(--sc-tone-d);
+    }
+}
+
+.edMeters {
+    position: absolute;
+    left: 268px;
+    top: 4px;
+    height: 92px;
+    display: flex;
+    gap: 3px;
+
+    i {
+        position: relative;
+        width: 5px;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 1px;
+        background: $faint;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #22c55e 0 70%, #eab308 70% 88%, #ef4444 88%);
+            transform-origin: bottom;
+            animation: scEdMeter 0.6s ease-in-out infinite alternate;
+        }
+
+        &:nth-child(2)::after {
+            animation-duration: 0.45s;
+            animation-delay: -0.2s;
+        }
+    }
+}
+
+.edFx {
+    position: absolute;
+    left: 290px;
+    top: 4px;
+    width: 64px;
+
+    b {
+        position: relative;
+        height: 4px;
+        margin-bottom: 14px;
+        border-radius: 2px;
+        background: $faint;
+
+        // مارکر keyframe
+        &::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            width: 6px;
+            height: 6px;
+            background: var(--sc-tone-d);
+            transform: rotate(45deg);
+        }
+
+        &:nth-child(1)::after { left: 12px; }
+        &:nth-child(2)::after { left: 34px; }
+        &:nth-child(3)::after { left: 22px; }
+        &:nth-child(4)::after { left: 46px; }
+    }
+}
+
+.edTimeline {
+    position: absolute;
+    left: 6px;
+    top: 110px;
+    width: 348px;
+    height: 70px;
+}
+
+.edRuler {
+    position: absolute;
+    left: 30px;
+    right: 0;
+    top: 0;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, $muted 0 1px, transparent 1px 15px);
+    border-bottom: 1px solid $line;
+}
+
+.edHeads {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 26px;
+    height: 100%;
+
+    em {
+        position: absolute;
+        left: 2px;
+        font-size: 7.5px;
+        font-weight: 700;
+        line-height: 1;
+        color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+
+        &:nth-child(1) { top: 12px; }
+        &:nth-child(2) { top: 28px; }
+        &:nth-child(3) { top: 43px; }
+        &:nth-child(4) { top: 57px; }
+    }
+}
+
+.edLane {
+    position: absolute;
+    left: 30px;
+    right: 0;
+
+    i {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        box-sizing: border-box;
+        border-radius: 2px;
+    }
+}
+
+.edV2 { top: 10px; height: 13px; }
+.edV1 { top: 26px; height: 13px; }
+.edA1 { top: 42px; height: 11px; }
+.edA2 { top: 56px; height: 10px; }
+
+.edGfx {
+    left: 94px;
+    width: 70px;
+    background: color-mix(in srgb, var(--sc-tone-e) 55%, transparent);
+    border: 1px solid var(--sc-tone-e);
+    opacity: 0;
+    transform-origin: left center;
+    animation: scEdGfx var(--loop) $ease-pop infinite;
+}
+
+.edV1 i {
+    border: 1px solid color-mix(in srgb, var(--sc-tone-d) 80%, transparent);
+    background:
+        repeating-linear-gradient(90deg, transparent 0 13px, color-mix(in srgb, var(--sc-tone-d) 70%, transparent) 13px 14px),
+        color-mix(in srgb, var(--sc-tone-d) 40%, transparent);
+
+    &:nth-child(1) { left: 0; width: 84px; }
+    &:nth-child(2) { left: 86px; width: 110px; }
+    &:nth-child(3) { left: 198px; width: 120px; }
+}
+
+// موج صدا
+.edA1 i,
+.edA2 i {
+    border: 1px solid color-mix(in srgb, var(--sc-tone-b) 75%, transparent);
+    background: color-mix(in srgb, var(--sc-tone-b) 30%, transparent);
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 2px 3px;
+        background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--sc-tone-b) 85%, transparent) 0 1px, transparent 1px 3px);
+        mask-image: repeating-linear-gradient(90deg, #000 0 7px, rgba(0, 0, 0, 0.35) 7px 11px, #000 11px 16px, rgba(0, 0, 0, 0.55) 16px 21px);
+    }
+}
+
+.edA1 i { left: 0; width: 220px; }
+.edA2 i { left: 70px; width: 248px; }
+
+.edPlayhead {
+    position: absolute;
+    left: 30px;
+    top: -2px;
+    bottom: 0;
+    width: 1.5px;
+    background: #2d8ceb;
+    animation: scEdPlayhead var(--loop) linear infinite;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: -4px;
+        top: 0;
+        width: 9.5px;
+        height: 7px;
+        border-radius: 2px 2px 4px 4px;
+        background: #2d8ceb;
+    }
+}
+
+// کلیپی که از بین مدیا روی ترک V2 کشیده می‌شود
+.edDrag {
+    position: absolute;
+    left: 46px;
+    top: 42px;
+    width: 36px;
+    height: 22px;
+    box-sizing: border-box;
+    padding: 6px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--sc-tone-e) 80%, #fff);
+    outline: 1.5px solid var(--sc-tone-e);
+
+    b {
+        width: 80%;
+        height: 3px;
+        border-radius: 1px;
+        background: #fff;
+
+        &:nth-child(2) { width: 50%; }
+    }
+    opacity: 0;
+    transform-origin: top left;
+    animation: scEdDrag var(--loop) cubic-bezier(0.55, 0, 0.35, 1) infinite;
+}
+
+.edCursor {
+    position: absolute;
+    left: 61px;
+    top: 50px;
+    width: 16px;
+    height: 16px;
+    color: var(--body-text-color);
+    opacity: 0;
+    animation: scEdCursor var(--loop) cubic-bezier(0.55, 0, 0.35, 1) infinite;
+}
+
+@keyframes scEdDrag {
+    0%, 67.5% { opacity: 0; transform: translate(0, 0) scale(1); }
+    68.5% { opacity: 1; transform: translate(0, 0) scale(1.08); }
+    73% { opacity: 1; transform: translate(84px, 78px) scale(1.944, 0.59); }
+    74%, 100% { opacity: 0; transform: translate(84px, 78px) scale(1.944, 0.59); }
+}
+
+@keyframes scEdCursor {
+    0%, 67% { opacity: 0; transform: translate(-10px, 8px); }
+    68% { opacity: 1; transform: translate(0, 0); }
+    73% { opacity: 1; transform: translate(101px, 74px); }
+    76%, 100% { opacity: 0; transform: translate(112px, 84px); }
+}
+
+@keyframes scEdGfx {
+    0%, 73.2% { opacity: 0; transform: scaleY(0.4); }
+    74.5%, 100% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes scEdPlayhead {
+    0%, 69% { transform: translateX(0); }
+    98%, 100% { transform: translateX(300px); }
+}
+
+@keyframes scEdFrame1 {
+    0%, 77.2% { opacity: 0; }
+    77.4%, 88% { opacity: 1; }
+    88.2%, 100% { opacity: 0; }
+}
+
+@keyframes scEdFrame2 {
+    0%, 88% { opacity: 0; }
+    88.2%, 100% { opacity: 1; }
+}
+
+@keyframes scEdTitle {
+    0%, 78% { opacity: 0; transform: translateY(4px); }
+    79%, 84.6% { opacity: 1; transform: translateY(0); }
+    85.4%, 100% { opacity: 0; transform: translateY(0); }
+}
+
+@keyframes scEdMeter {
+    from { transform: scaleY(0.25); }
+    to { transform: scaleY(0.82); }
+}
+
+/* ═════════ ۲. کیف پول مشترک پروژه (۱۲ ثانیه) ═════════
+   «یکی شارژ می‌کند، بقیه مصرف می‌کنند»: صاحب پروژه (تاج‌دار) بالای باکس پروژه ۹٪ روی «+$20» کلیک می‌کند و
+   سکه‌ها موجودی را ۰ → ۲۰ می‌کنند. چپ سه عضو تیم به نوبت (۱۸، ۳۴، ۵۰٪) تصویر، ویدیو و صدا تولید می‌کنند؛
+   هر خروجی با یک نقطه به باکس می‌رود، یک ردیف «−$x» می‌شود و موجودی ۱۵ → ۵ → ۰ کم می‌شود. روی صفر باکس
+   قرمز می‌شود و ۷۴٪ صاحب پروژه دوباره شارژ می‌کند (→ ۲۰). */
+
+$bl-edge: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+$bl-green: #10b981;
+$bl-red: #ef4444;
+$bl-charges: 9, 74;
+$bl-turns: 18, 34, 50;
+// لحظه نشستن هر ردیف مصرف (۱۳٪ بعد از شروع تولید)
+$bl-rows: 31, 47, 63;
+// لحظه عوض شدن موجودی: $0 → $20 → $15 → $5 → $0 → $20
+$bl-balance-at: 0, 15, 31, 47, 63, 80, 100;
+// جابه‌جایی نقطه از خروجی هر عضو تا ردیف خودش در باکس
+$bl-dot-dy: 34, 8, -18;
+
+.blScene {
+    position: absolute;
+    inset: 0;
+    animation: scBlScene var(--loop) linear infinite;
+}
+
+@keyframes scBlScene {
+    0% { opacity: 0; }
+    2%, 95% { opacity: 1; }
+    99%, 100% { opacity: 0; }
+}
+
+/* ───────── اعضای تیم و خروجی‌هایشان ───────── */
+
+.blMember {
+    position: absolute;
+    left: 10px;
+    width: 112px;
+    height: 36px;
+}
+
+.blAvatar {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bg);
+
+    .blMember & {
+        left: 0;
+        top: 3px;
+        width: 30px;
+        height: 30px;
+        font-size: 3.5px;
+    }
+
+    .blOwner & {
+        inset: 0;
+        font-size: 3.5px;
+    }
+}
+
+.blOut {
+    position: absolute;
+    left: 38px;
+    top: 0;
+    width: 52px;
+    height: 36px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: 1px dashed $bl-edge;
+}
+
+.blSpin {
+    position: absolute;
+    left: 18px;
+    top: 10px;
+    width: 14px;
+    height: 14px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--sc-accent) 25%, transparent);
+    border-top-color: var(--sc-accent);
+    opacity: 0;
+}
+
+.blOutMedia {
+    position: absolute;
+    inset: -1px;
+    overflow: hidden;
+    border-radius: 7px;
+    opacity: 0;
+}
+
+.blOutFace {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    font-size: 3.6px;
+}
+
+.blPlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 8px;
+}
+
+// خروجی صوتی: موج صدا
+.blOut_audio {
+    background: color-mix(in srgb, var(--sc-tone-e) 22%, $surface);
+}
+
+.blWave {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+
+    i {
+        width: 3px;
+        height: 20px;
+        border-radius: 2px;
+        background: var(--sc-tone-e);
+        transform-origin: center;
+        animation: scBlWave 0.9s ease-in-out infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+        &:nth-child(4) { animation-delay: 0.45s; }
+        &:nth-child(5) { animation-delay: 0.6s; }
+    }
+}
+
+@keyframes scBlWave {
+    0%, 100% { transform: scaleY(0.35); }
+    50% { transform: scaleY(1); }
+}
+
+// نقطه‌ای که هزینه هر خروجی را به باکس پروژه می‌برد
+.blDot {
+    position: absolute;
+    left: 88px;
+    top: 14px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sc-accent);
+    opacity: 0;
+}
+
+@for $m from 1 through 3 {
+    $s: list.nth($bl-turns, $m);
+    $dy: list.nth($bl-dot-dy, $m);
+
+    .blM#{$m} {
+        top: #{56 + ($m - 1) * 54}px;
+
+        .blSpin { animation: scSpin 0.8s linear infinite, scBlSpin#{$m} var(--loop) linear infinite; }
+        .blOutMedia { animation: scBlOut#{$m} var(--loop) $ease-pop infinite; }
+        .blDot { animation: scBlDot#{$m} var(--loop) cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+    }
+
+    @include win(scBlSpin#{$m}, $s, $s + 7, 0.6);
+
+    @keyframes scBlOut#{$m} {
+        0%, #{$s + 7}% { opacity: 0; transform: scale(0.4); }
+        #{$s + 10}%, 100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes scBlDot#{$m} {
+        0%, #{$s + 8}% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+        #{$s + 8.6}% { opacity: 1; transform: translate(0, 0) scale(1); }
+        #{$s + 13}% { opacity: 1; transform: translate(42px, #{$dy}px) scale(1); }
+        #{$s + 13.3}%, 100% { opacity: 0; transform: translate(42px, #{$dy}px) scale(1); }
+    }
+}
+
+/* ───────── صاحب پروژه بالای باکس ───────── */
+
+.blOwner {
+    position: absolute;
+    left: 150px;
+    top: 6px;
+    width: 30px;
+    height: 30px;
+
+    // حلقه هنگام شارژ
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 2px solid var(--sc-accent);
+        opacity: 0;
+        animation: scBlOwnerRing var(--loop) $ease-pop infinite;
+    }
+}
+
+@keyframes scBlOwnerRing {
+    @each $c in $bl-charges {
+        #{$c - 0.5}% { opacity: 0; transform: scale(0.85); }
+        #{$c + 1.5}%, #{$c + 6}% { opacity: 1; transform: scale(1); }
+        #{$c + 8}% { opacity: 0; transform: scale(1); }
+    }
+    0%, 100% { opacity: 0; transform: scale(0.85); }
+}
+
+.blCrown {
+    position: absolute;
+    right: -5px;
+    top: -6px;
+    width: 14px;
+    height: 14px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid $surface;
+    background: #f59e0b;
+    color: #fff;
+    font-size: 7px;
+}
+
+// دکمه شارژ کنار صاحب پروژه
+.blCharge {
+    position: absolute;
+    left: 190px;
+    top: 10px;
+    width: 62px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 11px;
+    background: var(--sc-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    animation: scBlCharge var(--loop) ease-out infinite;
+
+    svg {
+        width: 11px;
+        height: 11px;
+        stroke-width: 3;
+    }
+}
+
+@keyframes scBlCharge {
+    @each $c in $bl-charges {
+        #{$c - 0.8}% { transform: scale(1); }
+        #{$c}% { transform: scale(0.88); }
+        #{$c + 1.5}% { transform: scale(1); }
+    }
+    0%, 100% { transform: scale(1); }
+}
+
+// سکه‌ها از دکمه شارژ پایین می‌افتند و وارد موجودی پروژه می‌شوند (۳ تا برای هر شارژ)
+.blCoin {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, #f59e0b 70%, #000);
+    background: #f59e0b;
+    opacity: 0;
+}
+
+@for $k from 1 through 6 {
+    $c: list.nth($bl-charges, 1);
+    @if $k > 3 { $c: list.nth($bl-charges, 2); }
+    $s: $c + 1 + (($k - 1) % 3) * 1.2;
+
+    .blC#{$k} { animation: scBlCoin#{$k} var(--loop) cubic-bezier(0.5, 0, 0.6, 1) infinite; }
+
+    @keyframes scBlCoin#{$k} {
+        0%, #{$s}% { opacity: 0; transform: translate(216px, 28px) scale(0.6); }
+        #{$s + 0.5}% { opacity: 1; transform: translate(214px, 30px) scale(1); }
+        #{$s + 3}% { opacity: 1; transform: translate(181px, 62px) scale(0.9); }
+        #{$s + 3.2}%, 100% { opacity: 0; transform: translate(181px, 62px) scale(0.9); }
+    }
+}
+
+/* ───────── باکس پروژه (۲۱۶×۱۳۶) ───────── */
+
+.blBox {
+    position: absolute;
+    left: 132px;
+    top: 48px;
+    width: 216px;
+    height: 136px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid $bl-edge;
+    background: $surface;
+    animation: scBlBox var(--loop) ease-out infinite;
+}
+
+// روی موجودی صفر، کادر قرمز می‌زند تا شارژ دوباره
+@keyframes scBlBox {
+    0%, 63% { border-color: $bl-edge; }
+    64.5%, 68%, 72%, 76% { border-color: $bl-red; }
+    66%, 70%, 74% { border-color: color-mix(in srgb, #{$bl-red} 35%, transparent); }
+    80%, 100% { border-color: $bl-edge; }
+}
+
+.blHead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 38px;
+    border-bottom: 1px solid $bl-edge;
+
+    > b {
+        position: absolute;
+        right: 12px;
+        top: 17px;
+        width: 56px;
+        height: 5px;
+        border-radius: 3px;
+        background: color-mix(in srgb, var(--body-text-color) 22%, transparent);
+    }
+}
+
+.blWalletIcon {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 15px;
+    height: 15px;
+    color: $bl-green;
+}
+
+.blAmount {
+    position: absolute;
+    left: 32px;
+    top: 5px;
+    width: 70px;
+    height: 28px;
+    color: var(--body-text-color);
+    transform-origin: 20% 50%;
+    animation: scBlAmount var(--loop) ease-out infinite;
+
+    em {
+        position: absolute;
+        inset: 0;
+        font-size: 21px;
+        font-weight: 800;
+        line-height: 28px;
+        font-variant-numeric: tabular-nums;
+        color: inherit;
+        opacity: 0;
+    }
+
+    @for $i from 1 through 6 {
+        em:nth-child(#{$i}) { animation: scBlBalance#{$i} var(--loop) linear infinite; }
+    }
+}
+
+@for $i from 1 through 6 {
+    @include win(scBlBalance#{$i}, list.nth($bl-balance-at, $i), list.nth($bl-balance-at, $i + 1), 0.4);
+}
+
+// شارژ: بزرگ و سبز؛ مصرف: کمی جمع و قرمز؛ صفر: قرمز تا شارژ دوباره
+@keyframes scBlAmount {
+    0%, 14.5% { transform: scale(1); color: var(--body-text-color); }
+    16% { transform: scale(1.2); color: #{$bl-green}; }
+    19% { transform: scale(1); color: #{$bl-green}; }
+    24% { color: var(--body-text-color); }
+    @each $r in (31, 47) {
+        #{$r - 0.3}% { transform: scale(1); color: var(--body-text-color); }
+        #{$r + 1}% { transform: scale(0.9); color: #{$bl-red}; }
+        #{$r + 4}% { transform: scale(1); }
+        #{$r + 7}% { color: var(--body-text-color); }
+    }
+    62.7% { transform: scale(1); color: var(--body-text-color); }
+    64% { transform: scale(0.9); color: #{$bl-red}; }
+    67%, 79.5% { transform: scale(1); color: #{$bl-red}; }
+    81% { transform: scale(1.2); color: #{$bl-green}; }
+    84% { transform: scale(1); color: #{$bl-green}; }
+    90%, 100% { transform: scale(1); color: var(--body-text-color); }
+}
+
+.blDelta {
+    position: absolute;
+    left: 104px;
+    top: 12px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 14px;
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.blPlus {
+    color: $bl-green;
+    animation: scBlPlus var(--loop) ease-out infinite;
+}
+
+@keyframes scBlPlus {
+    @each $a in (15, 80) {
+        #{$a - 0.3}% { opacity: 0; transform: translateY(6px); }
+        #{$a + 1}% { opacity: 1; transform: translateY(0); }
+        #{$a + 6}% { opacity: 1; transform: translateY(-4px); }
+        #{$a + 9}% { opacity: 0; transform: translateY(-8px); }
+    }
+    0%, 100% { opacity: 0; transform: translateY(6px); }
+}
+
+.blMinus {
+    color: $bl-red;
+}
+
+@for $r from 1 through 3 {
+    $a: list.nth($bl-rows, $r);
+
+    .blMinus#{$r} { animation: scBlMinus#{$r} var(--loop) ease-out infinite; }
+
+    @keyframes scBlMinus#{$r} {
+        0%, #{$a - 0.3}% { opacity: 0; transform: translateY(6px); }
+        #{$a + 1}% { opacity: 1; transform: translateY(0); }
+        #{$a + 6}% { opacity: 1; transform: translateY(-4px); }
+        #{$a + 9}%, 100% { opacity: 0; transform: translateY(-8px); }
+    }
+}
+
+/* ───────── ردیف‌های مصرف ───────── */
+
+.blRow {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    height: 24px;
+    border-radius: 6px;
+    opacity: 0;
+
+    > b {
+        position: absolute;
+        left: 46px;
+        top: 10px;
+        width: 70px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-text-color) 18%, transparent);
+    }
+
+    > em {
+        position: absolute;
+        right: 6px;
+        top: 4px;
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 16px;
+        color: $bl-red;
+    }
+}
+
+.blRowAvatar {
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bg);
+    font-size: 1.9px;
+}
+
+.blRowIcon {
+    position: absolute;
+    left: 27px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+}
+
+@for $r from 1 through 3 {
+    $at: list.nth($bl-rows, $r);
+
+    .blR#{$r} {
+        top: #{48 + ($r - 1) * 28}px;
+        animation: scBlRow#{$r} var(--loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+    }
+
+    // ردیف از چپ می‌نشیند و لحظه‌ای هایلایت می‌شود
+    @keyframes scBlRow#{$r} {
+        0%, #{$at}% { opacity: 0; transform: translateX(-10px); background: transparent; }
+        #{$at + 1.5}% { opacity: 1; transform: translateX(0); background: color-mix(in srgb, var(--sc-accent) 14%, transparent); }
+        #{$at + 7}%, 100% { opacity: 1; transform: translateX(0); background: transparent; }
+    }
+}
+
+/* ───────── نشانگر و «بوم» روی دکمه شارژ؛ نقطه کلیک = لبه پایین-راست دکمه (۲۵۰، ۲۸) تا «$20» زیر نشانگر نرود ───────── */
+
+.blRipple {
+    position: absolute;
+    left: 250px;
+    top: 28px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--sc-accent);
+    opacity: 0;
+    animation: scBlRipple var(--loop) ease-out infinite;
+}
+
+@keyframes scBlRipple {
+    @each $c in $bl-charges {
+        #{$c - 0.3}% { transform: scale(0.4); opacity: 0; }
+        #{$c + 0.5}% { transform: scale(0.5); opacity: 0.9; }
+        #{$c + 6}% { transform: scale(3); opacity: 0; }
+    }
+    0%, 100% { transform: scale(0.4); opacity: 0; }
+}
+
+.blBurst {
+    position: absolute;
+    left: 250px;
+    top: 28px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--sc-accent);
+        opacity: 0;
+        animation: scBlRay var(--loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+@keyframes scBlRay {
+    @each $c in $bl-charges {
+        #{$c}% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+        #{$c + 0.6}% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+        #{$c + 4}% { transform: rotate(var(--ray-angle)) translateY(-24px) scaleY(0.2); opacity: 0; }
+    }
+    0%, 100% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+}
+
+.blCursor {
+    position: absolute;
+    left: 242px;
+    top: 20px;
+    width: 22px;
+    height: 22px;
+    color: var(--body-text-color);
+    opacity: 0;
+    animation: scBlCursor var(--loop) ease-in-out infinite;
+}
+
+@keyframes scBlCursor {
+    0%, 2% { transform: translate(30px, 26px); opacity: 0; }
+    7% { transform: translate(0, 0) scale(1); opacity: 1; }
+    9% { transform: translate(0, 0) scale(0.8); }
+    10.5%, 14% { transform: translate(0, 0) scale(1); opacity: 1; }
+    20%, 66% { transform: translate(30px, 26px); opacity: 0; }
+    72% { transform: translate(0, 0) scale(1); opacity: 1; }
+    74% { transform: translate(0, 0) scale(0.8); }
+    75.5%, 80% { transform: translate(0, 0) scale(1); opacity: 1; }
+    86%, 100% { transform: translate(30px, 26px); opacity: 0; }
+}
+
+/* ═════════ ۳. گفتگوی تیم (۷ ثانیه) ═════════ */
+
+.tcAvatar {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--bg);
+    font-size: 3.3px;
+    opacity: 0;
+
+    &.tcRow1 { left: 10px; top: 8px; }
+    &.tcRow2 { left: 322px; top: 58px; }
+    &.tcRow3 { left: 10px; top: 98px; }
+}
+
+
+.tcBubble {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 11px;
+    border-radius: 4px 13px 13px 13px;
+    background: $faint;
+    opacity: 0;
+    transform-origin: left top;
+
+    > b {
+        height: 4px;
+        border-radius: 2px;
+        background: $muted;
+
+        &:nth-child(2) { width: 62%; }
+    }
+
+    &.tcRow1 { left: 46px; top: 8px; width: 178px; height: 38px; }
+    &.tcRow2 { left: 150px; top: 58px; width: 164px; height: 28px; }
+    &.tcRow3 { left: 46px; top: 98px; width: 120px; height: 72px; }
+    &.tcRow4 { left: 176px; top: 182px; width: 138px; height: 28px; }
+}
+
+.tcMine {
+    flex-direction: row;
+    align-items: center;
+    border-radius: 13px 4px 13px 13px;
+    background: color-mix(in srgb, var(--sc-accent) 18%, transparent);
+    transform-origin: right top;
+
+    > b {
+        flex: 1;
+        background: color-mix(in srgb, var(--sc-accent) 50%, transparent);
+    }
+}
+
+.tcMentionChip {
+    width: 30px;
+    height: 12px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--sc-accent) 45%, transparent);
+}
+
+.tcMedia {
+    justify-content: flex-start;
+    padding: 6px;
+
+    > b {
+        width: 70%;
+        margin: 1px 4px 0;
+    }
+}
+
+.tcImage {
+    --tone: var(--sc-tone-c);
+    position: relative;
+    height: 44px;
+    border-radius: 7px;
+    @include picture(8px);
+}
+
+.tcHeart {
+    position: absolute;
+    left: 154px;
+    top: 158px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $surface;
+    border: 1px solid $line;
+    color: #ef4444;
+    font-size: 10px;
+    opacity: 0;
+    animation: scTcHeart var(--loop) $ease-pop infinite;
+
+    svg { fill: currentColor; }
+}
+
+.tcTyping {
+    position: absolute;
+    left: 262px;
+    top: 182px;
+    width: 52px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 13px 4px 13px 13px;
+    background: color-mix(in srgb, var(--sc-accent) 14%, transparent);
+    opacity: 0;
+    animation: scTcTyping var(--loop) ease-out infinite;
+
+    i {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--sc-accent) 70%, transparent);
+        animation: scTcDot 0.9s ease-in-out infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+    }
+}
+
+.tcRow1 { animation: scTcRow1 var(--loop) $ease-pop infinite; }
+.tcRow2 { animation: scTcRow2 var(--loop) $ease-pop infinite; }
+.tcRow3 { animation: scTcRow3 var(--loop) $ease-pop infinite; }
+.tcRow4 { animation: scTcRow4 var(--loop) $ease-pop infinite; }
+
+@mixin chat-appear($name, $in) {
+    @keyframes #{$name} {
+        0%, #{$in}% { opacity: 0; transform: translateY(6px) scale(0.9); }
+        #{$in + 5}%, 91% { opacity: 1; transform: translateY(0) scale(1); }
+        96%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+    }
+}
+
+@include chat-appear(scTcRow1, 3);
+@include chat-appear(scTcRow2, 16);
+@include chat-appear(scTcRow3, 30);
+@include chat-appear(scTcRow4, 64);
+
+@keyframes scTcHeart {
+    0%, 44% { opacity: 0; transform: scale(0.2); }
+    48%, 91% { opacity: 1; transform: scale(1); }
+    96%, 100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes scTcTyping {
+    0%, 51% { opacity: 0; transform: scale(0.85); }
+    54%, 62.5% { opacity: 1; transform: scale(1); }
+    64%, 100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes scTcDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-3px); opacity: 1; }
+}
+
+/* بدون موشن (انیمیشن‌ها در FeatureShowcase.module.scss خاموش می‌شوند): هر صحنه را در یک حالت ثابت و گویا نشان بده */
+@media (prefers-reduced-motion: reduce) {
+    .viewWorkflow,
+    .wfFlowIn,
+    .wfFlowOut,
+    .cvNew,
+    .tcAvatar,
+    .tcBubble,
+    .tcHeart,
+    .blOutMedia,
+    .blRow,
+    .blAmount em:last-child {
+        opacity: 1;
+    }
+
+    .modeTab:nth-child(2) {
+        color: var(--sc-accent);
+    }
+
+    .wfGen {
+        border-color: var(--sc-accent);
+    }
+
+    .wfProgress i {
+        transform: scaleX(1);
+    }
+
+    .live {
+        clip-path: none;
+    }
+
+    .wfLink {
+        stroke-dashoffset: 0;
+    }
+}

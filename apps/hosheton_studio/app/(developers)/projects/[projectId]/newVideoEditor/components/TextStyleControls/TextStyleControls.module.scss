@@ -1,0 +1,173 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    font-size: 12px;
+
+    .titleRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .panelTitle {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--ve-text, var(--body-text-color));
+    }
+
+    .resetOverridesBtn {
+        padding: 2px 8px;
+        border: 1px solid color-mix(in srgb, var(--brand-color) 45%, transparent);
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+        color: var(--brand-color);
+        font-size: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:hover {
+            background: color-mix(in srgb, var(--brand-color) 18%, transparent);
+        }
+    }
+
+    .row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 120px;
+        flex: 1;
+
+        > span {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        }
+
+        textarea,
+        select,
+        input[type='text'] {
+            width: 100%;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 8px;
+            background: var(--ve-input-bg, var(--body-background));
+            color: var(--ve-text, var(--body-text-color));
+            padding: 6px 8px;
+            font-size: 12px;
+            font-family: inherit;
+            outline: none;
+            resize: vertical;
+
+            &:focus {
+                border-color: color-mix(in srgb, var(--brand-color) 55%, transparent);
+                box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-color) 12%, transparent);
+            }
+        }
+
+        input[type='color'] {
+            width: 100%;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 8px;
+            background: var(--ve-input-bg, var(--body-background));
+            cursor: pointer;
+        }
+    }
+
+    .colorField {
+        flex: 0 1 150px;
+    }
+
+    .sliderField {
+        display: grid;
+        grid-template-columns: 92px 1fr 48px;
+        align-items: center;
+        gap: 8px;
+
+        > span {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        }
+
+        > em {
+            font-style: normal;
+            font-size: 10.5px;
+            font-variant-numeric: tabular-nums;
+            text-align: end;
+            color: var(--ve-text, var(--body-text-color));
+        }
+
+        input[type='range'] {
+            width: 100%;
+            accent-color: var(--brand-color);
+        }
+    }
+
+    .toggleGroup {
+        display: flex;
+        gap: 3px;
+
+        button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 7px;
+            background: var(--ve-hover, var(--body-background));
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+            cursor: pointer;
+            transition: all 0.15s;
+
+            svg {
+                width: 13px;
+                height: 13px;
+            }
+
+            &:hover {
+                color: var(--ve-text, var(--body-text-color));
+            }
+
+            &.toggleActive {
+                background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+                border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+                color: var(--brand-color);
+            }
+        }
+    }
+
+    .noneBtn {
+        padding: 1px 6px;
+        border: 1px solid var(--ve-border, var(--input-border-color));
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        font-size: 9px;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--ve-text, var(--body-text-color));
+            border-color: var(--ve-text, var(--body-text-color));
+        }
+    }
+}

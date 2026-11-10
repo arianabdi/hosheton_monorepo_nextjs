@@ -1,0 +1,112 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    font-size: 12px;
+    border-top: 1px solid var(--ve-border, var(--input-border-color));
+
+    .titleRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .panelTitle {
+        margin: 0;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--ve-text, var(--body-text-color));
+    }
+
+    .resetBtn {
+        padding: 2px 8px;
+        border: 1px solid var(--ve-border, var(--input-border-color));
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        font-size: 10px;
+        cursor: pointer;
+
+        &:hover {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+    }
+
+    .row {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 130px;
+        flex: 1;
+
+        > span {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        }
+
+        select {
+            height: 30px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 8px;
+            background: var(--ve-input-bg, var(--body-background));
+            color: var(--ve-text, var(--body-text-color));
+            padding: 0 8px;
+            font-size: 12px;
+            font-family: inherit;
+            outline: none;
+
+            &:focus {
+                border-color: color-mix(in srgb, var(--brand-color) 55%, transparent);
+            }
+        }
+
+        input[type='range'] {
+            width: 110px;
+            accent-color: var(--brand-color);
+        }
+
+        em {
+            font-style: normal;
+            font-size: 10.5px;
+            font-variant-numeric: tabular-nums;
+            color: var(--ve-text, var(--body-text-color));
+        }
+    }
+
+    .sliderField {
+        display: grid;
+        grid-template-columns: 92px 1fr 52px;
+        align-items: center;
+        gap: 8px;
+
+        > span {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+        }
+
+        > em {
+            font-style: normal;
+            font-size: 10.5px;
+            font-variant-numeric: tabular-nums;
+            text-align: end;
+            color: var(--ve-text, var(--body-text-color));
+        }
+
+        input[type='range'] {
+            width: 100%;
+            accent-color: var(--brand-color);
+        }
+    }
+}

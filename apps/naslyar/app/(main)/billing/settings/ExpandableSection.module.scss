@@ -1,0 +1,70 @@
+.section {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+    color: var(--body-text-color);
+
+    &.open {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.25rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: right;
+    color: inherit;
+}
+
+.headerText {
+    flex: 1;
+    min-width: 0;
+}
+
+.title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    margin: 0.35rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--body-text-color);
+    opacity: 0.82;
+}
+
+.headerMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-shrink: 0;
+}
+
+.chevron {
+    font-size: 0.7rem;
+    opacity: 0.65;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+}
+
+.body {
+    padding: 0 1.25rem 1.15rem;
+    border-top: 1px solid var(--plan-card-border-color);
+    padding-top: 1rem;
+}

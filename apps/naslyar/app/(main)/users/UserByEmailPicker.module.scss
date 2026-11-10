@@ -1,0 +1,136 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.searchRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: stretch;
+
+    input {
+        flex: 1;
+        min-width: 200px;
+        padding: 0.55rem 0.65rem;
+        border: 1px solid var(--plan-card-border-color);
+        border-radius: 8px;
+        background: var(--body-background);
+        color: inherit;
+        font-family: inherit;
+        direction: ltr;
+        text-align: left;
+    }
+}
+
+.searchBtn {
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 35%, transparent);
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    color: var(--brand-color);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+}
+
+.hint {
+    margin: 0;
+    font-size: 0.78rem;
+    opacity: 0.75;
+    line-height: 1.5;
+}
+
+.error {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #c5221f;
+}
+
+.selectedCard {
+    border: 1px solid color-mix(in srgb, var(--brand-color) 28%, transparent);
+    border-radius: 10px;
+    padding: 0.75rem 0.85rem;
+    background: color-mix(in srgb, var(--brand-color) 5%, transparent);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.selectedMain {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.selectedName {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.selectedMeta {
+    font-size: 0.82rem;
+    opacity: 0.88;
+    direction: ltr;
+    text-align: right;
+    word-break: break-all;
+}
+
+.selectedId {
+    font-family: ui-monospace, monospace;
+    font-size: 0.72rem;
+    opacity: 0.7;
+}
+
+.changeBtn {
+    border: 1px solid var(--plan-card-border-color);
+    background: var(--body-background);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: inherit;
+}
+
+.pickList {
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.pickItem {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 0.55rem 0.65rem;
+    border: none;
+    border-bottom: 1px solid var(--plan-card-border-color);
+    background: var(--body-background);
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    }
+}
+
+.pickItemEmail {
+    direction: ltr;
+    display: inline-block;
+    font-size: 0.82rem;
+    opacity: 0.85;
+}

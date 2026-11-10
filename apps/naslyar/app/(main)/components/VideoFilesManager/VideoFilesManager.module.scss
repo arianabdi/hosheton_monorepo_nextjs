@@ -1,0 +1,325 @@
+.wrapper {
+    border-radius: .75rem;
+    padding: .75rem 0px;
+    font-family: inherit;
+    transition: all .2s;
+
+    &.disabled {
+        opacity: 0.65;
+        background: #f1f5f9;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0px 10px;
+
+    h4 {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--body-text-color);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-weight: 300;
+    }
+}
+
+.badge {
+    background: #e2e8f0;
+    color: #475569;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2rem;
+}
+
+.alertText {
+    font-size: 0.75rem;
+    color: #ef4444;
+    font-weight: 500;
+}
+
+// ردیف اصلی که همه المان‌های فرم را در یک خط جا می‌دهد
+.actionRow {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0px 10px;
+}
+
+.select {
+    color: var(--body-text-color);
+    cursor: pointer;
+    background: var(--input-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: .4rem;
+    outline: none;
+    min-width: 13.3rem;
+    padding: .55rem .5rem;
+    font-size: .8rem;
+
+    &:focus {
+        border-color: #3b82f6;
+    }
+}
+
+// ساخت Dropzone خطی و کاستومایز شده برای فیلد فایل فایل
+.uploadZone {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--input-background-color);
+    border: 1px dashed var(--border-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+
+    &:hover {
+        border-color: #3b82f6;
+    }
+}
+
+.hiddenInput {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.uploadLabel {
+    display: block;
+    width: 100%;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+    color: #64748b;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.previewInfo {
+    color: var(--body-text-color);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+}
+
+.clearFile {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    height: 100%;
+
+    &:hover {
+        color: #ef4444;
+    }
+}
+
+.submitBtn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.45rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) {
+        background: #1d4ed8;
+    }
+
+    &:disabled {
+        color: #94a3b8;
+        cursor: not-allowed;
+        background: #2563eb47;
+
+    }
+}
+
+// ویدیوهای آپلود شده قبلی به جای سطرهای جاگیر، به شکل تگ‌های فشرده نمایش داده می‌شوند
+.tagCloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.videoTag {
+    border-bottom: 1px solid var(--border-color);
+    justify-content: space-between;
+    align-items: center;
+    gap: .35rem;
+    width: 100%;
+    padding: 10px;
+    font-size: .75rem;
+    display: inline-flex;
+}
+
+.tagContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.tagRes {
+    background: #0ea5e9;
+    color: #fff;
+    padding: 0.05rem 0.25rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+}
+
+.tagSize {
+    color: #0369a1;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: monospace;
+    font-size: .75rem;
+}
+
+.tagDelete {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 0 0.1rem;
+
+    &:hover {
+        color: #ef4444;
+    }
+}
+
+// واکنش‌گرایی نرم برای صفحات کوچک موبایل
+@media (max-width: 640px) {
+    .actionRow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.4rem;
+    }
+    .select, .submitBtn {
+        width: 100%;
+    }
+}
+
+
+.progressContainer {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+    height: 9px;
+    position: relative;
+}
+
+.progressBar {
+    height: 100%;
+    background-color: #0070f3; // رنگ نوار پیشرفت
+    width: 0%;
+    transition: width 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progressText {
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.pauseBtn {
+    background-color: #f44336 !important;
+}
+
+.resumeBtn {
+    background-color: #ff9800 !important;
+}
+
+.cacheAlert {
+    margin: 0.75rem 10px 0;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.resetCacheBtn {
+    align-self: flex-start;
+    border: 1px solid #93c5fd;
+    background: #fff;
+    color: #1d4ed8;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.queueHint {
+    margin: 0.75rem 10px 0;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #9a3412;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.openQueueBtn {
+    border: 1px solid #fb923c;
+    background: #fff;
+    color: #c2410c;
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.selectedFilesList {
+    margin: 0.75rem 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.selectedFileItem {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+    color: #64748b;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.35rem;
+    background: #f8fafc;
+}

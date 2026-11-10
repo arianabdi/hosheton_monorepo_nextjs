@@ -1,0 +1,52 @@
+.root {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.root img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pending {
+    opacity: 0;
+}
+
+.ready {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.ghost {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    // سبک برای تعداد زیاد: پس‌زمینه‌ی ثابت (بدون انیمیشن پس‌زمینه که هر فریم repaint می‌خواهد)
+    // + یک اسپینر کوچک که فقط transform می‌چرخد و روی compositor اجرا می‌شود
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        margin: -9px 0 0 -9px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid color-mix(in srgb, var(--body-text-color) 16%, transparent);
+        border-top-color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+        animation: optimizedThumbGhost 0.8s linear infinite;
+    }
+}
+
+@keyframes optimizedThumbGhost {
+    to { transform: rotate(360deg); }
+}

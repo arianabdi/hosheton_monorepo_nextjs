@@ -1,0 +1,210 @@
+// پلیر ads-2video — صحنه‌ی پیش‌نمایش با پوستر اسکرین‌شات + نوار پخش با تایم‌لاین تکه‌تکه.
+// روی متغیرهای --ads2-* صفحه سوار است (با فالبک، تا مستقل هم قابل استفاده باشد).
+
+$brand: var(--brand-color, #8b5cf6);
+
+.player {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.stageArea {
+    flex: 1;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.frameBox {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #17181c;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.28);
+}
+
+.frame {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    border: 0;
+    pointer-events: none;
+}
+
+.poster {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    border: 1px dashed var(--ads2-border, var(--border-color, #cbcbcb));
+    border-radius: 14px;
+    color: var(--ads2-faint, var(--settings-text-muted, #666));
+    font-size: 12.5px;
+}
+
+// دکمه‌ی پخش روی پیش‌نمایش — وسط قاب؛ حین پخش کم‌رنگ می‌شود تا صحنه را
+// نپوشاند ولی همچنان برای توقف قابل کلیک می‌ماند
+.playOverlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    background: rgba(15, 18, 24, 0.55);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transform: translate(-50%, -50%);
+    transition: background 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        background: rgba(15, 18, 24, 0.78);
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+}
+
+.playOverlayPlaying {
+    opacity: 0;
+
+    .frameBox:hover & {
+        opacity: 1;
+    }
+}
+
+// ── نوار پخش: دکمه + تایم‌لاین تکه‌تکه + زمان ──
+.transport {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.transportPlay {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid var(--ads2-border, #e6e7eb);
+    background: var(--ads2-panel, #fff);
+    color: var(--ads2-text, #16181d);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+        border-color: $brand;
+        color: $brand;
+    }
+
+    &:active {
+        transform: scale(0.92);
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, #{$brand} 55%, transparent);
+        outline-offset: 2px;
+    }
+}
+
+.transportPlayActive {
+    border-color: $brand;
+    background: $brand;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+// هر کات یک سگمنت به نسبت مدتش؛ پیشرفت هر سگمنت با --seg-progress (۰…۱) از rAF
+.segments {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 18px;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+}
+
+.segment {
+    position: relative;
+    flex-basis: 0;
+    min-width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--ads2-text, #16181d) 14%, transparent);
+    transition: height 0.15s ease, background-color 0.15s ease;
+
+    .segments:hover & {
+        height: 6px;
+    }
+}
+
+// سگمنتِ کاتِ در حال پخش — ضخیم‌تر تا جای فعلی در یک نگاه دیده شود
+.segmentActive {
+    height: 6px;
+    background: color-mix(in srgb, var(--ads2-text, #16181d) 20%, transparent);
+
+    .segments:hover & {
+        height: 8px;
+    }
+}
+
+.segmentFill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: calc(var(--seg-progress, 0) * 100%);
+    border-radius: inherit;
+    background: $brand;
+    pointer-events: none;
+}
+
+.clock {
+    flex: 0 0 auto;
+    min-width: 64px;
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--ads2-faint, #8a8f98);
+    direction: ltr;
+    text-align: end;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .playOverlay,
+    .transportPlay,
+    .segment {
+        transition: none;
+    }
+}

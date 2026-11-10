@@ -1,0 +1,8 @@
+
+/* ستون کامپوزر + بنر زیر آن (هم‌عرض چت‌باکس) */
+.composerStack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}

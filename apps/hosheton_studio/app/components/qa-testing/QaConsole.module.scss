@@ -1,0 +1,960 @@
+// کنسول QA Testing — هم‌تم با DeveloperToolsPanel (متغیرهای CSS استودیو)
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9998;
+}
+
+.panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 860px;
+    max-width: 94vw;
+    background: var(--body-background);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--brand-color);
+    color: white;
+    flex-shrink: 0;
+}
+
+.headerTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    h2 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+.badge {
+    font-size: 12px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.runnerBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.runnerDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.runnerOnline { color: #d9ffe6; }
+.runnerOffline { color: #ffe0e0; }
+
+.closeBtn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover { background: rgba(255, 255, 255, 0.3); }
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    padding: 10px 24px 0;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--card-background);
+    flex-shrink: 0;
+    overflow-x: auto;
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border: none;
+    background: transparent;
+    color: var(--secondary-text-color);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+
+    &:hover { color: var(--body-text-color); }
+}
+
+.tabActive {
+    color: var(--brand-color);
+    border-bottom-color: var(--brand-color);
+}
+
+.errorBar {
+    margin: 12px 24px 0;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    color: #dc2626;
+    font-size: 12.5px;
+}
+
+.panelScroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px 24px 28px;
+}
+
+.section { display: flex; flex-direction: column; gap: 12px; }
+
+// ============================================================ راهنما
+
+.guide {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 720px;
+}
+
+.guideIntro {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 2;
+    color: var(--body-text-color);
+}
+
+.guideWarn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px dashed rgba(220, 38, 38, 0.45);
+    background: rgba(220, 38, 38, 0.06);
+    color: #dc2626;
+    font-size: 12.5px;
+    line-height: 1.9;
+}
+
+.guideStep {
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-background);
+
+    p {
+        margin: 8px 0 0;
+        font-size: 12.5px;
+        line-height: 2;
+        color: var(--secondary-text-color);
+    }
+}
+
+.guideStepHead {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    h4 {
+        margin: 0;
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--body-text-color);
+    }
+}
+
+.guideStepNum {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--brand-color);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.guideStepIcon {
+    color: var(--brand-color);
+    display: inline-flex;
+}
+
+.guideCode {
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 11.5px;
+    line-height: 1.8;
+    color: var(--body-text-color);
+    overflow-x: auto;
+    text-align: left;
+}
+
+.guideCard {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: color-mix(in srgb, var(--brand-color) 4%, transparent);
+
+    h4 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--body-text-color);
+    }
+
+    ul {
+        margin: 0;
+        padding-inline-start: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    li {
+        font-size: 12.5px;
+        line-height: 1.9;
+        color: var(--secondary-text-color);
+
+        b { color: var(--brand-color); }
+    }
+}
+
+.guideNote {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
+    font-size: 12px;
+    line-height: 2;
+    color: var(--secondary-text-color);
+}
+
+// ============================================================ دکمه‌ها
+
+.primaryBtn,
+.ghostBtn,
+.dangerBtn,
+.linkBtn,
+.iconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.primaryBtn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: var(--brand-color);
+    color: white;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(var(--brand-color-rgb, 123, 100, 207), 0.3);
+    }
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+}
+
+.ghostBtn {
+    padding: 7px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--body-background);
+    color: var(--body-text-color);
+
+    &:hover:not(:disabled) {
+        border-color: var(--brand-color);
+        color: var(--brand-color);
+    }
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+}
+
+.dangerBtn {
+    padding: 7px 12px;
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    border-radius: 8px;
+    background: rgba(220, 38, 38, 0.08);
+    color: #dc2626;
+
+    &:hover:not(:disabled) { background: rgba(220, 38, 38, 0.15); }
+    &:disabled { opacity: 0.5; }
+}
+
+.linkBtn {
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    color: var(--brand-color);
+
+    &:hover { text-decoration: underline; }
+}
+
+.iconBtn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--body-background);
+    color: var(--body-text-color);
+
+    &:hover { border-color: var(--brand-color); color: var(--brand-color); }
+}
+
+// ============================================================ تست‌ها
+
+.testsToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filterChips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filterChip {
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
+    color: var(--secondary-text-color);
+    font-family: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+    direction: ltr;
+
+    &:hover { border-color: var(--brand-color); color: var(--brand-color); }
+}
+
+.filterChipActive {
+    border-color: var(--brand-color);
+    color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+}
+
+.modeSelect {
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--body-background);
+    color: var(--body-text-color);
+    font-family: inherit;
+    font-size: 12.5px;
+    outline: none;
+    cursor: pointer;
+}
+
+.testsBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+}
+
+.testsActions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-inline-start: auto;
+}
+
+.selectedCount {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+.testList {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.testRow {
+    display: grid;
+    grid-template-columns: 18px 140px 1fr 90px 64px 44px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: color-mix(in srgb, var(--brand-color) 5%, transparent); }
+
+    input[type='checkbox'] {
+        accent-color: var(--brand-color);
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+}
+
+.testRowSelected {
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+}
+
+.testKey {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand-color);
+    direction: ltr;
+    text-align: left;
+}
+
+.testTitle {
+    font-size: 12.5px;
+    color: var(--body-text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.testSection {
+    font-size: 11.5px;
+    color: var(--secondary-text-color);
+    direction: ltr;
+    text-align: left;
+}
+
+.costBadge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-align: center;
+
+    &.cost_free { background: #d1fae5; color: #065f46; }
+    &.cost_cheap { background: #fef3c7; color: #92400e; }
+    &.cost_paid { background: #fee2e2; color: #991b1b; }
+}
+
+.typeBadge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--brand-color);
+    color: white;
+    text-align: center;
+}
+
+// ============================================================ اجراها
+
+.summaryChips { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.summaryChip {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
+    color: var(--body-text-color);
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.createForm {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px dashed var(--border-color);
+    background: var(--card-background);
+    flex-wrap: wrap;
+
+    .input {
+        flex: 1;
+        min-width: 160px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background: var(--body-background);
+        color: var(--body-text-color);
+        font-family: inherit;
+        font-size: 12.5px;
+        outline: none;
+
+        &:focus { border-color: var(--brand-color); }
+    }
+}
+
+.releaseList { display: flex; flex-direction: column; gap: 8px; }
+
+.releaseRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    text-align: start;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s;
+
+    &:hover { border-color: var(--brand-color); }
+}
+
+.releaseMain {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.version {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--body-text-color);
+    direction: ltr;
+}
+
+.modeBadge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+    font-weight: 700;
+}
+
+.releaseMeta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11.5px;
+    color: var(--secondary-text-color);
+}
+
+.progressTrack {
+    height: 5px;
+    border-radius: 999px;
+    background: var(--border-color);
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--brand-color);
+    transition: width 0.3s ease;
+
+    &.progressBad { background: #dc2626; }
+}
+
+.statusBadge {
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--border-color);
+    color: var(--body-text-color);
+
+    &.status_passed { background: #d1fae5; color: #065f46; }
+    &.status_failed { background: #fee2e2; color: #991b1b; }
+    &.status_running { background: #dbeafe; color: #1e40af; }
+    &.status_pending { background: #fef3c7; color: #92400e; }
+    &.status_skipped { background: #f3f4f6; color: #374151; }
+    &.status_aborted { background: #f3f4f6; color: #374151; }
+}
+
+.detailHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    h3 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
+        color: var(--body-text-color);
+        direction: ltr;
+    }
+}
+
+.detailActions { margin-inline-start: auto; display: flex; gap: 6px; }
+
+.statRow {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--secondary-text-color);
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+
+    .okText { color: #059669; }
+    .badText { color: #dc2626; }
+}
+
+.runTable {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.runRow {
+    display: grid;
+    grid-template-columns: 140px 1fr 84px 104px 70px 60px;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--secondary-text-color);
+    font-family: inherit;
+    font-size: 12px;
+    text-align: start;
+
+    &:last-child { border-bottom: none; }
+    &:not(.runHeadRow):hover { background: color-mix(in srgb, var(--brand-color) 5%, transparent); cursor: pointer; }
+}
+
+.runHeadRow {
+    background: var(--card-background);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: default;
+
+    &:hover { background: var(--card-background) !important; }
+}
+
+.runTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--body-text-color);
+}
+
+.artifactCell {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.subTitle {
+    margin: 6px 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--body-text-color);
+}
+
+.errorBox {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 11.5px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 180px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.skipBox {
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    color: var(--secondary-text-color);
+    font-size: 12px;
+}
+
+.artifactGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+}
+
+.artifactCard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--card-background);
+    text-decoration: none;
+    transition: border-color 0.15s;
+
+    &:hover { border-color: var(--brand-color); }
+
+    img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        border-radius: 8px;
+        background: var(--border-color);
+    }
+}
+
+.artifactFallback {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--border-color);
+    color: var(--secondary-text-color);
+    font-size: 12px;
+}
+
+.artifactLabel {
+    font-size: 11px;
+    color: var(--secondary-text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logList {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.logRow {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 11.5px;
+    color: var(--body-text-color);
+
+    &:last-child { border-bottom: none; }
+    &.log_error { color: #dc2626; }
+    &.log_warn { color: #d97706; }
+}
+
+.logTime {
+    font-size: 10.5px;
+    color: var(--secondary-text-color);
+    flex-shrink: 0;
+}
+
+.logStep {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 10.5px;
+    color: var(--brand-color);
+    flex-shrink: 0;
+}
+
+.logMessage {
+    word-break: break-word;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 11px;
+}
+
+// ============================================================ باگ‌ها
+
+.sectionHint {
+    font-size: 12px;
+    color: var(--secondary-text-color);
+}
+
+.bugList { display: flex; flex-direction: column; gap: 10px; }
+
+.bugCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    background: var(--card-background);
+}
+
+.bugHead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.versionBadge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10.5px;
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+    direction: ltr;
+}
+
+.bugDate {
+    margin-inline-start: auto;
+    font-size: 11px;
+    color: var(--secondary-text-color);
+}
+
+.bugTitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--body-text-color);
+}
+
+.bugError {
+    margin: 0;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 11px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 130px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.bugFooter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.evidenceLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--brand-color);
+    font-size: 12px;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 36px 20px;
+    text-align: center;
+    color: var(--secondary-text-color);
+    font-size: 13px;
+    line-height: 2;
+}
+
+.emptyStateSmall {
+    padding: 14px;
+    text-align: center;
+    color: var(--secondary-text-color);
+    font-size: 12px;
+}
+
+.spin { animation: qaSpin 1s linear infinite; }
+
+@keyframes qaSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .panel { width: 100%; max-width: 100vw; }
+
+    .testRow { grid-template-columns: 18px 1fr 70px; }
+    .testRow .testKey, .testRow .testSection, .testRow .typeBadge { display: none; }
+
+    .runRow { grid-template-columns: 110px 1fr 100px 60px; }
+    .runRow span:nth-child(3), .runRow span:nth-child(5), .runRow span:nth-child(6) { display: none; }
+}

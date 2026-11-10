@@ -1,0 +1,15 @@
+
+.logs,
+.logs div
+{
+    color: var(--body-text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 3;
+    position: fixed;
+    top: var(--header-height);
+    left: 0px;
+    min-width: 200px;
+    padding: 20px 0px ;
+
+}

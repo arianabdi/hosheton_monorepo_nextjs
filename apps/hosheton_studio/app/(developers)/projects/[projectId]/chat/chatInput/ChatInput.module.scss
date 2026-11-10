@@ -1,0 +1,796 @@
+.composer {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    background: none;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+
+    .inputCardWrapper,
+    .mainInputArea {
+        overflow: visible;
+    }
+
+    // لنگر صحنهٔ گربه روی لبهٔ بالای کارت (cat/ChatCat)
+    .inputCardWrapper {
+        position: relative;
+    }
+
+    .bottomControls {
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        overflow: visible;
+    }
+
+    .compactToolbar {
+        flex: 1;
+        min-width: 0;
+        overflow: visible;
+    }
+}
+
+.composerOffline {
+    .inputCardWrapper {
+        opacity: 0.72;
+    }
+}
+
+.connectionBanner {
+    margin: 0 1px 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: color-mix(in srgb, #c2410c 14%, var(--body-background));
+    color: color-mix(in srgb, #c2410c 85%, var(--body-text-color));
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.editModeBanner {
+    background: color-mix(in srgb, #8b5cf6 9%, var(--body-background));
+    color: var(--body-text-color);
+    border-radius: 12px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 0 1px 8px;
+    padding: 5px 12px;
+    display: flex;
+
+    > span {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+
+        > svg {
+            flex: 0 0 auto;
+            color: #8b5cf6;
+        }
+
+        span {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+    }
+
+    strong {
+        font-size: 12px;
+    }
+
+    small {
+        overflow: hidden;
+        font-size: 10px;
+        opacity: 0.65;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        flex: 0 0 auto;
+        padding: 5px 8px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background: color-mix(in srgb, #8b5cf6 13%, transparent);
+        }
+
+        &:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+    }
+}
+
+.modeSlots {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.modeSlot {
+    flex: 1 1 140px;
+    min-width: 132px;
+    max-width: 100%;
+    border: 1px dashed var(--input-border-color, #d8d8e6);
+    border-radius: 12px;
+    padding: 8px;
+    background: color-mix(in srgb, var(--input-background-color, transparent) 80%, transparent);
+}
+
+.modeSlotHead {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin-bottom: 6px;
+
+    strong {
+        font-size: 12.5px;
+        font-weight: 800;
+    }
+
+    small {
+        font-size: 11px;
+        opacity: 0.65;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.modeSlotReq {
+    color: #dc2626;
+    margin-inline-start: 3px;
+}
+
+.modeSlotHint {
+    margin: 0 0 8px;
+    font-size: 11px;
+    opacity: 0.68;
+    line-height: 1.5;
+}
+
+.modeSlotRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.modeSlotAdd {
+    display: inline-flex;
+    gap: 6px;
+
+    button {
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+        border: 1px dashed var(--input-border-color, #d8d8e6);
+        background: transparent;
+        color: inherit;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}
+
+.modeSlotPlaceholder {
+    width: 72px;
+    min-height: 72px;
+    border-radius: 10px;
+    border: 1px dashed var(--input-border-color, #d8d8e6);
+    background: transparent;
+    color: inherit;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 6px;
+    font: inherit;
+
+    span {
+        font-size: 10.5px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    small {
+        font-size: 10px;
+        opacity: 0.6;
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: default;
+    }
+}
+
+.modeSlotEmpty {
+    font-size: 12px;
+    opacity: 0.55;
+}
+
+.limitsPreview {
+    margin: 0 0 8px;
+    padding: 0 2px;
+    font-size: 11px;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    opacity: 0.62;
+    color: var(--body-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+}
+
+.limitsPreviewWarn {
+    opacity: 0.95;
+    color: #b91c1c;
+}
+
+.pendingThumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.12);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0.7;
+    }
+
+    .pendingAudio {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        opacity: 0.8;
+    }
+
+    span {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        background: rgba(0, 0, 0, 0.4);
+    }
+}
+
+.pendingFailOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.58);
+
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 3px 8px;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        background: #fff;
+        color: #0f172a;
+    }
+}
+
+.pendingDismiss {
+    position: absolute !important;
+    top: 4px;
+    inset-inline-end: 4px;
+    width: 18px;
+    height: 18px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    line-height: 1;
+    font-size: 12px !important;
+}
+
+.pendingFailed img,
+.pendingFailed .pendingAudio {
+    opacity: 0.45;
+}
+
+.usageDock {
+    width: 100%;
+    max-width: 720px;
+    margin: 6px auto 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-inline-end: 18px;
+}
+
+
+.inputCardWrapper {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    // padding و border داخل همان ۱۰۰٪ — وگرنه کارت ۶px پهن‌تر از ستون می‌شد و در RTL از چپ بیرون می‌زد
+    box-sizing: border-box;
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--brand-color) 78%, var(--plan-card-background-color)) 0%,
+        color-mix(in srgb, var(--brand-color) 22%, var(--plan-card-background-color)) 46%,
+        color-mix(in srgb, var(--brand-color) 62%, var(--plan-card-background-color)) 100%
+    );
+    border: 1px solid color-mix(in srgb, var(--brand-color) 40%, var(--input-border-color));
+    box-shadow:
+        0 12px 28px color-mix(in srgb, var(--brand-color) 16%, transparent),
+        0 1px 0 color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    overflow: visible;
+}
+
+/* 1. بخش سفید بالا (Input) */
+.mainInputArea {
+    background: var(--plan-card-background-color);
+    border-radius: 22px;
+    padding: 16px 18px 12px;
+
+    textarea,
+    .composerTextarea {
+        width: 100%;
+        border: none !important;
+        outline: none;
+        background: transparent !important;
+        box-shadow: none !important;
+        resize: none;
+        font-size: 15px;
+        line-height: 1.55;
+        min-height: 24px;
+        color: var(--body-text-color);
+        font-family: inherit;
+        padding: 0;
+        margin: 0;
+        display: block;
+        field-sizing: content;
+
+        &::placeholder {
+            color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+        }
+    }
+
+    textarea {
+        max-height: 160px;
+        overflow-y: auto;
+    }
+
+    .composerTextarea {
+        max-height: none;
+        overflow: visible;
+    }
+
+    /* در زبان‌های RTL پلیس‌هولدر ادیتور خالی راست‌چین باشد
+       (dir=auto در حالت خالی به LTR برمی‌گردد؛ متن تایپی همچنان auto می‌ماند) */
+    html[dir='rtl'] & .composerTextarea [contenteditable]:empty {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .composerTextSlot {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    /* آیکون تخمین هزینه (developer) — روی متن می‌نشیند و متن را جابه‌جا نمی‌کند */
+    .costAnchor {
+        position: absolute;
+        top: 0;
+        inset-inline-start: 0;
+        z-index: 4;
+    }
+
+    .bottomControls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+
+        .leftTools {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .addBtn {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: 1px solid var(--input-border-color, var(--border-color));
+                background: var(--input-background-color, var(--plan-card-background-color));
+                color: var(--body-text-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+                opacity: 0.78;
+
+                &:hover,
+                &.addBtnOpen {
+                    opacity: 1;
+                    background: color-mix(in srgb, var(--body-text-color) 8%, var(--input-background-color, var(--plan-card-background-color)));
+                    border-color: color-mix(in srgb, var(--brand-color) 40%, var(--input-border-color, var(--border-color)));
+                    color: var(--brand-color);
+                }
+
+                &:disabled {
+                    opacity: 0.4;
+                    cursor: not-allowed;
+                }
+            }
+        }
+
+        .rightTools {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative; // لنگر چیپ قیمتِ شناور بالای دکمه ارسال
+
+            .sendCostChip {
+                position: absolute;
+                bottom: calc(100% + 4px);
+                right: 0; // LTR: هم‌تراز لبه دکمه ارسال
+                font-size: 11px;
+                font-weight: 700;
+                opacity: 0.72;
+                white-space: nowrap;
+                pointer-events: none;
+
+                // RTL: دکمه ارسال سمت چپ می‌رود و قیمت هم چپ‌چین می‌شود
+                html[dir='rtl'] & {
+                    right: auto;
+                    left: 0;
+                }
+            }
+
+            .sendBtn {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: none;
+                background: var(--brand-color);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 4px 12px color-mix(in srgb, var(--brand-color) 35%, transparent);
+                transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+
+                svg {
+                    position: relative;
+                    top: 1px;
+                }
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                &:disabled {
+                    opacity: 0.38;
+                    cursor: not-allowed;
+                    transform: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+
+.compactNarrow {
+    .bottomControls {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-areas: 'add top send';
+        align-items: center;
+        gap: 8px 6px;
+    }
+
+    .leftTools {
+        grid-area: add;
+    }
+
+    .compactToolbar {
+        display: contents;
+    }
+
+    .rightTools {
+        grid-area: send;
+        justify-self: end;
+    }
+}
+
+/* فقط موبایل (عرض کامپوزر < 640px) — لنگر خط شناور «مدل | تنظیمات / قیمت» */
+.compactMobile {
+    .bottomControls {
+        position: relative;
+    }
+}
+
+.addMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px;
+    border-radius: 14px;
+    border: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    box-sizing: border-box;
+}
+
+.addMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--body-text-color);
+    padding: 10px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: start;
+
+    svg {
+        flex-shrink: 0;
+        opacity: 0.8;
+    }
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color, #8b5cf6) 12%, transparent);
+        color: var(--brand-color, #8b5cf6);
+    }
+}
+
+// بهینه‌سازی پرامپت — بالای لبه کارت، سمت مقابل پاک‌کن (هم‌ارتفاع با آن)
+.optimizeFloat {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    inset-inline-end: 12px;
+    z-index: 4;
+    display: flex;
+}
+
+.optimizeFloatChip {
+    height: 26px;
+    background: var(--plan-card-background-color);
+}
+
+// موبایل: دکمهٔ باز کردن متن در PromptEditDialog — absolute روی گوشهٔ راست بالای متن کادر
+// (جایی از متن نمی‌گیرد)؛ فقط وقتی کادر فوکوس دارد دیده می‌شود
+.expandBtn {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+.inputCardWrapper:focus-within .expandBtn:not(:disabled) {
+    opacity: 0.8;
+    pointer-events: auto;
+}
+
+.attachStrip {
+    min-width: 0;
+    transition: zoom 0.2s ease;
+}
+
+/* موبایل، کادر جمع‌شده (ChatInput compact — موقع دیدن خروجی‌ها یا با دکمهٔ کنار پاک‌کن):
+   تصاویر مرجع ریز، یک خط متن، و از ابزارها فقط آیکون ریز مدل + خط «مدل | تنظیمات» و قیمت؛
+   با لمس متن (فوکوس) دوباره کامل می‌شود */
+.compact {
+    border-radius: 20px;
+
+    .mainInputArea {
+        padding: 8px 14px 6px;
+        border-radius: 18px;
+    }
+
+    .attachStrip {
+        zoom: 0.55;
+    }
+
+    .composerTextSlot {
+        margin-bottom: 0;
+    }
+
+    .composerTextarea [contenteditable] {
+        max-height: 1.55em !important;
+        overflow: hidden !important;
+    }
+
+    .optimizeFloat,
+    .clearComposer,
+    .expandBtn,
+    .leftTools,
+    .sendBtn {
+        display: none !important;
+    }
+
+    // یک ردیف: [آیکون ریز مدل + خط مدل/تنظیمات] ... [قیمت]
+    .bottomControls {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        margin-top: 4px;
+    }
+
+    .compactToolbar {
+        display: block;
+        flex: 1;
+        min-width: 0;
+    }
+
+    // قیمت هم در همان ردیف (نه شناور بالای دکمهٔ ارسال که در این حالت پنهان است)
+    .sendCostChip {
+        position: static !important;
+        font-weight: 400 !important;
+    }
+}
+
+/* بالای لبه کارت، سمت مقابل بهینه‌سازی: باز/بسته کردن کادر (موبایل) + پاک‌کن */
+.edgeStart {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    inset-inline-start: 12px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:empty {
+        display: none;
+    }
+}
+
+.edgeBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 50%;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font-size: 13px;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+
+    &:hover:not(:disabled) {
+        opacity: 1;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.3;
+    }
+}
+
+// پاک کردن کادر (همان edgeBtn)
+.clearComposer {
+    flex-shrink: 0;
+}
+
+.addMenuDivider {
+    display: block;
+    height: 1px;
+    margin: 4px 6px;
+    background: var(--input-border-color);
+}
+
+// کلید «بهینه‌سازی عکس» — منو بسته نمی‌شود، فقط سوییچ عوض می‌شود
+.addMenuToggle {
+    &:hover {
+        color: var(--body-text-color);
+    }
+}
+
+.addMenuToggleText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+
+    small {
+        font-size: 0.7rem;
+        font-weight: 500;
+        opacity: 0.6;
+    }
+}
+
+// همان سوییچ system-design، کوچک‌تر برای ردیف منو
+.switch {
+    position: relative;
+    flex-shrink: 0;
+    width: 32px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-hover-background-color, color-mix(in srgb, var(--body-text-color) 12%, transparent));
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        inset-inline-start: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.18s ease;
+    }
+}
+
+.switchOn {
+    background: var(--brand-color, #8b5cf6);
+    border-color: var(--brand-color, #8b5cf6);
+
+    &::after {
+        transform: translateX(-14px);
+    }
+}
+
+:global([dir='ltr']) .switchOn::after {
+    transform: translateX(14px);
+}

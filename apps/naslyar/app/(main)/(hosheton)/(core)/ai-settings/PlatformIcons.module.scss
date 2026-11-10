@@ -1,0 +1,280 @@
+/* آیکون‌های عمومی پلتفرم — تب مدیریت کتابخانه و مودال انتخاب آیکون */
+
+.addBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    background: var(--plan-card-background-color);
+}
+
+.nameField {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fieldLabel {
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.nameInput {
+    width: 100%;
+    max-width: 320px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+}
+
+.addRow {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.svgInput {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-family: monospace;
+    font-size: 0.78rem;
+    direction: ltr;
+    text-align: left;
+    resize: vertical;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+}
+
+.previewBox {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--input-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+
+    svg {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+.hint {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.listBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.listTitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0 0 2px;
+}
+
+.iconRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    background: var(--plan-card-background-color);
+}
+
+.iconThumb {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.iconName {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.rowActions {
+    display: flex;
+    gap: 6px;
+    margin-inline-start: auto;
+}
+
+.btn {
+    border: 1px solid var(--input-border-color);
+    background: transparent;
+    color: var(--body-text-color);
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.dangerBtn {
+    color: #e5484d;
+    border-color: #e5484d55;
+}
+
+/* ── فیلد آیکون در تنظیمات مدل (PlatformIconField) ── */
+
+.iconField {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fieldTitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.manualIcon {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.linkedIcon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+}
+
+.linkedMeta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* ── مودال انتخاب ── */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    padding: 16px;
+}
+
+.modal {
+    width: min(680px, 100%);
+    max-height: 80vh;
+    overflow: auto;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    h3 {
+        margin: 0;
+        font-size: 1rem;
+    }
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: inherit;
+    line-height: 1;
+    padding: 0 4px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 10px;
+}
+
+.gridItem {
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+    padding: 6px 4px;
+
+    svg {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        border-color: var(--accent-color, #7c5cff);
+    }
+}
+
+.gridItemName {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.62rem;
+    opacity: 0.75;
+}
+
+.stateText {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    text-align: center;
+    padding: 24px 0;
+    margin: 0;
+}

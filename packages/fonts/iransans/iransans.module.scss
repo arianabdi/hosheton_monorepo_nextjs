@@ -1,0 +1,31 @@
+
+/*Yekanbakh (Persian & English)*/
+@font-face {
+    font-family: "almari";
+    src: url("./Ultralight.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: "iransans";
+    src: url("./Light.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: "iransans";
+    src: url("./Medium.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: "iransans";
+    src: url("./Bold.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
+
+/* Optional utility class (handy for quick testing) */
+.iransans {
+    font-family: 'iransans', sans-serif;
+}

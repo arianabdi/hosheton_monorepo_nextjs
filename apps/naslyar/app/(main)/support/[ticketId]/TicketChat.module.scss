@@ -1,0 +1,739 @@
+$primary-blue: var(--brand-color);
+$primary-hover: var(--brand-color);
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+$border-color: var(--plan-card-border-color);
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: $text-dark;
+    box-sizing: border-box;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.mainTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+.layoutGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.subTitle {
+    font-size: 0.95rem;
+    color: $text-muted;
+}
+
+.addKeyBtn {
+    background-color: $primary-blue;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s, opacity 0.2s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+// --- استایل جدول درخواست‌ها ---
+.tableWrapper {
+    width: 100%;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+    font-size: 0.875rem;
+
+    th {
+        background-color: rgba(123, 88, 253, 0.05); // متمایز کننده هدر جدول
+        color: $text-dark;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border-bottom: 1px solid $border-color;
+    }
+
+    td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+        color: $text-dark;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+        thead { display: none; }
+        tr {
+            display: block;
+            border-bottom: 1px solid $border-color;
+            padding: 0.75rem 0;
+        }
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            border: none;
+
+            &::before {
+                content: attr(data-label);
+                color: $text-dark;
+                font-size: 0.75rem;
+                opacity: 0.7;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+.codeText {
+    direction: ltr;
+    background-color: rgba(123, 88, 253, 0.08);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: .8rem;
+    width: max-content;
+}
+
+// وضعیت‌های اختصاصی تیکت‌ها با نشان‌های رنگی هماهنگ
+.statusSuccess {
+    color: #2a9f51;
+    background-color: rgba(35, 193, 104, 0.12);
+    border-radius: 4px;
+    border: 1px solid rgba(35, 193, 104, 0.3);
+    padding: 4px 10px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.statusPending {
+    color: #e28704;
+    background-color: rgba(226, 135, 4, 0.12);
+    border-radius: 4px;
+    border: 1px solid rgba(226, 135, 4, 0.35);
+    padding: 4px 10px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.statusClosed {
+    color: #5f6368;
+    background-color: rgba(95, 99, 104, 0.12);
+    border-radius: 4px;
+    border: 1px solid rgba(95, 99, 104, 0.3);
+    padding: 4px 10px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+// کارت کوچک اطلاعات جانبی پایین لیست
+.infoMiniCard {
+    background-color: rgba(123, 88, 253, 0.02);
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+    line-height: 1.6;
+
+    .infoIcon {
+        font-size: 1.1rem;
+    }
+}
+
+// ==========================================
+// استایل‌های پیشرفته بخش اتاق چت کاربران (سازگار با هر دو تم)
+// ==========================================
+
+.chatSection {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    height: calc(100vh - 280px);
+    min-height: 520px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.chatHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background-color: rgba(123, 88, 253, 0.05);
+    border-bottom: 1px solid $border-color;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+
+    .ticketBadge {
+        font-size: 0.95rem;
+        color: $text-dark;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .ticketTitle {
+        font-weight: 700;
+    }
+
+    .headerCategory {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.78rem;
+        background-color: rgba(0, 0, 0, 0.04);
+        border: 1px solid $border-color;
+        border-radius: 20px;
+        padding: 2px 10px;
+    }
+
+    .categoryDot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .connectionBadge {
+        font-size: 0.72rem;
+        color: #9ca3af;
+        border: 1px dashed $border-color;
+        border-radius: 20px;
+        padding: 2px 10px;
+
+        &.connected {
+            color: #2a9f51;
+            border-color: rgba(35, 193, 104, 0.4);
+            background-color: rgba(35, 193, 104, 0.07);
+        }
+    }
+
+    .headerTools {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .backBtn {
+        background-color: transparent;
+        border: 1px solid $border-color;
+        color: $text-dark;
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-family: inherit;
+        transition: background-color 0.15s;
+
+        &:hover {
+            background-color: rgba(123, 88, 253, 0.08);
+        }
+    }
+}
+
+.chatBody {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.01); // کانتراست ملایم پس‌زمینه چت
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $border-color;
+        border-radius: 10px;
+    }
+}
+
+.messageWrapper {
+    display: flex;
+    width: 100%;
+}
+
+// تراز منطقی — با direction سند خودش آینه می‌شود:
+// پیام کاربر سمت «انتهایی» (چپ در RTL) و پشتیبان سمت مقابل
+.userWrapper {
+    justify-content: flex-end;
+
+    .messageGroup {
+        align-items: flex-end;
+    }
+}
+
+.agentWrapper {
+    justify-content: flex-start;
+
+    .messageGroup {
+        align-items: flex-start;
+    }
+}
+
+.messageGroup {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+
+.messageBubble {
+    padding: 0.75rem 1.15rem;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
+
+    .msgContent {
+        margin: 0;
+        white-space: pre-line;
+        word-break: break-word;
+        text-align: start;
+    }
+}
+
+// حباب پیام کاربر (یکپارچه با پس‌زمینه کارت)
+.userBubble {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    color: $text-dark;
+    // گوشه «دم» با پراپرتی منطقی تا در RTL و LTR سمت درست بماند
+    border-start-end-radius: 6px;
+}
+
+// حباب پیام پشتیبان (دارای تم برند ملایم لنگی‌کو)
+.agentBubble {
+    background-color: rgba(123, 88, 253, 0.09);
+    border: 1px solid rgba(123, 88, 253, 0.25);
+    color: $text-dark;
+    border-start-start-radius: 6px;
+}
+
+// فرستنده و زمان — زیر حباب پیام، هم‌تراز با همان سمت
+.msgMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.3rem;
+    padding-inline: 0.55rem;
+    font-size: 0.7rem;
+    opacity: 0.65;
+    color: $text-muted;
+}
+
+.senderName {
+    font-weight: 500;
+}
+
+.metaDot {
+    font-size: 0.55rem;
+    line-height: 1;
+}
+
+.msgTime {
+    font-variant-numeric: tabular-nums;
+}
+
+// پیوست‌های پیام — پیش‌نمایش تصویر، پخش ویدیو یا ردیف دانلود فایل
+.attachmentsGrid {
+    margin-top: 0.75rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed $border-color;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.attachmentImageWrap {
+    position: relative;
+    display: inline-block;
+}
+
+.attachmentImage {
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid $border-color;
+    max-width: 220px;
+
+    img {
+        display: block;
+        max-width: 100%;
+        max-height: 180px;
+        object-fit: cover;
+        cursor: zoom-in;
+    }
+}
+
+.attachmentDownload {
+    position: absolute;
+    top: 6px;
+    inset-inline-end: 6px;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.15s;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.75);
+        text-decoration: none;
+    }
+}
+
+.attachmentVideo {
+    display: block;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    max-width: 260px;
+    max-height: 200px;
+    background: #000;
+}
+
+// ردیف فایل با دکمه دانلود مستقل
+.attachmentFileRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    color: $primary-blue;
+    font-size: 0.8rem;
+    max-width: 260px;
+
+    svg {
+        flex-shrink: 0;
+        color: $primary-blue;
+    }
+}
+
+.attachmentFileName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    direction: ltr;
+    flex: 1;
+    min-width: 0;
+}
+
+.attachmentFileDownload {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    color: $primary-blue;
+    background-color: rgba(123, 88, 253, 0.1);
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s;
+
+    &:hover {
+        background-color: rgba(123, 88, 253, 0.2);
+        text-decoration: none;
+    }
+}
+
+.chatFooter {
+    padding: 1.1rem 1.5rem;
+    background-color: var(--plan-card-background-color);
+    border-top: 1px solid $border-color;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.uploadingNote {
+    font-size: 0.75rem;
+    color: $primary-blue;
+    padding: 0 0.25rem;
+}
+
+.selectedFiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.fileChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.3rem 0.55rem;
+    border: 1px solid $border-color;
+    border-radius: 20px;
+    background-color: var(--plan-card-background-color);
+    font-size: 0.75rem;
+    color: $text-dark;
+
+    svg {
+        color: $primary-blue;
+        flex-shrink: 0;
+    }
+}
+
+.chipName {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+.chipSize {
+    opacity: 0.6;
+    direction: ltr;
+}
+
+.chipRemove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: $text-dark;
+    opacity: 0.6;
+    transition: opacity 0.15s, background-color 0.15s;
+
+    &:hover:not(:disabled) {
+        opacity: 1;
+        background-color: rgba(220, 53, 69, 0.12);
+        color: #dc3545;
+    }
+
+    &:disabled { cursor: not-allowed; }
+}
+
+.closedNote {
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba(226, 135, 4, 0.07);
+    color: #e28704;
+    font-size: 13px;
+}
+
+// نوار ارسال یکپارچه — فیلد، پیوست و ارسال داخل یک کپسول
+.inputContainer {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 16px;
+    padding: 6px 6px 6px 6px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+
+    &:focus-within {
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 3px rgba(123, 88, 253, 0.12);
+    }
+}
+
+.chatInput {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    color: $text-dark;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    resize: none;
+    line-height: 1.6;
+
+    &::placeholder {
+        color: $text-muted;
+        opacity: 0.65;
+    }
+}
+
+.inlineUpload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    color: var(--icon-color, $text-dark);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+
+    &:hover:not(:disabled) {
+        background-color: rgba(123, 88, 253, 0.08);
+        color: $primary-blue;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+    }
+}
+
+.sendBtn {
+    background-color: var(--blue-bg);
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 11px;
+    padding: 0.6rem 1.3rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    flex-shrink: 0;
+    transition: background-color .15s, opacity .15s;
+
+    &:hover:not(:disabled) {
+        opacity: 0.95;
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+}
+
+// تگ‌های اکستند وضعیت هدر با دات‌نوت فرمت SASS
+.badgeSuccess {
+    color: #2a9f51;
+    background-color: rgba(35, 193, 104, 0.12);
+    border-radius: 4px;
+    border: 1px solid rgba(35, 193, 104, 0.3);
+    padding: 4px 10px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.badgePending {
+    color: #e28704;
+    background-color: rgba(226, 135, 4, 0.12);
+    border-radius: 4px;
+    border: 1px solid rgba(226, 135, 4, 0.35);
+    padding: 4px 10px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .chatSection {
+        height: calc(100vh - 220px);
+    }
+    .messageGroup {
+        max-width: 88%;
+    }
+    .chatHeader, .chatFooter {
+        padding: 0.85rem 1rem;
+    }
+}
+
+.ticketControlHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fafc;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+
+.statusManager {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label {
+        font-size: 14px;
+        font-weight: bold;
+        color: #475569;
+    }
+}
+
+.statusSelectDropdown {
+    color: #1e293b;
+    cursor: pointer;
+    background-color: var(--header-background);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 10px;
+    font-family: inherit;
+
+    &:focus {
+        border-color: #3b82f6;
+    }
+}

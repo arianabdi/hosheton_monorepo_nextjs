@@ -1,0 +1,85 @@
+.settingsContainer {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    min-height: 700px;
+    font-family: iransansxvf, sans-serif;
+    overflow: hidden;
+
+
+
+    // محتوای اصلی سمت راست
+    .mainContent {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+
+        .pageHeader {
+            margin-bottom: 32px;
+
+            h2 {
+                margin: 0 0 8px 0;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--body-text-color, #000);
+            }
+            p {
+                margin: 0;
+                color: #666;
+                font-size: 0.875rem;
+            }
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color, #eaeaea);
+            margin: 24px 0;
+        }
+    }
+}
+
+// استایل‌های عمومی برای فرم‌ها و فیلدها درون تب‌ها
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    max-width: 500px;
+
+    label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--body-text-color, #333);
+    }
+
+    input, select, textarea {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color, #ccc);
+        background-color: var(--body-background, #fff);
+        color: var(--body-text-color, #000);
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: var(--brand-color, #0066cc);
+        }
+    }
+}
+
+.primaryButton {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--brand-color, #0066cc);
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    align-self: flex-start;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

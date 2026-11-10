@@ -1,0 +1,509 @@
+.edgeAssetSelection {
+    display: grid;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.edgeAssetOption {
+    display: grid;
+    grid-template-columns: auto 40px minmax(0, 1fr);
+    gap: 2px 8px;
+    align-items: center;
+    font-size: 0.76rem;
+
+    input {
+        grid-row: 1 / span 2;
+    }
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    small {
+        opacity: 0.58;
+        font-size: 0.65rem;
+    }
+}
+
+.edgeAssetThumb {
+    grid-row: 1 / span 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    opacity: 0.85;
+
+    svg {
+        font-size: 1rem;
+    }
+}
+
+.edgeAssetThumbEmpty {
+    opacity: 0.45;
+}
+
+.edgeAssetThumbMedia {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.edgeAssetIncompatible {
+    opacity: 0.52;
+}
+
+.edgeAssetAuto {
+    justify-self: start;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 0.7rem;
+}
+.settingsPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 4px 0;
+    /* ارتفاع باقی‌مانده سایدبار را پر کند تا دکمه اجرا (margin-top: auto) پایین بنشیند */
+    flex: 1 0 auto;
+}
+
+.panelTitle {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.panelMeta {
+    font-size: 0.72rem;
+    opacity: 0.55;
+    margin: 0;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* ردیف عنوان فیلد + آیکون راهنما (علامت تعجب) — آیکون چسبیده به عنوان */
+.fieldLabelRow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    min-width: 0;
+}
+
+.fieldLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.75;
+}
+
+.fieldInput,
+.fieldSelect,
+.fieldTextarea {
+    width: 100%;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+    color: var(--body-text-color);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    box-sizing: border-box;
+}
+
+.fieldTextarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Preview sample of the selected select-option (voice sample / sample frame / clip) */
+.optionPreviewImage {
+    width: 100%;
+    max-height: 160px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid var(--input-border-color);
+    background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+}
+
+.optionPreviewVideo {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    border: 1px solid var(--input-border-color);
+    background: #000;
+}
+
+.sliderRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    input[type='range'] {
+        flex: 1;
+        accent-color: #8b5cf6;
+    }
+}
+
+.sliderValue {
+    flex-shrink: 0;
+    width: 42px;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    opacity: 0.75;
+}
+
+.modelSettingsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--input-border-color);
+}
+
+.modelSettingsTitle {
+    font-size: 0.78rem;
+    font-weight: 700;
+    opacity: 0.75;
+    margin: 0;
+}
+
+.checkboxRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    width: max-content;
+    max-width: 100%;
+
+    input[type='checkbox'] {
+        flex: 0 0 auto;
+        appearance: auto;
+        width: 16px !important;
+        min-width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--brand-color, #8b5cf6);
+        cursor: pointer;
+    }
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.emptyState {
+    font-size: 0.82rem;
+    opacity: 0.55;
+    text-align: center;
+    padding: 24px 8px;
+}
+
+/* تولبار مدل/تنظیمات (همان CompactChatToolbar چت) — در عرض سایدبار */
+.nodeModelToolbar {
+    min-width: 0;
+}
+
+/* کادر پرامپت + اجرا. حالت اصلی: با پورتال در جای پایین سایدبار میزبان
+   (بیرون از ناحیه اسکرول) — تا لبه پایین می‌نشیند و محتوا زیر/روی آن نمی‌آید. */
+.runFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px 8px 8px;
+    background: var(--input-background-color);
+}
+
+/* میزبانی که جا نداده (ویرایشگر ویدیو): داخل پنل، چسبیده به پایین ناحیه اسکرول */
+.runFooterInline {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    margin-top: auto;
+    padding-inline: 0;
+}
+
+/* کادر چت داخل سایدبار — فقط اندازه/گوشه‌ها برای جا شدن در سایدبار؛ استایل چت دست نمی‌خورد.
+   فرزند مستقیم = .inputCardWrapper و نوه = .mainInputArea از ChatInput.module.scss */
+.nodeComposer {
+    position: relative; // لنگر دکمه کوچک/بزرگ کردن کادر
+
+    > div {
+        /* width:100% + padding/border کادر چت بدون border-box از سایدبار بیرون می‌زد */
+        box-sizing: border-box;
+        /* هم‌مرکز با گوشه گرد سایدبار (۲۴px − border ۱px − فاصله ۸px) تا گوشه‌ها بریده نشوند */
+        border-radius: 15px;
+        /* سایه بلند کادر چت در ۸px پایین سایدبار بریده می‌شد */
+        box-shadow: none;
+
+        > div {
+            border-radius: 12px;
+        }
+    }
+}
+
+/* جا برای نیمه بالایی دکمه کوچک/بزرگ کردن که روی لبه کادر می‌نشیند */
+.runFooterWithToggle {
+    padding-top: 10px;
+}
+
+/* موبایل: دکمه خیلی کوچک کوچک/بزرگ کردن کادر — وسط لبه بالای کارت، مثل دستگیره شیت */
+.composerSizeToggle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 14px;
+    padding: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 999px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    /* ناحیه لمس بزرگ‌تر از ظاهر کوچک دکمه */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -8px;
+    }
+}
+
+/* حالت کوچک: همان کارت در یک ردیف — پیش‌نمایش یک‌خطی پرامپت + دکمه اجرا.
+   پیشوند .nodeComposer تا بر padding/margin کلاس‌های کادر چت غلبه کند */
+.nodeComposer .collapsedArea {
+    padding: 6px;
+    padding-inline-start: 14px;
+}
+
+.nodeComposer .collapsedArea .collapsedControls {
+    margin-top: 0;
+    flex-wrap: nowrap;
+}
+
+.collapsedPreviewSlot {
+    flex: 1;
+    min-width: 0;
+}
+
+.collapsedPreview {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 36px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 14px;
+    text-align: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: text;
+}
+
+.collapsedPlaceholder {
+    opacity: 0.45;
+}
+
+/* قیمت تخمینی بالای کادر، هم‌تراز دکمه اجرا — مثل چیپ بالای دکمه ارسال چت */
+.runCostLine {
+    display: flex;
+    justify-content: flex-end;
+    padding-inline: 18px;
+}
+
+.runCostChip {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.72;
+    white-space: nowrap;
+}
+
+/* گوشه بالای کادر پرامپت (همان لنگر optimize چت؛ در RTL سمت چپ): optimize + expand */
+.composerTopActions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ویرایش کامل پرامپت — هم‌قد و هم‌ظاهر دکمه compact بهینه‌سازی، توپر (نه شفاف) */
+.composerExpandBtn {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid var(--input-border-color);
+    border-radius: 999px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.12s ease, color 0.12s ease;
+
+    &:hover {
+        border-color: var(--brand-color, #8b5cf6);
+        color: var(--brand-color, #8b5cf6);
+    }
+}
+
+/* نود بدون پرامپت (render): به‌جای متن، عنوان دکمه اجرا */
+.runOnlyLabel {
+    margin: 0;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.runNodeBtn {
+    margin-top: 8px;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    :global(.dark) & {
+        background: #fff;
+        color: #000;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.colorSwatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.colorSwatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 2px solid;
+    cursor: pointer;
+    padding: 0;
+
+    &.colorSwatchActive {
+        box-shadow: 0 0 0 2px #8b5cf6;
+    }
+}
+
+.themeAwareSwatch {
+    --swatch-bg: var(--swatch-light-bg);
+    --swatch-border: var(--swatch-light-border);
+    background: var(--swatch-bg);
+    border-color: var(--swatch-border);
+
+    :global([data-theme='dark']) & {
+        --swatch-bg: var(--swatch-dark-bg);
+        --swatch-border: var(--swatch-dark-border);
+    }
+}
+
+.matrixSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 4px;
+    border-top: 1px solid var(--input-border-color);
+}
+
+.matrixHint {
+    font-size: 0.68rem;
+    opacity: 0.55;
+    margin: 0;
+    line-height: 1.45;
+}
+
+.tilePromptsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tilePromptRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tilePromptLabel {
+    flex-shrink: 0;
+    width: 28px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8b5cf6;
+    text-align: center;
+}
+
+.transformerSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 4px;
+    border-top: 1px solid var(--input-border-color);
+}
+
+.connectionStatusList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.connectionStatusRow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px dashed var(--input-border-color);
+    font-size: 0.75rem;
+    line-height: 1.45;
+
+    &.connectionOk {
+        border-style: solid;
+        border-color: rgba(16, 185, 129, 0.35);
+        background: rgba(16, 185, 129, 0.06);
+    }
+}

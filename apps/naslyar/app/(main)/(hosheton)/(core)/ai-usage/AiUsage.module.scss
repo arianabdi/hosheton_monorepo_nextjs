@@ -1,0 +1,754 @@
+// گزارش مصرف — نمای ساده: ردیف آمار با خط جداکننده، نمودارها بدون کارت رنگی.
+// رنگ‌ها فقط برای داده (سری‌ها) و وضعیت‌ها؛ متن همیشه رنگ متن بدنه است.
+
+.vizRoot {
+    --series-charged: #2a78d6;   // مبلغ کسرشده از کاربر (آبی)
+    --series-vendor: #eb6834;    // هزینه واقعی ارائه‌دهنده (نارنجی)
+    --polarity-gain: #2a78d6;
+    --polarity-loss: #e34948;
+    --polarity-neutral: #c9c8c3;
+    --status-good: #0ca30c;
+    --status-warning: #fab219;
+    --status-critical: #d03b3b;
+    --grid-line: rgba(0, 0, 0, 0.08);
+}
+
+:global([data-theme='dark']) .vizRoot {
+    --series-charged: #3987e5;
+    --series-vendor: #d95926;
+    --polarity-gain: #3987e5;
+    --polarity-loss: #e66767;
+    --polarity-neutral: #5a5955;
+    --grid-line: rgba(255, 255, 255, 0.1);
+}
+
+// ---------------- پنل فیلتر ----------------
+.filterPanel {
+    margin: 1.5rem 0 1.25rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--plan-card-border-color);
+    border-bottom: 1px solid var(--plan-card-border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.filterTopRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+}
+
+.segmentGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.segmentLabel {
+    font-size: 0.75rem;
+    opacity: 0.75;
+}
+
+// کنترل تک‌انتخابی (radiogroup) — یک قاب، گزینه فعال با زمینه ساده
+.segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--input-background-color);
+
+    button {
+        background: transparent;
+        border: none;
+        border-inline-start: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        padding: 0.45rem 0.85rem;
+        font-size: 0.82rem;
+        cursor: pointer;
+        opacity: 0.8;
+
+        &:first-child {
+            border-inline-start: none;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--brand-color);
+            outline-offset: -2px;
+        }
+    }
+
+    .segmentActive {
+        opacity: 1;
+        font-weight: 700;
+        background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+        color: var(--body-text-color);
+    }
+}
+
+.basisNote {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.8;
+    opacity: 0.8;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 2px solid var(--brand-color);
+}
+
+.filterRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem 1rem;
+}
+
+.selectField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 150px;
+
+    label {
+        font-size: 0.75rem;
+        opacity: 0.75;
+    }
+
+    select {
+        height: 38px;
+        background: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        border-radius: 6px;
+        padding: 0 0.6rem;
+        font-size: 0.85rem;
+
+        &:focus-visible {
+            outline: 2px solid color-mix(in srgb, var(--brand-color) 25%, transparent);
+            border-color: var(--brand-color);
+        }
+    }
+}
+
+.activeFilters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+.activeLabel {
+    opacity: 0.7;
+}
+
+.activeChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.3rem 0.2rem 0.6rem;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 999px;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+        }
+    }
+}
+
+.clearAll {
+    background: none;
+    border: none;
+    color: var(--brand-color);
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0.2rem 0.3rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.toolbarGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+}
+
+.sortControl {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.dirBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    height: 38px;
+    padding: 0 0.7rem;
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    color: var(--body-text-color);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.resultCount {
+    margin: 0 0 0.6rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.sortBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+
+    svg {
+        opacity: 0.45;
+    }
+}
+
+.sortActive {
+    font-weight: 700;
+
+    svg {
+        opacity: 1;
+    }
+}
+
+.inlineLink {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: right;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
+    text-underline-offset: 3px;
+
+    &:hover {
+        color: var(--brand-color);
+    }
+}
+
+// داده در حال بارگذاری دوباره — کم‌رنگ، بدون پرش چیدمان
+.stale {
+    opacity: 0.55;
+    transition: opacity 0.15s;
+}
+
+// ردیف آمار: یک کارت فشرده با ۴ بخش؛ خط بین بخش‌ها همان gap یک‌پیکسلی است که رنگ قاب از پشتش دیده می‌شود
+// (در ۲×۲ موبایل هم خط عمودی و هم افقی درست می‌افتد)
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-bottom: 1.25rem;
+    background-color: var(--plan-card-border-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 6px;
+    overflow: hidden;
+
+    @media (min-width: 900px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    padding: 0.65rem 0.9rem;
+    background-color: var(--plan-card-background-color);
+}
+
+.statLabel {
+    font-size: 0.74rem;
+    opacity: 0.65;
+}
+
+.statValueRow {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+}
+
+.statValue {
+    font-size: 1.15rem;
+    font-weight: 700;
+    direction: ltr;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.statPct {
+    font-size: 0.74rem;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+.statSub {
+    font-size: 0.72rem;
+    opacity: 0.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.statSubWarn {
+    color: var(--polarity-loss);
+    opacity: 0.9;
+}
+
+.paginationWrap {
+    margin-top: 0.25rem;
+}
+
+.section {
+    padding: 0;
+    margin-top: 1.25rem;
+}
+
+// کارت نمودار — همان زمینه و قاب کارت‌های آمار
+.chartCard {
+    margin-top: 1.25rem;
+    padding: 1rem 1.1rem 1.1rem;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 6px;
+    min-width: 0;
+}
+
+.sectionHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0 0 0.25rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+        opacity: 0.75;
+        margin: 0;
+        line-height: 1.7;
+    }
+}
+
+.legend {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.78rem;
+    flex-wrap: wrap;
+}
+
+.legendItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.swatchLine {
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+}
+
+.swatchBox {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.chartBox {
+    width: 100%;
+    height: 280px;
+    direction: ltr;
+}
+
+.chartBoxTall {
+    width: 100%;
+    direction: ltr;
+}
+
+.chartEmpty {
+    padding: 2.5rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+.tooltip {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 6px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--body-text-color);
+    direction: rtl;
+    text-align: right;
+    min-width: 170px;
+
+    strong {
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+}
+
+.tooltipRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    line-height: 1.8;
+
+    b {
+        direction: ltr;
+    }
+}
+
+.twoCol {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 1.25rem;
+
+    @media (min-width: 1000px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.money {
+    direction: ltr;
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+}
+
+.gain {
+    font-weight: 600;
+}
+
+.loss {
+    font-weight: 600;
+}
+
+.muted {
+    opacity: 0.65;
+    font-size: 0.75rem;
+}
+
+// وضعیت = آیکون + برچسب، رنگ هیچ‌وقت تنها نیست
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.statusResolved svg { color: var(--status-good); }
+.statusPending svg { color: var(--status-warning); }
+.statusUnavailable svg { color: var(--status-critical); }
+
+.note {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 0.2rem;
+    max-width: 260px;
+    line-height: 1.6;
+}
+
+.mismatchRow {
+    td {
+        background: rgba(208, 59, 59, 0.06);
+    }
+}
+
+.linkBtn {
+    background: none;
+    border: 1px solid var(--input-border-color);
+    color: var(--body-text-color);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+}
+
+.idText {
+    display: block;
+    direction: ltr;
+    font-family: monospace;
+    font-size: 0.72rem;
+    opacity: 0.75;
+    word-break: break-all;
+}
+
+// ظرف جدول مثل صفحه کارمندان (Automation.module.scss → .tableWrap)
+.tableScroll {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+
+    tbody tr td {
+        transition: background-color 0.15s ease;
+    }
+
+    tbody tr:hover td {
+        background: color-mix(in srgb, var(--brand-color) 4%, transparent);
+    }
+}
+
+// ---------------- جدول پردازش‌ها: ردیف فشرده + جزئیات بازشونده ----------------
+.recordsHint {
+    margin: 0;
+    padding: 0.6rem 1rem;
+    font-size: 0.76rem;
+    opacity: 0.7;
+    border-bottom: 1px solid var(--plan-card-border-color);
+}
+
+.recordsTable {
+    table-layout: auto;
+
+    th,
+    td {
+        padding: 0.65rem 0.75rem;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+}
+
+.expandCol {
+    width: 40px;
+    padding-inline: 0.5rem 0 !important;
+}
+
+.expandBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.6;
+
+    svg {
+        transition: transform 0.15s ease;
+    }
+
+    &:hover {
+        opacity: 1;
+        border-color: var(--plan-card-border-color);
+    }
+
+    &[aria-expanded='true'] {
+        opacity: 1;
+        color: var(--brand-color);
+
+        svg {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.recordRow {
+    cursor: pointer;
+}
+
+.recordRowOpen td {
+    background: color-mix(in srgb, var(--brand-color) 5%, transparent);
+    border-bottom-color: transparent !important;
+}
+
+.cellPrimary {
+    display: block;
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+.cellSecondary {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.6;
+    line-height: 1.5;
+}
+
+.truncateCell {
+    .cellPrimary,
+    .cellSecondary {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 190px;
+    }
+}
+
+.profitCell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-weight: 600;
+}
+
+.mismatchFlag {
+    display: block;
+    width: fit-content;
+    margin-top: 0.2rem;
+    padding: 0 0.35rem;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--status-critical);
+    background: rgba(208, 59, 59, 0.08);
+}
+
+.lossText {
+    color: var(--polarity-loss);
+    font-weight: 600;
+}
+
+.recordDetailRow > td {
+    padding: 0 !important;
+    white-space: normal !important;
+    background: color-mix(in srgb, var(--brand-color) 3%, transparent);
+    border-bottom: 1px solid var(--plan-card-border-color);
+
+    &::before {
+        display: none !important;
+    }
+}
+
+// سه ستون با خط جداکننده — نه کارت جدا
+.recordDetail {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.detailGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 0.85rem 1rem 1rem;
+
+    & + & {
+        border-inline-start: 1px solid var(--plan-card-border-color);
+    }
+
+    @media (max-width: 900px) {
+        & + & {
+            border-inline-start: none;
+            border-top: 1px solid var(--plan-card-border-color);
+        }
+    }
+
+    h4 {
+        margin: 0 0 0.2rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        opacity: 0.8;
+    }
+}
+
+.detailItem {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+}
+
+.detailLabel {
+    opacity: 0.65;
+    white-space: nowrap;
+}
+
+.detailValue {
+    min-width: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+
+    .idText {
+        display: inline;
+    }
+}
+
+.detailNote {
+    margin: 0.2rem 0 0;
+    font-size: 0.74rem;
+    line-height: 1.7;
+    opacity: 0.7;
+}
+
+.detailActions {
+    margin-top: 0.35rem;
+
+    .linkBtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+}

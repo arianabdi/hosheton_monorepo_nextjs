@@ -1,0 +1,149 @@
+.guideBox {
+    background: color-mix(in srgb, var(--brand-color) 6%, var(--input-background-color));
+    border: 1px solid color-mix(in srgb, var(--brand-color) 25%, var(--input-border-color));
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.guideTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.guideList {
+    margin: 0;
+    padding-inline-start: 1.2rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    opacity: 0.88;
+
+    li + li {
+        margin-top: 8px;
+    }
+
+    strong {
+        font-weight: 700;
+    }
+
+    em {
+        font-style: normal;
+        opacity: 0.85;
+    }
+}
+
+.exportBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--brand-color);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.65;
+        cursor: wait;
+    }
+}
+
+.spin {
+    animation: exportSpin 1s linear infinite;
+}
+
+.statusHint {
+    margin: 8px 0 0;
+    font-size: 0.78rem;
+    opacity: 0.75;
+}
+
+.progressBox {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+}
+
+.progressTitle {
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.progressList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.progressItem {
+    font-size: 0.74rem;
+    line-height: 1.45;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--input-background-color) 80%, transparent);
+}
+
+.progressStage {
+    display: inline-block;
+    font-weight: 700;
+    margin-inline-end: 6px;
+}
+
+.progressMessage {
+    opacity: 0.9;
+}
+
+.level_error {
+    color: #f87171;
+}
+
+.resultSuccess {
+    border-color: color-mix(in srgb, #22c55e 40%, var(--input-border-color));
+}
+
+.error {
+    margin: 0;
+    font-size: 0.78rem;
+    color: #f87171;
+}
+
+.resultBox {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+    font-size: 0.78rem;
+
+    p {
+        margin: 0 0 6px;
+    }
+}
+
+.downloadLink {
+    color: var(--brand-color);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+@keyframes exportSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

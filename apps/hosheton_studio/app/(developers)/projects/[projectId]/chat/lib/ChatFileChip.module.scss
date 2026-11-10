@@ -1,0 +1,120 @@
+// پیوست سند/کد/جدول — همان ارتفاع تامبنیل‌های کادر چت (۶۴px)، کم‌رنگ و بی‌سایه
+.chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 6px;
+    height: 64px;
+    max-width: 240px;
+    padding: 0 8px 0 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--body-text-color) 4%, var(--input-background-color));
+    color: var(--body-text-color);
+    box-sizing: border-box;
+}
+
+.chipInvalid {
+    border-color: color-mix(in srgb, #dc2626 55%, transparent);
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+a.link:hover .name {
+    text-decoration: underline;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--brand-color, #8b5cf6) 12%, transparent);
+    color: var(--brand-color, #8b5cf6);
+}
+
+.spin {
+    animation: chatFileSpin 0.9s linear infinite;
+}
+
+@keyframes chatFileSpin {
+    to { transform: rotate(360deg); }
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.name {
+    overflow: hidden;
+    max-width: 150px;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.meta {
+    font-size: 11px;
+    opacity: 0.6;
+    white-space: nowrap;
+    text-align: start;
+}
+
+.chipInvalid .meta {
+    color: #dc2626;
+    opacity: 1;
+    white-space: normal;
+    direction: rtl;
+}
+
+.action {
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 7px;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.6;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spin { animation: none; }
+}

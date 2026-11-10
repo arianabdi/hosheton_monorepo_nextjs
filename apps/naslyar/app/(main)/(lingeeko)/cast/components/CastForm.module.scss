@@ -1,0 +1,86 @@
+.formCard {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.loading {
+    padding: 2rem;
+    text-align: center;
+    color: #718096;
+}
+
+.previewBox {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background: #f7fafc;
+    border-radius: 0.5rem;
+}
+
+.previewImg {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.cancelBtn {
+    background: #edf2f7;
+    color: #4a5568;
+    border: none;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.saveBtn {
+    background: #3182ce;
+    color: #fff;
+    border: none;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.uploadBlock {
+    margin: 0.5rem 0;
+}
+
+.filmsSection {
+    margin-top: 2rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.sectionTitle {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.emptyFilms {
+    color: #718096;
+    text-align: center;
+    padding: 1.5rem;
+}

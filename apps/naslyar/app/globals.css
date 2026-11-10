@@ -1,0 +1,142 @@
+:root {
+    --promo-card-color: #fff;
+    --promo-sectoin-color: linear-gradient(135deg, rgb(246, 245, 247) 0%, rgb(238, 242, 247) 100%);
+    --blue-bg:  #007bff;
+    --panel-left-background: #f1f1f1;
+    --body-padding-top: 85px;
+    --body-horizontal-padding: 30px;
+    --body-background: #f5f5f5;
+    --card-background: #eaeaea;
+    --card-border-color: #dfdfdf;
+    --card-path-color: #a3a3a3;
+    --button-green: #278E67;
+    --icon-red: #BB5C5C;
+    --brand-color: #2673ee;
+    --plan-card-background-color: #ffffff;
+    --plan-card-border-color: #dddddd;
+    --active-card-path-color: #0076ff;
+    --header-background: #ffffff;
+    --header-icon-color: #232323;
+    --border-color: #cbcbcb;
+    --blue-sky-background: #E6F0FF;
+    --green-sky-background: #A5F2DC;
+    --bottom-nav-background: #222222;
+    --body-text-color: #000000;
+    --link-text-color: #003dff;
+    --button-background: #0166FE;
+    --button-text-color: #ffffff;
+    --menu-hover: #c2c2c2;
+    --header-height: 60px;
+    --sidbar-width: 236px;
+    --video-preview-min-height: 220px;
+    --bottom-navbar-height: 72px;
+    --flashcard-list-background-color: #f7f7f7;
+    --flashcard-list-border-color: #e9e9e9;
+    --input-background-color: #fff;
+    --input-hover-background-color: #e5e5e5;
+    --input-border-color: #e3e3e3;
+    --border-color-green: #2673ee;
+    --border-color-blue: #4972BE;
+    --dictionary-card-background: #ededed;
+    --dictionary-card-divider-color: #c1c1c1;
+
+    --blog-notice-card-bg: rgba(0, 0, 0, 0.02);
+    --blog-notice-code-bg: rgba(0, 0, 0, 0.05);
+    --blog-notice-footer-bg: #f8fafc;
+    --blog-notice-footer-text: #475569;
+
+    --table-empty-glow: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    --table-empty-icon-bg: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    --table-empty-icon-border: color-mix(in srgb, var(--brand-color) 22%, transparent);
+    --table-empty-icon-shadow: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    --table-empty-hint-bg: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    --table-empty-secondary-hover: color-mix(in srgb, var(--brand-color) 5%, transparent);
+
+    /* Pagination (shared component vars + naslyar theme) */
+    --code-block-background-color: #ffffff;
+    --pagination-active-bg: var(--brand-color);
+    --pagination-active-text: #ffffff;
+    --pagination-surface: var(--plan-card-background-color);
+    --pagination-border: var(--plan-card-border-color);
+    --pagination-hover-bg: color-mix(in srgb, var(--brand-color) 10%, var(--input-background-color));
+}
+
+/* Dark mode */
+[data-theme='dark'] {
+    --promo-card-color: #232229;
+    --promo-sectoin-color: linear-gradient(135deg, #283471 0%, #000000 100%);
+    --blue-bg:  #007bff;
+    --panel-left-background: #131313;
+    --body-padding-top: 85px;
+    --body-horizontal-padding: 30px;
+    --body-background: #000000;
+    --card-border-color: #232323;
+    --header-background: #121212;
+    --header-icon-color: #a1a1a1;
+    --card-path-color: #3b3b3b;
+    --button-green: #278E67;
+    --icon-red: #BB5C5C;
+    --brand-color: #2673ee;
+    --active-card-path-color: #454DDB;
+    --card-background: #161617;
+    --border-color: #2f2f2f;
+    --page-view-background-color: #0C121F;
+    --page-view-border-color: #1D2535;
+    --blue-sky-background: #1e2229;
+    --green-sky-background: #364d48;
+    --bottom-nav-background: #222222;
+    --body-text-color: #ffffff;
+    --link-text-color: #ffffff;
+    --header-height: 60px;
+    --sidbar-width: 236px;
+    --button-background: #0166FE;
+    --button-text-color: #ffffff;
+    --menu-hover: #30323C;
+    --video-preview-min-height: 220px;
+    --bottom-navbar-height: 72px;
+    --flashcard-list-background-color: #2C2C2C;
+    --flashcard-list-border-color: #3B3B3B;
+    --input-background-color: #141414;
+    --input-hover-background-color: #3c3c42;
+    --input-border-color: #46464d;
+    --border-color-green: #2673ee;
+    --border-color-blue: #4972BE;
+    --dictionary-card-background: #1b1c1c;
+    --dictionary-card-divider-color: #38393b;
+    --plan-card-background-color: #161617;
+    --plan-card-border-color: #2f2f2f;
+
+    --blog-notice-card-bg: rgba(255, 255, 255, 0.03);
+    --blog-notice-code-bg: rgba(255, 255, 255, 0.08);
+    --blog-notice-footer-bg: rgba(255, 255, 255, 0.04);
+    --blog-notice-footer-text: rgba(255, 255, 255, 0.75);
+
+    --table-empty-glow: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    --table-empty-icon-bg: color-mix(in srgb, var(--brand-color) 16%, transparent);
+    --table-empty-icon-border: color-mix(in srgb, var(--brand-color) 30%, transparent);
+    --table-empty-icon-shadow: color-mix(in srgb, var(--brand-color) 15%, transparent);
+    --table-empty-hint-bg: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    --table-empty-secondary-hover: color-mix(in srgb, var(--brand-color) 10%, transparent);
+
+    --code-block-background-color: #1a1a1a;
+    --pagination-active-bg: var(--brand-color);
+    --pagination-active-text: #ffffff;
+    --pagination-surface: #141414;
+    --pagination-border: #2f2f2f;
+    --pagination-hover-bg: color-mix(in srgb, var(--brand-color) 18%, #141414);
+}
+
+body {
+    margin: 0px;
+}
+
+button {
+    font-family: iransansxvf, sans-serif;
+}
+
+input,
+textarea {
+    font-family: iransansxvf, sans-serif;
+}
+
+/* Naslyar pagination theme: through the --pagination-* variables above (consumed by @my-workspace/components Pagination). */

@@ -1,0 +1,98 @@
+.badge {
+    position: relative;
+    z-index: 7;
+    align-self: flex-start;
+}
+
+.total {
+    color: var(--body-text-color);
+    font-variant-numeric: tabular-nums;
+    cursor: default;
+    background: var(--green-sky-background);
+    border-radius: 999px;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: 11px;
+    display: inline-flex;
+}
+
+// روی تصویر/ویدیو: یک قرص تیره با متن سفید — خوانا روی هر رنگی
+.totalOverlay {
+    background: rgba(2, 6, 23, 0.68);
+    color: #fff;
+    font-weight: 600;
+}
+
+.popup {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    inset-inline-start: 0;
+    width: 240px;
+    background: var(--input-background-color, #fff);
+    color: var(--body-text-color, #0f172a);
+    border: 1px solid var(--input-border-color, #e2e8f0);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+    padding: 10px 12px;
+    text-align: start;
+}
+
+.popupHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+
+    strong {
+        direction: ltr;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 180px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rowMain {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 12px;
+
+    strong {
+        direction: ltr;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.rowMeta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 2px;
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+.empty {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.65;
+}
+
+.popupFooter {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--input-border-color, #e2e8f0);
+    font-size: 11px;
+    opacity: 0.7;
+}

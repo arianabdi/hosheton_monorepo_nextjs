@@ -1,0 +1,28 @@
+.sortBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+
+    svg {
+        opacity: 0.45;
+    }
+
+    &:hover svg {
+        opacity: 0.8;
+    }
+}
+
+.sortActive {
+    color: var(--brand-color);
+
+    svg {
+        opacity: 1;
+    }
+}

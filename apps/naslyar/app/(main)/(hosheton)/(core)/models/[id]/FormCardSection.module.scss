@@ -1,0 +1,108 @@
+.card {
+    padding: 0.7rem 0.85rem;
+    scroll-margin-top: 4.5rem;
+}
+
+.dense {
+    padding: 0.55rem 0.7rem;
+
+    .body {
+        margin-top: 0.7rem;
+    }
+
+    .subtitle {
+        margin-bottom: 0 !important;
+        font-size: 0.72rem;
+        line-height: 1.4;
+    }
+}
+
+.compact {
+    margin-bottom: 0.55rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    background: var(--plan-card-background-color);
+    padding: 0.5rem 0.65rem;
+
+    .body {
+        margin-top: 0.55rem;
+    }
+}
+
+.headerRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.header {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    text-align: right;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+        opacity: 0.85;
+
+        .chevron {
+            opacity: 1;
+        }
+    }
+
+    h4 {
+        margin-bottom: 0.15rem;
+        font-size: 0.9rem;
+    }
+}
+
+.headerText {
+    min-width: 0;
+}
+
+.subtitle {
+    margin: 0 !important;
+}
+
+.chevron {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    opacity: 0.65;
+    background: color-mix(in srgb, var(--brand-color, #137333) 8%, transparent);
+    transition: opacity 0.15s ease;
+}
+
+.extra {
+    flex-shrink: 0;
+}
+
+.body {
+    margin-top: 0.75rem;
+    animation: fadeInSlide 0.2s ease;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

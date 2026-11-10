@@ -1,0 +1,220 @@
+.panel {
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--plan-card-background-color) 96%, transparent);
+    overflow: hidden;
+}
+
+.panelHeader {
+    padding: 0.65rem 0.75rem 0;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.content {
+    padding: 0.65rem 0.75rem 0.75rem;
+}
+
+.block {
+    margin-bottom: 0.85rem;
+
+    &:last-of-type {
+        margin-bottom: 0.35rem;
+    }
+}
+
+.blockTitle {
+    margin: 0 0 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    opacity: 0.78;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px dashed color-mix(in srgb, var(--plan-card-border-color) 70%, transparent);
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+.label {
+    font-size: 0.68rem;
+    opacity: 0.62;
+    font-weight: 600;
+}
+
+.value {
+    font-size: 0.78rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+.badgeActive,
+.badgeInactive {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.badgeActive {
+    background: color-mix(in srgb, #137333 14%, transparent);
+    color: #137333;
+}
+
+.badgeInactive {
+    background: color-mix(in srgb, #9aa0a6 18%, transparent);
+    color: #5f6368;
+}
+
+.timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.timelineItem {
+    position: relative;
+    margin: 0;
+    padding: 0 0.85rem 0.75rem 0;
+    border-right: 2px solid color-mix(in srgb, var(--brand-color) 35%, var(--plan-card-border-color));
+
+    &:last-child {
+        padding-bottom: 0;
+        border-right-color: transparent;
+    }
+}
+
+.timelineDot {
+    position: absolute;
+    top: 0.28rem;
+    right: -0.34rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--brand-color);
+    box-shadow: 0 0 0 2px var(--plan-card-background-color);
+}
+
+.timelineBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.timelineButton {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.2rem 0.35rem 0.2rem 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: right;
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--brand-color) 45%, transparent);
+        outline-offset: 1px;
+    }
+}
+
+.timelineHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.timelineTitle {
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.timelineBadge,
+.timelineType {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.08rem 0.4rem;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+    white-space: nowrap;
+}
+
+.timelineType {
+    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    color: var(--body-text-color);
+    opacity: 0.85;
+}
+
+.timelineMeta {
+    font-size: 0.7rem;
+    opacity: 0.78;
+    word-break: break-word;
+}
+
+.timelineFoot {
+    font-size: 0.66rem;
+    opacity: 0.62;
+}
+
+.emptyHint {
+    margin: 0;
+    font-size: 0.72rem;
+    opacity: 0.65;
+    line-height: 1.5;
+}
+
+.activeTabHint {
+    margin-top: 0.65rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--plan-card-border-color);
+    font-size: 0.68rem;
+    opacity: 0.72;
+}
+
+.activeTabHint strong {
+    color: var(--brand-color);
+    font-weight: 700;
+}

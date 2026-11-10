@@ -1,0 +1,533 @@
+// components/ApiUsagePage.module.scss
+
+$primary-blue: var(--brand-color);
+$primary-hover: var(--brand-color);
+$text-dark: var(--body-tex-color);
+$text-muted: var(--body-tex-color);
+$border-color: #dadce0;
+$bg-light: #f8f9fa;
+$success-color: #137333;
+$success-bg: #e6f4ea;
+$error-color: #c5221f;
+$error-bg: #fce8e6;
+
+.rtl {
+    text-align: start;
+}
+
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: $text-dark;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.headerRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.refreshBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--body-background);
+    color: var(--body-text-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.82rem;
+}
+
+.typeBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+}
+
+.emptyCell {
+    text-align: center;
+    opacity: 0.7;
+    padding: 1.5rem !important;
+}
+
+.currency,
+.currencySmall {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.mainTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.loadingWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+    opacity: 0.75;
+}
+
+.tabs {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-color, #dadce0);
+}
+
+.tabBtn {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.65;
+    padding: 0.65rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, opacity 0.15s, border-color 0.15s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.tabActive {
+    opacity: 1;
+    color: var(--brand-color, #7b64cf);
+    border-bottom-color: var(--brand-color, #7b64cf);
+}
+
+/* موبایل: هم‌اندازهٔ تب‌های پروفایل سازنده */
+@media (max-width: 768px) {
+    .tabBtn {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+}
+
+.chartsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+
+    @media (min-width: 900px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.summaryRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 600px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.sectionCard {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    margin-bottom: 1.25rem;
+}
+
+.statCardsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 960px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.statCard {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    padding: 1.15rem 1.2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    min-height: 100%;
+}
+
+.statCardTitle {
+    margin: 0 0 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--body-text-color);
+}
+
+.statList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.statRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+
+    span {
+        opacity: 0.72;
+        flex: 1;
+    }
+
+    strong {
+        font-weight: 700;
+        text-align: left;
+        font-size: 0.78rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
+
+.chartCard {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+    padding: 1.25rem 1rem 0.75rem;
+    min-height: 260px;
+}
+
+.chartEmpty {
+    margin: 0;
+    padding: 3rem 1rem;
+    text-align: center;
+    opacity: 0.65;
+    font-size: 0.9rem;
+}
+
+.boldText {
+    font-weight: 700;
+}
+
+// --- گرید کارت‌های بالایی ---
+.topGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+
+    @media (min-width: 600px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    @media (min-width: 900px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.cardLabel {
+    font-size: 0.85rem;
+    color: $text-muted;
+}
+
+.badgeActive {
+    color: #0076e4;
+    background-color: #005dff1f;
+    border-radius: 12px;
+    border: 1px solid #649cff91;
+    padding: 3px 12px;
+    font-size: .75rem;
+}
+
+.balanceValue {
+    font-size: 1.7rem;
+    color: var(--body-text-color);
+    margin-bottom: 0.25rem;
+}
+
+.currency {
+    font-size: 1rem;
+    color: $text-muted;
+    margin-right: 0.25rem;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.currencySmall {
+    font-size: 0.85rem;
+    color: $text-muted;
+}
+
+.cardSub {
+    font-size: 0.8rem;
+    color: $text-muted;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.trendUp {
+    font-size: 0.8rem;
+    color: $success-color;
+}
+
+.primaryBtn {
+    background-color: $primary-blue;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    width: max-content;
+    transition: background-color 0.15s;
+
+    &:hover {
+        background-color: $primary-hover;
+    }
+}
+
+// --- بخش‌ها ---
+.section {
+    margin-bottom: 1.25rem;
+}
+
+.sectionTitle {
+    color: var(--body-text-color);
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.sectionHint {
+    margin: -0.5rem 0 1rem;
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+}
+
+.sectionCard .sectionTitle {
+    margin-bottom: 1rem;
+}
+
+.sectionCard .tableWrapper {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+}
+
+// --- استایل‌های نمودار میله‌ای مالی ---
+.chartBox {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 2.5rem 1.5rem 1.25rem 1.5rem;
+    overflow-x: auto;
+}
+
+.chartBars {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 180px;
+    min-width: 550px;
+    flex-direction: row-reverse; // جهت چیدمان روزها از راست به چپ برای تقویم شمسی/فارسی
+}
+
+.barWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+
+    &:hover {
+        .barTooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(50%, -5px);
+        }
+        .bar {
+            background-color: $primary-blue;
+        }
+    }
+}
+
+.barTooltip {
+    position: absolute;
+    top: -30px;
+    right: 50%; // هماهنگی تولتیپ با ساختار راست‌چین
+    transform: translate(50%, 0);
+    background-color: #212529;
+    color: #ffffff;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.15s ease-out;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.bar {
+    width: 32px;
+    background-color: #e2e8f0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    transition: height 0.4s ease, background-color 0.2s;
+    cursor: pointer;
+}
+
+// متمایز کردن روز جاری (اولین ستون از راست در سیستم RTL)
+.barWrapper:last-child .bar {
+    background-color: #93c5fd;
+}
+
+.barLabel {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    color: $text-muted;
+}
+
+// --- جداول ریسپانسیو فارسی ---
+.tableWrapper {
+    width: 100%;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start; // تراز متن به راست
+    font-size: 0.875rem;
+
+    th {
+        background-color: #7b58fd0d;
+        color: $text-muted;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.8rem;
+        //background-color: var(--plan-card-background-color);
+        border-bottom: 1px solid var(--plan-card-border-color);
+    }
+
+    td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        vertical-align: middle;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+        thead { display: none; }
+        tr {
+            display: block;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 0;
+        }
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            border: none;
+
+            &::before {
+                content: attr(data-label);
+                color: $text-muted;
+                font-size: 0.75rem;
+            }
+        }
+    }
+}
+
+.modelName {
+    color: var(--body-text-color);
+}
+
+
+
+.codeText {
+    direction: ltr;
+    background-color: #7b58fd0d;
+    padding: 2px 6px;
+    font-family: monospace;
+    font-size: .8rem;
+}
+
+.statusSuccess {
+    color: #2a9f51;
+    background-color: #23c1681f;
+    border-radius: 4px;
+    border: 1px solid #23c1684f;
+    padding: 4px 10px;
+    font-size: .75rem;
+}
+
+.statusError {
+    color: #C5221FFF;
+    background-color: rgba(197, 34, 31, 0.13);
+    border-radius: 4px;
+    border: 1px solid rgba(197, 34, 31, 0.53);
+    padding: 4px 10px;
+    font-size: .75rem;
+}

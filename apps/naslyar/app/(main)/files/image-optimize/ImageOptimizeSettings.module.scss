@@ -1,0 +1,89 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card {
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 14px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lead {
+    margin: 0;
+    line-height: 1.8;
+    opacity: 0.8;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    input {
+        width: 1.1rem;
+        height: 1.1rem;
+    }
+}
+
+.fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+
+    input {
+        font-family: iransansxvf, sans-serif;
+        background: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        border-radius: 10px;
+        padding: 0.7rem 0.8rem;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.primaryBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--brand-color);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    font-family: iransansxvf, sans-serif;
+
+    &:disabled { opacity: 0.6; cursor: default; }
+}
+
+.status {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.75;
+}

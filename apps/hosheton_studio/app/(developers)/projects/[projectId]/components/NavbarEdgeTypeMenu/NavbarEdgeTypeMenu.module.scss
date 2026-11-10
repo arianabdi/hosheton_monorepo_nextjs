@@ -1,0 +1,61 @@
+.root {
+    position: relative;
+}
+
+.trigger {
+    background: transparent;
+    border: none !important;
+    color: var(--body-text-color);
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    &:hover {
+        background: var(--body-background);
+    }
+}
+
+.popup {
+    position: fixed;
+    padding: 6px;
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 12000;
+}
+
+.item {
+    background: transparent;
+    border: none;
+    color: var(--body-text-color);
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.48;
+    transition: opacity 0.18s ease, background 0.18s ease;
+
+    &:hover {
+        background: var(--body-background);
+        opacity: 1;
+    }
+}
+
+.itemActive {
+    background: var(--body-background);
+    color: var(--body-text-color);
+    opacity: 1;
+}

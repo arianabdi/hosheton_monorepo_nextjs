@@ -1,0 +1,6 @@
+// tsconfig.json at workspace root
+{
+    "compilerOptions": {
+        "typeRoots": ["./node_modules/@types", "./types"]
+    }
+}

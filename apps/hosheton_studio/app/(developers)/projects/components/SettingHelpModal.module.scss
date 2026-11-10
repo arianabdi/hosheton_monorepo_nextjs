@@ -1,0 +1,42 @@
+/* راهنمای تنظیمات — آیکون علامت تعجب کنار عنوان تنظیم + متن داخل ModalHelper */
+
+/* آیکون کوچک علامت تعجب کنار عنوان تنظیم */
+.helpButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--brand-color, #8b5cf6);
+    opacity: 0.62;
+    cursor: pointer;
+    transition: opacity 0.12s ease, transform 0.12s ease;
+
+    &:hover,
+    &:focus-visible {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+}
+
+/* فقط والد React برای ModalHelper پورتال‌شده — در چیدمان جایی نمی‌گیرد */
+.modalEventScope {
+    display: contents;
+}
+
+/* فاصله‌ی افقی دو طرف برای دکمه ✕ ModalHelper (در RTL چپ، در LTR راست) */
+.description {
+    margin: 0;
+    padding: 20px 56px 22px;
+    font-size: 0.86rem;
+    line-height: 1.85;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    overflow-y: auto;
+}

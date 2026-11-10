@@ -1,0 +1,289 @@
+// src/components/shared/project-template.module.scss
+
+// رنگ‌های شاخص داینامیک برای ایجاد تمایز هویت استودیوها در هر دو تم
+$game-accent-light: #059669;  // سبز زمردی تیره (Light Mode)
+$game-accent-dark: #34d399;   // سبز زمردی روشن (Dark Mode)
+
+$media-accent-light: #2563eb; // آبی کاربنی (Light Mode)
+$media-accent-dark: #60a5fa;  // آبی آسمانی (Dark Mode)
+
+$blog-accent-light: #d97706;  // نارنجی کهربایی تیره (Light Mode)
+$blog-accent-dark: #fbbf24;   // زرد/نارنجی روشن (Dark Mode)
+
+.container {
+    min-height: 100vh;
+    // استفاده از متغیرهای سراسری سیستم شما برای پس‌زمینه و متن بادی
+    background: var(--body-background) !important;
+    color: var(--body-text-color) !important;
+    padding: 2rem 15px;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+    @media (max-width: 640px) {
+        padding: 1rem 10px;
+    }
+}
+
+
+
+
+.header {
+    margin-bottom: 3rem;
+    // استفاده از رنگ بوردرهای اینپوت برای خطوط جداکننده تمیز
+    border-bottom: 1px solid var(--input-border-color) !important;
+    padding-bottom: 1.5rem;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--body-text-color) !important;
+        font-family: iransansxvf, sans-serif;
+    }
+
+    p {
+        color: var(--body-text-color) !important;
+        opacity: 0.7; // خوانایی هوشمند در لایت و دارک با تغییر اوپاسیتی
+        font-size: 1rem;
+        line-height: 1.6;
+        font-family: iransansxvf, sans-serif;
+    }
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px; // هماهنگ با گپ‌های ۱۰ و ۲۰ پیکسلی سیستم شما
+    width: 100%;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr; // سایدبار در موبایل و تبلت به زیر گرید می‌رود
+    }
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card {
+    // استفاده از بک‌گراند اینپوت برای کارت جهت هماهنگی کنتراست لایه‌ها
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    // افکت نوار رنگی کوچک بالای کارت هنگام هاور
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: transparent;
+        transition: background-color 0.2s ease;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: var(--body-text-color) !important;
+        transition: color 0.2s;
+    }
+
+    p {
+        color: var(--body-text-color) !important;
+        opacity: 0.65;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .cardFooter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--body-text-color);
+        opacity: 0.5;
+        border-top: 1px solid var(--input-border-color) !important;
+        padding-top: 1rem;
+
+        span:first-child {
+            font-family: monospace;
+            background: var(--body-background) !important; // پس‌زمینه تگ شناسه برعکس لایه کارت
+            border: 1px solid var(--input-border-color) !important;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+    }
+}
+
+.sidebar {
+    background: var(--input-background-color) !important;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 16px;
+    padding: 1.75rem;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+    box-sizing: border-box;
+
+    h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--body-text-color) !important;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--body-text-color);
+            opacity: 0.7;
+        }
+
+        // استایل‌های اصلی اینپوت و تکست‌اریا منطبق بر استایل‌های ریست سراسری شما
+        input, textarea {
+            background: var(--input-background-color) !important;
+            border: 1px solid var(--input-border-color) !important;
+            color: var(--body-text-color) !important;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+
+            &::placeholder {
+                color: var(--body-text-color);
+                opacity: 0.4;
+            }
+        }
+
+        textarea {
+            resize: vertical;
+        }
+    }
+
+    // دکمه ثبت با استایل دیفالت پلتفرم
+    button[type="submit"] {
+        background-color: var(--body-text-color) !important; // استفاده از کنتراست معکوس متن بادی برای دکمه استاندارد
+        color: var(--body-background) !important;
+        border: none;
+        padding: 0.85rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 0.5rem;
+
+        &:hover {
+            opacity: 0.9;
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+}
+
+// ----------------------------------------------------
+// لایه‌های استایل اختصاصی بر اساس نوع کلاس والد استودیو
+// ----------------------------------------------------
+
+// در صورت نیاز، کلاس نوع استودیو (مانند `.game`) به والد کامپوننت پروژه الحاق می‌شود
+:global(.game) {
+    .card:hover {
+        border-color: $game-accent-light !important;
+        :global(.dark) & { border-color: $game-accent-dark !important; }
+        &::before {
+            background-color: $game-accent-light;
+            :global(.dark) & { background-color: $game-accent-dark; }
+        }
+        h3 {
+            color: $game-accent-light !important;
+            :global(.dark) & { color: $game-accent-dark !important; }
+        }
+    }
+}
+
+:global(.media) {
+    .card:hover {
+        border-color: $media-accent-light !important;
+        :global(.dark) & { border-color: $media-accent-dark !important; }
+        &::before {
+            background-color: $media-accent-light;
+            :global(.dark) & { background-color: $media-accent-dark; }
+        }
+        h3 {
+            color: $media-accent-light !important;
+            :global(.dark) & { color: $media-accent-dark !important; }
+        }
+    }
+}
+
+:global(.blog) {
+    .card:hover {
+        border-color: $blog-accent-light !important;
+        :global(.dark) & { border-color: $blog-accent-dark !important; }
+        &::before {
+            background-color: $blog-accent-light;
+            :global(.dark) & { background-color: $blog-accent-dark; }
+        }
+        h3 {
+            color: $blog-accent-light !important;
+            :global(.dark) & { color: $blog-accent-dark !important; }
+        }
+    }
+}

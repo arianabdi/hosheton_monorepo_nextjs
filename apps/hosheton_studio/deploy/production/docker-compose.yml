@@ -1,0 +1,27 @@
+# Production deploy, run by .github/workflows/main.yml on tag "hosheton_studio/<repo>/<version>".
+# The workflow provides DOCKERHUB_USERNAME, DOCKERHUB_REPOSITORY_NAME and DOCKERHUB_REPOSITORY_VERSION.
+name: hosheton-studio-nextjs
+
+services:
+  hosheton-studio-nextjs:
+    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${DOCKERHUB_REPOSITORY_VERSION}
+    expose:
+      - "80"
+
+    container_name: hosheton-studio-nextjs
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hosheton_studio_nextjs.rule=Host(`studio.hosheton.com`)"
+      - "traefik.http.routers.hosheton_studio_nextjs.entrypoints=websecure"
+      - "traefik.http.routers.hosheton_studio_nextjs.tls=true"
+      - "traefik.docker.network=traefik-public"
+
+    networks:
+      - traefik-public
+
+    restart: unless-stopped
+
+networks:
+  traefik-public:
+    external: true

@@ -1,0 +1,277 @@
+// کارت پروژهٔ موبایل — یک قاب ساده؛ داخلش بخش‌ها فقط با خط جداکننده (کارت تو در تو نه)
+$muted: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+$divider: color-mix(in srgb, var(--body-text-color) 9%, transparent);
+
+.card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.15s;
+
+    &:active {
+        border-color: color-mix(in srgb, var(--brand-color) 45%, var(--border-color));
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--brand-color);
+        outline-offset: 2px;
+    }
+
+    > * + * {
+        border-top: 1px solid $divider;
+    }
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding-bottom: 12px;
+}
+
+.icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+}
+
+.titleBlock {
+    flex: 1;
+    min-width: 0;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.45;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+}
+
+.subline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    margin: 4px 0 0;
+    font-size: 0.72rem;
+    color: $muted;
+}
+
+.status {
+    flex-shrink: 0;
+    padding: 1px 7px;
+    border-radius: 6px;
+    color: #d97706;
+    background: color-mix(in srgb, #f59e0b 14%, transparent);
+}
+
+.statusDone {
+    color: #16a34a;
+    background: color-mix(in srgb, #22c55e 14%, transparent);
+}
+
+.space {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-self: flex-start;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+}
+
+.sectionHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.label {
+    color: $muted;
+}
+
+.muted {
+    color: $muted;
+}
+
+.budgetTotal {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+.track {
+    height: 6px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    overflow: hidden;
+}
+
+.fill {
+    display: block;
+    height: 100%;
+    min-width: 0;
+    border-radius: inherit;
+    background: var(--brand-color);
+}
+
+.fillHigh {
+    background: #ef4444;
+}
+
+.budgetSplit {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: $muted;
+
+    strong {
+        margin-inline-start: 2px;
+        font-weight: 500;
+        color: var(--body-text-color);
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.left.left {
+    color: #16a34a;
+}
+
+.out,
+.out.out {
+    color: #ef4444;
+}
+
+/* شش عدد پروژه — سه ستون، بدون قاب؛ خط عمودی بین ستون‌ها */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 12px;
+    padding: 12px 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+    text-align: center;
+
+    &:not(:nth-child(3n + 1)) {
+        border-inline-start: 1px solid $divider;
+    }
+
+    strong {
+        font-size: 0.95rem;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+    }
+
+    span {
+        font-size: 0.7rem;
+        color: $muted;
+        white-space: nowrap;
+    }
+}
+
+/* مالک، اعضا، ددلاین — برچسب یک سمت، مقدار سمت دیگر */
+.facts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding-top: 12px;
+}
+
+.fact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    font-size: 0.78rem;
+
+    dt {
+        flex-shrink: 0;
+        color: $muted;
+    }
+
+    dd {
+        min-width: 0;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.person {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+
+    > span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.avatarStack {
+    display: inline-flex;
+    padding-inline-start: 6px;
+
+    > * {
+        margin-inline-start: -6px;
+        border: 2px solid var(--plan-card-background-color);
+    }
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.avatarFallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 16%, var(--plan-card-background-color));
+}

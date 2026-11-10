@@ -1,0 +1,134 @@
+{
+  "_id": "6aa9907b6f6133f2f7f5754a",
+  "name": "google/nano-banana-2",
+  "backedUpAt": "2026-10-10T18:36:54.098Z",
+  "fields": [
+    {
+      "key": "aspectRatio",
+      "label": "Aspect Ratio",
+      "type": "select",
+      "labelFa": "نسبت تصویر",
+      "payloadPath": "aspect_ratio",
+      "sendToProvider": true,
+      "options": [
+        {
+          "value": "1:1",
+          "label": "1:1",
+          "iconSvg": "<svg width=\"148\" height=\"148\" viewBox=\"0 0 148 148\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 8H140V140H8V8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "3:2",
+          "label": "3:2",
+          "iconSvg": "<svg width=\"207\" height=\"149\" viewBox=\"0 0 207 149\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 8H199V141H8V8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "2:3",
+          "label": "2:3",
+          "iconSvg": "<svg width=\"149\" height=\"207\" viewBox=\"0 0 149 207\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 8H141V199H8V8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "3:4",
+          "label": "3:4",
+          "iconSvg": "<svg width=\"149\" height=\"188\" viewBox=\"0 0 149 188\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 8H141V180H8V8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "4:3",
+          "label": "4:3",
+          "iconSvg": "<svg width=\"188\" height=\"149\" viewBox=\"0 0 188 149\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M180 8L180 141L7.99999 141L8 7.99999L180 8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "4:5",
+          "label": "4:5",
+          "iconSvg": "<svg width=\"148\" height=\"177\" viewBox=\"0 0 148 177\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M140 169L7.99998 169L8 8L140 8.00002L140 169Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "5:4",
+          "label": "5:4",
+          "iconSvg": "<svg width=\"177\" height=\"148\" viewBox=\"0 0 177 148\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M169 8L169 140L7.99999 140L8 7.99999L169 8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "9:16",
+          "label": "9:16",
+          "iconSvg": "<svg width=\"149\" height=\"240\" viewBox=\"0 0 149 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M141 232L8.00002 232L8 8L141 7.99998L141 232Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "16:9",
+          "label": "16:9",
+          "iconSvg": "<svg width=\"240\" height=\"149\" viewBox=\"0 0 240 149\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 141L8 8.00002L232 8.00002L232 141L8 141Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        },
+        {
+          "value": "21:9",
+          "label": "21:9",
+          "iconSvg": "<svg width=\"303\" height=\"148\" viewBox=\"0 0 303 148\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M8 8L295 8V140H8L8 8Z\" stroke-width=\"16\" stroke=\"var(--body-text-color)\"/>\n</svg>"
+        }
+      ],
+      "optionsDisplay": "chips",
+      "optionsPreview": {
+        "audio": false,
+        "image": false,
+        "video": false
+      }
+    },
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "labelFa": "رزولوشن",
+      "payloadPath": "resolution",
+      "sendToProvider": true,
+      "options": [
+        {
+          "value": "1k",
+          "label": "1k",
+          "iconSvg": "<svg stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" viewBox=\"0 0 24 24\" height=\"200px\" width=\"200px\" xmlns=\"http://www.w3.org/2000/svg\"><path fill=\"none\" d=\"M0 0h24v24H0z\"></path><path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 16H5V5h14z\"></path><path d=\"M8.5 15H10V9H7v1.5h1.5zM13.5 12.75 15.25 15H17l-2.25-3L17 9h-1.75l-1.75 2.25V9H12v6h1.5z\"></path></svg>"
+        },
+        {
+          "value": "2k",
+          "label": "2k",
+          "iconSvg": "<svg stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" viewBox=\"0 0 24 24\" height=\"200px\" width=\"200px\" xmlns=\"http://www.w3.org/2000/svg\"><path fill=\"none\" d=\"M0 0h24v24H0z\"></path><path d=\"M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 16H5V5h14z\"></path><path d=\"M11 13.5H8v-1h2c.55 0 1-.45 1-1V10c0-.55-.45-1-1-1H6.5v1.5h3v1h-2c-.55 0-1 .45-1 1V15H11zM14.5 12.75 16.25 15H18l-2.25-3L18 9h-1.75l-1.75 2.25V9H13v6h1.5z\"></path></svg>"
+        },
+        {
+          "value": "4k",
+          "label": "4k",
+          "iconSvg": "<svg stroke=\"currentColor\" fill=\"currentColor\" stroke-width=\"0\" viewBox=\"0 0 24 24\" height=\"200px\" width=\"200px\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M4 5V19H20V5H4ZM3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM11.5 13.5H10.5V15H9V13.5H6V9H7.5V12H9V9H10.5V12H11.5V13.5ZM18 15H16.25L14.5 12.75V15H13V9H14.5V11.25L16.25 9H18L15.75 12L18 15Z\"></path></svg>"
+        }
+      ],
+      "optionsDisplay": "chips"
+    },
+    {
+      "key": "mediaResolution",
+      "label": "Media Resolution",
+      "type": "select",
+      "labelFa": "کیفیت مدیای ورودی",
+      "payloadPath": "media_resolution",
+      "sendToProvider": true,
+      "options": [
+        {
+          "value": "default",
+          "label": "default"
+        },
+        {
+          "value": "low",
+          "label": "low",
+          "iconSvg": "<svg width=\"137\" height=\"105\" viewBox=\"0 0 137 105\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect y=\"62.6003\" width=\"20\" height=\"41.4992\" fill=\"var(--body-text-color)\"/>\n<rect x=\"39\" y=\"43.6094\" width=\"20\" height=\"60.4904\" fill=\"var(--body-text-color)\"/>\n<rect x=\"78\" y=\"19.6946\" width=\"20\" height=\"84.4051\" fill=\"var(--body-text-color)\" fill-opacity=\"0.1\"/>\n<rect x=\"117\" width=\"20\" height=\"104.1\" fill=\"var(--body-text-color)\" fill-opacity=\"0.1\"/>\n</svg>"
+        },
+        {
+          "value": "medium",
+          "label": "medium",
+          "iconSvg": "<svg width=\"137\" height=\"105\" viewBox=\"0 0 137 105\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect y=\"62.6006\" width=\"20\" height=\"41.4992\" fill=\"var(--body-text-color)\"/>\n<rect x=\"39\" y=\"43.6094\" width=\"20\" height=\"60.4904\" fill=\"var(--body-text-color)\"/>\n<rect x=\"78\" y=\"19.6946\" width=\"20\" height=\"84.4051\" fill=\"var(--body-text-color)\"/>\n<rect x=\"117\" width=\"20\" height=\"104.1\" fill=\"var(--body-text-color)\" fill-opacity=\"0.1\"/>\n</svg>"
+        },
+        {
+          "value": "high",
+          "label": "high",
+          "iconSvg": "<svg width=\"137\" height=\"105\" viewBox=\"0 0 137 105\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect y=\"62.6003\" width=\"20\" height=\"41.4992\" fill=\"var(--body-text-color)\"/>\n<rect x=\"39\" y=\"43.6094\" width=\"20\" height=\"60.4904\" fill=\"var(--body-text-color)\"/>\n<rect x=\"78\" y=\"19.6946\" width=\"20\" height=\"84.4051\" fill=\"var(--body-text-color)\"/>\n<rect x=\"117\" width=\"20\" height=\"104.1\" fill=\"var(--body-text-color)\"/>\n</svg>"
+        }
+      ],
+      "optionsDisplay": "chips",
+      "optionsPreview": {
+        "audio": false,
+        "image": false,
+        "video": false
+      }
+    }
+  ]
+}

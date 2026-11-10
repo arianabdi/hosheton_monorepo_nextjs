@@ -1,0 +1,87 @@
+/* Spinner.module.scss */
+
+// Keyframes are automatically scoped to this module in Next.js
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    display: inline-block;
+    border-style: solid;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+
+    // Default fallback sizing & colors
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.2);
+    border-top-color: #ffffff;
+}
+
+/* Sizes */
+.sm {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+}
+
+.md {
+    width: 24px;
+    height: 24px;
+    border-width: 2.5px;
+}
+
+.lg {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+}
+
+/* Color Variants */
+.light {
+    border-color: rgba(255, 255, 255, 0.25);
+    border-top-color: #ffffff;
+}
+
+.dark {
+    border-color: rgba(0, 0, 0, 0.15);
+    border-top-color: #111827;
+}
+
+.primary {
+    border-color: rgba(59, 130, 246, 0.2);
+    border-top-color: #2563eb;
+}
+
+/* LoadingStates.module.scss */
+
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.tableContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 200px;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+}
+
+.customSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,632 @@
+// components/WalletPage.module.scss
+
+$primary-blue: var(--brand-color);
+$primary-hover: var(--brand-color);
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+$border-color: #dadce0;
+
+.rtl {
+    text-align: start;
+}
+
+.container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: $text-dark;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.mainTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+// ساختار گرید دو ستونه دسکتاپ
+.layoutGrid {
+    display: flex;
+    flex-direction: column;
+}
+
+.mainControls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+// کارت اختصاصی نمایش بالانس مالی
+.balanceCard {
+    background: linear-gradient(135deg, var(--plan-card-background-color) 0%, #ae98ff33 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.cardLabel {
+    font-size: 0.85rem;
+    color: $text-muted;
+    opacity: 0.9;
+}
+
+.balanceValue {
+    font-size: 1.8rem;
+    color: var(--body-text-color);
+    margin-top: 0.25rem;
+}
+
+.currency {
+    font-size: 1rem;
+    font-weight: 400;
+    color: $text-muted;
+}
+
+.balanceMeta {
+    font-size: 0.85rem;
+    color: $text-muted;
+    strong{
+        font-weight: 400;
+    }
+}
+
+// کارت CTA تسویه درآمد فروش (کیف پول creator)
+.creatorSettlementCta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.creatorSettlementDesc {
+    margin: 0.35rem 0 0;
+    font-size: 0.82rem;
+    color: $text-muted;
+    max-width: 46ch;
+}
+
+.creatorSettlementBtn {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    background: var(--brand-color);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+        filter: brightness(1.08);
+    }
+}
+
+
+.fxStrip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px dashed color-mix(in srgb, var(--brand-color) 35%, var(--plan-card-border-color));
+    background: color-mix(in srgb, var(--brand-color) 5%, var(--plan-card-background-color));
+}
+
+.fxStripLabel {
+    display: block;
+    font-size: 0.78rem;
+    opacity: 0.8;
+    margin-bottom: 0.25rem;
+}
+
+.fxStripValue {
+    display: block;
+    font-size: 1.05rem;
+}
+
+.fxStripSub {
+    display: block;
+    font-size: 0.78rem;
+    opacity: 0.82;
+    margin-top: 0.2rem;
+}
+
+.fxStripMeta {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.fieldHintInline {
+    font-weight: 400;
+    font-size: 0.78rem;
+    opacity: 0.75;
+}
+
+.pkgSubAmount {
+    font-size: 0.72rem;
+    opacity: 0.85;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.chargePreview {
+    font-size: 0.82rem;
+    margin: 0.35rem 0 0;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.sectionTitle {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.subHeading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.fieldHint {
+    font-size: 0.78rem;
+    opacity: 0.75;
+    line-height: 1.6;
+}
+
+// --- کامپوننت فرم و بسته‌ها ---
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--plan-card-border-color);
+    background-color: transparent;
+    color: $text-dark;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+
+    &:focus {
+        border-color: $primary-blue;
+    }
+}
+
+// گرید کارت‌های پکیج فوری
+.packageGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    @media (max-width: 768px) {
+
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.packageCard {
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 6px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: transparent;
+
+    &:hover {
+        border-color: $primary-blue;
+        background-color: #7b58fd05;
+    }
+}
+
+.activePackage {
+    border-color: $primary-blue;
+    background-color: #005dff10 !important;
+}
+
+.pkgLabel {
+    font-size: 0.75rem;
+    color: $text-muted;
+}
+
+.pkgAmount {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.pkgBonus {
+    color: #10a14b;
+    font-size: .7rem;
+}
+
+// رادیو باکس‌های درگاه بانکی
+.gatewayRadioGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.gatewayLabel {
+    border: 1px solid var(--plan-card-border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    input {
+        accent-color: $primary-blue;
+        width: auto;
+    }
+    span{
+
+        flex: 1;
+    }
+}
+
+.activeGateway {
+    background-color: #7b58fd05;
+    border-color: var(--plan-card-border-color);
+}
+
+.primaryBtn {
+    background-color: $primary-blue;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.15s;
+
+    &:hover {
+        background-color: $primary-hover;
+        opacity: 0.92;
+    }
+}
+
+// --- استایل‌های جدول تراکنش‌ها ---
+.historySection {
+    display: flex;
+    flex-direction: column;
+}
+
+.tableWrapper {
+    width: 100%;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start;
+    font-size: 0.875rem;
+
+    th {
+        background-color: #7b58fd0d;
+        color: $text-muted;
+        padding: 0.9rem 1.25rem;
+        font-size: 0.8rem;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        vertical-align: middle;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+        thead { display: none; }
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid var(--plan-card-border-color);
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 0;
+            border: none;
+            width: 100%;
+
+            &::before {
+                content: attr(data-label);
+                color: var(--body-text-color);
+                opacity: 0.5;
+                font-size: 0.75rem;
+                font-weight: 500;
+                flex-shrink: 0;
+            }
+        }
+    }
+}
+
+.codeText {
+    direction: ltr;
+    background-color: #7b58fd0d;
+    padding: 2px 6px;
+    font-family: monospace;
+    font-size: .8rem;
+    width: max-content;
+
+    @media (max-width: 768px) {
+        width: auto;
+        background: none;
+        padding: 0;
+    }
+}
+
+.timeText {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+
+// تفاوت رنگی شارژ و مصرف اعتبار
+.positivePrice {
+    color: #25bd58; // سبز برای واریز/شارژ
+}
+
+.negativePrice {
+    opacity: 0.9;
+    direction: ltr;
+    color: #f61b5d;
+}
+
+.statusSuccess {
+    color: #2a9f51;
+    background-color: #23c1681f;
+    border-radius: 4px;
+    border: 1px solid #23c1684f;
+    padding: 4px 10px;
+    font-size: .75rem;
+}
+
+.statusPending {
+    color: #b45309;
+    background-color: rgba(245, 158, 11, 0.12);
+    border-radius: 4px;
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    padding: 4px 10px;
+    font-size: .75rem;
+}
+
+.statusError {
+    color: #C5221FFF;
+    background-color: rgba(197, 34, 31, 0.13);
+    border-radius: 4px;
+    border: 1px solid rgba(197, 34, 31, 0.53);
+    padding: 4px 10px;
+    font-size: .75rem;
+}
+
+.loadingPlaceholder,
+.emptyPlaceholder {
+    padding: 2rem 1rem;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.boldText {
+    font-weight: 700;
+}
+
+.textarea {
+    @extend .input;
+    resize: vertical;
+    min-height: 84px;
+}
+
+.helpNote {
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--brand-color) 18%, transparent);
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.transferBanner {
+    margin-bottom: 1rem;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    font-size: 0.9rem;
+}
+
+.bankBox {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--plan-card-border-color);
+    background: var(--body-background, transparent);
+}
+
+.bankRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+
+    span {
+        opacity: 0.75;
+    }
+}
+
+.copyValue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        border: 1px solid var(--plan-card-border-color);
+        background: var(--plan-card-background-color);
+        border-radius: 6px;
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+        font-size: 0.75rem;
+    }
+}
+
+.ltr {
+    direction: ltr;
+    unicode-bidi: plaintext;
+}
+
+.transferHint {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+.uploadBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px dashed var(--plan-card-border-color);
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.receiptThumb {
+    margin-top: 0.75rem;
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid var(--plan-card-border-color);
+    background: #00000008;
+}
+
+.progressTrack {
+    margin-top: 0.65rem;
+    height: 8px;
+    border-radius: 999px;
+    background: #00000012;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: var(--brand-color);
+    transition: width 0.2s ease;
+}
+
+.actionRow {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.secondaryBtn {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    border: 1px solid var(--plan-card-border-color);
+    background: transparent;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.resumeLink {
+    display: block;
+    margin-top: 0.35rem;
+    border: none;
+    background: none;
+    color: var(--brand-color);
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 0;
+    font-weight: 600;
+}

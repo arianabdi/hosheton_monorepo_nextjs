@@ -1,0 +1,62 @@
+.card {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 7px;
+    padding: 17px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 320px; // مناسب برای عرض سایدبار
+    margin: 16px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.iconWrapper {
+    background-color: var(--brand-color);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.title {
+    color: var(--body-text-color);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+}
+
+.description {
+    color: var(--body-text-color);
+    margin: 0 0 20px;
+    font-size: .75rem;
+    line-height: 1.6;
+}
+
+.button {
+    color: #fff;
+    cursor: pointer;
+    background-color: #2e7d60;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    padding: 12px 0;
+    font-size: .75rem;
+    font-weight: 600;
+    transition: background-color .2s, transform .1s;
+    font-family: iransans;
+
+    &:hover {
+        background-color: #3b9473; // هاور دکمه
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}

@@ -1,0 +1,316 @@
+.panel {
+    margin-bottom: 1.35rem;
+    border-radius: 14px;
+    border: 1px solid var(--plan-card-border-color);
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--brand-color) 4%, var(--plan-card-background-color)) 0%,
+        var(--plan-card-background-color) 48%
+    );
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 8px 24px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+}
+
+.panelHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem 0.65rem;
+    flex-wrap: wrap;
+}
+
+.headTitle {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    min-width: 0;
+}
+
+.headIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+    flex-shrink: 0;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.subtitle {
+    margin: 0.2rem 0 0;
+    font-size: 0.78rem;
+    opacity: 0.65;
+    line-height: 1.45;
+}
+
+.headMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.resultPill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: var(--input-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    font-size: 0.78rem;
+
+    strong {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--brand-color);
+    }
+
+    span {
+        opacity: 0.7;
+    }
+}
+
+.filterBadge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    color: var(--brand-color);
+    border: 1px solid color-mix(in srgb, var(--brand-color) 28%, transparent);
+}
+
+.searchRow {
+    padding: 0 1.15rem 0.75rem;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0 0.85rem;
+    border-radius: 12px;
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color, var(--plan-card-border-color));
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+    &:focus-within {
+        border-color: color-mix(in srgb, var(--brand-color) 50%, transparent);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-color) 10%, transparent);
+    }
+}
+
+.searchLead {
+    display: flex;
+    color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+    flex-shrink: 0;
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    background: transparent;
+    min-width: 0;
+    font-size: 0.9rem;
+    color: var(--body-text-color);
+    outline: none;
+
+    &::placeholder {
+        color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+    }
+}
+
+.searchClear {
+    border: none;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    color: var(--body-text-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    opacity: 0.75;
+
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+    }
+}
+
+.fieldsRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem 0.85rem;
+    padding: 0.9rem 1.15rem 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--plan-card-border-color) 85%, transparent);
+
+    @media (min-width: 560px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 960px) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.fieldLabel {
+    font-size: 0.72rem;
+    font-weight: 650;
+    opacity: 0.72;
+    padding-inline: 0.1rem;
+}
+
+.selectShell {
+    position: relative;
+    border-radius: 10px;
+    background: var(--input-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+    &:focus-within {
+        border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-color) 8%, transparent);
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset-inline-start: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid color-mix(in srgb, var(--body-text-color) 45%, transparent);
+        pointer-events: none;
+    }
+}
+
+.select {
+    width: 100%;
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--body-text-color);
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0.55rem 0.75rem;
+    padding-inline-start: 2rem;
+    cursor: pointer;
+    outline: none;
+    border-radius: 10px;
+}
+
+.footerRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 0.65rem 1.15rem 0.9rem;
+    background: color-mix(in srgb, var(--body-text-color) 2%, transparent);
+    border-top: 1px solid var(--plan-card-border-color);
+}
+
+.chipList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 30%, var(--plan-card-border-color));
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.28rem 0.55rem 0.28rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    max-width: 100%;
+
+    span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &:hover {
+        border-color: color-mix(in srgb, var(--brand-color) 50%, transparent);
+        background: color-mix(in srgb, var(--brand-color) 6%, var(--plan-card-background-color));
+    }
+}
+
+.chipRemove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    font-size: 0.95rem;
+    line-height: 1;
+    opacity: 0.85;
+}
+
+.resetLink {
+    border: none;
+    background: none;
+    color: var(--brand-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.35rem 0.5rem;
+    white-space: nowrap;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

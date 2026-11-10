@@ -1,0 +1,44 @@
+/* MessageVersionSwitcher.module.scss */
+
+.wrapper {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 4px 8px;
+    border-radius: 999px;
+
+    color: var(--body-text-color);
+
+    font-size: 13px;
+    line-height: 1;
+    user-select: none;
+}
+
+.arrowButton {
+    display: flex;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+
+    &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+}
+
+.counter {
+    min-width: 36px;
+    text-align: center;
+    font-weight: 500;
+}

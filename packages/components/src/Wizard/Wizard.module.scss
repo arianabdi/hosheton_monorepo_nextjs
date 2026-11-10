@@ -1,0 +1,21 @@
+.wizard {
+
+}
+
+.progress {
+    height: 6px;
+    background: var(--taskboard-card-bg);
+    border-radius: 4px;
+    margin-bottom: 25px;
+
+    .bar {
+        height: 6px;
+        background: #4a8af4;
+        transition: 0.3s ease;
+        border-radius: 4px;
+    }
+}
+
+.stepContainer {
+    margin-top: 20px;
+}

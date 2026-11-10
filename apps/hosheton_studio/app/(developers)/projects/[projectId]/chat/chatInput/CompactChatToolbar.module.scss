@@ -1,0 +1,571 @@
+.toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 6px;
+    min-width: 0;
+    overflow: visible;
+}
+
+/* ===== variant="fields": همان کنترل‌ها به شکل فیلد فرم (سایدبار تنظیمات نود) =====
+   فقط کلاس‌های جدید — ظاهر چیپ‌های کادر چت دست نمی‌خورد.
+   مقادیر هم‌شکل .fieldLabel / .fieldSelect سایدبار تا با بقیه فیلدها یکی باشد. */
+.toolbarFields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.fieldRow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.fieldRowLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.75;
+}
+
+/* .toolbarFields پیشوند تا بر z-index/عرض .modelSelectWrap و .settingsWrap (پایین‌تر در فایل) غلبه کند */
+.toolbarFields .fieldWrap {
+    width: 100%;
+    z-index: auto;
+}
+
+.fieldBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.82rem;
+    text-align: start;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 0.12s ease;
+
+    .chipLabel {
+        flex: 1;
+    }
+
+    &:hover:not(:disabled) {
+        border-color: color-mix(in srgb, var(--body-text-color) 30%, var(--input-border-color));
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.fieldBoxOpen {
+    border-color: var(--brand-color, #8b5cf6);
+}
+
+.fieldChevron {
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: transform 0.15s ease;
+
+    .fieldBoxOpen & {
+        transform: rotate(180deg);
+    }
+}
+
+/* حالت باریک: چیپ نوع رسانه فقط آیکون */
+.kindChipNarrow {
+    width: 32px;
+    flex: 0 0 32px;
+    padding: 0;
+    justify-content: center;
+
+    .chipLabel {
+        display: none;
+    }
+}
+
+.modelSelectWrap {
+    position: relative;
+    z-index: 8;
+    min-width: 0;
+}
+
+.modelChip {
+    flex: 0 1 auto;
+    width: max-content;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.modelMenu {
+    overflow-y: auto;
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+.modelOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 13px;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color, #8b5cf6) 10%, transparent);
+    }
+}
+
+// عنوان گروه ارائه‌دهنده: نام + خطی که تا انتهای ردیف ادامه دارد
+.modelGroupHead {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 10px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.6;
+
+    span {
+        flex: 0 0 auto;
+    }
+
+    &::after {
+        content: '';
+        flex: 1 1 auto;
+        height: 1px;
+        background: var(--input-border-color);
+    }
+}
+
+.modelOptionText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.modelOptionDesc {
+    font-size: 11px;
+    line-height: 1.5;
+    opacity: 0.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.modelOptionActive {
+    color: var(--brand-color, #8b5cf6);
+
+    .modeOptionIcon {
+        background: color-mix(in srgb, var(--brand-color, #8b5cf6) 18%, transparent);
+    }
+}
+
+.modelOptionDisabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+
+    &:hover {
+        background: transparent;
+    }
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    width: max-content;
+    max-width: 100%;
+    flex: 0 1 auto;
+    padding: 0 7px;
+    border-radius: 999px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 0;
+
+    &:disabled,
+    &.chipDisabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+.settingsChip {
+    cursor: pointer;
+    width: max-content;
+    max-width: 100%;
+}
+
+/* موبایل: چیپ‌های فقط-آیکون (مدل/تنظیمات/مود/دوربین/نور) در ردیف واحد با send */
+.chipIconOnly {
+    width: 32px;
+    flex: 0 1 32px;
+    min-width: 26px;
+    padding: 0;
+    justify-content: center;
+
+    .chipLabel {
+        display: none;
+    }
+}
+
+/* موبایل: خلاصه تنظیمات — شناور هم‌خط با قیمت بالای دکمه ارسال، سمت دکمه افزودن/مدل */
+.settingsSummary {
+    position: absolute;
+    bottom: 40px; // 36px دکمه ارسال + 4px فاصله — همان خطِ چیپ قیمت
+    left: 0;
+    max-width: calc(100% - 110px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.72;
+    pointer-events: none;
+
+    html[dir='rtl'] & {
+        left: auto;
+        right: 0;
+    }
+}
+
+/* کادر چت جمع‌شده (موبایل): از ابزارها فقط آیکون ریز مدل و خط «مدل | تنظیمات» در یک ردیف */
+.toolbarCompact {
+    gap: 6px;
+
+    > *:not(.modelSelectWrap):not(.settingsSummary) {
+        display: none;
+    }
+
+    .modelSelectWrap {
+        flex-shrink: 0;
+        zoom: 0.62;
+    }
+
+    .settingsSummary {
+        position: static;
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        font-weight: 400;
+    }
+}
+
+// متن طولانی خلاصه: به‌جای «…» آرام حرکت می‌کند (انیمیشن در MarqueeText)
+.marqueeInner {
+    display: inline-block;
+    will-change: transform;
+}
+
+.marqueeActive {
+    text-overflow: clip;
+}
+
+.chipLabel {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.open {
+    border-color: var(--brand-color, #8b5cf6);
+    color: var(--brand-color, #8b5cf6);
+}
+
+.settingsWrap {
+    position: relative;
+    z-index: 8;
+    min-width: 0;
+}
+
+.popover {
+    overflow-y: auto;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    box-sizing: border-box;
+}
+
+.popoverCentered {
+    max-width: none;
+}
+
+.popoverLabel {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.72;
+}
+
+/* آیکون راهنما داخل ردیف‌های پاپ‌اور تنظیمات */
+.helpInline {
+    vertical-align: middle;
+    margin-inline-start: 3px;
+}
+
+/* عنوان ردیف (number/text) + آیکون راهنما کنار هم */
+.rowLabelWrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+.popoverHint {
+    margin: -4px 0 8px;
+    font-size: 10px;
+    line-height: 1.6;
+    opacity: 0.55;
+}
+
+/* مقدار محاسبه‌شده‌ی فیلد ترکیبی — read-only */
+.derivedValue {
+    display: inline-block;
+    margin-inline-start: 6px;
+    padding: 2px 8px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 999px;
+    background: var(--input-background-color);
+    font-weight: 700;
+    opacity: 0.95;
+}
+
+.chipSvg,
+.previewSvg {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.previewSvg {
+    width: 28px;
+    height: 28px;
+}
+
+.fieldBlock {
+    margin-bottom: 10px;
+}
+
+.numberRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* چک‌باکس و لیبل باید چسبیده به هم باشند، نه دو سر ردیف */
+.checkRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: max-content;
+    max-width: 100%;
+
+    input[type='checkbox'] {
+        flex: 0 0 auto;
+        appearance: auto;
+        width: 16px;
+        min-width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--brand-color, #8b5cf6);
+        cursor: pointer;
+    }
+}
+
+.numberRow input {
+    width: 88px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font: inherit;
+}
+
+/* ─── Capability Mode selector ─── */
+.modeChip {
+    .chipLabel {
+        font-weight: 600;
+    }
+}
+
+.modeChipActive {
+    border-color: var(--brand-color, #8b5cf6);
+    color: var(--brand-color, #8b5cf6);
+}
+
+.modeChipIcon,
+.modeOptionIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: inherit;
+}
+
+.modeChipIcon svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+.modeOptionIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--brand-color, #8b5cf6) 10%, transparent);
+    color: var(--brand-color, #8b5cf6);
+}
+
+.modeMenu {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 16px;
+    border: 1px solid var(--input-border-color);
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    box-sizing: border-box;
+}
+
+.modeMenuScroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--body-text-color) 28%, transparent) transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        margin-block: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+        border-radius: 999px;
+        border: 3px solid transparent;
+        background-clip: content-box;
+    }
+}
+
+.modeGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.modeGroupLabel {
+    margin: 8px 8px 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    opacity: 0.55;
+}
+
+.modeOptionText {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    small {
+        opacity: 0.6;
+        font-size: 10.5px;
+        line-height: 1.6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 260px;
+    }
+}
+
+.panelToggles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 0 12px;
+    padding: 10px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12.5px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    input {
+        accent-color: var(--brand-color, #8b5cf6);
+    }
+}

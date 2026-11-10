@@ -1,0 +1,167 @@
+.field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 220px;
+    flex: 1 1 220px;
+    max-width: 300px;
+}
+
+.label {
+    font-size: 0.75rem;
+    opacity: 0.75;
+}
+
+.control {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    height: 38px;
+    padding: 0 0.65rem;
+    background: var(--input-background-color);
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    color: var(--body-text-color);
+
+    &:focus-within {
+        border-color: var(--brand-color);
+        outline: 2px solid color-mix(in srgb, var(--brand-color) 25%, transparent);
+        outline-offset: 0;
+    }
+
+    input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        background: transparent;
+        color: inherit;
+        outline: none;
+        font-size: 0.85rem;
+    }
+}
+
+.controlOpen {
+    border-color: var(--brand-color);
+}
+
+.icon {
+    flex-shrink: 0;
+    opacity: 0.6;
+}
+
+.spin {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.list {
+    position: absolute;
+    top: calc(100% + 4px);
+    inset-inline: 0;
+    z-index: 30;
+    margin: 0;
+    padding: 0.25rem;
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 6px;
+}
+
+.state {
+    padding: 0.75rem 0.6rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.optionActive {
+    background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+}
+
+.optionMain {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.optionLabel {
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.optionHint {
+    font-size: 0.72rem;
+    opacity: 0.65;
+    direction: ltr;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.optionMeta {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    opacity: 0.65;
+}
+
+.mark {
+    background: none;
+    color: inherit;
+    font-weight: 700;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    height: 38px;
+    padding: 0 0.4rem 0 0.65rem;
+    border: 1px solid var(--brand-color);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    font-size: 0.85rem;
+}
+
+.chipText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.chipClear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    }
+}

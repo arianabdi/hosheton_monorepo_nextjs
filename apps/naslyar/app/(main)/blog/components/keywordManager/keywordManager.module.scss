@@ -1,0 +1,70 @@
+.customInput{
+  padding: 10px 0px;
+  margin: 0px;
+
+}
+
+.keywordManagerContainer{
+  align-items: end;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.keywordAddButton{
+  border-radius: 3px;
+  background-color: var(--button-background);
+  width: 45px !important;
+  height: 45px !important;
+  padding: 10px;
+}
+
+.keywordAddButton:hover{
+  background-color: var(--button-background) !important;
+}
+
+.keywordsTitle{
+  color: var(--body-text-color);
+  font-size: 15px;
+  margin-right: 10px;
+  font-family: "B yekan", sans-serif;
+}
+
+
+
+
+.keywordItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+}
+
+.keywordItemRemoveButton {
+  background-color: var(--icon-red) !important;
+  width: 15px;
+  height: 13px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin: 0px 4px;
+  font-size: 21px;
+}
+
+.keywordItemContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px !important;
+}
+
+
+.keywordManager{
+  margin-top: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}

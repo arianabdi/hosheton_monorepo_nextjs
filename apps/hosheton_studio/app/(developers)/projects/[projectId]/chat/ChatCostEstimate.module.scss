@@ -1,0 +1,254 @@
+/* آیکون تخمین هزینه — هم‌قد دکمه optimize، سمت مقابل آن */
+.trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: color-mix(in srgb, var(--body-text-color) 70%, transparent);
+    cursor: pointer;
+    transition: color 0.12s ease, border-color 0.12s ease;
+
+    &:hover {
+        color: var(--body-text-color);
+    }
+}
+
+.triggerCompact {
+    width: 26px;
+    height: 26px;
+}
+
+.triggerOpen {
+    border-color: var(--brand-color);
+    color: var(--brand-color);
+}
+
+/* محتوای popup — قاب و padding را .popover پنجره تنظیمات مدل می‌دهد */
+.pop {
+    color: var(--body-text-color);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.title {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--body-text-color) 72%, transparent);
+}
+
+.refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+        color: var(--body-text-color);
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+.spin {
+    animation: costSpin 0.8s linear infinite;
+}
+
+@keyframes costSpin {
+    to { transform: rotate(360deg); }
+}
+
+.amountRow {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-height: 30px;
+}
+
+.amount {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+.unit {
+    font-size: 12px;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+}
+
+.amountSkeleton {
+    display: block;
+    width: 96px;
+    height: 22px;
+    margin-top: 4px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    animation: costPulse 1.1s ease-in-out infinite;
+}
+
+@keyframes costPulse {
+    50% { opacity: 0.45; }
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 0;
+    margin: 2px 0 10px;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+
+    span + span::before {
+        content: '·';
+        margin: 0 6px;
+        opacity: 0.6;
+    }
+}
+
+.rows,
+.detailRows {
+    margin: 0;
+    border-top: 1px solid var(--border-color, var(--input-border-color));
+}
+
+.row,
+.detailRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 7%, transparent);
+
+    dt {
+        flex-shrink: 0;
+        color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+    }
+
+    dd {
+        margin: 0;
+        min-width: 0;
+        text-align: end;
+        font-variant-numeric: tabular-nums;
+        overflow-wrap: anywhere;
+    }
+}
+
+.profit {
+    color: #16a34a;
+}
+
+.details {
+    margin-top: 2px;
+
+    summary {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 0;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        color: color-mix(in srgb, var(--body-text-color) 72%, transparent);
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:hover {
+            color: var(--body-text-color);
+        }
+    }
+
+    &[open] .chevron {
+        transform: rotate(180deg);
+    }
+}
+
+.count {
+    min-width: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+    font-size: 10px;
+    line-height: 16px;
+    text-align: center;
+}
+
+.chevron {
+    margin-inline-start: auto;
+    transition: transform 0.15s ease;
+}
+
+.detailRow {
+    font-size: 11px;
+    padding: 6px 0;
+
+    dt {
+        max-width: 48%;
+    }
+}
+
+.segments {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+
+    b {
+        margin-inline-start: 4px;
+        font-weight: 600;
+    }
+}
+
+.note,
+.muted {
+    margin: 10px 0 0;
+    font-size: 11px;
+    color: color-mix(in srgb, var(--body-text-color) 50%, transparent);
+}
+
+.muted {
+    margin: 0;
+}
+
+.error {
+    font-size: 12px;
+    color: #dc2626;
+}
+
+/* بخش «این قیمت چطور حساب شد» */
+.explain {
+    margin-top: 12px;
+}
+
+.explainTitle {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+}

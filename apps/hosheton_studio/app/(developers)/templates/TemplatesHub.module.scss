@@ -1,0 +1,450 @@
+.toolbar {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.secondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    color: var(--body-text-color);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.formCard {
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.25rem;
+    background: var(--plan-card-background-color);
+}
+
+.formGrid {
+    display: grid;
+    gap: 1rem;
+}
+
+.row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.65rem 0.8rem;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.hint {
+    font-size: 0.78rem;
+    opacity: 0.75;
+    margin-top: 0.35rem;
+}
+
+.previewList {
+    display: flex;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.previewItem {
+    border: 1px dashed var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem;
+    max-width: 250px;
+    width: 100%;
+}
+
+.mediaStrip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mediaThumb {
+    position: relative;
+    width: 88px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--input-background-color);
+    border: 2px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.mediaThumbCover {
+    border-color: #f5c451;
+}
+
+.mediaThumb img,
+.mediaThumb video {
+    display: block;
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+}
+
+.mediaThumbActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 4px;
+}
+
+.mediaThumbActions button {
+    flex: 1;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 0;
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+    color: inherit;
+}
+
+.mediaCoverBtnActive {
+    background: #f5c451 !important;
+    color: #2a1d00 !important;
+}
+
+.mediaRemoveBtn {
+    color: #ef4444 !important;
+}
+
+.mediaAdd {
+    width: 88px;
+    height: 88px;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    opacity: 0.7;
+
+    input {
+        display: none;
+    }
+}
+
+.tagInputRow {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tagInputRow button {
+    border: 1px solid var(--border-color);
+    background: var(--input-background-color);
+    border-radius: 8px;
+    padding: 0 0.75rem;
+    cursor: pointer;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.primaryBtn {
+    border: none;
+    background: var(--brand-color);
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.secondaryBtn {
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--body-text-color);
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.error {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, #ef4444 12%, transparent);
+}
+
+.reviewCard {
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    background: var(--plan-card-background-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        border-color: color-mix(in srgb, var(--brand-color) 35%, var(--border-color));
+        box-shadow: 0 8px 24px color-mix(in srgb, #000 6%, transparent);
+    }
+}
+
+.reviewList {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.reviewTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.reviewDescription {
+    margin: 0.45rem 0 0;
+    font-size: 0.86rem;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.statusPending {
+    background: color-mix(in srgb, #f59e0b 14%, transparent);
+    color: #d97706;
+}
+
+.statusApproved {
+    background: color-mix(in srgb, #22c55e 14%, transparent);
+    color: #16a34a;
+}
+
+.statusRejected {
+    background: color-mix(in srgb, #ef4444 14%, transparent);
+    color: #dc2626;
+}
+
+.reviewMeta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.65rem;
+    font-size: 0.8rem;
+    opacity: 0.88;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+}
+
+.metaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.metaLabel {
+    font-size: 0.72rem;
+    opacity: 0.65;
+}
+
+.metaValue {
+    font-weight: 600;
+}
+
+.filterTabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.filterTab {
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--body-text-color);
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.filterTabActive {
+    border-color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+}
+
+.listFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+}
+
+.totalCount {
+    font-size: 0.84rem;
+    opacity: 0.8;
+}
+
+.reviewNoteBox {
+    margin-top: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, #ef4444 8%, transparent);
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.formGuideCard {
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1.25rem;
+    background: color-mix(in srgb, var(--brand-color) 6%, var(--plan-card-background-color));
+
+    h2 {
+        margin: 0 0 0.45rem;
+        font-size: 0.95rem;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.84rem;
+        line-height: 1.7;
+        opacity: 0.86;
+    }
+}
+
+.formSectionTitle {
+    margin: 0 0 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.fieldHint {
+    font-size: 0.78rem;
+    opacity: 0.72;
+    line-height: 1.6;
+    margin: 0.35rem 0 0;
+}
+
+.fieldHintBlock {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    line-height: 1.65;
+    margin: 0 0 0.75rem;
+}
+
+.formNoteBox {
+    margin-top: 1.1rem;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    font-size: 0.82rem;
+    line-height: 1.65;
+}
+
+.promptArea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.chipRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.22rem 0.35rem 0.22rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    color: var(--brand-color);
+
+    button {
+        border: none;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1;
+        padding: 0 0.2rem;
+        opacity: 0.75;
+
+        &:hover { opacity: 1; }
+    }
+}
+
+.inlineActions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}

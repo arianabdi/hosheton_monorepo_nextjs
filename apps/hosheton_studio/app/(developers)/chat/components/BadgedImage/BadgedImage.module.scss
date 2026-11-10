@@ -1,0 +1,198 @@
+/* Corner radius — hosts can override with --badged-image-radius (chat v2 grid uses a rounder tile). */
+$border-radius-card: var(--badged-image-radius, 14px);
+$badge-radius: 12px;
+$cutout-size: 10px;
+/* Frame/notch color. Hosts can override per-state via --badged-image-frame
+   (e.g. history items recolor it to their hover background). */
+$frame-bg: var(--badged-image-frame, var(--plan-card-background-color, #fff));
+
+.container {
+    position: relative;
+    box-sizing: border-box;
+    background-color: $frame-bg;
+    border-radius: $border-radius-card;
+    overflow: hidden;
+    padding: 3px;
+    flex-shrink: 0;
+}
+
+.compact {
+    padding: 2px;
+
+    .imageWrapper {
+        border-radius: calc(#{$border-radius-card} - 2px);
+        height: 100%;
+    }
+
+    .badgeWrapper {
+        padding-top: 3px;
+        padding-left: 3px;
+        border-top-left-radius: 10px;
+
+        &::before,
+        &::after {
+            width: 8px;
+            height: 8px;
+        }
+
+        &::before {
+            top: -8px;
+            right: 0;
+            left: auto;
+            border-bottom-right-radius: 8px;
+            box-shadow: 4px 4px 0 4px $frame-bg;
+        }
+
+        &::after {
+            bottom: 0;
+            left: -8px;
+            right: auto;
+            border-bottom-right-radius: 8px;
+            box-shadow: 4px 4px 0 4px $frame-bg;
+        }
+    }
+
+    .badgeBtn {
+        gap: 0;
+        padding: 4px;
+        /* Rounded square chip (not a circle) tinted with the input border token. */
+        border-radius: 7px;
+        background-color: var(--input-border-background, var(--input-border-color));
+        min-width: 22px;
+        min-height: 22px;
+        justify-content: center;
+        /* Keep the icon above the wrapper's fillet shadows so the notch
+           pieces never paint over it. */
+        position: relative;
+        z-index: 1;
+
+        :global(svg) {
+            width: 15px;
+            height: 15px;
+            display: block;
+        }
+    }
+
+    &.hasLabel .badgeBtn {
+        gap: 0;
+        padding: 4px 7px;
+        min-width: 0;
+        color: var(--body-text-color);
+        font-size: 10px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.01em;
+        line-height: 1;
+    }
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: calc(#{$border-radius-card} - 3px);
+    overflow: hidden;
+    display: block;
+    background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+
+    .image,
+    :global(img) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    > :global(*) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.favoriteBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--plan-card-background-color, #fff) 92%, transparent);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--body-text-color);
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, background 0.2s ease;
+
+    &:hover {
+        transform: scale(1.08);
+        background: var(--plan-card-background-color, #fff);
+    }
+}
+
+.badgeWrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    background-color: $frame-bg;
+    padding-top: 5px;
+    padding-left: 5px;
+    border-top-left-radius: $badge-radius;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: $cutout-size;
+        height: $cutout-size;
+        pointer-events: none;
+    }
+
+    &::before {
+        top: -$cutout-size;
+        right: 0;
+        background-color: transparent;
+        border-bottom-right-radius: $cutout-size;
+        box-shadow: 5px 5px 0 5px $frame-bg;
+    }
+
+    &::after {
+        bottom: 0;
+        left: -$cutout-size;
+        background-color: transparent;
+        border-bottom-right-radius: $cutout-size;
+        box-shadow: 5px 5px 0 5px $frame-bg;
+    }
+}
+
+.badgeBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: color-mix(in srgb, var(--body-text-color) 88%, #000);
+    color: var(--plan-card-background-color, #fff);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: default;
+
+    :global(svg) {
+        width: 12px;
+        height: 12px;
+        flex-shrink: 0;
+        display: block;
+    }
+}
+
+.badgeText {
+    direction: ltr;
+    white-space: nowrap;
+}

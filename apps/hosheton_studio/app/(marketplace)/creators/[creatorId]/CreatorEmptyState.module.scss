@@ -1,0 +1,375 @@
+// حالت خالی پروفایل سازنده — موشن هم‌خانوادهٔ راهنمای «تنظیمات نود» (نشانگر، کلیک، موج، پرتو)
+
+$muted: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+$line: color-mix(in srgb, var(--body-text-color) 22%, transparent);
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 340px;
+    padding: 2.5rem 1rem 3rem;
+    text-align: center;
+    color: var(--body-text-color);
+}
+
+.art {
+    --hint-accent: var(--brand-color, #7b58fd);
+    --hint-loop: 3.6s;
+
+    position: relative;
+    width: 268px;
+    height: 112px;
+    margin-bottom: 18px;
+    // هندسهٔ صحنه ثابت است؛ در RTL هم آینه نمی‌شود
+    direction: ltr;
+}
+
+/* ── خانه‌های ردیف قالب (مربع، مثل گرید پروفایل) ── */
+
+.tile {
+    position: absolute;
+    top: 16px;
+    width: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1.5px dashed $line;
+}
+
+.tileStart { left: 4px; }
+.tileEnd { left: 184px; }
+
+// خانه‌های کناری: اسکلت کم‌رنگ کارت
+.tileGhost {
+    opacity: 0.55;
+
+    i {
+        position: absolute;
+        inset: 7px 7px 26px;
+        border-radius: 7px;
+        background: color-mix(in srgb, var(--body-text-color) 7%, transparent);
+    }
+
+    b {
+        position: absolute;
+        left: 9px;
+        bottom: 11px;
+        width: 34px;
+        height: 4px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--body-text-color) 12%, transparent);
+    }
+}
+
+.tileHero {
+    left: 94px;
+    animation: emptyTilePop var(--hint-loop) linear infinite;
+
+    // حلقهٔ «انتخاب» بعد از کلیک
+    &::after {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 17px;
+        border: 3px solid color-mix(in srgb, var(--hint-accent) 24%, transparent);
+        opacity: 0;
+        pointer-events: none;
+        animation: emptyRing var(--hint-loop) cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+    }
+}
+
+.plus {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    color: $muted;
+    animation: emptyPlus var(--hint-loop) ease-out infinite;
+}
+
+/* ── کارت قالبی که «منتشر» می‌شود: کاور + نوار سازنده + دکمهٔ استفاده ── */
+
+.card {
+    position: absolute;
+    inset: -1.5px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1.5px solid var(--hint-accent);
+    background: var(--input-background-color);
+    opacity: 0;
+    transform: scale(0.85);
+    animation: emptyCard var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+}
+
+.cover {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--hint-accent) 16%, var(--input-background-color));
+}
+
+.sun {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--hint-accent) 60%, transparent);
+}
+
+.hill {
+    position: absolute;
+    left: -14px;
+    bottom: 14px;
+    width: 64px;
+    height: 34px;
+    border-radius: 50% 50% 0 0;
+    background: color-mix(in srgb, var(--hint-accent) 48%, var(--input-background-color));
+}
+
+.hillBack {
+    left: 30px;
+    width: 70px;
+    height: 26px;
+    background: color-mix(in srgb, var(--hint-accent) 30%, var(--input-background-color));
+    z-index: -0;
+}
+
+.cardMeta {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 20px;
+    padding: 0 6px;
+    background: rgba(0, 0, 0, 0.42);
+    animation: emptyMeta var(--hint-loop) ease-out infinite;
+}
+
+.cardAvatar {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.cardName {
+    width: 24px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.cardUse {
+    margin-left: auto;
+    width: 18px;
+    height: 9px;
+    border-radius: 5px;
+    background: #fff;
+}
+
+// فلش کوتاه لحظهٔ کلیک
+.flash {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: var(--hint-accent);
+    opacity: 0;
+    pointer-events: none;
+    animation: emptyFlash var(--hint-loop) ease-out infinite;
+}
+
+/* ── نشانگر، موج و پرتوها — نقطهٔ کلیک = مرکز خانهٔ وسط (134, 56) ── */
+
+.ripple {
+    position: absolute;
+    left: 134px;
+    top: 56px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: emptyRipple var(--hint-loop) ease-out infinite;
+}
+
+.burst {
+    position: absolute;
+    left: 134px;
+    top: 56px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: emptyRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.cursor {
+    position: absolute;
+    left: 126px;
+    top: 48px;
+    width: 22px;
+    height: 22px;
+    color: var(--body-text-color);
+    animation: emptyCursor var(--hint-loop) ease-in-out infinite;
+}
+
+/* ── متن و دکمه ── */
+
+.title {
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 400;
+}
+
+.text {
+    margin: 0;
+    max-width: 380px;
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: $muted;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.primary,
+.ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.6rem 1.15rem;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.85rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
+
+    &:hover { transform: translateY(-1px); }
+}
+
+.primary {
+    border: none;
+    background: var(--body-text-color);
+    color: var(--body-background);
+
+    &:hover { opacity: 0.9; }
+}
+
+.ghost {
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--body-text-color);
+
+    &:hover { background: color-mix(in srgb, var(--body-text-color) 6%, transparent); }
+}
+
+/* حلقهٔ ۳.۶ ثانیه‌ای — هر ۱٪ ≈ ۳۶ms؛ کلیک حوالی ۲۸٪ */
+@keyframes emptyCursor {
+    0%, 6% { transform: translate(40px, 30px); opacity: 0; }
+    21% { transform: translate(0, 0); opacity: 1; }
+    25% { transform: translate(0, 0) scale(0.78); }
+    29%, 70% { transform: translate(0, 0) scale(1); opacity: 1; }
+    84%, 100% { transform: translate(40px, 30px); opacity: 0; }
+}
+
+@keyframes emptyTilePop {
+    0%, 24% { transform: scale(1); animation-timing-function: ease-in; }
+    27% { transform: scale(0.92); animation-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+    30% { transform: scale(1.08); animation-timing-function: ease-out; }
+    34% { transform: scale(0.98); }
+    38%, 100% { transform: scale(1); }
+}
+
+@keyframes emptyPlus {
+    0%, 25% { opacity: 1; transform: scale(1); }
+    28% { opacity: 0; transform: scale(0.5); }
+    90% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes emptyCard {
+    0%, 27% { opacity: 0; transform: scale(0.85); }
+    32% { opacity: 1; transform: scale(1); }
+    82% { opacity: 1; transform: scale(1); }
+    92%, 100% { opacity: 0; transform: scale(0.92); }
+}
+
+@keyframes emptyMeta {
+    0%, 31% { transform: translateY(100%); }
+    40%, 100% { transform: translateY(0); }
+}
+
+@keyframes emptyFlash {
+    0%, 27% { opacity: 0; }
+    28.5% { opacity: 0.35; }
+    36%, 100% { opacity: 0; }
+}
+
+@keyframes emptyRing {
+    0%, 28% { transform: scale(1.2); opacity: 0; }
+    35%, 80% { transform: scale(1); opacity: 1; }
+    90%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes emptyRipple {
+    0%, 26% { transform: scale(0.4); opacity: 0; }
+    28% { opacity: 0.9; }
+    42%, 100% { transform: scale(3.2); opacity: 0; }
+}
+
+@keyframes emptyRay {
+    0%, 27% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.4); opacity: 0; }
+    29% { opacity: 1; }
+    40%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(1); opacity: 0; }
+}
+
+// بدون حرکت: کارت منتشرشده ثابت نمایش داده می‌شود
+@media (prefers-reduced-motion: reduce) {
+    .tileHero,
+    .tileHero::after,
+    .plus,
+    .card,
+    .cardMeta,
+    .flash,
+    .ripple,
+    .burst i,
+    .cursor {
+        animation: none;
+    }
+
+    .card { opacity: 1; transform: none; }
+    .plus,
+    .cursor { opacity: 0; }
+}

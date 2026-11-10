@@ -1,0 +1,270 @@
+$primary-blue: var(--brand-color);
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+
+.rtl {
+    text-align: start;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem;
+    color: $text-dark;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+
+    @media (max-width: 767px) {
+        padding: 1.15rem 1rem 2rem;
+    }
+}
+
+// حالت خالی (هیچ پروژه‌ای نیست): صفحه کل ارتفاع را می‌گیرد تا معرفی قابلیت‌ها وسط فضای زیر هدر بنشیند
+.containerFill {
+    @media (min-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+}
+
+.emptyCenter {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+// عنوان، فیلتر فضا، مدیریت فضا و دکمهٔ ساخت همه در یک ردیف
+.headerRow {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.titleBlock {
+    min-width: 0;
+}
+
+.mainTitle {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+.errorBanner {
+    color: #ef4444;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+}
+
+.tabRow {
+    display: flex;
+    gap: 4px;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 5px;
+    width: 100%;
+    max-width: 520px;
+    box-sizing: border-box;
+    margin-bottom: 0;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    flex: 1;
+    min-width: 0;
+}
+
+// دکمهٔ ساخت پروژه در هدر: فقط آیکون +
+.createIconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background-color: $primary-blue;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.92;
+    }
+}
+
+.createBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: $primary-blue;
+    color: #fff;
+    border: none;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+        opacity: 0.92;
+    }
+}
+
+.emptyBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 2rem;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 12px;
+
+    p {
+        margin: 0;
+        opacity: 0.7;
+        font-size: 0.95rem;
+    }
+}
+
+.tabBtn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 16px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    cursor: pointer;
+    color: $text-dark;
+    opacity: 0.7;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+        opacity: 1;
+        background-color: #7b58fd0a;
+    }
+}
+
+.tabActive {
+    opacity: 1;
+    font-weight: 600;
+    background-color: #7b58fd1a;
+    color: $primary-blue;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.emptyState {
+    opacity: 0.6;
+    font-size: 0.95rem;
+}
+
+.mobileCount {
+    display: none;
+}
+
+/* موبایل: هدر فشرده — عنوان و دکمهٔ کوچک ساخت در یک ردیف، توضیح حذف؛ فیلتر و مدیریت فضا در یک ردیف */
+@media (max-width: 767px) {
+    .header {
+        margin-bottom: 0.85rem;
+        text-align: start;
+    }
+
+    .headerRow {
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .mainTitle {
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    .subtitle {
+        display: none;
+    }
+
+    .mobileCount {
+        display: block;
+        margin: 2px 0 0;
+        font-size: 0.75rem;
+        opacity: 0.55;
+    }
+
+    .toolbar {
+        gap: 8px;
+    }
+
+    .titleBlock {
+        flex-shrink: 0;
+    }
+
+    .createBtn {
+        flex-shrink: 0;
+        gap: 6px;
+        height: 38px;
+        padding: 0 14px;
+        border-radius: 10px;
+        font-size: 0.82rem;
+        font-weight: 500;
+    }
+
+    // حالت خالی: معرفی قابلیت‌ها وسط فضای بین هدر و نوار پایین
+    .containerFill {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100dvh - 52px - var(--mobile-tabbar-height));
+        padding-bottom: 1rem;
+    }
+
+    .emptyBox {
+        align-items: flex-start;
+        text-align: start;
+        padding: 1.5rem 1rem;
+    }
+}
+
+// موبایل: در حالت خالی دکمهٔ ساخت فقط زیر اسلاید معرفی است (تکرار در هدر نه)
+@media (max-width: 767px) {
+    .containerFill .header .createIconBtn {
+        display: none;
+    }
+}

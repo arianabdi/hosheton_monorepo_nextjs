@@ -1,0 +1,28 @@
+# Production deploy, run by .github/workflows/main.yml on tag "naslyar/<repo>/<version>".
+# The workflow provides DOCKERHUB_USERNAME, DOCKERHUB_REPOSITORY_NAME and
+# DOCKERHUB_REPOSITORY_VERSION; for a manual run on the server export them first.
+name: naslyar
+
+services:
+  naslyar-nextjs:
+    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${DOCKERHUB_REPOSITORY_VERSION:-latest}
+    expose:
+      - "80"
+
+    container_name: naslyar-nextjs
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.naslyar_nextjs.rule=Host(`console.hosheton.com`)"
+      - "traefik.http.routers.naslyar_nextjs.entrypoints=websecure"
+      - "traefik.http.routers.naslyar_nextjs.tls=true"
+      - "traefik.docker.network=traefik-public"
+
+    networks:
+      - traefik-public
+
+    restart: unless-stopped
+
+networks:
+  traefik-public:
+    external: true

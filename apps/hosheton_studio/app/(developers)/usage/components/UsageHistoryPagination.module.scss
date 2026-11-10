@@ -1,0 +1,182 @@
+.root {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: nowrap;
+    margin-top: 0.35rem;
+    padding: 0.45rem 0.15rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.range {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    white-space: nowrap;
+}
+
+.perPage {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    padding: 2px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--body-text-color) 4%, transparent);
+}
+
+.perPageBtn {
+    min-width: 1.7rem;
+    height: 1.55rem;
+    padding: 0 0.35rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: color-mix(in srgb, var(--body-text-color) 65%, transparent);
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+
+    &:hover:not(.perPageBtnActive) {
+        color: var(--brand-color, #0066cc);
+    }
+}
+
+.perPageBtnActive {
+    background: var(--brand-color, #0066cc);
+    color: #fff;
+}
+
+.controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-shrink: 0;
+    margin-inline-start: auto;
+}
+
+.pages {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.pageBtn,
+.navBtn {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.12s, color 0.12s, opacity 0.12s;
+}
+
+.pageBtn {
+    min-width: 1.7rem;
+    height: 1.7rem;
+    padding: 0 0.25rem;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--body-text-color);
+    font-size: 0.75rem;
+    font-weight: 560;
+
+    &:hover:not(.active) {
+        background: color-mix(in srgb, var(--brand-color, #0066cc) 8%, transparent);
+        color: var(--brand-color, #0066cc);
+    }
+
+    &.active {
+        background: var(--brand-color, #0066cc);
+        color: #fff;
+        font-weight: 700;
+    }
+}
+
+.navBtn {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--body-text-color);
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--brand-color, #0066cc) 8%, transparent);
+        color: var(--brand-color, #0066cc);
+    }
+
+    &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+}
+
+.ellipsis {
+    min-width: 0.9rem;
+    text-align: center;
+    color: color-mix(in srgb, var(--body-text-color) 35%, transparent);
+    font-size: 0.8rem;
+    line-height: 1;
+    user-select: none;
+}
+
+.goto {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    white-space: nowrap;
+
+    input {
+        width: 2.4rem;
+        height: 1.7rem;
+        box-sizing: border-box;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--input-background-color, var(--header-background));
+        color: var(--body-text-color);
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-align: center;
+        outline: none;
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        &:focus {
+            border-color: var(--brand-color, #0066cc);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-color, #0066cc) 16%, transparent);
+        }
+    }
+}
+
+.gotoTotal {
+    color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+}
+
+@media (max-width: 640px) {
+    .root {
+        gap: 0.5rem;
+        padding-bottom: 0.15rem;
+    }
+
+    .range {
+        font-size: 0.7rem;
+    }
+}

@@ -1,0 +1,24 @@
+.footer {
+    flex-shrink: 0;
+    padding: 0.85rem 1rem 1.1rem;
+    font-size: 0.72rem;
+    text-align: center;
+    color: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+
+    p {
+        margin: 0 0 0.3rem;
+    }
+}
+
+.versionLink {
+    display: inline-block;
+    color: var(--brand-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.85;
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,148 @@
+.lookupBar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--brand-color) 6%, var(--plan-card-background-color));
+    border: 1px dashed color-mix(in srgb, var(--brand-color) 30%, transparent);
+    border-radius: 10px;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.lookupInfo {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.lookupTitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+.lookupHint {
+    font-size: 0.78rem;
+    color: var(--body-text-color);
+    opacity: 0.7;
+    line-height: 1.6;
+}
+
+.lookupBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.1rem;
+    background: var(--brand-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.83rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-family: inherit;
+    transition: opacity 0.15s;
+
+    &:hover:not(:disabled) {
+        opacity: 0.88;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 0.9s linear infinite;
+}
+
+// ─── Result banner ────────────────────────────────────────────────────────────
+
+.resultBanner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.resultOk {
+    background: color-mix(in srgb, #22c55e 8%, var(--plan-card-background-color));
+    border: 1px solid color-mix(in srgb, #22c55e 28%, transparent);
+    color: #15803d;
+}
+
+.resultWarn {
+    background: color-mix(in srgb, #f59e0b 8%, var(--plan-card-background-color));
+    border: 1px solid color-mix(in srgb, #f59e0b 28%, transparent);
+    color: #92400e;
+}
+
+[data-theme='dark'] .resultOk {
+    color: #86efac;
+}
+
+[data-theme='dark'] .resultWarn {
+    color: #fcd34d;
+}
+
+.resultIcon {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.resultBody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    strong {
+        font-size: 0.84rem;
+    }
+
+    a {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        text-decoration: underline;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.resultClose {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 0.1rem;
+    flex-shrink: 0;
+    color: inherit;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        opacity: 1;
+    }
+}

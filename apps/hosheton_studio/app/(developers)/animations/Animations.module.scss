@@ -1,0 +1,1163 @@
+/* صفحهٔ «انیمیشن‌ها»: ساده و خنثی — جداکننده‌های خطی به‌جای کارت، رنگ برند فقط برای حالت فعال */
+
+$muted: color-mix(in srgb, var(--body-text-color) 58%, transparent);
+$line: var(--border-color);
+$tint: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+$brand-tint: color-mix(in srgb, var(--brand-color) 10%, transparent);
+$mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+.page {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+    box-sizing: border-box;
+    color: var(--body-text-color);
+    overflow-x: clip;
+
+    code {
+        font-family: $mono;
+        font-size: 11.5px;
+    }
+
+    @media (max-width: 767px) {
+        padding: 1.15rem 1rem 2.5rem;
+    }
+}
+
+.defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.muted {
+    color: $muted;
+    font-size: 12.5px;
+}
+
+/* ───────── هدر ───────── */
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.title {
+    margin: 0 0 0.45rem;
+    font-size: 1.85rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    max-width: 78ch;
+    margin: 0;
+    font-size: 0.93rem;
+    line-height: 1.75;
+    opacity: 0.85;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.offBadge {
+    padding: 4px 9px;
+    border-radius: 7px;
+    background: color-mix(in srgb, #e5484d 12%, transparent);
+    color: #d93d42;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+@media (max-width: 767px) {
+    .header {
+        flex-direction: column;
+        margin-bottom: 1.25rem;
+    }
+
+    .title {
+        font-size: 1.45rem;
+    }
+
+    .subtitle {
+        font-size: 0.88rem;
+    }
+}
+
+/* ───────── دکمه‌ها و اجزای کوچک ───────── */
+
+.btn,
+.btnPrimary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
+    border: 1px solid $line;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 12.5px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &:hover:not(:disabled) {
+        background: $tint;
+    }
+
+    &:disabled {
+        opacity: 0.45;
+        cursor: default;
+    }
+}
+
+.btnActive {
+    border-color: var(--brand-color);
+    background: $brand-tint;
+    color: var(--brand-color);
+}
+
+.btnPrimary {
+    border-color: var(--button-background, var(--brand-color));
+    background: var(--button-background, var(--brand-color));
+    color: var(--button-text-color, #fff);
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+        background: var(--button-background, var(--brand-color));
+        opacity: 0.92;
+    }
+}
+
+.iconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: $muted;
+    cursor: pointer;
+
+    &:hover {
+        background: $tint;
+        color: var(--body-text-color);
+    }
+}
+
+.pinBtn {
+    width: 30px;
+    height: 30px;
+    border-color: $line;
+}
+
+.iconBtnOn {
+    border-color: var(--brand-color);
+    background: $brand-tint;
+    color: var(--brand-color);
+}
+
+.linkBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 4px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: $muted;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+        color: var(--body-text-color);
+        background: $tint;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+}
+
+.meta {
+    color: $muted;
+    font-size: 12px;
+}
+
+.metaRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    margin-top: 6px;
+}
+
+.chip,
+.chipStatic {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border: 1px solid $line;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font-family: $mono;
+    font-size: 11.5px;
+    line-height: 1.6;
+}
+
+.chip {
+    cursor: pointer;
+
+    &:hover {
+        background: $tint;
+    }
+}
+
+.chipStatic {
+    font-family: inherit;
+    color: $muted;
+}
+
+.chipActive {
+    border-color: var(--brand-color);
+    background: $brand-tint;
+    color: var(--brand-color);
+}
+
+.chipRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+}
+
+.codeRef {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+    color: $muted;
+
+    code {
+        overflow-wrap: anywhere;
+    }
+}
+
+.flagId {
+    color: $muted;
+}
+
+.stateOff {
+    color: #d93d42;
+    font-size: 12px;
+}
+
+.selectLabel,
+.rangeLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+
+    select {
+        padding: 4px 6px;
+        border: 1px solid $line;
+        border-radius: 7px;
+        background: var(--input-background-color);
+        color: inherit;
+        font: inherit;
+    }
+
+    input[type='range'] {
+        width: 160px;
+        accent-color: var(--brand-color);
+    }
+}
+
+/* سوییچ: تنها جایی که شکل قرص مجاز است */
+.switchLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.switchDisabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.switch {
+    position: relative;
+    flex-shrink: 0;
+    width: 32px;
+    height: 18px;
+    padding: 0;
+    border: 1px solid $line;
+    border-radius: 999px;
+    background: var(--input-hover-background-color);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        inset-inline-start: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid color-mix(in srgb, var(--body-text-color) 18%, transparent);
+        box-sizing: border-box;
+        transition: transform 0.16s ease;
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+.switchOn {
+    border-color: var(--brand-color);
+    background: var(--brand-color);
+
+    &::after {
+        border-color: transparent;
+        transform: translateX(14px);
+    }
+}
+
+:global([dir='rtl']) .switchOn::after {
+    transform: translateX(-14px);
+}
+
+/* ───────── صحنهٔ زنده ───────── */
+
+.stageSection {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid $line;
+    container-type: inline-size;
+}
+
+@media (min-width: 768px) {
+    .stagePinned {
+        position: sticky;
+        top: 0;
+        z-index: 6;
+        padding-top: 10px;
+        background: var(--body-background);
+    }
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 12px;
+}
+
+.toolGroup {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.stageGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+}
+
+@container (min-width: 1020px) {
+    .stageGrid {
+        grid-template-columns: minmax(0, 1fr) 330px;
+        align-items: end;
+    }
+}
+
+.stageArea {
+    min-width: 0;
+    /* جای صحنهٔ گربه بالای چت‌باکس: ۱۹۰ × clamp(عرض ÷ ۹۰۰، ۰.۵۲، ۰.۷۸) */
+    padding-top: clamp(104px, 21.1cqi, 152px);
+}
+
+.stageInput {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    font: inherit;
+    color: inherit;
+}
+
+.stageHint {
+    max-width: 720px;
+    margin: 10px auto 0;
+    color: $muted;
+    font-size: 12px;
+    text-align: center;
+}
+
+.now {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding-inline-start: 16px;
+    border-inline-start: 1px solid $line;
+    font-size: 12.5px;
+}
+
+@container (max-width: 1019px) {
+    .now {
+        padding: 12px 0 0;
+        border-inline-start: none;
+        border-top: 1px solid $line;
+    }
+}
+
+.nowHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+
+    strong {
+        font-size: 13px;
+    }
+
+    code {
+        color: $muted;
+    }
+}
+
+.nowStep {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 10px;
+    border-inline-start: 2px solid var(--brand-color);
+    background: $brand-tint;
+    border-radius: 0 6px 6px 0;
+
+    span {
+        font-weight: 600;
+    }
+
+    code {
+        color: $muted;
+        overflow-wrap: anywhere;
+    }
+}
+
+:global([dir='rtl']) .nowStep {
+    border-radius: 6px 0 0 6px;
+}
+
+.stateGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 12px;
+    margin: 0;
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        min-width: 0;
+        padding: 2px 0;
+        border-bottom: 1px dashed color-mix(in srgb, var(--body-text-color) 10%, transparent);
+    }
+
+    dt {
+        color: $muted;
+    }
+
+    dd {
+        margin: 0;
+        font-family: $mono;
+        font-size: 11.5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.logHead {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+
+    > span {
+        flex: 1;
+        font-weight: 600;
+    }
+}
+
+.log {
+    max-height: 190px;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+    border-top: 1px solid $line;
+    scrollbar-width: thin;
+
+    li {
+        display: grid;
+        grid-template-columns: 42px minmax(0, auto) minmax(0, 1fr);
+        align-items: baseline;
+        gap: 8px;
+        padding: 3px 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+
+    code {
+        color: $muted;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+.log li.logEmpty {
+    display: block;
+    padding: 8px 0;
+    border-bottom: none;
+}
+
+.logTime {
+    font-family: $mono;
+    font-size: 11px;
+    color: $muted;
+    text-align: end;
+}
+
+.logText {
+    white-space: nowrap;
+}
+
+.logBlip .logText {
+    color: $muted;
+}
+
+.logMark .logText {
+    font-weight: 600;
+}
+
+/* ───────── تب‌ها ───────── */
+
+.tabNav {
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid $line;
+}
+
+.tabScroller {
+    --hscroll-margin: 0px;
+    --hscroll-gap: 22px;
+    --hscroll-fade-color: var(--body-background);
+}
+
+.tab {
+    position: relative;
+    padding: 10px 0 11px;
+    border: none;
+    background: none;
+    color: $muted;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--body-text-color);
+    }
+}
+
+.tabActive {
+    color: var(--brand-color);
+    font-weight: 600;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        bottom: -1px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--brand-color);
+    }
+}
+
+.panel {
+    min-width: 0;
+}
+
+.panelNote {
+    max-width: 80ch;
+    margin: 0 0 1rem;
+    color: $muted;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ───────── ردیف‌ها (جداکننده‌های خطی) ───────── */
+
+.groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.group {
+    min-width: 0;
+}
+
+.groupHeadRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.sectionHead {
+    margin-bottom: 0.6rem;
+
+    h2 {
+        margin: 0 0 4px;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    p {
+        max-width: 80ch;
+        margin: 0;
+        color: $muted;
+        font-size: 12.5px;
+        line-height: 1.7;
+    }
+}
+
+.rows {
+    margin: 0 0 8px;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid $line;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 6px 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid $line;
+
+    > :last-child:not(.rowMain) {
+        justify-self: end;
+    }
+
+    @media (max-width: 767px) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.rowOff .rowMain p {
+    opacity: 0.6;
+}
+
+.rowMain {
+    grid-column: 2 / -1;
+    min-width: 0;
+
+    p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.75;
+    }
+
+    @media (max-width: 767px) {
+        grid-column: auto;
+    }
+}
+
+.row:has(> .btn) .rowMain {
+    grid-column: 2;
+
+    @media (max-width: 767px) {
+        grid-column: auto;
+    }
+}
+
+.rowKey {
+    padding-top: 2px;
+    overflow-wrap: anywhere;
+}
+
+.rowKeyText {
+    font-size: 12.5px;
+    font-weight: 600;
+    padding-top: 2px;
+}
+
+.flagRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 8px;
+}
+
+/* ───────── سناریوها ───────── */
+
+.subTabs {
+    --hscroll-margin: 14px;
+    --hscroll-gap: 6px;
+    --hscroll-fade-color: var(--body-background);
+}
+
+.subTab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: none;
+    color: $muted;
+    font: inherit;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+        background: $tint;
+        color: var(--body-text-color);
+    }
+}
+
+.subTabActive {
+    border-color: $line;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    font-weight: 600;
+}
+
+.liveDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--brand-color);
+    animation: livePulse 1.1s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    50% {
+        opacity: 0.35;
+    }
+}
+
+.scenarioHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-bottom: 14px;
+}
+
+.scenarioIntro {
+    flex: 1 1 420px;
+    min-width: 0;
+
+    h2 {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 0 0 4px;
+        font-size: 1.15rem;
+
+        code {
+            color: $muted;
+            font-weight: 400;
+        }
+    }
+
+    p {
+        max-width: 78ch;
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.75;
+    }
+}
+
+.scenarioActions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+
+    @media (max-width: 767px) {
+        align-items: flex-start;
+    }
+}
+
+.steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid $line;
+}
+
+.step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 10px;
+    border-bottom: 1px solid $line;
+    transition: background 0.2s ease;
+}
+
+.stepSub {
+    margin-inline-start: 38px;
+    padding-inline-start: 14px;
+    border-inline-start: 2px solid color-mix(in srgb, var(--body-text-color) 10%, transparent);
+
+    .stepIndex {
+        background: none;
+        border-color: transparent;
+    }
+}
+
+.stepActive {
+    background: $brand-tint;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset-block: 0;
+        inset-inline-start: 0;
+        width: 3px;
+        background: var(--brand-color);
+    }
+
+    .stepIndex {
+        border-color: var(--brand-color);
+        background: var(--brand-color);
+        color: #fff;
+    }
+}
+
+.stepFlash {
+    animation: stepFlash 0.9s ease-out;
+}
+
+@keyframes stepFlash {
+    0% {
+        background: color-mix(in srgb, var(--brand-color) 22%, transparent);
+    }
+}
+
+.stepIndex {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 1px solid $line;
+    border-radius: 7px;
+    background: var(--plan-card-background-color);
+    color: $muted;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stepMain {
+    min-width: 0;
+
+    p {
+        max-width: 86ch;
+        margin: 4px 0 0;
+        font-size: 13px;
+        line-height: 1.75;
+    }
+}
+
+.stepHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+
+    strong {
+        font-size: 13.5px;
+    }
+}
+
+.liveDetail {
+    padding: 1px 6px;
+    border-radius: 5px;
+    background: var(--plan-card-background-color);
+    color: var(--brand-color);
+}
+
+.poseChips {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+/* ───────── ژست‌ها ───────── */
+
+.shelf {
+    fill: var(--plan-card-background-color);
+    stroke: color-mix(in srgb, var(--brand-color) 45%, var(--input-border-color));
+    stroke-width: 1.5;
+}
+
+.poseGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    border-top: 1px solid $line;
+    border-inline-start: 1px solid $line;
+}
+
+.poseCell {
+    min-width: 0;
+    margin: 0;
+    padding: 10px 12px 14px;
+    border-bottom: 1px solid $line;
+    border-inline-end: 1px solid $line;
+
+    figcaption {
+        margin-top: 8px;
+
+        p {
+            margin: 4px 0 0;
+            font-size: 12.5px;
+            line-height: 1.7;
+        }
+    }
+}
+
+.poseStage {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.poseName {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.poseOpen {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--body-text-color);
+    font-family: $mono;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+
+    svg {
+        color: $muted;
+    }
+
+    &:hover {
+        color: var(--brand-color);
+
+        svg {
+            color: var(--brand-color);
+        }
+    }
+}
+
+/* ───────── زمین بازی ───────── */
+
+.playground {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 24px;
+    align-items: start;
+
+    @media (max-width: 1100px) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.playMain {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.playStage {
+    display: block;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    touch-action: none;
+}
+
+.controlBlock {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 8px 14px;
+    padding-top: 12px;
+    border-top: 1px solid $line;
+
+    @media (max-width: 767px) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.controlLabel {
+    padding-top: 5px;
+    color: $muted;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.liveParams {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    max-height: 640px;
+    overflow-y: auto;
+    padding-inline-start: 16px;
+    border-inline-start: 1px solid $line;
+    font-size: 12.5px;
+    scrollbar-width: thin;
+
+    p {
+        margin: 0;
+    }
+
+    @media (max-width: 1100px) {
+        max-height: none;
+        padding: 12px 0 0;
+        border-inline-start: none;
+        border-top: 1px solid $line;
+    }
+}
+
+.paramGroup {
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 2px 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--body-text-color) 6%, transparent);
+
+        span {
+            font-family: $mono;
+            font-size: 11.5px;
+            color: $muted;
+        }
+    }
+}
+
+.paramGroupHead {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid $line;
+
+    code {
+        font-weight: 700;
+    }
+}
+
+.paramMoving {
+    code,
+    span {
+        color: var(--brand-color) !important;
+    }
+}
+
+/* ───────── پارامترها ───────── */
+
+.searchRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    margin-bottom: 12px;
+}
+
+.searchBox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: min(360px, 100%);
+    padding: 7px 11px;
+    border: 1px solid $line;
+    border-radius: 9px;
+    background: var(--input-background-color);
+    color: $muted;
+    box-sizing: border-box;
+
+    input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: var(--body-text-color);
+        font: inherit;
+        font-size: 13px;
+    }
+}
+
+.paramBlock {
+    margin-bottom: 14px;
+}
+
+.paramBlockHead {
+    margin: 4px 0 6px;
+
+    code {
+        font-size: 12.5px;
+        font-weight: 700;
+    }
+}

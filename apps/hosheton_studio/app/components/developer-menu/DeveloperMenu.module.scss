@@ -1,0 +1,184 @@
+.anchor {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    z-index: 1100;
+}
+
+.fixed {
+    position: fixed;
+    top: 18px;
+    /* 260px sidebar + 12px gap */
+    inset-inline-start: 272px;
+    z-index: 1100;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.inline {
+    @media (min-width: 769px) {
+        display: none;
+    }
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline-start: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    width: max-content;
+    min-width: 168px;
+    padding: 8px;
+    border-radius: 20px;
+    background: var(--plan-card-background-color, #fff);
+    border: 1px solid var(--border-color, #eceef2);
+    box-shadow:
+        0 8px 28px rgba(15, 23, 42, 0.08),
+        0 1px 2px rgba(15, 23, 42, 0.04);
+    animation: menuIn 160ms ease-out;
+    z-index: 1;
+}
+
+.inline .menu {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+}
+
+@keyframes menuIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 14px;
+    background: transparent;
+    color: var(--body-text-color, #334155);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: start;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color, #7b64cf) 10%, transparent);
+        color: var(--brand-color, #7b64cf);
+    }
+
+    .menuIcon {
+        display: inline-flex;
+        flex-shrink: 0;
+        color: inherit;
+        opacity: 0.85;
+    }
+}
+
+.menuItemDisabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+
+    &:hover {
+        background: transparent;
+        color: var(--body-text-color, #334155);
+    }
+}
+
+.trigger {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 14px;
+    background: #0f172a;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow:
+        0 0 0 1px rgba(59, 130, 246, 0.35),
+        0 0 14px rgba(59, 130, 246, 0.28),
+        0 0 18px rgba(251, 146, 60, 0.18),
+        0 8px 20px rgba(15, 23, 42, 0.28);
+    transition: box-shadow 0.15s ease, filter 0.15s ease;
+
+    &:hover {
+        filter: brightness(1.08);
+        box-shadow:
+            0 0 0 1px rgba(59, 130, 246, 0.45),
+            0 0 18px rgba(59, 130, 246, 0.35),
+            0 0 22px rgba(251, 146, 60, 0.25),
+            0 10px 24px rgba(15, 23, 42, 0.32);
+    }
+
+    .triggerIcon {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+}
+
+.inline .trigger {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    box-shadow:
+        0 0 0 1px rgba(59, 130, 246, 0.3),
+        0 0 10px rgba(59, 130, 246, 0.2),
+        0 0 12px rgba(251, 146, 60, 0.14);
+
+    .triggerIcon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* آیتم فعال — مثل حالت نمایش لوکیشن بنرها */
+.menuItemActive {
+    background: color-mix(in srgb, var(--brand-color, #7b64cf) 14%, transparent);
+    color: var(--brand-color, #7b64cf);
+    font-weight: 700;
+
+    .menuIcon {
+        color: var(--brand-color, #7b64cf);
+    }
+}
+
+/* موبایل — فقط جای‌گذاری مثل پنجره منوی پروفایل (profileMenu.module.scss)؛ ظاهر داخل همان .menu است */
+.mobileBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1150;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.35);
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.menuMobile {
+    position: fixed;
+    top: 60px;
+    inset-inline: 12px;
+    width: auto;
+    max-height: calc(100dvh - 84px);
+    overflow-y: auto;
+    z-index: 1202;
+}

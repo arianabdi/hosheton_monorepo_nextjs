@@ -1,0 +1,734 @@
+// استایل ماژول بنرها — از استایل والد مارکتینگ ارث‌بری می‌شود
+@import '../Marketing.module.scss';
+
+$text-muted: var(--body-text-color);
+$border-color: var(--plan-card-border-color);
+
+.muted { opacity: 0.65; white-space: nowrap; }
+
+// ─── ناوبری بخش‌های ماژول — تب ساده زیرخط‌دار ───
+.sectionNav {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid $border-color;
+}
+
+.sectionNavLink {
+    padding: 0.5rem 0.1rem;
+    font-size: 0.88rem;
+    color: var(--body-text-color);
+    text-decoration: none;
+    opacity: 0.6;
+    position: relative;
+    margin-bottom: -1px;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &.active {
+        opacity: 1;
+        color: var(--brand-color);
+        font-weight: 700;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            inset-inline: 0;
+            height: 2px;
+            background: var(--brand-color);
+            border-radius: 2px;
+        }
+    }
+}
+
+// ─── کارت‌های نمای کلی ───
+.overviewCardBox {
+    background: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        line-height: 1.7;
+        flex: 1;
+    }
+}
+
+.ltrInput {
+    direction: ltr;
+    text-align: left;
+}
+
+.keyBadge {
+    display: inline-block;
+    background: var(--input-background-color);
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.72rem;
+    direction: ltr;
+    font-family: monospace;
+}
+
+// ─── فرم asset های خلاقیت (دسکتاپ/تبلت/موبایل) ───
+.assetsBox {
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .assetsTitle {
+        font-size: 0.84rem;
+        font-weight: 700;
+        margin: 0;
+    }
+}
+
+.assetRow {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--input-background-color);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+
+    .assetPreview {
+        width: 110px;
+        height: 62px;
+        border-radius: 6px;
+        background: var(--plan-card-background-color);
+        border: 1px solid $border-color;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .assetMeta {
+        flex: 1;
+        min-width: 150px;
+        font-size: 0.75rem;
+        opacity: 0.75;
+        direction: ltr;
+        text-align: left;
+        word-break: break-all;
+    }
+}
+
+// ─── سازنده قوانین تارگتینگ ───
+.rulesBox {
+    border: 1px dashed var(--input-border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    .rulesTitle {
+        font-size: 0.84rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .rulesHint {
+        font-size: 0.72rem;
+        opacity: 0.6;
+        margin: 0;
+    }
+}
+
+.ruleRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.tag {
+    background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+    color: var(--brand-color);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.tagRow {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin-top: 0.35rem;
+}
+
+.freqGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0 1rem;
+}
+
+// ─── قفل نسبت تصویر در فرم جایگاه ───
+.lockToggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+}
+
+.lockBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-family: iransansxvf, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover { opacity: 0.85; }
+
+    &.locked {
+        background: color-mix(in srgb, var(--brand-color) 12%, transparent);
+        border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        color: var(--brand-color);
+    }
+}
+
+.lockHint {
+    font-size: 0.72rem;
+    color: #d97706;
+}
+
+// ─── راهنمای بازشو (آموزش خلاقیت‌ها) ───
+.guideBox {
+    background: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+}
+
+.guideToggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: none;
+    border: none;
+    padding: 0.9rem 1.1rem;
+    font-family: iransansxvf, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--body-text-color);
+    cursor: pointer;
+    text-align: right;
+
+    .guideChevron {
+        display: flex;
+        transition: transform 0.2s ease;
+        color: var(--brand-color);
+    }
+
+    .guideChevronOpen {
+        transform: rotate(90deg);
+    }
+
+    &:hover { background: var(--input-background-color); }
+}
+
+.guideBody {
+    padding: 0.25rem 1.1rem 1.1rem;
+    font-size: 0.84rem;
+    line-height: 1.9;
+    border-top: 1px dashed $border-color;
+    padding-top: 1rem;
+
+    p { margin: 0 0 0.6rem; }
+
+    .guideExample {
+        background: var(--input-background-color);
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        margin: 0.75rem 0;
+        font-size: 0.8rem;
+    }
+
+    .guideList {
+        margin: 0.4rem 0 0.75rem;
+        padding-inline-start: 1.2rem;
+
+        li { margin-bottom: 0.25rem; }
+    }
+}
+
+.tableWrap {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    text-align: right;
+
+    th {
+        background-color: #7b58fd0d;
+        color: var(--body-text-color);
+        padding: 0.85rem 1.25rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        border-bottom: 1px solid $border-color;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 0.85rem 1.25rem;
+        border-bottom: 1px solid $border-color;
+        vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover td { background: color-mix(in srgb, var(--brand-color) 4%, transparent); }
+
+    @media (max-width: 768px) {
+        thead { display: none; }
+
+        tbody tr {
+            display: block;
+            border-bottom: 1px solid $border-color;
+            padding: 0.75rem 0;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: none;
+            padding: 0.5rem 1rem;
+
+            &::before {
+                content: attr(data-label);
+                font-weight: 700;
+                font-size: 0.75rem;
+                opacity: 0.6;
+            }
+        }
+    }
+}
+
+.inlineActions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+// ─── دکمه سه‌نقطه عملیات سطر + منوی کشویی ───
+.rowActions {
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-end;
+}
+
+.kebabBtn {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: none;
+    background: transparent;
+    color: var(--body-text-color);
+    opacity: 0.55;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+
+    &:hover {
+        opacity: 1;
+        background: var(--input-background-color);
+    }
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    inset-inline-end: 0;
+    background: var(--plan-card-background-color);
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    min-width: 150px;
+    padding: 0.35rem;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+
+    &.menuUp {
+        top: auto;
+        bottom: calc(100% + 4px);
+    }
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    border-radius: 7px;
+    padding: 0.5rem 0.65rem;
+    font-family: iransansxvf, sans-serif;
+    font-size: 0.8rem;
+    color: var(--body-text-color);
+    cursor: pointer;
+    text-align: right;
+    white-space: nowrap;
+
+    &:hover { background: var(--input-background-color); }
+}
+
+.menuItemDanger {
+    color: #ef4444;
+
+    &:hover { background: #ef44441a; }
+}
+
+// ─── فرمت‌های جایگاه با جداکننده دایره‌ای ───
+.formatList {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    direction: ltr;
+    font-size: 0.8rem;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+.formatDot {
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--body-text-color);
+    opacity: 0.4;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.smallBtn {
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: iransansxvf, sans-serif;
+
+    &:hover { opacity: 0.85; }
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    &.active {
+        background: #22c55e1f;
+        color: #16a34a;
+    }
+
+    &.inactive {
+        background: #94a3b81f;
+        color: var(--body-text-color);
+        opacity: 0.75;
+    }
+
+    &.scheduled {
+        background: #f59e0b1f;
+        color: #d97706;
+    }
+
+    &.expired {
+        background: #ef44441a;
+        color: #dc2626;
+    }
+}
+
+.bannerThumb {
+    width: 84px;
+    height: 52px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--input-background-color);
+    border: 1px solid $border-color;
+    display: block;
+}
+
+.thumbFallback {
+    width: 84px;
+    height: 52px;
+    border-radius: 8px;
+    background: var(--input-background-color);
+    border: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+}
+
+.imageField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.1rem;
+
+    label {
+        font-size: 0.84rem;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+
+    .imageRow {
+        display: flex;
+        gap: 0.75rem;
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+    .imagePreviewBox {
+        width: 180px;
+        height: 100px;
+        border-radius: 10px;
+        border: 1px dashed var(--input-border-color);
+        background: var(--input-background-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .placeholder {
+            font-size: 0.75rem;
+            opacity: 0.5;
+            text-align: center;
+            padding: 0.5rem;
+        }
+    }
+
+    .imageControls {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+        flex: 1;
+        min-width: 200px;
+
+        .imageUrl {
+            font-size: 0.72rem;
+            opacity: 0.6;
+            direction: ltr;
+            text-align: left;
+            word-break: break-all;
+        }
+    }
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 1rem;
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dateHint {
+    font-size: 0.7rem;
+    opacity: 0.55;
+    margin: 0;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: var(--plan-card-background-color);
+    border: 1px dashed $border-color;
+    border-radius: 12px;
+    opacity: 0.75;
+}
+
+.toolbarActions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.placementGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+
+    @media (min-width: 720px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.placementOption {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    cursor: pointer;
+    background: var(--input-background-color);
+    text-align: right;
+    margin: 0;
+
+    input {
+        margin-top: 0.2rem;
+        flex-shrink: 0;
+    }
+
+    &.selected {
+        border-color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 8%, transparent);
+        opacity: 1;
+    }
+}
+
+.placementOptionBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.placementOptionName {
+    font-weight: 700;
+    font-size: 0.84rem;
+}
+
+.placementOptionMeta {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    line-height: 1.55;
+}
+
+.creativePreview {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    margin: 0.35rem 0 0;
+    border-radius: 10px;
+    background: var(--input-background-color);
+    border: 1px solid $border-color;
+}
+
+.creativePreviewInfo {
+    min-width: 0;
+
+    strong {
+        display: block;
+        font-size: 0.82rem;
+    }
+
+    span {
+        display: block;
+        font-size: 0.72rem;
+        opacity: 0.7;
+        margin-top: 0.15rem;
+    }
+}
+
+.formatChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid $border-color;
+    background: var(--input-background-color);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin: 0;
+    opacity: 0.55;
+
+    input {
+        margin: 0;
+    }
+
+    &.selected {
+        opacity: 1;
+        border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+        background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+        color: var(--brand-color);
+    }
+}
+
+.ruleGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.assetHint {
+    font-size: 0.72rem;
+    opacity: 0.68;
+    line-height: 1.55;
+    margin: 0;
+    flex-basis: 100%;
+}

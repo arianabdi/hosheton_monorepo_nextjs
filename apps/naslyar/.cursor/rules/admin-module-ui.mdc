@@ -1,0 +1,17 @@
+---
+description: naslyar admin modules must ship list guides and employee-style add/edit forms
+globs: "**/*.{tsx,scss,ts}"
+alwaysApply: false
+---
+
+# ماژول جدید naslyar
+
+قبل از ساخت یا تغییر صفحهٔ پنل، `AGENTS.md` ریشهٔ همین اپ را بخوان و اجرا کن.
+
+- **فهرست:** بخش آموزش همیشه ‌نمایان (مقدمه، کارت‌های قدم/وضعیت، مثال عملی، نکته) مثل `EmployeesGuide` و راهنماهای `marketing/banners` و `campaigns`.
+- **افزودن/ویرایش:** هدر + بازگشت به فهرست + `formGuideCard` + `formCard` بخش‌بندی‌شده + `fieldHint` زیر هر فیلد. تب‌های ماژول روی فرم نباشد.
+- **تب‌ها:** ساده و زیرخط‌دار مثل بنرها (`SimpleLineTabs` / `SimpleLineNav` / `sectionNav`). pill یا دکمه برای تب ممنوع.
+- **منوی چندتبی (هر تب یک مسیر):** شل `(tabs)/layout.tsx` + Provider ماژول + ثبت در `app/config/page-shells.ts` — هدر/ناوبری را در page ها تکرار نکن (AGENTS.md بخش ۳).
+- **جدول‌ها:** صفحه‌بندی سمت سرور (`Pagination`) + جستجو/فیلتر (`TableSearch`) + مرتب‌سازی (`SortHeader`) + state در URL (`useUrlTableState`) + راهنمای «به چه درد می‌خورد / چطور استفاده کنم» (AGENTS.md بخش ۴).
+- **مرجع:** `app/(main)/management/hr/` ، `app/(main)/marketing/banners/` ، `app/(main)/campaigns/` ، `app/(main)/error-tracking/` .
+- استایل از `Marketing.module.scss` و `Hr.module.scss`. فرم شلوغ بدون آموزش نساز.

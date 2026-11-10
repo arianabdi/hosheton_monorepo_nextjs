@@ -1,0 +1,159 @@
+// زبان طراحی مشترک تب‌های پنل سازنده (/creators/:id — اطلاعات حساب، پروژه‌ها، فروش، دعوت، امنیت).
+// همه‌ی تب‌ها همین عنوان بخش، فیلد، دکمه و بخش را می‌گیرند تا یکدست بمانند.
+// موبایل: بخش‌ها کارت نیستند (padding صفحه کافی است) — فقط خط جداکننده بین بخش‌ها.
+
+$mobile: 768px;
+$muted: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+$divider: color-mix(in srgb, var(--body-text-color) 9%, transparent);
+
+@mixin section-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--body-text-color);
+    opacity: 1;
+}
+
+@mixin section-hint {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.8;
+    color: $muted;
+    opacity: 1;
+}
+
+@mixin label {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--body-text-color);
+}
+
+@mixin input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: border-color 0.15s;
+
+    &:focus {
+        outline: none;
+        border-color: var(--brand-color);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+    }
+}
+
+@mixin primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--brand-color);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+        opacity: 0.9;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: $mobile) {
+        width: 100%;
+    }
+}
+
+@mixin secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--body-text-color);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 400;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--body-text-color) 6%, transparent);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+// بخش: دسکتاپ کارت سبک؛ موبایل بدون قاب، فقط خط زیرین
+@mixin panel {
+    padding: 18px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--input-background-color);
+
+    @media (max-width: $mobile) {
+        padding: 18px 0;
+        border: 0;
+        border-bottom: 1px solid $divider;
+        border-radius: 0;
+        background: transparent;
+    }
+}
+
+// ردیف فهرست (فروش، دعوت، پاداش) — عنوان/زیرعنوان یک سمت، مقدار سمت دیگر
+@mixin list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid $divider;
+    font-weight: 400;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    p {
+        margin: 0 0 2px;
+        font-size: 0.86rem;
+        font-weight: 400;
+    }
+
+    small {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: $muted;
+        opacity: 1;
+    }
+}

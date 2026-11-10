@@ -1,0 +1,214 @@
+
+
+:global(.link-list-opt a:hover){
+    color: #fff !important;
+    border-color: var(--blue-bg) !important;
+    background: var(--blue-bg) !important;
+
+}
+
+
+:global(.dropdown-menu){
+
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 3px 12px 1px rgba(44, 55, 130, 0.15);
+    background: var(--taskboard-column-bg);
+
+}
+
+:global(.link-list-opt a) {
+    padding: 0px !important;
+    line-height: 13px !important;
+    font-size: 13px !important;
+    border-color: var(--taskboard-column-bg) !important;
+    color: var(--body-text-color) !important;
+    height: 90px;
+}
+
+
+:global(.dropdown button){
+    background: unset !important;
+    border: unset !important;
+}
+
+:global(.dropdown-menu ul li){
+    padding: 12px 13px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+}
+:global(.dropdown-menu ul li:hover){
+    color: var(--active-card-path-color);
+}
+:global(textarea),
+:global(input){
+    background: var(--input-color);
+    border-color: var(--border-color) !important;
+    color: var(--body-text-color);
+    box-sizing: border-box;
+}
+
+.userAvatar {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.headerContainer {
+    box-sizing: border-box;
+    z-index: 50;
+    width: 100%;
+    height: var(--header-height);
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+    background: transparent;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    display: flex;
+    position: sticky;
+    top: 0;
+    right: auto;
+    backdrop-filter: blur(8px);
+    overflow: visible;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        right: auto;
+        background: color-mix(in srgb, var(--header-background) 88%, transparent);
+        border-bottom: 1px solid var(--border-color);
+        padding: 0 0.85rem;
+    }
+
+}
+
+.headerDock {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+    flex: 1;
+    display: flex;
+}
+
+.menuToggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+}
+
+.pageTitle {
+    font-weight: 700;
+    color: var(--body-text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.img{
+    height: 47px;
+    width: 65px;
+}
+.icon span:first-child {
+    top: 12px;
+    left: -9px;
+}
+.icon span {
+    font-family: "Yekan Bakh Fat";
+    color: #4b78ff;
+    font-size: 25px;
+    position: relative;
+}
+
+.icon {
+    height: 58px;
+    width: calc(var(--sidbar-width) - 34px);
+    justify-content: start;
+    align-items: center;
+    font-size: 19px;
+    display: flex;
+    position: relative;
+}
+
+.icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.dropdown {
+    height: var(--header-height);
+    border-radius: 0px;
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+
+}
+
+
+.dropdown a {
+    border-radius: 0px !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logoContainer {
+    padding: 0px 20px;
+    height: var(--header-height);
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+.logoContainer a {
+    padding: 0px !important;
+
+}
+
+.actions {
+    border-radius: 0px !important;
+    padding: 0px !important;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: end;
+    position: relative;
+    z-index: 30;
+    overflow: visible;
+}
+
+
+.userAvatar .icon {
+    align-items: center;
+    gap: 10px;
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(179.69deg, #25252B 32.6%, #19191D 258.86%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 46px;
+    display: flex;
+    justify-content: center;
+}
+
+
+@media (max-width: 768px) {
+    .headerDock{
+        max-width: calc(100% - 60px);
+    }
+}
+
+
+

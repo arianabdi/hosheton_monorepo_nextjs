@@ -1,0 +1,28 @@
+# Stage deploy, run by .github/workflows/main.yml on tag "naslyar/<repo>/<version>-stage".
+# The image is built with apps/naslyar/.env.stage over .env.production (stage API/studio URLs).
+name: naslyar-stage
+
+services:
+  naslyar-nextjs-stage:
+    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${DOCKERHUB_REPOSITORY_VERSION}
+    expose:
+      - "80"
+
+    container_name: naslyar-nextjs-stage
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.naslyar_nextjs_stage.rule=Host(`stage-console.hosheton.com`)"
+      - "traefik.http.routers.naslyar_nextjs_stage.entrypoints=websecure"
+      - "traefik.http.routers.naslyar_nextjs_stage.tls=true"
+      - "traefik.http.services.naslyar_nextjs_stage.loadbalancer.server.port=80"
+      - "traefik.docker.network=traefik-public"
+
+    networks:
+      - traefik-public
+
+    restart: unless-stopped
+
+networks:
+  traefik-public:
+    external: true

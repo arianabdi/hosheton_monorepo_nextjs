@@ -1,0 +1,1135 @@
+$primary-color: var(--brand-color, #6366f1);
+$playhead-color: #ef4444;
+
+.editorLayout {
+    --ve-bg: var(--body-background);
+    --ve-panel: var(--input-background-color);
+    --ve-surface: var(--body-background);
+    --ve-border: var(--input-border-color);
+    --ve-text: var(--body-text-color);
+    --ve-muted: color-mix(in srgb, var(--body-text-color) 55%, transparent);
+    --ve-hover: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+    --ve-track: color-mix(in srgb, var(--body-text-color) 8%, var(--input-background-color));
+    --ve-toolbar-btn: color-mix(in srgb, var(--body-text-color) 10%, var(--input-background-color));
+    --ve-header-bar: color-mix(in srgb, var(--body-text-color) 4%, var(--input-background-color));
+    --ve-ruler-bg: color-mix(in srgb, var(--body-text-color) 5%, var(--input-background-color));
+    --ve-group-label: color-mix(in srgb, var(--body-text-color) 3%, var(--input-background-color));
+    --ve-chat-ai-bg: color-mix(in srgb, var(--body-text-color) 12%, var(--input-background-color));
+    --ve-input-bg: var(--body-background);
+    --ve-preview-bg: #050505;
+    --ve-timecode-bg: #000000;
+    --ve-timecode-text: #38bdf8;
+    --ve-marker: color-mix(in srgb, var(--body-text-color) 25%, transparent);
+    --ve-clip-border: rgba(255, 255, 255, 0.2);
+    --ve-control-muted: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    // Fill the shell's content slot exactly — 100vh ignores the site banner
+    // height and pushes the bottom toolbar out of the viewport.
+    height: 100%;
+    background-color: var(--ve-bg);
+    color: var(--ve-text);
+    overflow: hidden;
+    user-select: none;
+    direction: ltr;
+}
+
+.editorLayout[data-theme='light'] {
+    --ve-preview-bg: #0f172a;
+    --ve-timecode-bg: #0f172a;
+    --ve-clip-border: rgba(0, 0, 0, 0.12);
+}
+
+// ─── Toolbar (global bottom bar) ─────────────────────────────────────────────
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 8px;
+    background-color: var(--ve-panel);
+    border-top: 1px solid var(--ve-border);
+    flex-shrink: 0;
+    overflow-x: auto;
+
+    .toolbarMain {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .toolbarDivider {
+        width: 1px;
+        height: 20px;
+        background: var(--ve-border);
+        flex-shrink: 0;
+    }
+
+    // Opens the media panel — the main way to bring footage in.
+    .addMediaBtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 28px;
+        padding: 0 10px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        border: 1px solid color-mix(in srgb, var(--brand-color) 40%, var(--ve-border));
+        background: color-mix(in srgb, var(--brand-color) 12%, var(--ve-toolbar-btn));
+        color: var(--brand-color);
+        font-size: 12px;
+
+        svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        &:hover {
+            background: var(--brand-color);
+            color: #fff;
+        }
+    }
+
+    .group {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    button {
+        background: var(--ve-toolbar-btn);
+        border: 1px solid var(--ve-border);
+        color: var(--ve-text);
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+
+        &:hover:not(:disabled) {
+            background: $primary-color;
+            color: #fff;
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+
+    .themeToggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .iconBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        font-size: 14px;
+
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .chatToggleActive {
+        background: var(--brand-color);
+        border-color: var(--brand-color);
+        color: #fff;
+    }
+
+    .timeCode {
+        font-family: monospace;
+        background: var(--ve-timecode-bg);
+        padding: 2px 8px;
+        border-radius: 4px;
+        color: var(--ve-timecode-text);
+        font-size: 11px;
+    }
+
+    .splitBtn {
+        color: #f59e0b;
+    }
+
+    .deleteClipBtn {
+        background: var(--ve-toolbar-btn);
+        border: 1px solid var(--ve-border);
+        color: #f43f5e;
+
+        &:hover:not(:disabled) {
+            background: #be123c !important;
+            color: #fff;
+        }
+    }
+}
+
+// ─── Preview ─────────────────────────────────────────────────────────────────
+
+.settingsHint {
+    margin: 0;
+    padding: 8px 12px 0;
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: var(--ve-muted, color-mix(in srgb, var(--body-text-color) 55%, transparent));
+}
+
+.previewContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: var(--ve-bg);
+    background-size: 16px 16px;
+    padding: 8px;
+    min-width: 160px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .previewStage {
+        background: #000;
+        border-radius: 8px;
+        flex: none;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 6px 22px #00000080;
+    }
+
+    .previewCanvasControls {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        z-index: 150;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        padding: 3px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 7px;
+        color: #cbd5e1;
+        background: rgba(15, 23, 42, 0.88);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+        transform: translateX(-50%);
+        backdrop-filter: blur(8px);
+
+        button {
+            padding: 3px 6px;
+            border: 0;
+            border-radius: 5px;
+            color: #cbd5e1;
+            background: transparent;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        span {
+            padding-inline: 5px;
+            border-inline-start: 1px solid rgba(255, 255, 255, 0.16);
+            font: 10px/1 monospace;
+            white-space: nowrap;
+        }
+    }
+
+    .previewCanvasControlActive {
+        color: #fff !important;
+        background: #2563eb !important;
+    }
+
+    .previewLayer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        border-radius: 5px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .previewSelection {
+        position: absolute;
+        // Above text layers (composited at z 1000+ / track) so their move and
+        // resize handles stay draggable.
+        z-index: 1500;
+        box-sizing: border-box;
+        border: 2px solid #60a5fa;
+        box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8);
+        cursor: move;
+        touch-action: none;
+    }
+
+    .previewSelectionLabel {
+        position: absolute;
+        left: -2px;
+        top: -22px;
+        max-width: 180px;
+        padding: 2px 6px;
+        overflow: hidden;
+        color: #fff;
+        background: #2563eb;
+        border-radius: 4px 4px 0 0;
+        font-size: 10px;
+        line-height: 16px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    .previewResizeHandle {
+        position: absolute;
+        width: 11px;
+        height: 11px;
+        padding: 0;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: #2563eb;
+        touch-action: none;
+
+        &.nw {
+            left: -6px;
+            top: -6px;
+            cursor: nwse-resize;
+        }
+
+        &.ne {
+            right: -6px;
+            top: -6px;
+            cursor: nesw-resize;
+        }
+
+        &.sw {
+            left: -6px;
+            bottom: -6px;
+            cursor: nesw-resize;
+        }
+
+        &.se {
+            right: -6px;
+            bottom: -6px;
+            cursor: nwse-resize;
+        }
+    }
+
+    .previewRotateHandle {
+        position: absolute;
+        left: 50%;
+        top: -26px;
+        width: 16px;
+        height: 16px;
+        margin-left: -8px;
+        padding: 0;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: #22c55e;
+        cursor: grab;
+        touch-action: none;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 1px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.75);
+            transform: translateX(-50%);
+        }
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    .previewResetButton {
+        position: absolute;
+        right: 2px;
+        bottom: 2px;
+        padding: 2px 6px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 5px;
+        color: #fff;
+        background: rgba(15, 23, 42, 0.82);
+        font-size: 10px;
+        cursor: pointer;
+    }
+
+    .previewTextLayer {
+        position: absolute;
+        margin: 0;
+        z-index: 20;
+        overflow: hidden;
+
+        span {
+            display: inline-block;
+            max-width: 100%;
+        }
+    }
+
+    // Dashed guide marking where the active text/caption sits ("deck line").
+    .previewDeckLine {
+        position: absolute;
+        left: 0;
+        right: 0;
+        // Visible above composited text layers (z 1000+), never intercepts.
+        z-index: 1600;
+        pointer-events: none;
+        border-top: 1px dashed rgba(125, 211, 252, 0.7);
+
+        span {
+            position: absolute;
+            left: 4px;
+            top: 2px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: rgba(15, 23, 42, 0.78);
+            color: #7dd3fc;
+            font-size: 9px;
+            white-space: nowrap;
+        }
+    }
+
+    .previewControls {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        z-index: 150;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        padding: 4px 6px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        color: #cbd5e1;
+        background: rgba(15, 23, 42, 0.88);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+        transform: translateX(-50%);
+        backdrop-filter: blur(8px);
+
+        .previewControlBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            border: 0;
+            border-radius: 6px;
+            color: #cbd5e1;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
+
+            svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.12);
+                color: #fff;
+            }
+        }
+
+        .previewPlayBtn {
+            background: #2563eb;
+            color: #fff;
+
+            &:hover {
+                background: #1d4ed8;
+                color: #fff;
+            }
+        }
+
+        .previewControlActive {
+            background: rgba(125, 211, 252, 0.22);
+            color: #7dd3fc;
+        }
+
+        .previewTimecode {
+            padding-inline: 6px;
+            border-inline-start: 1px solid rgba(255, 255, 255, 0.16);
+            font: 10.5px/1 monospace;
+            color: #7dd3fc;
+            white-space: nowrap;
+        }
+    }
+
+    video {
+        max-height: 100%;
+        max-width: 100%;
+        border-radius: 5px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+}
+
+// ─── Timeline viewport ───────────────────────────────────────────────────────
+
+.timelinePanel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+.viewport {
+    display: flex;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    width: 100%;
+}
+
+.trackHeaders {
+    width: 168px;
+    min-width: 168px;
+    background-color: var(--ve-panel);
+    border-right: 1px solid var(--ve-border);
+    z-index: 10;
+    overflow-y: hidden;
+
+    .headerSpacer {
+        height: 24px;
+        border-bottom: 1px solid var(--ve-border);
+        background: var(--ve-header-bar);
+    }
+
+        .groupLabel {
+            height: 22px;
+            box-sizing: border-box;
+            background: var(--ve-group-label);
+            color: var(--ve-muted);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0 8px;
+            border-bottom: 1px solid var(--ve-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .groupLabelActions {
+                display: flex;
+                align-items: center;
+                gap: 2px;
+            }
+
+            .addTrackBtn {
+            cursor: pointer;
+            background: unset;
+            border: 0 solid transparent;
+            border-radius: 4px;
+            align-items: center;
+            padding: 1px 5px;
+            font-size: 0.72rem;
+            transition: all 0.2s;
+            display: flex;
+
+            &:hover {
+                background: $primary-color;
+                color: #fff;
+            }
+        }
+    }
+
+    .headerItem {
+        height: 40px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8px;
+        margin: 3px 6px;
+        border: 1px solid var(--ve-border);
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+
+        &.headerSelected {
+            background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+            box-shadow: inset 2px 0 0 var(--brand-color);
+        }
+
+        &.transitionHeader {
+            border-color: rgba(236, 72, 153, 0.4);
+            background: color-mix(in srgb, #ec4899 6%, var(--ve-track));
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+
+            button {
+                background: transparent;
+                border: none;
+                color: var(--ve-control-muted);
+                cursor: pointer;
+                padding: 2px;
+                border-radius: 4px;
+                font-size: 12px;
+                transition: background 0.15s, color 0.15s;
+
+                &:hover {
+                    background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+                    color: var(--ve-text);
+                }
+
+                &.active {
+                    color: #ef4444;
+                    background: rgba(239, 68, 68, 0.2);
+                }
+
+                &.deleteBtn:hover {
+                    color: #f87171;
+                    background: rgba(239, 68, 68, 0.15);
+                }
+            }
+        }
+    }
+}
+
+.scrollArea {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+
+    .tracksContent {
+        position: relative;
+        min-height: 100%;
+    }
+}
+
+.ruler {
+    height: 24px;
+    min-height: 24px;
+    background-color: var(--ve-ruler-bg);
+    border-bottom: 1px solid var(--ve-border);
+    position: sticky;
+    top: 0;
+    cursor: pointer;
+    z-index: 40;
+
+    .marker {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        border-left: 1px solid var(--ve-marker);
+        font-size: 9px;
+        color: var(--ve-muted);
+        padding-left: 3px;
+        pointer-events: none;
+    }
+}
+
+.groupLabelSpacer {
+    height: 22px;
+    background: var(--ve-group-label);
+    border-bottom: 1px solid var(--ve-border);
+}
+
+.trackRow {
+    height: 40px;
+    box-sizing: border-box;
+    background-color: var(--ve-track);
+    border: 1px solid var(--ve-border);
+    border-radius: 4px;
+    margin: 3px 6px;
+    position: relative;
+
+    &.hiddenTrack {
+        opacity: 0.3;
+    }
+
+    &.dropTarget {
+        outline: 2px dashed color-mix(in srgb, var(--brand-color) 55%, transparent);
+        outline-offset: -2px;
+        background: color-mix(in srgb, var(--brand-color) 6%, var(--ve-track));
+    }
+
+    &.transitionTrackRow {
+        border-color: rgba(236, 72, 153, 0.4);
+        background: color-mix(in srgb, #ec4899 8%, var(--ve-track));
+    }
+}
+
+// "Add media" tile right after the last clip of the main video layer.
+.addMediaTile {
+    position: absolute;
+    top: 3px;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px dashed color-mix(in srgb, var(--brand-color) 55%, transparent);
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    color: var(--brand-color);
+    cursor: pointer;
+    z-index: 2;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color) 20%, transparent);
+    }
+}
+
+.clip {
+    position: absolute;
+    top: 3px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid var(--ve-clip-border);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: grab;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    &.selected {
+        border: 2px solid #f59e0b !important;
+        box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+    }
+
+    &.videoClip {
+        background-image: repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.08) 0px,
+            rgba(255, 255, 255, 0.08) 40px,
+            transparent 40px,
+            transparent 80px
+        );
+    }
+
+    .clipTitle {
+        position: absolute;
+        left: 6px;
+        top: 1px;
+        font-size: 10px;
+        font-weight: 600;
+        color: #fff;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+        z-index: 5;
+        pointer-events: none;
+        max-width: calc(100% - 12px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &.transitionClip {
+        z-index: 10;
+        background-color: #ec4899 !important;
+        background-image: repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.14) 0px,
+            rgba(255, 255, 255, 0.14) 40px,
+            transparent 40px,
+            transparent 80px
+        );
+        border: 1px solid #f472b6;
+
+        &.selected {
+            border-color: #fbcfe8 !important;
+            box-shadow: 0 0 8px rgba(236, 72, 153, 0.55);
+        }
+
+        &.reversed {
+            background-image: repeating-linear-gradient(
+                270deg,
+                rgba(255, 255, 255, 0.14) 0px,
+                rgba(255, 255, 255, 0.14) 40px,
+                transparent 40px,
+                transparent 80px
+            );
+        }
+    }
+
+    // Keyframe diamond lane along the bottom edge of the clip.
+    .kfLane {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 11px;
+        z-index: 9;
+        pointer-events: none;
+    }
+
+    .kfDiamond {
+        position: absolute;
+        bottom: 1.5px;
+        width: 7px;
+        height: 7px;
+        margin-left: -4.5px;
+        padding: 0;
+        pointer-events: auto;
+        cursor: pointer;
+        touch-action: none;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.55);
+        border-radius: 1px;
+        transform: rotate(45deg);
+        box-sizing: border-box;
+        transition: background 0.1s, box-shadow 0.1s;
+
+        &:hover {
+            background: #fbbf24;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+        }
+
+        &.kfDiamondActive {
+            background: #f59e0b;
+            border-color: #fff;
+            box-shadow: 0 0 5px rgba(245, 158, 11, 0.9);
+        }
+    }
+
+    .handle {
+        position: absolute;
+        top: 0;
+        width: 7px;
+        height: 100%;
+        cursor: col-resize;
+        background: rgba(255, 255, 255, 0.35);
+        z-index: 12;
+        pointer-events: auto;
+
+        &:hover {
+            background: #fff;
+        }
+
+        &.left {
+            left: 0;
+        }
+
+        &.right {
+            right: 0;
+        }
+    }
+}
+
+.playhead {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: $playhead-color;
+    z-index: 50;
+    cursor: ew-resize;
+    pointer-events: auto;
+
+    .head {
+        position: absolute;
+        top: 0;
+        left: -5px;
+        width: 12px;
+        height: 12px;
+        background-color: $playhead-color;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        cursor: ew-resize;
+        pointer-events: auto;
+    }
+}
+
+.snapGuide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #f59e0b;
+    z-index: 45;
+    pointer-events: none;
+}
+
+// ─── Timeline footer (editing tools live here, not in the global toolbar) ────
+
+.timelineFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 4px 8px;
+    background-color: var(--ve-panel);
+    border-top: 1px solid var(--ve-border);
+    flex-shrink: 0;
+
+    .footerGroup {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .footerDivider {
+        width: 1px;
+        height: 18px;
+        background: var(--ve-border);
+        margin: 0 2px;
+    }
+
+    .iconBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        font-size: 14px;
+        background: var(--ve-toolbar-btn);
+        border: 1px solid var(--ve-border);
+        color: var(--ve-text);
+        border-radius: 4px;
+        cursor: pointer;
+
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        &:hover:not(:disabled) {
+            background: $primary-color;
+            color: #fff;
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+
+    .splitBtn {
+        color: #f59e0b;
+    }
+
+    .deleteClipBtn {
+        color: #f43f5e;
+
+        &:hover:not(:disabled) {
+            background: #be123c !important;
+            color: #fff;
+        }
+    }
+
+    .captionBtn {
+        color: #22d3ee;
+
+        &:hover:not(:disabled) {
+            background: #0e7490 !important;
+            color: #fff;
+        }
+    }
+
+    .timeCode {
+        font-family: monospace;
+        background: var(--ve-timecode-bg);
+        padding: 2px 8px;
+        border-radius: 4px;
+        color: var(--ve-timecode-text);
+        font-size: 11px;
+        margin-inline-start: 4px;
+    }
+
+    .durationInput {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 0 8px;
+        height: 28px;
+        border: 1px solid var(--ve-border);
+        border-radius: 6px;
+        background: var(--ve-toolbar-btn);
+
+        span {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--ve-muted);
+            white-space: nowrap;
+        }
+
+        input {
+            width: 58px;
+            height: 22px;
+            border: none;
+            border-radius: 4px;
+            background: var(--ve-input-bg);
+            color: var(--ve-text);
+            font: 11px/1 monospace;
+            text-align: center;
+            outline: none;
+
+            &:focus {
+                box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-color) 35%, transparent);
+            }
+
+            // Hide number spinners — typing is enough.
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                appearance: none;
+                margin: 0;
+            }
+        }
+    }
+
+    .zoomSlider {
+        width: 110px;
+        accent-color: $primary-color;
+    }
+}
+
+// Type icon shown instead of the group name in the narrow mobile header column.
+.groupLabelIcon {
+    display: none;
+}
+
+// ─── Mobile layout (≤768px, see MobileEditor) ────────────────────────────────
+
+.mobileEditor {
+    .previewContainer {
+        min-width: 0;
+        padding: 6px;
+    }
+
+    .previewSelectionLabel,
+    .previewResetButton {
+        font-size: 10px;
+    }
+
+    // Track headers shrink to a narrow column: type icon + layer name.
+    .trackHeaders {
+        width: 64px;
+        min-width: 64px;
+        border-right: 0;
+        border-inline-end: 1px solid var(--ve-border);
+
+        // Lane header: type icon + one "+" (new layer / new text).
+        .groupLabel {
+            height: 30px;
+            padding: 0 3px 0 6px;
+
+            .groupLabelIcon {
+                display: inline-flex;
+
+                svg {
+                    width: 13px;
+                    height: 13px;
+                }
+            }
+
+            .groupLabelText,
+            .desktopOnly {
+                display: none;
+            }
+
+            .addTrackBtn {
+                justify-content: center;
+                width: 26px;
+                height: 24px;
+                padding: 0;
+                border-radius: 6px;
+                background: color-mix(in srgb, var(--brand-color) 16%, transparent);
+                color: var(--brand-color);
+
+                svg {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+        }
+
+        .headerItem {
+            justify-content: center;
+            margin: 3px 4px;
+            padding: 0 4px;
+            font-size: 10px;
+
+            > span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .controls {
+                display: none;
+            }
+        }
+    }
+
+    // Native touch scrolling pans the tracks (also over clips); a selected
+    // clip, the ruler and the playhead take the gesture (move / trim / scrub).
+    .scrollArea {
+        touch-action: pan-x pan-y;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .clip.selected,
+    .ruler,
+    .playhead {
+        touch-action: none;
+    }
+
+    .groupLabelSpacer {
+        height: 30px;
+    }
+
+    .clip .handle {
+        width: 14px;
+    }
+
+    .playhead .head {
+        left: -7px;
+        width: 16px;
+        height: 16px;
+    }
+
+    // Finger-sized grab area around the head (the triangle's clip-path would
+    // clip a pseudo element on .head itself).
+    .playhead::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -17px;
+        width: 36px;
+        height: 34px;
+    }
+
+    // Editing tools move to the bottom tool bar / transport row.
+    .timelineFooter {
+        display: none;
+    }
+}

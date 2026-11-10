@@ -1,0 +1,180 @@
+// لیست کات‌های ads-2video — ردیف یک‌خطی فشرده: پخش + عنوان در شروع، اطلاعات کات در انتها.
+// روی متغیرهای --ads2-* صفحه سوار است.
+
+$brand: var(--brand-color, #8b5cf6);
+
+.list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ads2-scrollbar, #d3d4d9) transparent;
+}
+
+.row {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 4px;
+    min-height: 38px;
+    padding-inline-start: 6px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: var(--ads2-text, #16181d);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--ads2-text, #16181d) 4%, transparent);
+    }
+
+    &:has(.rowMain:focus-visible) {
+        outline: 2px solid color-mix(in srgb, #{$brand} 55%, transparent);
+        outline-offset: -1px;
+    }
+}
+
+.active {
+    border-color: color-mix(in srgb, #{$brand} 70%, transparent);
+    background: color-mix(in srgb, #{$brand} 6%, var(--ads2-panel, #fff));
+
+    &:hover {
+        background: color-mix(in srgb, #{$brand} 8%, var(--ads2-panel, #fff));
+    }
+
+    .title {
+        color: $brand;
+    }
+}
+
+// پیشرفت پخش کات — پس‌زمینه‌ی ردیف از لبه‌ی شروع پر می‌شود (--cut-progress ۰…۱ از rAF)
+.fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: calc(var(--cut-progress, 0) * 100%);
+    background: color-mix(in srgb, #{$brand} 14%, transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
+// عنوان و اطلاعات در یک خط — اطلاعات با margin خودکار به انتهای ردیف می‌رود
+.rowMain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 auto;
+    min-width: 0;
+    align-self: stretch;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding-block: 0;
+    padding-inline: 4px 12px;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    outline: none;
+}
+
+.title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ads2-faint, #8a8f98);
+    font-variant-numeric: tabular-nums;
+
+    i {
+        font-style: normal;
+        opacity: 0.7;
+    }
+}
+
+// شماره‌ی کات — ستون هم‌عرض در لبه‌ی ردیف
+.index {
+    min-width: 14px;
+    text-align: center;
+}
+
+// دکمه‌ی پخش مینیمال — همان دکمه‌ی پیش‌نمایش صدای چت
+.play {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--ads2-text, #16181d) 18%, transparent);
+    background: transparent;
+    color: var(--ads2-text, #16181d);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+
+    svg {
+        width: 10px;
+        height: 10px;
+        fill: currentColor;
+    }
+
+    &:hover:not(:disabled) {
+        border-color: $brand;
+        color: $brand;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.9);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, #{$brand} 55%, transparent);
+        outline-offset: 2px;
+    }
+}
+
+.playActive {
+    border-color: $brand;
+    background: $brand;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+        color: #fff;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .row,
+    .title,
+    .play {
+        transition: none;
+    }
+}

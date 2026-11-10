@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - var(--header-height));
+    position: relative;
+    color: var(--card-text-color);
+    top: 0px;
+}

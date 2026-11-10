@@ -1,0 +1,221 @@
+// کارت برند کیت بالای چت — قاب چرخان با رنگ‌های خود برند + سواچ‌های شناور.
+// زاویه‌ی گرادیان با @property انیمیت می‌شود تا قاب بدون چرخاندن محتوا بچرخد.
+
+@property --bk-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+$brand: var(--brand-color, #8b5cf6);
+$text: var(--body-text-color, #16181d);
+$surface: var(--body-background, #fff);
+
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid transparent;
+    border-radius: 14px;
+    // پس‌زمینه‌ی ساده در padding-box، قاب رنگی چرخان در border-box
+    background:
+        linear-gradient(#{$surface}, #{$surface}) padding-box,
+        conic-gradient(
+            from var(--bk-angle),
+            var(--bk-1), var(--bk-2), var(--bk-3), var(--bk-4), var(--bk-1)
+        ) border-box;
+    color: $text;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    animation: bkSpin 7s linear infinite;
+    transition: transform 0.18s ease;
+
+    // ته‌رنگ بسیار ملایم برند داخل کارت
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--bk-1) 9%, transparent), transparent 60%);
+        pointer-events: none;
+
+        html[dir='rtl'] & {
+            background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--bk-1) 9%, transparent), transparent 60%);
+        }
+    }
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+
+        .swatches i {
+            margin-inline-start: 2px;
+        }
+
+        .chevron {
+            transform: translateX(-2px);
+
+            html[dir='ltr'] & {
+                transform: scaleX(-1) translateX(-2px);
+            }
+        }
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, #{$brand} 55%, transparent);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        animation: none;
+    }
+}
+
+// قبل از تنظیم: قاب کم‌رنگ‌تر و آرام‌تر — بعد از تنظیم، رنگ کامل
+.card:not(.cardOn) {
+    animation-duration: 11s;
+}
+
+.swatches {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding-inline-start: 6px;
+
+    i {
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin-inline-start: -6px;
+        border-radius: 999px;
+        border: 2px solid $surface;
+        animation: bkFloat 3.2s ease-in-out infinite;
+        transition: margin 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+}
+
+.logo {
+    width: 24px;
+    height: 24px;
+    margin-inline-start: -6px;
+    margin-inline-end: 2px;
+    border-radius: 7px;
+    border: 2px solid $surface;
+    object-fit: cover;
+    background: #fff;
+}
+
+.text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1 1 auto;
+    min-width: 0;
+
+    strong {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 12.5px;
+        font-weight: 800;
+    }
+
+    small {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 11px;
+        font-weight: 500;
+        color: color-mix(in srgb, #{$text} 58%, transparent);
+    }
+}
+
+.spark {
+    color: var(--bk-3);
+    animation: bkTwinkle 2.6s ease-in-out infinite;
+}
+
+.badge {
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--icon-green, #278e67) 14%, transparent);
+    color: var(--icon-green, #278e67);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.fontSample {
+    position: relative;
+    flex-shrink: 0;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    color: color-mix(in srgb, #{$text} 75%, transparent);
+}
+
+.chevron {
+    position: relative;
+    flex-shrink: 0;
+    opacity: 0.45;
+    transition: transform 0.2s ease;
+
+    // آیکون رو به «جلو» است: در RTL به چپ، در LTR به راست
+    html[dir='ltr'] & {
+        transform: scaleX(-1);
+    }
+}
+
+@keyframes bkSpin {
+    to {
+        --bk-angle: 360deg;
+    }
+}
+
+@keyframes bkFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes bkTwinkle {
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: scale(0.85) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1) rotate(14deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .swatches i,
+    .spark {
+        animation: none;
+    }
+
+    .card,
+    .swatches i,
+    .chevron {
+        transition: none;
+    }
+}

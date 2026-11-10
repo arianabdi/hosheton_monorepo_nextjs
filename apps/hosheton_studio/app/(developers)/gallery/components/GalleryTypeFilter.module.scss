@@ -1,0 +1,101 @@
+// تب‌های نوع فایل گالری — هم‌الگوی تب‌های پروفایل سازنده (CreatorProfile.module.scss، نسخه‌ی زیرخط‌دار):
+// ردیف تمام‌عرض، اسکرول افقی در عرض کم با هاله‌ی تیره روی لبه‌ای که هنوز محتوا دارد
+.tabScroller {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+
+    &.fadeStart::before,
+    &.fadeEnd::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2.75rem;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    &.fadeStart::before {
+        inset-inline-start: 0;
+        background: linear-gradient(
+            to inline-end,
+            color-mix(in srgb, #000 30%, var(--body-background)),
+            transparent
+        );
+    }
+
+    &.fadeEnd::after {
+        inset-inline-end: 0;
+        background: linear-gradient(
+            to inline-start,
+            color-mix(in srgb, #000 30%, var(--body-background)),
+            transparent
+        );
+    }
+}
+
+.tabRow {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.tabBtn {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 6px;
+    padding: 12px 14px;
+    margin-bottom: -1px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0.72;
+    cursor: pointer;
+    transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+
+    &:hover:not(:disabled) {
+        opacity: 1;
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: default;
+    }
+
+    &.active {
+        opacity: 1;
+        color: var(--brand-color);
+        border-bottom-color: var(--brand-color);
+    }
+}
+
+.count {
+    min-width: 18px;
+    padding: 1px 5px;
+    border-radius: 6px;
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    box-sizing: border-box;
+}

@@ -1,0 +1,23 @@
+{
+    "name": "@my-workspace/components",
+    "version": "1.0.0",
+    "main": "src/index.tsx",
+    "scripts": {
+        "build": "rm -rf dist && mkdir dist && cp -r src/* dist/",
+        "dev": "npm run build --watch"
+    },
+    "dependencies": {
+        "@material-ui/styles": "^4.11.5",
+        "@my-workspace/utils": "*",
+        "@radix-ui/react-visually-hidden": "^1.2.11",
+        "next": "15.2.0",
+        "react-spring-bottom-sheet": "^3.4.1",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "reactstrap": "^9.2.3",
+        "sass": "^1.85.1",
+        "vaul": "^1.1.2"
+    },
+    "keywords": [],
+    "author": ""
+}

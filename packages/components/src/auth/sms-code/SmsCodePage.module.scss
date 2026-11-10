@@ -1,0 +1,133 @@
+.button {
+    background: #4a68ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: background 0.25s;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.button:hover {
+    background: #3749d1;
+}
+
+.button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Grouped OTP input: one rounded container, segments joined with inner separators */
+.inputs {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    direction: ltr;
+    margin: 2rem 0 1.75rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--input-background-color);
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputs:focus-within {
+    border-color: #4a68ff;
+    box-shadow: 0 0 0 4px rgba(74, 104, 255, 0.15);
+}
+
+.input {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 60px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: inherit;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--body-text-color);
+    outline: none;
+    caret-color: #4a68ff;
+    box-sizing: border-box;
+    transition: background 0.2s ease;
+}
+
+.input + .input {
+    border-inline-start: 1.5px solid var(--border-color);
+}
+
+.input:focus {
+    background: rgba(74, 104, 255, 0.08);
+}
+
+.inputFilled {
+    background: rgba(74, 104, 255, 0.07);
+}
+
+.tip {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.resend {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #4a68ff;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.resend:disabled {
+    color: var(--body-text-color);
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.countdown {
+    color: var(--body-text-color);
+    opacity: 0.6;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+    margin-inline-start: 4px;
+}
+
+.emailLogin {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.policy {
+    display: flex;
+    gap: 5px;
+}
+
+@media (max-width: 480px) {
+    .inputs {
+        margin: 1.5rem 0 1.25rem;
+        border-radius: 12px;
+    }
+
+    .input {
+        height: 52px;
+        font-size: 1.2rem;
+    }
+
+    .tip {
+        font-size: 0.8rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 360px) {
+    .input {
+        height: 46px;
+        font-size: 1.05rem;
+    }
+}

@@ -1,0 +1,480 @@
+/* HelpGuideViewer — index sidebar · content · topic outline.
+   Responsive: 3 columns ≥1100px, outline collapses to dropdown ≥900px,
+   pickers + collapsible topics below that. Uses logical CSS properties so
+   RTL layouts mirror automatically. */
+
+.viewer {
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr) 216px;
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    background: var(--help-bg, #fff);
+    color: var(--help-text, #16203a);
+    font-size: 13.5px;
+    line-height: 1.65;
+    overflow: hidden;
+
+    &.embedded {
+        min-height: 60vh;
+        max-height: 78vh;
+        border-radius: 10px;
+    }
+}
+
+/* ── Left sidebar: sections + their guides ─────────────────────────────── */
+
+.indexSidebar {
+    border-inline-end: 1px solid var(--help-border, rgba(15, 23, 42, .1));
+    background: var(--help-sidebar-bg, rgba(15, 23, 42, .025));
+    overflow-y: auto;
+    padding: 14px 10px;
+
+    h4 {
+        margin: 0 0 10px;
+        padding-inline: 8px;
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .07em;
+        color: var(--help-muted, #64748b);
+    }
+}
+
+.indexSection {
+    margin-bottom: 4px;
+    border-radius: 10px;
+
+    &.current {
+        background: var(--help-card, rgba(124, 156, 245, .1));
+    }
+}
+
+.indexSectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    padding: 8px 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: inherit;
+    cursor: pointer;
+    text-align: start;
+
+    &:hover {
+        background: var(--help-hover, rgba(15, 23, 42, .05));
+    }
+}
+
+.indexGuides {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px 6px 8px 22px;
+}
+
+.indexGuide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    padding: 6px 9px;
+    cursor: pointer;
+    text-align: start;
+    color: var(--help-muted, #64748b);
+
+    .guideTitle {
+        font-size: 12.5px;
+        font-weight: 600;
+    }
+
+    em {
+        font-style: normal;
+        font-size: 10px;
+        opacity: .75;
+    }
+
+    &:hover {
+        background: var(--help-hover, rgba(15, 23, 42, .05));
+        color: inherit;
+    }
+
+    &.currentGuide {
+        background: var(--help-card, rgba(124, 156, 245, .16));
+        color: var(--help-accent, #2a5298);
+    }
+}
+
+/* ── Middle column ─────────────────────────────────────────────────────── */
+
+.contentColumn {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+}
+
+.guideHead {
+    padding: 18px 26px 6px;
+    border-bottom: 1px solid var(--help-border, rgba(15, 23, 42, .08));
+
+    h2 {
+        margin: 6px 0 4px;
+        font-size: 19px;
+        line-height: 1.35;
+    }
+
+    p {
+        margin: 0;
+        font-size: 12.5px;
+        color: var(--help-muted, #64748b);
+    }
+}
+
+.audienceBadge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    background: rgba(39, 174, 96, .14);
+    color: #1e8a52;
+
+    &[data-audience='developer'] {
+        background: rgba(124, 156, 245, .18);
+        color: #2a5298;
+    }
+}
+
+.content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 10px 26px 40px;
+    scroll-behavior: smooth;
+}
+
+.topic {
+    padding: 16px 0 6px;
+    scroll-margin-top: 12px;
+
+    & + .topic {
+        border-top: 1px solid var(--help-border, rgba(15, 23, 42, .07));
+    }
+
+    h3 {
+        margin: 0 0 8px;
+        font-size: 15.5px;
+    }
+
+    p {
+        margin: 0 0 10px;
+    }
+
+    ul,
+    ol {
+        margin: 0 0 12px;
+        padding-inline-start: 22px;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+}
+
+/* Blocks */
+
+.kbdList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 4px 0 14px;
+}
+
+.kbdRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.kbdKeys {
+    display: flex;
+    gap: 4px;
+    flex: none;
+    min-width: 110px;
+
+    kbd {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        height: 22px;
+        padding: 0 7px;
+        background: var(--help-card, rgba(15, 23, 42, .07));
+        border: 1px solid var(--help-border, rgba(15, 23, 42, .18));
+        border-bottom-width: 2px;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 600;
+    }
+}
+
+.kbdDesc {
+    flex: 1;
+    min-width: 0;
+}
+
+.codeBlock {
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 11.5px;
+    line-height: 1.6;
+    text-align: left;
+
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+}
+
+.tableWrap {
+    margin: 0 0 14px;
+    overflow-x: auto;
+    border: 1px solid var(--help-border, rgba(15, 23, 42, .12));
+    border-radius: 10px;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 7px 12px;
+        text-align: start;
+        border-bottom: 1px solid var(--help-border, rgba(15, 23, 42, .08));
+        vertical-align: top;
+    }
+
+    th {
+        background: var(--help-sidebar-bg, rgba(15, 23, 42, .035));
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: var(--help-muted, #64748b);
+    }
+
+    tr:last-child td {
+        border-bottom: 0;
+    }
+}
+
+.note {
+    margin: 0 0 14px;
+    padding: 10px 14px;
+    border-inline-start: 3px solid #2a5298;
+    background: rgba(124, 156, 245, .1);
+    border-radius: 8px;
+    font-size: 12.5px;
+
+    &.warn {
+        border-inline-start-color: #d97706;
+        background: rgba(245, 158, 11, .12);
+    }
+}
+
+/* ── Right sidebar: topic outline ──────────────────────────────────────── */
+
+.outlineSidebar {
+    border-inline-start: 1px solid var(--help-border, rgba(15, 23, 42, .1));
+    background: var(--help-sidebar-bg, rgba(15, 23, 42, .025));
+    overflow-y: auto;
+    padding: 14px 10px;
+
+    h4 {
+        margin: 0 0 10px;
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--help-text, #16203a);
+    }
+
+    ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    button {
+        display: flex;
+        align-items: baseline;
+        gap: 7px;
+        width: 100%;
+        background: transparent;
+        border: 0;
+        border-radius: 7px;
+        padding: 5px 8px;
+        font-size: 11.5px;
+        line-height: 1.45;
+        color: var(--help-muted, #64748b);
+        cursor: pointer;
+        text-align: start;
+
+        em {
+            font-style: normal;
+            font-size: 9.5px;
+            opacity: .6;
+            flex: none;
+        }
+
+        &:hover {
+            background: var(--help-hover, rgba(15, 23, 42, .05));
+            color: inherit;
+        }
+
+        &.activeTopic {
+            background: var(--help-card, rgba(124, 156, 245, .16));
+            color: var(--help-accent, #2a5298);
+            font-weight: 600;
+        }
+    }
+}
+
+.sectionRoute {
+    display: block;
+    margin: 12px 8px 0;
+    font-size: 11.5px;
+    color: var(--help-accent, #2a5298);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ── Mobile bar + collapsible topics ───────────────────────────────────── */
+
+.mobileBar {
+    display: none;
+    grid-column: 1 / -1;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--help-border, rgba(15, 23, 42, .1));
+    background: var(--help-sidebar-bg, rgba(15, 23, 42, .03));
+
+    select {
+        flex: 1;
+        min-width: 0;
+        padding: 7px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--help-border, rgba(15, 23, 42, .16));
+        background: var(--help-bg, #fff);
+        color: inherit;
+        font-size: 12px;
+        font-family: inherit;
+    }
+}
+
+.topicsToggle {
+    flex: none;
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--help-border, rgba(15, 23, 42, .16));
+    background: var(--help-card, rgba(124, 156, 245, .12));
+    color: var(--help-accent, #2a5298);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mobileTopics {
+    display: none;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--help-border, rgba(15, 23, 42, .1));
+
+    ol {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+    }
+
+    button {
+        background: var(--help-card, rgba(15, 23, 42, .06));
+        border: 1px solid var(--help-border, rgba(15, 23, 42, .12));
+        border-radius: 20px;
+        padding: 5px 12px;
+        font-size: 11.5px;
+        color: inherit;
+        cursor: pointer;
+
+        &.activeTopic {
+            background: rgba(124, 156, 245, .18);
+            color: var(--help-accent, #2a5298);
+            font-weight: 600;
+        }
+    }
+}
+
+/* ── Breakpoints ───────────────────────────────────────────────────────── */
+
+@media (max-width: 1099px) {
+    .viewer {
+        grid-template-columns: 232px minmax(0, 1fr);
+    }
+
+    .outlineSidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 899px) {
+    .viewer {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .indexSidebar {
+        display: none;
+    }
+
+    .mobileBar {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .mobileTopics {
+        display: block;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    .guideHead,
+    .content {
+        padding-inline: 16px;
+    }
+}

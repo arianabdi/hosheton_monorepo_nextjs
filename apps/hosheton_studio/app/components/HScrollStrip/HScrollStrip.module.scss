@@ -1,0 +1,112 @@
+/* HScrollStrip is the ONLY sanctioned way to lay out horizontal media strips
+   (chat attachments, template gallery tabs, ...). Do not re-introduce
+   flex-wrap strips elsewhere; tests/ui-hscroll-strip-guard.test.ts enforces
+   the nowrap contract, so keep these rules intact. */
+.wrap {
+    position: relative;
+    margin-bottom: var(--hscroll-margin, 10px);
+    min-width: 0;
+}
+
+.scroller {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: var(--hscroll-gap, 8px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    padding: 2px;
+    margin: -2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Regression guard: whatever a child's own styles say, it must stay on the
+       single row at its natural size — never shrink, wrap, or grow. */
+    > * {
+        flex: 0 0 auto;
+        max-width: none;
+    }
+
+    img,
+    video {
+        -webkit-user-drag: none;
+    }
+}
+
+.dragging {
+    cursor: grabbing;
+}
+
+/* Edge fades: only rendered when more content exists in that direction. */
+.fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.fadeStart {
+    inset-inline-start: -2px;
+    --fade-dir: to right;
+    background: linear-gradient(var(--fade-dir), var(--hscroll-fade-color, var(--plan-card-background-color)) 12%, transparent 100%);
+}
+
+.fadeEnd {
+    inset-inline-end: -2px;
+    --fade-dir: to left;
+    background: linear-gradient(var(--fade-dir), var(--hscroll-fade-color, var(--plan-card-background-color)) 12%, transparent 100%);
+}
+
+:global([dir='rtl']) {
+    .fadeStart {
+        --fade-dir: to left;
+    }
+
+    .fadeEnd {
+        --fade-dir: to right;
+    }
+}
+
+.chev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--hscroll-fade-color, var(--plan-card-background-color));
+    border: 1px solid color-mix(in srgb, var(--body-text-color) 18%, transparent);
+    box-shadow: 0 2px 6px color-mix(in srgb, #000 18%, transparent);
+    color: color-mix(in srgb, var(--body-text-color) 62%, transparent);
+}
+
+.chevStart {
+    inset-inline-start: 2px;
+}
+
+.chevEnd {
+    inset-inline-end: 2px;
+}
+
+/* Flip the chevrons so they always point toward their own edge in RTL. */
+:global([dir='rtl']) {
+    .chevStart svg,
+    .chevEnd svg {
+        transform: scaleX(-1);
+    }
+}

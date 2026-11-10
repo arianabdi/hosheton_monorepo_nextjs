@@ -1,0 +1,650 @@
+// Mobile video editor (≤768px): preview → transport → timeline → tool bar,
+// plus full-screen pages for the desktop dock tabs. Colors come from the
+// --ve-* tokens set on .editorLayout (Timeline.module.scss).
+
+@mixin no-scrollbar {
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+// ─── Top bar ────────────────────────────────────────────────────────────────
+
+.topBar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 12px;
+    flex-shrink: 0;
+    background: var(--ve-bg);
+}
+
+.topStart,
+.topEnd {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.topEnd {
+    justify-content: flex-end;
+}
+
+.topIconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ve-text);
+    cursor: pointer;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    &:active {
+        background: var(--ve-hover);
+    }
+}
+
+.ratioPicker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 8px;
+    color: var(--ve-text);
+    font-size: 14px;
+    direction: ltr;
+
+    svg {
+        width: 17px;
+        height: 17px;
+        flex-shrink: 0;
+    }
+
+    .ratioChevron {
+        width: 14px;
+        height: 14px;
+        color: var(--ve-muted);
+    }
+
+    // Native picker on top: the OS sheet is the most usable menu on phones.
+    select {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+        font-size: 16px;
+    }
+}
+
+// ─── Preview + transport ────────────────────────────────────────────────────
+
+.preview {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 140px;
+    display: flex;
+}
+
+// Opens the full-screen player; sits on the preview's bottom corner.
+.expandBtn {
+    position: absolute;
+    bottom: 8px;
+    inset-inline-end: 10px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--ve-border);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--ve-bg) 80%, transparent);
+    color: var(--ve-text);
+    cursor: pointer;
+
+    svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    &:active {
+        background: var(--ve-hover);
+    }
+}
+
+.transport {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    height: 46px;
+    padding: 0 12px;
+    flex-shrink: 0;
+    direction: ltr;
+    background: var(--ve-bg);
+}
+
+.timecode {
+    font: 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--ve-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.transportCenter,
+.transportEnd {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.transportEnd {
+    justify-content: flex-end;
+}
+
+.transportBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ve-text);
+    cursor: pointer;
+
+    svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    &:disabled {
+        opacity: 0.35;
+    }
+
+    &.active {
+        color: var(--brand-color);
+    }
+}
+
+.playBtn {
+    width: 42px;
+    height: 42px;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+// ─── Timeline slot ──────────────────────────────────────────────────────────
+
+// Default height until the user drags the split handle (then an inline
+// flex-basis takes over and is remembered on this device).
+.timeline {
+    flex: 0 1 clamp(200px, 40dvh, 360px);
+    display: flex;
+    min-height: 120px;
+    background: var(--ve-bg);
+}
+
+// Drag handle between preview and timeline: up = bigger timeline,
+// down = bigger preview. The whole strip is the touch target.
+.splitHandle {
+    position: relative;
+    flex-shrink: 0;
+    height: 16px;
+    border-top: 1px solid var(--ve-border);
+    background: var(--ve-bg);
+    cursor: row-resize;
+    touch-action: none;
+    outline: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 4px;
+        margin: -2px 0 0 -20px;
+        border-radius: 2px;
+        background: var(--ve-muted);
+        opacity: 0.55;
+    }
+
+    &:active::after,
+    &:focus-visible::after,
+    &.dragging::after {
+        background: var(--brand-color);
+        opacity: 1;
+    }
+}
+
+// ─── Bottom tool bar ────────────────────────────────────────────────────────
+
+.toolBar {
+    @include no-scrollbar;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    flex-shrink: 0;
+    overflow-x: auto;
+    padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--ve-border);
+    background: var(--ve-bg);
+}
+
+// Dark halo on the edge that still has tools to scroll to (MobileToolBar
+// measures the first/last tool, so it works in RTL and LTR).
+.toolBarWrap {
+    display: flex;
+    flex-shrink: 0;
+    border-top: 1px solid var(--ve-border);
+    background: var(--ve-bg);
+
+    .toolBar {
+        border-top: 0;
+    }
+}
+
+.toolBarScroll {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+// Pinned ✓ that ends the selection; a divider separates it from the tools.
+.toolBarLeading {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px));
+    border-inline-end: 1px solid var(--ve-border);
+}
+
+.doneBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--brand-color);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    color: var(--brand-color);
+    cursor: pointer;
+
+    svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    &:active {
+        background: color-mix(in srgb, var(--brand-color) 26%, transparent);
+    }
+}
+
+.fadeLeft,
+.fadeRight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 36px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+// Physical sides: dark on the outer edge, clear towards the middle.
+.fadeLeft {
+    left: 0;
+    background: linear-gradient(to left, transparent, var(--ve-bg));
+}
+
+.fadeRight {
+    right: 0;
+    background: linear-gradient(to right, transparent, var(--ve-bg));
+}
+
+.toolBarDivider {
+    width: 1px;
+    margin: 12px 2px;
+    flex-shrink: 0;
+    background: var(--ve-border);
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 48px;
+    min-width: 48px;
+    height: 52px;
+    padding: 0 4px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ve-text);
+    cursor: pointer;
+
+    &:active:not(:disabled) {
+        background: var(--ve-hover);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    &.danger {
+        color: #f87171;
+    }
+
+    &.accent {
+        color: var(--brand-color);
+    }
+}
+
+.toolIcon {
+    display: inline-flex;
+
+    svg {
+        width: 21px;
+        height: 21px;
+    }
+}
+
+
+// ─── Full-screen page ───────────────────────────────────────────────────────
+
+.screen {
+    position: fixed;
+    inset: 0;
+    // Below ModalHelper sheets (1000000) so dropdowns/dialogs still open on top.
+    z-index: 999990;
+    display: flex;
+    flex-direction: column;
+    background: var(--ve-panel);
+    color: var(--ve-text);
+    user-select: text;
+}
+
+// Gallery-window header: icon + title at the start, ✕ on the far side.
+.screenHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 54px;
+    padding: 0 14px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ve-border);
+}
+
+.screenTitleWrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.screenIcon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: var(--ve-hover);
+    color: var(--ve-text);
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.screenTitle {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.screenBody {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 16px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.screenBodyFlush {
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+
+    > * {
+        flex: 1;
+        min-height: 0;
+    }
+}
+
+.screenFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+    flex-shrink: 0;
+}
+
+// ─── Form bits (export / settings pages) ────────────────────────────────────
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fieldLabel {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ve-text);
+}
+
+.fieldHint {
+    font-size: 12px;
+    color: var(--ve-muted);
+}
+
+.fieldRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+// The global input style (border/background !important) draws the box;
+// this only sizes it and pins the unit inside.
+.input {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        height: 46px;
+        padding: 0 14px;
+        padding-inline-end: 56px;
+        border-radius: 8px;
+        color: var(--ve-text);
+        font-size: 16px;
+        outline: none;
+    }
+
+    span {
+        position: absolute;
+        inset-inline-end: 14px;
+        font-size: 13px;
+        color: var(--ve-muted);
+        pointer-events: none;
+    }
+}
+
+.readonly {
+    display: flex;
+    align-items: center;
+    height: 46px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid var(--ve-border);
+    border-radius: 8px;
+    background: var(--ve-panel);
+    color: var(--ve-muted);
+    font: 15px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+    direction: ltr;
+}
+
+.segmented {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    gap: 8px;
+    direction: ltr;
+
+    button {
+        height: 46px;
+        border: 1px solid var(--ve-border);
+        border-radius: 8px;
+        background: var(--ve-panel);
+        color: var(--ve-text);
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .segmentActive {
+        border-color: var(--brand-color);
+        background: color-mix(in srgb, var(--brand-color) 14%, var(--ve-panel));
+    }
+}
+
+.centerNote {
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+    color: var(--ve-muted);
+}
+
+.primaryBtn,
+.secondaryBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.primaryBtn {
+    border: 0;
+    background: var(--brand-color);
+    color: #fff;
+}
+
+.secondaryBtn {
+    border: 1px solid var(--ve-border);
+    background: transparent;
+    color: var(--ve-text);
+}
+
+// ─── Settings page: desktop panel controls as a phone form ──────────────────
+// The section components keep their own layout; here every top-level section
+// goes flat (divider lines instead of boxes) and inputs/selects get finger-
+// sized with 16px text so iOS doesn't zoom on focus.
+
+.screen .formBody {
+    padding-top: 0;
+    gap: 0;
+
+    > * {
+        margin: 0;
+        padding: 16px 0;
+        border: 0;
+        border-bottom: 1px solid var(--ve-border);
+        border-radius: 0;
+        background: transparent;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    h3,
+    h4 {
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: 0;
+    }
+
+    input:not([type='range']):not([type='checkbox']):not([type='radio']):not([type='color']),
+    select {
+        box-sizing: border-box;
+        min-height: 40px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    textarea {
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    input[type='range'] {
+        min-height: 28px;
+    }
+}

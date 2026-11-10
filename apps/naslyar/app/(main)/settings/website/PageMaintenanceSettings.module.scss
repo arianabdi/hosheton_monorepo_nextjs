@@ -1,0 +1,93 @@
+/* بروزرسانی صفحه‌به‌صفحه — کارت و سوییچ/فیلدها از MaintenanceSettings.module.scss می‌آیند */
+
+.intro {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 2;
+    opacity: 0.7;
+}
+
+.empty {
+    margin: 0;
+    padding: 14px 0;
+    font-size: 0.8rem;
+    opacity: 0.55;
+}
+
+/* ردیف‌ها با خط جداکننده، نه کارت تو در تو */
+.list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px 0;
+    border-top: 1px solid var(--plan-card-border-color, rgba(0, 0, 0, 0.08));
+
+    &:first-child {
+        border-top: 0;
+        padding-top: 0;
+    }
+
+    code {
+        padding: 0 4px;
+        border-radius: 4px;
+        background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+        font-size: 0.72rem;
+        direction: ltr;
+        unicode-bidi: isolate;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+
+    @media (max-width: 720px) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.paths {
+    min-height: 74px !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+    font-size: 0.8rem !important;
+}
+
+.itemActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.removeBtn,
+.addBtn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--plan-card-border-color, rgba(0, 0, 0, 0.12));
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+    }
+}
+
+.removeBtn {
+    color: #dc2626;
+    border-color: color-mix(in srgb, #dc2626 30%, transparent);
+
+    &:hover {
+        background: color-mix(in srgb, #dc2626 8%, transparent);
+    }
+}

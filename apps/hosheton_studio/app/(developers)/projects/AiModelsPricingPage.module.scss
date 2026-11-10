@@ -1,0 +1,246 @@
+// components/AiModelsPricingPage.module.scss
+
+$primary-blue: var(--brand-color);
+$primary-hover: var(--brand-color);
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+$border-color: #dadce0;
+
+.rtl {
+    text-align: start;
+}
+
+.container {
+    max-width: 1300px; // فضای کمی بزرگتر برای جا شدن تمام ستون‌های جدول قیمت
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: $text-dark;
+
+    @media (min-width: 768px) {
+        padding: 3rem 2rem;
+    }
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.mainTitle {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
+
+// --- بخش باکس فیلترها و سرچ‌بار ---
+.filterSection {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.searchBarWrapper {
+    margin-bottom: 1.25rem;
+}
+
+.mainSearchInput {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid var(--plan-card-border-color);
+    background-color: transparent;
+    color: $text-dark;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+
+    &:focus {
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 3px rgba(0, 118, 228, 0.08);
+    }
+}
+
+.filterGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 576px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 992px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: $text-dark;
+    opacity: 0.9;
+}
+
+.input, .select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--plan-card-border-color);
+    background-color: transparent;
+    color: $text-dark;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.15s;
+
+    &:focus {
+        border-color: $primary-blue;
+    }
+}
+
+// نوار طلایی/آبی راهنما
+.infoMiniCard {
+    background-color: #7b58fd0a;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+
+    .infoIcon {
+        font-size: 1.2rem;
+    }
+}
+
+// --- استایل‌های جدول کاتالوگ و قیمت ---
+.tableWrapper {
+    width: 100%;
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start;
+    font-size: 0.875rem;
+
+    th {
+        background-color: #7b58fd0d;
+        color: $text-muted;
+        padding: 1rem 1.25rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        vertical-align: middle;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    @media (max-width: 1100px) {
+        thead { display: none; }
+        tr {
+            display: block;
+            border-bottom: 1px solid var(--plan-card-border-color);
+            padding: 0.75rem 0;
+        }
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1.25rem;
+            border: none;
+            gap: 1rem;
+
+            &::before {
+                content: attr(data-label);
+                color: $text-muted;
+                font-size: 0.75rem;
+                font-weight: 700;
+                flex-shrink: 0;
+            }
+        }
+    }
+}
+
+.modelName {
+    color: $text-dark;
+}
+
+.providerBadge {
+    background-color: #7b58fd0d;
+    border: 1px solid var(--plan-card-border-color);
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.codeText {
+    font-family: monospace;
+    font-weight: 600;
+    direction: ltr;
+    display: inline-block;
+}
+
+.searchBarWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .mainSearchInput {
+        width: 100%;
+        // استایل‌های قبلی اینپوت تو...
+    }
+
+    .searchIconBtn {
+        position: absolute;
+        left: 10px; // چون دایرکشن RTL است، آیکون می‌افتد سمت چپ (پایان فیلد)
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #888; // یا هر رنگ سازمانی خنثی که داری
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: #fff; // یا رنگ هایلایت تمپلت
+            background-color: rgba(255, 255, 255, 0.05); // یک افکت هور ملایم در دارک مود
+        }
+    }
+}

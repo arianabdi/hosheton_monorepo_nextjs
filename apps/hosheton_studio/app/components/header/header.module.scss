@@ -1,0 +1,178 @@
+//Application Header
+.header {
+    box-sizing: border-box;
+    min-height: 3rem;
+    height: var(--header-height);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+    display: flex;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    background: var(--plan-card-background-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.headerStart {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.headerCenter {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoBtn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    line-height: 0;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.brandLogo {
+    height: 22px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+}
+
+
+@media (max-width: 1600px) {
+    .header {
+        width: 100%;
+    }
+
+}
+// Logo Styles
+.logoContainer {
+    padding: 7px 10px 20px 0px;
+}
+
+.logo {
+    max-width: 38px;
+    height: auto;
+    display: inline-block;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+
+.headerIcons {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.desktopNotification {
+    display: flex;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.mobileMenuBtn {
+    border: unset;
+    background: unset;
+    cursor: pointer;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: none;
+
+    &:hover {
+        background: var(--hover-background, rgba(0, 0, 0, 0.05));
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+}
+
+.mobileMenuBtnActive {
+    border-color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 12%, var(--input-background-color));
+}
+
+.logs,
+.logs div
+{
+    color: var(--body-text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 3;
+    position: fixed;
+    top: var(--header-height);
+    left: 0px;
+    min-width: 200px;
+    padding: 20px 0px ;
+
+}
+
+
+@media (max-width: 780px) {
+    .header {
+        width: 100%;
+        padding: 0 20px;
+        overflow: visible;
+        align-items: center;
+        flex-direction: row;
+    }
+    .icon {
+        width: 30px;
+    }
+
+
+    .header .title {
+        font-size: 20px;
+    }
+
+    .headerIcons {
+        gap: 20px;
+    }
+}
+
+
+@media (max-height: 460px) {
+
+    .header {
+        padding: 0rem 1rem;
+    }
+    .header .title {
+        font-size: 20px;
+    }
+    .icon {
+        width: 30px;
+    }
+    .header {
+        display: none;
+    }
+}

@@ -1,0 +1,298 @@
+@use '../../../styles/creator-ui' as ui;
+
+$color-bg: var(--plan-card-background-color);
+$color-text-main: var(--body-text-color);
+$color-text-muted: var(--settings-text-muted, #666666);
+$color-border: var(--settings-border, var(--input-border-color));
+$color-primary: var(--body-text-color);
+$color-purple-title: var(--brand-color);
+$font-family: inherit; // فونت اصلی اپ — داخل پروفایل سازنده هم همان
+
+.container {
+    font-family: $font-family;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 8px 0 24px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+
+    @media (min-width: 769px) {
+        padding: 8px 4px 24px;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .headerIcon {
+        border: 1px solid $color-border;
+        border-radius: 8px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-text-muted;
+        background-color: var(--settings-surface-muted, var(--input-background-color));
+    }
+
+    .headerText {
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: $color-text-main;
+            margin: 0 0 4px 0;
+        }
+        p {
+            font-size: 0.875rem;
+            color: $color-text-muted;
+            margin: 0;
+        }
+    }
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid ui.$divider;
+    margin: 24px 0;
+}
+
+.sectionTitle {
+    @include ui.section-title;
+}
+
+/* فرم رمز: عنوان، سه فیلد و دکمه پشت هم — بدون خط‌چین و فاصله‌های بلند بین فیلدها */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.formGroupRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .label {
+        @include ui.label;
+    }
+
+    .inputHint {
+        font-size: 0.75rem;
+        color: ui.$muted;
+        line-height: 1.7;
+    }
+}
+
+.input {
+    @include ui.input;
+    direction: ltr; /* ورودی پسورد همیشه چپ‌به‌راست */
+    text-align: start;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 4px;
+
+    .saveBtn {
+        @include ui.primary-btn;
+    }
+}
+
+/* احراز دو مرحله‌ای — بخش جدا با خط جداکننده بالا، بدون کارت */
+.twoFactorWrapper {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid ui.$divider;
+    color: var(--body-text-color);
+
+    .twoFactorHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 10px;
+
+        .statusIndicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: ui.$muted;
+
+            .dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background-color: color-mix(in srgb, var(--body-text-color) 30%, transparent);
+
+                &.active {
+                    background-color: #16a34a;
+                }
+            }
+        }
+
+        .enableBtn {
+            @include ui.secondary-btn;
+            flex-shrink: 0;
+        }
+    }
+
+    .twoFactorDescription {
+        @include ui.section-hint;
+        margin: 0 0 6px;
+    }
+
+    .comingSoonNote {
+        margin: 0;
+        font-size: 0.78rem;
+        font-weight: 400;
+        color: ui.$muted;
+    }
+}
+
+/* گام‌های تعاملی اسکن QR کد */
+.qrSection {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    border-top: 1px dotted $color-border;
+    padding-top: 20px;
+    margin-top: 20px;
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+
+    .qrInstructions {
+        h4 {
+            font-size: 0.85rem;
+            margin: 0 0 10px 0;
+            color: $color-text-main;
+        }
+        ol {
+            margin: 0;
+            padding-right: 20px;
+            font-size: 0.8rem;
+            color: $color-text-muted;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            line-height: 1.6;
+
+            code {
+                background-color: #f3f4f6;
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-family: monospace;
+                font-size: 0.85rem;
+                color: $color-primary;
+                direction: ltr;
+                display: inline-block;
+            }
+        }
+    }
+
+    .qrVisualBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .mockQR {
+            border: 1px solid $color-border;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+    }
+
+    .confirmationBox {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 12px;
+
+        .verifyCodeInput {
+            width: 120px;
+            padding: 10px;
+            border: 1px solid $color-border;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            direction: ltr;
+
+            &:focus {
+                outline: none;
+                border-color: $color-primary;
+            }
+        }
+    }
+}
+
+/* بخش کدهای بک‌آپ اضطراری */
+.backupCodesSection {
+    border-top: 1px dotted $color-border;
+    padding-top: 20px;
+    margin-top: 20px;
+
+    .backupHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        h5 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .downloadBtn {
+            background: none;
+            border: 1px solid $color-border;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: $color-text-muted;
+
+            &:hover {
+                background-color: var(--settings-surface-muted, var(--input-background-color));
+                color: $color-primary;
+            }
+        }
+    }
+
+    p {
+        font-size: 0.8rem;
+        color: $color-text-muted;
+        margin: 0 0 12px 0;
+    }
+
+    .codesGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        direction: ltr;
+
+        .codeItem {
+            background-color: var(--settings-surface-muted, var(--input-background-color));
+            border: 1px dashed $color-border;
+            padding: 8px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: $color-text-main;
+            border-radius: 4px;
+        }
+    }
+}

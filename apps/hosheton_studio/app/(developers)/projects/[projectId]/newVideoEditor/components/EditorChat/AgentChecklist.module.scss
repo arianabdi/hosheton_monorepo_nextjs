@@ -1,0 +1,218 @@
+.plan {
+    margin-top: 7px;
+    border: 1px solid var(--ve-border, var(--input-border-color));
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--brand-color, #6366f1) 4%, transparent);
+    overflow: hidden;
+    font-size: 10.5px;
+    direction: rtl;
+    text-align: right;
+
+    .planHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        padding: 5px 8px;
+        border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+        background: color-mix(in srgb, var(--brand-color, #6366f1) 8%, transparent);
+
+        .planTitle {
+            font-weight: 700;
+            color: var(--ve-text, inherit);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .selectAllBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: none;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            font-size: 9.5px;
+            cursor: pointer;
+            padding: 0;
+
+            input {
+                accent-color: var(--brand-color, #6366f1);
+                width: 11px;
+                height: 11px;
+                margin: 0;
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+
+        .appliedTag,
+        .revertedTag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .appliedTag {
+            color: #16a34a;
+        }
+
+        .revertedTag {
+            color: var(--ve-muted, inherit);
+        }
+    }
+
+    .planItems {
+        display: flex;
+        flex-direction: column;
+        max-height: 190px;
+        overflow-y: auto;
+
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            padding: 5px 8px;
+            cursor: pointer;
+
+            + .item {
+                border-top: 1px solid color-mix(in srgb, var(--ve-border, var(--input-border-color)) 55%, transparent);
+            }
+
+            input[type='checkbox'] {
+                accent-color: var(--brand-color, #6366f1);
+                width: 12px;
+                height: 12px;
+                margin: 1px 0 0;
+                flex-shrink: 0;
+            }
+
+            .itemText {
+                flex: 1;
+                min-width: 0;
+                line-height: 1.5;
+                color: var(--ve-text, inherit);
+                word-break: break-word;
+            }
+
+            .itemType {
+                flex-shrink: 0;
+                font-size: 8.5px;
+                font-weight: 600;
+                color: var(--ve-muted, inherit);
+                opacity: 0.75;
+                direction: ltr;
+            }
+
+            .lockIcon {
+                flex-shrink: 0;
+                display: inline-flex;
+                margin-top: 1px;
+                color: #16a34a;
+
+                svg {
+                    width: 11px;
+                    height: 11px;
+                }
+
+                &.lockFail {
+                    color: #dc2626;
+                }
+            }
+
+            .failTag {
+                flex-shrink: 0;
+                font-size: 8.5px;
+                font-weight: 700;
+                color: #dc2626;
+                direction: ltr;
+            }
+
+            &:hover:not(.itemLocked) {
+                background: color-mix(in srgb, var(--brand-color, #6366f1) 7%, transparent);
+            }
+
+            &.itemLocked {
+                cursor: default;
+            }
+        }
+    }
+
+    .confirmBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: calc(100% - 12px);
+        margin: 6px;
+        padding: 6px 8px;
+        border: none;
+        border-radius: 7px;
+        background: var(--brand-color, #6366f1);
+        color: #fff;
+        font-size: 10.5px;
+        font-weight: 700;
+        cursor: pointer;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        &:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+    }
+
+    .revertBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: calc(100% - 12px);
+        margin: 6px;
+        padding: 5px 8px;
+        border: 1px solid color-mix(in srgb, #ef4444 45%, transparent);
+        border-radius: 7px;
+        background: color-mix(in srgb, #ef4444 10%, transparent);
+        color: #ef4444;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        &:hover:not(:disabled) {
+            background: color-mix(in srgb, #ef4444 18%, transparent);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    .spinner {
+        width: 12px;
+        height: 12px;
+        animation: agentPlanSpin 0.9s linear infinite;
+    }
+
+    &.planReverted {
+        opacity: 0.72;
+    }
+}
+
+@keyframes agentPlanSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

@@ -1,0 +1,140 @@
+.tableWrapper {
+    direction: rtl;
+    width: 100%;
+    overflow-x: auto;          // Still needed for desktop, but on mobile we'll disable it
+    border-radius: 8px;
+    background: var(--header-background);
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    text-align: right;
+
+    // ========== DESKTOP STYLES (original table) ==========
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        box-shadow: unset;
+        border: unset;
+
+        thead {
+
+            th {
+                color: var(--header-icon-color);
+                white-space: nowrap;
+                padding: 16px 12px;
+                font-size: .85rem;
+                font-weight: 700;
+                background: #7b58fd0d;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        tbody {
+            tr {
+                transition: background-color 0.2s ease;
+                line-height: 40px;
+                border-bottom: 1px solid var(--border-color);
+
+                &:hover {
+                    background-color: var(--card-background);
+                }
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+            td {
+                padding: 7px 4px;
+                font-size: 0.875rem;
+                vertical-align: middle;
+                color: var(--body-text-color);
+            }
+        }
+    }
+
+    // ========== MOBILE: BREAK OUT OF TABLE FORMAT ==========
+    @media (max-width: 768px) {
+        overflow-x: visible;      // No horizontal scroll – we are stacking
+        background: unset;
+        border: unset;
+
+
+
+        table, thead, tbody, tr, th, td {
+            display: block;         // Destroy the table layout
+        }
+
+        // Hide the original header row completely
+        thead {
+            display: none;
+        }
+
+        // Each row becomes a card
+        tbody tr {
+            border: 1px solid var(--border-color);
+            background: var(--header-background);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            box-shadow: 0 1px 3px #0000001a;
+            line-height: 24px !important;
+
+            &:hover {
+                background-color: var(--card-background);
+            }
+        }
+
+        // Each cell becomes a flex row with a label
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            // Add the column label using a pseudo-element
+            &::before {
+                content: attr(data-label);   // Requires data-label on each <td>
+                color: var(--header-icon-color);
+                margin-left: 12px;           // Spacing in RTL (since direction: rtl)
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+        }
+    }
+
+    // Optional: even tighter for very small screens
+    @media (max-width: 480px) {
+        tbody tr {
+            padding: 8px;
+        }
+        td {
+            padding: 8px 0;
+            font-size: 0.8rem;
+        }
+    }
+}
+
+
+// Custom badge styles (optional helper classes) – unchanged, fully responsive
+.statusBadge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+
+    &.success {
+        background-color: #e6f9ed;
+        color: #22c55e;
+    }
+
+    &.error {
+        background-color: #fee2e2;
+        color: #ef4444;
+    }
+}

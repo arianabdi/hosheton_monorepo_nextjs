@@ -1,0 +1,138 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--input-border-color);
+    color: var(--body-text-color);
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.headTitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    svg {
+        color: var(--brand-color, #7b64cf);
+    }
+}
+
+.headActions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.iconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid var(--input-border-color);
+    background: transparent;
+    color: var(--body-text-color);
+    cursor: pointer;
+
+    &:hover {
+        border-color: color-mix(in srgb, var(--body-text-color) 30%, var(--input-border-color));
+    }
+}
+
+.toggleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.toggleText {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+
+    svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+        color: var(--brand-color, #7b64cf);
+    }
+
+    > span {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+}
+
+.toggleTitle {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.toggleHint,
+.hint {
+    font-size: 0.72rem;
+    color: color-mix(in srgb, var(--body-text-color) 60%, transparent);
+}
+
+.hint,
+.warning {
+    margin: 0;
+}
+
+.warning {
+    font-size: 0.75rem;
+    color: var(--icon-red, #bb5c5c);
+}
+
+/* سوییچ ساده (pill فقط برای سوییچ) */
+.switch {
+    appearance: none;
+    flex-shrink: 0;
+    position: relative;
+    width: 34px;
+    height: 20px;
+    margin: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--body-text-color) 18%, transparent);
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        inset-inline-start: 3px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--plan-card-background-color, #fff);
+        transition: inset-inline-start 0.15s ease;
+    }
+
+    &:checked {
+        background: var(--brand-color, #7b64cf);
+
+        &::after {
+            inset-inline-start: 17px;
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+}

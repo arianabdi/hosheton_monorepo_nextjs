@@ -1,0 +1,140 @@
+.page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.card {
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    background: var(--plan-card-background-color, #fff);
+    text-align: center;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 560px;
+    padding: 3rem 4.25rem;
+
+    @media (max-width: 768px) {
+        padding: 3rem 0.6rem;
+    }
+}
+
+.iconWrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+}
+
+.successIcon {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.failedIcon {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+.pendingIcon {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+}
+
+.subtitle {
+    color: var(--body-text-color, #64748b);
+    opacity: 0.85;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.details {
+    text-align: start;
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    border-radius: 5px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--plan-card-border-color, #e2e8f0);
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    span:first-child {
+        opacity: 0.7;
+    }
+
+    strong {
+        font-weight: 600;
+        word-break: break-all;
+    }
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @media (min-width: 480px) {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+.primaryBtn,
+.secondaryBtn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    flex: 1;
+}
+
+.primaryBtn {
+    background: var(--brand-color, #7b58fd);
+    color: #fff;
+    border: none;
+}
+
+.secondaryBtn {
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    background: transparent;
+    color: inherit;
+}
+
+.loading {
+    padding: 3rem;
+    text-align: center;
+    opacity: 0.75;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    margin: 0 auto 12px;
+    display: block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

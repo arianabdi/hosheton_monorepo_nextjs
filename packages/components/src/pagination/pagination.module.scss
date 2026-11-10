@@ -1,0 +1,195 @@
+// صفحه‌بندی ساده و خنثی: بدون کادرهای تو در تو؛ صفحه فعال با رنگ متن (برعکس) مشخص می‌شود
+// تم‌پذیری هر اپ با متغیرها: --pagination-active-bg، --pagination-active-text، --pagination-hover-bg، --pagination-border، --pagination-surface
+$text: var(--body-text-color, #1e293b);
+$muted: color-mix(in srgb, var(--body-text-color, #1e293b) 55%, transparent);
+$border: var(--pagination-border, var(--border-color, #e2e8f0));
+$hover: var(--pagination-hover-bg, color-mix(in srgb, var(--body-text-color, #1e293b) 6%, transparent));
+$surface: var(--pagination-surface, var(--plan-card-background-color, var(--input-background-color, #fff)));
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 0;
+    box-sizing: border-box;
+    color: $text;
+    font-size: 13px;
+
+    @media (max-width: 640px) {
+        justify-content: center;
+    }
+}
+
+.range {
+    color: $muted;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+
+    @media (max-width: 640px) {
+        order: 2;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.pages {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.btn {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: $text;
+    font: inherit;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover:not(:disabled):not(.active) {
+        background: $hover;
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--body-text-color, #1e293b) 35%, transparent);
+        outline-offset: 1px;
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+}
+
+.active {
+    background: var(--pagination-active-bg, #{$text});
+    color: var(--pagination-active-text, #{$surface});
+    font-weight: 600;
+    cursor: default;
+}
+
+.arrow {
+    color: $muted;
+
+    &:hover:not(:disabled) {
+        color: $text;
+    }
+}
+
+.gap {
+    min-width: 24px;
+    text-align: center;
+    color: $muted;
+    user-select: none;
+}
+
+.tools {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    @media (max-width: 640px) {
+        order: 3;
+    }
+}
+
+.jump,
+.perPage {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $muted;
+    white-space: nowrap;
+
+    input,
+    select {
+        height: 30px;
+        box-sizing: border-box;
+        border: 1px solid $border;
+        border-radius: 6px;
+        background: transparent;
+        color: $text;
+        font: inherit;
+        font-size: 13px;
+        outline: none;
+
+        &:focus {
+            border-color: color-mix(in srgb, var(--body-text-color, #1e293b) 35%, transparent);
+        }
+    }
+
+    input {
+        width: 52px;
+        padding: 0 6px;
+        text-align: center;
+    }
+
+    select {
+        padding: 0 6px;
+        cursor: pointer;
+
+        option {
+            background: $surface;
+            color: $text;
+        }
+    }
+}
+
+// singleRow: همه در یک ردیف حتی در موبایل (بازه یک طرف، صفحه‌ها طرف دیگر)
+.singleRow {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 8px;
+
+    .range {
+        order: 0;
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .pages {
+        min-width: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .btn {
+        flex-shrink: 0;
+    }
+
+    .tools {
+        order: 0;
+        flex-shrink: 0;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    @media (max-width: 640px) {
+        justify-content: space-between;
+
+        .btn {
+            min-width: 30px;
+            height: 30px;
+            padding: 0 6px;
+        }
+    }
+}

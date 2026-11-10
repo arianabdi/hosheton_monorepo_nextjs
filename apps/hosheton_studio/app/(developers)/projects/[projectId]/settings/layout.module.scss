@@ -1,0 +1,164 @@
+.settingsContainer {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: calc(100vh - var(--header-height, 52px) - 3rem);
+    box-sizing: border-box;
+    padding: 1.5rem 2rem;
+
+    .sidebar {
+        width: 190px;
+        flex-shrink: 0;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .backButton {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--body-text-color);
+            opacity: 0.65;
+            font-size: 0.85rem;
+            padding: 8px 4px 16px;
+            font-family: inherit;
+            white-space: nowrap;
+
+            &:hover { opacity: 1; }
+        }
+
+        .navButton {
+            cursor: pointer;
+            text-align: start;
+            background: none;
+            border: none;
+            border-radius: 4px;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 15px;
+            font-size: .95rem;
+            font-weight: 500;
+            transition: all .2s;
+            display: flex;
+            color: var(--body-text-color);
+            font-family: inherit;
+
+            &:hover {
+                background-color: color-mix(in srgb, var(--brand-color) 8%, transparent);
+            }
+
+            &.active {
+                background-color: color-mix(in srgb, var(--brand-color) 12%, transparent);
+                color: var(--brand-color);
+            }
+        }
+    }
+
+    .mainContent {
+        flex: 1;
+        min-width: 0;
+        margin: 0 0 0 12px;
+        overflow-y: auto;
+        background: var(--plan-card-background-color);
+        border: 1px solid var(--border-color);
+        color: var(--dynamic-text);
+        border-radius: 4px;
+        padding: 48px 35px 18px;
+        box-shadow: 0 1px 1px #0000001a;
+    }
+}
+
+@media (max-width: 768px) {
+    .settingsContainer {
+        flex-direction: column;
+        margin: 0;
+        min-height: auto;
+        padding: 12px;
+        gap: 0;
+
+        .sidebar {
+            width: 100%;
+            max-width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: 0;
+            padding: 0 4px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x proximity;
+            border-bottom: 1px solid var(--border-color);
+            background: transparent;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            box-sizing: border-box;
+
+            scrollbar-width: none;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .backButton {
+                flex: 0 0 100%;
+                width: 100%;
+                padding: 0 4px 10px;
+                opacity: 0.75;
+            }
+
+            .navButton {
+                width: auto;
+                flex: 0 0 auto;
+                white-space: nowrap;
+                text-align: center;
+                justify-content: center;
+                padding: 12px 14px;
+                border-radius: 0;
+                border-bottom: 2px solid transparent;
+                font-size: 13px;
+                scroll-snap-align: start;
+
+                &:hover {
+                    background-color: transparent;
+                    color: var(--body-text-color);
+                }
+
+                &.active {
+                    background-color: transparent;
+                    color: var(--brand-color);
+                    border-bottom-color: var(--brand-color);
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .mainContent {
+            margin: 12px 0 0;
+            padding: 16px;
+            width: 100%;
+            max-width: 100%;
+            background: var(--plan-card-background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 1px 1px #0000001a;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .settingsContainer {
+        padding: 8px;
+
+        .mainContent {
+            padding: 16px 12px;
+            box-sizing: border-box;
+        }
+    }
+}

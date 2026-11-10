@@ -1,0 +1,50 @@
+.hoverPopup {
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline-start: 0;
+    z-index: 40;
+    width: 220px;
+    background: var(--input-background-color);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    text-align: start;
+    cursor: default;
+}
+
+.hoverPopupHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ef4444;
+    margin-bottom: 6px;
+}
+
+.hoverPopupMessage {
+    margin: 0 0 6px;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--body-text-color);
+    opacity: 0.85;
+    max-height: 90px;
+    overflow-y: auto;
+    word-break: break-word;
+}
+
+.hoverPopupTime {
+    display: block;
+    font-size: 0.62rem;
+    opacity: 0.5;
+    margin-bottom: 4px;
+}
+
+.hoverPopupHint {
+    display: block;
+    font-size: 0.62rem;
+    opacity: 0.55;
+    font-weight: 600;
+    color: #8b5cf6;
+}

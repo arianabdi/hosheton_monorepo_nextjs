@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  hosheton-studio-nextjs:
+    image: ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY_NAME}:${DOCKERHUB_REPOSITORY_VERSION:-latest}
+
+    expose:
+      - "80"
+
+    container_name: hosheton-studio-nextjs
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hosheton_studio_nextjs.rule=Host(`studio.hosheton.com`)"
+      - "traefik.http.routers.hosheton_studio_nextjs.entrypoints=websecure"
+      - "traefik.http.routers.hosheton_studio_nextjs.tls=true"
+      - "traefik.docker.network=traefik-public"
+
+    networks:
+      - traefik-public
+
+    env_file:
+      - .env
+
+    restart: unless-stopped  # Add this line
+
+networks:
+  traefik-public:
+    external: true

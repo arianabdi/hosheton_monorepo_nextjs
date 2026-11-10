@@ -1,0 +1,407 @@
+/* حالت خالی گفتگو — هم‌سبک موشن تنظیمات نود (project-view.module.scss → .emptyHint*):
+   تایپ در کامپوزر → کلیک روی «ارسال» (بوم، پرتوها، موج) → پیام من با یک تیک بالا می‌رود →
+   تیک دوم می‌آید و رنگی می‌شود (خوانده شد) → طرف مقابل در حال نوشتن → پاسخ.
+   صحنه ۲۳۰×۱۲۴ و چپ‌به‌راست؛ در RTL آینه می‌شود (پیام من و ارسال سمت چپ). فقط transform/opacity. */
+
+$text: var(--body-text-color);
+$edge: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+$surface: var(--input-background-color);
+$faint: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+$bar: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+$green: #10b981;
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    --hint-accent: #3b82f6;
+    --hint-loop: 4.8s;
+
+    position: relative;
+    width: 230px;
+    height: 124px;
+    margin-bottom: 12px;
+    direction: ltr;
+
+    :where(span, i, b) {
+        display: block;
+    }
+
+    &:dir(rtl) {
+        scale: -1 1;
+
+        svg {
+            scale: -1 1;
+        }
+    }
+}
+
+.card {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid $edge;
+    background: $surface;
+}
+
+.head {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    border-bottom: 1px solid $edge;
+
+    > b {
+        width: 52px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+.peer {
+    position: relative;
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--hint-accent) 30%, transparent);
+}
+
+.online {
+    position: absolute;
+    right: -2px;
+    bottom: -1px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $green;
+    box-shadow: 0 0 0 1.5px $surface;
+}
+
+/* ───────── گفتگو ───────── */
+
+.myMsg,
+.reply {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 10px;
+    opacity: 0;
+
+    b {
+        height: 4px;
+        border-radius: 2px;
+
+        &:nth-child(2) {
+            width: 60%;
+        }
+    }
+}
+
+.myMsg {
+    right: 10px;
+    top: 32px;
+    width: 124px;
+    height: 26px;
+    border-radius: 10px 10px 3px 10px;
+    background: color-mix(in srgb, var(--hint-accent) 16%, transparent);
+    transform-origin: right bottom;
+    animation: thMyMsg var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+
+    b {
+        background: color-mix(in srgb, var(--hint-accent) 50%, transparent);
+    }
+}
+
+// ✓ ارسال شد ← ✓✓ خوانده شد (رنگی)
+.ticks {
+    position: absolute;
+    right: 6px;
+    bottom: 3px;
+    width: 14px;
+    height: 8px;
+}
+
+.tick1,
+.tick2 {
+    position: absolute;
+    top: 0;
+    width: 8px;
+    height: 8px;
+    color: $bar;
+}
+
+.tick1 {
+    right: 4px;
+    animation: thTick1 var(--hint-loop) linear infinite;
+}
+
+.tick2 {
+    right: 0;
+    opacity: 0;
+    animation: thTick2 var(--hint-loop) $ease-pop infinite;
+}
+
+.typing {
+    position: absolute;
+    left: 10px;
+    top: 64px;
+    width: 36px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 10px;
+    background: $faint;
+    opacity: 0;
+    animation: thTyping var(--hint-loop) ease-out infinite;
+
+    i {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: $bar;
+        animation: thDot 0.9s ease-in-out infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+    }
+}
+
+.reply {
+    left: 10px;
+    top: 62px;
+    width: 132px;
+    height: 26px;
+    border-radius: 10px 10px 10px 3px;
+    background: $faint;
+    transform-origin: left top;
+    animation: thReply var(--hint-loop) $ease-pop infinite;
+
+    b {
+        background: $bar;
+    }
+}
+
+/* ───────── کامپوزر ───────── */
+
+.composer {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 94px;
+    height: 22px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    border: 1px solid $edge;
+    background: $surface;
+}
+
+.typed {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    width: 110px;
+    height: 4px;
+    border-radius: 2px;
+    background: $bar;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: thTyped var(--hint-loop) steps(12, end) infinite;
+}
+
+.send {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background: $bar;
+    color: #fff;
+    font-size: 9px;
+    animation: thSend var(--hint-loop) linear infinite;
+}
+
+/* ───────── نشانگر و «بوم» روی ارسال؛ نقطه کلیک = مرکز ارسال (۲۱۲، ۱۰۴) ───────── */
+
+.ripple {
+    position: absolute;
+    left: 212px;
+    top: 104px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: thRipple var(--hint-loop) ease-out infinite;
+}
+
+.burst {
+    position: absolute;
+    left: 212px;
+    top: 104px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: thRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.cursor {
+    position: absolute;
+    left: 204px;
+    top: 96px;
+    width: 22px;
+    height: 22px;
+    color: $text;
+    opacity: 0;
+    animation: thCursor var(--hint-loop) ease-in-out infinite;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 280px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// حلقهٔ ۴.۸ ثانیه — «بوم» ۲۶٪، خوانده شد ۴۴٪، نوشتن ۴۸–۵۸٪، پاسخ ۶۰٪
+@keyframes thTyped {
+    0%, 4% { transform: scaleX(0); opacity: 1; }
+    20%, 27% { transform: scaleX(1); opacity: 1; }
+    28.5%, 100% { transform: scaleX(1); opacity: 0; }
+}
+
+@keyframes thSend {
+    0%, 18% { background: color-mix(in srgb, var(--body-text-color) 24%, transparent); transform: scale(1); }
+    20%, 24% { background: var(--hint-accent); transform: scale(1); }
+    26% { transform: scale(0.8); }
+    29% { transform: scale(1.12); }
+    33% { background: var(--hint-accent); transform: scale(1); }
+    40%, 100% { background: color-mix(in srgb, var(--body-text-color) 24%, transparent); transform: scale(1); }
+}
+
+@keyframes thCursor {
+    0%, 6% { transform: translate(30px, 24px); opacity: 0; }
+    20% { transform: translate(0, 0); opacity: 1; }
+    24% { transform: translate(0, 0) scale(0.78); }
+    28%, 44% { transform: translate(0, 0) scale(1); opacity: 1; }
+    56%, 100% { transform: translate(30px, 24px); opacity: 0; }
+}
+
+@keyframes thRipple {
+    0%, 25% { transform: scale(0.4); opacity: 0; }
+    27% { opacity: 0.9; }
+    40%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes thRay {
+    0%, 25.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    26.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    36%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+}
+
+@keyframes thMyMsg {
+    0%, 28% { transform: translateY(54px) scale(0.85); opacity: 0; }
+    30% { opacity: 1; }
+    37% { transform: translateY(-2px) scale(1.02); }
+    41%, 90% { transform: translateY(0) scale(1); opacity: 1; }
+    96%, 100% { transform: translateY(0) scale(1); opacity: 0; }
+}
+
+// تیک اول: خاکستری، بعد از «خوانده شد» رنگی
+@keyframes thTick1 {
+    0%, 43% { color: color-mix(in srgb, var(--body-text-color) 30%, transparent); }
+    46%, 100% { color: var(--hint-accent); }
+}
+
+@keyframes thTick2 {
+    0%, 43% { transform: scale(0.3); opacity: 0; color: var(--hint-accent); }
+    47%, 90% { transform: scale(1); opacity: 1; color: var(--hint-accent); }
+    96%, 100% { opacity: 0; }
+}
+
+@keyframes thTyping {
+    0%, 47% { transform: scale(0.85); opacity: 0; }
+    50%, 58% { transform: scale(1); opacity: 1; }
+    60%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes thReply {
+    0%, 59% { transform: scale(0.6); opacity: 0; }
+    64%, 90% { transform: scale(1); opacity: 1; }
+    96%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes thDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-2px); opacity: 1; }
+}
+
+// بدون موشن: گفتگوی خوانده‌شده و پاسخ‌داده‌شده را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .myMsg,
+    .reply,
+    .tick2 {
+        opacity: 1;
+    }
+
+    .tick1,
+    .tick2 {
+        color: var(--hint-accent);
+    }
+}

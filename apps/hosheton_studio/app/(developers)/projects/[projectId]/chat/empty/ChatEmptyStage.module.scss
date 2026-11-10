@@ -1,0 +1,241 @@
+.stage {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    /* چت موبایل: محتوا زیر نوار ابزار بالا و نوار پایین هم اسکرول می‌شود (PersonalChat.module.scss) */
+    box-sizing: border-box;
+    padding-top: var(--chat-top-space, 0px);
+    padding-bottom: var(--chat-dock-bottom, 0px);
+    container-type: size;
+    -ms-overflow-style: none;  /* IE و Edge قدیمی */
+    scrollbar-width: none;      /* Firefox */
+}
+
+.hero {
+    box-sizing: border-box;
+    flex-direction: column;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 70cqb;
+    padding: 13vh 16px 16px;
+    display: flex;
+}
+
+.stack {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.brandRow {
+    position: relative;
+    display: inline-flex;
+    align-self: center;
+}
+
+.featuredBlock {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 8px 16px 36px;
+    box-sizing: border-box;
+}
+
+.copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(28px);
+
+    h2 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        max-width: 420px;
+        opacity: 0.65;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+}
+
+.copyEntered {
+    animation: chatEmptyRise 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.icon {
+    width: 86px;
+    height: 86px;
+    margin-bottom: 14px;
+    display: block;
+
+    :global(svg) {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+.featuredGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: 420px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.featuredCard {
+    position: relative;
+    aspect-ratio: 0.7;
+    border: 0;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    &:hover .featuredLabel {
+        opacity: 1;
+    }
+}
+
+.featuredFallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.featuredLabel {
+    position: absolute;
+    inset-inline-start: 10px;
+    bottom: 10px;
+    max-width: calc(100% - 20px);
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.featuredHint {
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.55;
+}
+
+.moreIdeas {
+    align-self: center;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--brand-color, #8b5cf6);
+        color: var(--brand-color, #8b5cf6);
+    }
+}
+
+.suggestions {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 2px 2px 6px;
+    margin-inline: -2px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.chip {
+    flex: 0 0 auto;
+    max-width: 240px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--brand-color, #8b5cf6);
+        color: var(--brand-color, #8b5cf6);
+    }
+}
+
+@keyframes chatEmptyRise {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .copy {
+        opacity: 1;
+        transform: none;
+    }
+
+    .copyEntered {
+        animation: none;
+    }
+}

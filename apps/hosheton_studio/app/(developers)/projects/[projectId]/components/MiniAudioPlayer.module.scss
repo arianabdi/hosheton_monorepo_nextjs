@@ -1,0 +1,432 @@
+.player {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.22);
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    direction: ltr;
+}
+
+.compact {
+    padding: 8px;
+    gap: 6px;
+}
+
+.visual {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 28px;
+    opacity: 0.85;
+}
+
+.compact .visual {
+    height: 22px;
+}
+
+.bar {
+    width: 4px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(139, 92, 246, 0.35);
+    transition: height 0.2s ease;
+}
+
+.barActive {
+    animation: wave 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+    from { height: 6px; opacity: 0.45; }
+    to { height: 22px; opacity: 1; }
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.playBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #8b5cf6;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    svg { font-size: 1rem; }
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 18px rgba(139, 92, 246, 0.45);
+    }
+}
+
+.meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    opacity: 0.85;
+
+    svg { flex-shrink: 0; opacity: 0.7; }
+}
+
+.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.seek {
+    width: 100%;
+    height: 4px;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.4);
+    }
+
+    &::-moz-range-thumb {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #8b5cf6;
+        border: 2px solid #fff;
+    }
+}
+
+.timeRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    opacity: 0.6;
+    direction: ltr;
+}
+
+/* ───── variant="waveform": کارت فایل صوتی (نود reference و سایدبارش) ─────
+   دکمه پخش، نام و زمان، و موج صوتی که خودش نوار جابه‌جایی است. با تم روشن/تیره. */
+.wavePlayer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--brand-color, #8b5cf6) 5%, var(--input-background-color));
+    color: var(--body-text-color);
+    direction: ltr; // زمان و جهت موج همیشه چپ‌به‌راست
+    box-sizing: border-box;
+    transition: border-color 0.15s ease;
+
+    &[data-playing='true'] {
+        border-color: color-mix(in srgb, var(--brand-color, #8b5cf6) 45%, var(--input-border-color));
+    }
+}
+
+.waveCompact {
+    gap: 8px;
+    padding: 8px 10px;
+}
+
+.wavePlay {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--brand-color, #8b5cf6);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+
+    svg {
+        font-size: 15px;
+    }
+
+    &:hover {
+        transform: scale(1.05);
+        filter: brightness(1.06);
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--brand-color, #8b5cf6) 45%, transparent);
+        outline-offset: 2px;
+    }
+}
+
+.waveCompact .wavePlay {
+    width: 32px;
+    height: 32px;
+
+    svg {
+        font-size: 14px;
+    }
+}
+
+/* مثلث پخش از نظر دیداری وسط نیست — کمی به راست */
+.wavePlayIcon {
+    margin-left: 2px;
+}
+
+.waveBody {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.waveHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+}
+
+.waveTitle {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.waveTime {
+    flex-shrink: 0;
+    font-size: 0.66rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+}
+
+.waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 28px;
+    cursor: pointer;
+    touch-action: none;
+    border-radius: 6px;
+    outline: none;
+
+    &:focus-visible {
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-color, #8b5cf6) 40%, transparent);
+    }
+}
+
+.waveCompact .waveform {
+    height: 24px;
+}
+
+.waveBar {
+    flex: 1;
+    min-width: 2px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--body-text-color) 20%, transparent);
+    transition: background-color 0.15s ease;
+
+    .waveform:hover & {
+        background: color-mix(in srgb, var(--body-text-color) 30%, transparent);
+    }
+}
+
+.waveBarPlayed,
+.waveform:hover .waveBarPlayed {
+    background: var(--brand-color, #8b5cf6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wavePlayer,
+    .wavePlay,
+    .waveBar {
+        transition: none;
+    }
+}
+
+/* ───── variant="tile": کاشی مربعی صوت در شبکه چندفایلی reference ─────
+   هم‌اندازه کاشی تصاویر؛ دکمه پخش وسط، موج کوچک (نوار جابه‌جایی)، نام و زمان */
+.audioTile {
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    overflow: hidden;
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--brand-color, #8b5cf6) 8%, var(--input-background-color));
+    color: var(--body-text-color);
+    direction: ltr;
+    transition: border-color 0.15s ease;
+
+    &[data-playing='true'] {
+        border-color: color-mix(in srgb, var(--brand-color, #8b5cf6) 50%, var(--input-border-color));
+    }
+}
+
+.audioTilePlay {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--brand-color, #8b5cf6);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+
+    svg {
+        font-size: 14px;
+    }
+
+    &:hover {
+        transform: scale(1.06);
+    }
+
+    &:focus-visible {
+        outline: 2px solid color-mix(in srgb, var(--brand-color, #8b5cf6) 45%, transparent);
+        outline-offset: 2px;
+    }
+}
+
+.audioTileWave {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 38px;
+    cursor: pointer;
+    touch-action: none;
+    border-radius: 4px;
+    outline: none;
+
+    &:hover .waveBar {
+        background: color-mix(in srgb, var(--body-text-color) 30%, transparent);
+    }
+
+    &:hover .waveBarPlayed {
+        background: var(--brand-color, #8b5cf6);
+    }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand-color, #8b5cf6) 40%, transparent);
+    }
+}
+
+.audioTileMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    width: 100%;
+    min-width: 0;
+    line-height: 1.2;
+}
+
+.audioTileName {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.62rem;
+    font-weight: 600;
+}
+
+.audioTileTime {
+    font-size: 0.58rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+}
+
+/* کاشی کوچک (شبکه سه‌ستونه): فقط پخش، موج و زمان — نام در title کاشی */
+@container (max-width: 100px) {
+    .audioTilePlay {
+        width: 28px;
+        height: 28px;
+    }
+
+    .audioTileWave {
+        height: 14px;
+    }
+
+    .audioTileName {
+        display: none;
+    }
+}
+
+/* waveform + size="large": کارت بزرگ نمای جزئیات (مودال جزئیات چت) */
+.waveLarge {
+    gap: 18px;
+    padding: 20px 22px;
+    border-radius: 16px;
+
+    .wavePlay {
+        width: 56px;
+        height: 56px;
+
+        svg {
+            font-size: 22px;
+        }
+    }
+
+    .waveBody {
+        gap: 12px;
+    }
+
+    .waveTitle {
+        font-size: 0.95rem;
+    }
+
+    .waveTime {
+        font-size: 0.78rem;
+    }
+
+    .waveform {
+        height: 56px;
+        gap: 3px;
+    }
+}

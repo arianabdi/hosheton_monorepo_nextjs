@@ -1,0 +1,284 @@
+$text-dark: var(--body-text-color);
+$text-muted: var(--body-text-color);
+$primary-blue: var(--brand-color);
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.formContainer {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 1.5rem;
+    color: $text-dark;
+    box-sizing: border-box;
+
+    @media (min-width: 768px) {
+        padding: 1.75rem 1.5rem;
+    }
+}
+
+/** Compact density for long admin forms (model editor, etc.) */
+.dense {
+    .formCard {
+        padding: 0.7rem 0.85rem;
+        border-radius: 8px;
+    }
+
+    .formCardTitle {
+        font-size: 0.88rem;
+        margin-bottom: 0.1rem;
+    }
+
+    .formCardDesc {
+        font-size: 0.72rem;
+        margin-bottom: 0;
+        line-height: 1.4;
+    }
+
+    .row {
+        gap: 0.65rem;
+        margin-bottom: 0.65rem;
+
+        label {
+            gap: 0.28rem;
+            font-size: 0.78rem;
+
+            input, select, textarea {
+                padding: 0.42rem 0.6rem;
+                font-size: 0.82rem;
+                border-radius: 6px;
+            }
+
+            textarea {
+                min-height: 72px;
+            }
+        }
+    }
+
+    .hint {
+        font-size: 0.7rem;
+        line-height: 1.4;
+    }
+
+    .column {
+        margin-top: 0.55rem;
+
+        h6 {
+            margin-bottom: 0.45rem;
+            font-size: 0.82rem;
+        }
+    }
+
+    .metadataRow {
+        gap: 0.55rem;
+        margin-bottom: 0.55rem;
+    }
+
+    .addButton {
+        margin-bottom: 0.55rem;
+        padding: 0.35rem 0.7rem;
+        font-size: 0.74rem;
+    }
+
+    .emptyPlaceholder {
+        padding: 1rem;
+        font-size: 0.78rem;
+    }
+}
+
+.formTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.formDescription {
+    color: $text-muted;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.formCard {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+}
+
+.formCardTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+    color: var(--body-text-color);
+}
+
+.formCardDesc {
+    font-size: 0.82rem;
+    opacity: 0.72;
+    margin: 0 0 1.1rem;
+    line-height: 1.6;
+    color: var(--body-text-color);
+}
+
+.legacyForm {
+    background-color: var(--plan-card-background-color);
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $text-dark;
+
+        input, select, textarea {
+            background: var(--input-background-color);
+            border: 1px solid var(--input-border-color);
+            color: var(--body-text-color);
+            border-radius: 8px;
+            padding: 0.65rem 0.85rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+
+            &:focus {
+                border-color: var(--brand-color);
+            }
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 96px;
+            line-height: 1.6;
+        }
+    }
+}
+
+.hint {
+    font-weight: 400;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    line-height: 1.6;
+}
+
+.column {
+    margin-top: 1rem;
+
+    h6 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0 0 1rem 0;
+    }
+}
+
+.metadataRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1rem;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cacheTierRow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.removeBtn {
+    background: #fef2f2;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+
+    &:hover {
+        background: #fee2e2;
+    }
+}
+
+.addButton {
+    background-color: $primary-blue;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 1rem;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.submit {
+    background-color: $primary-blue;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover:not(:disabled) {
+        opacity: 0.9;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.emptyPlaceholder {
+    text-align: center;
+    padding: 2rem;
+    color: $text-muted;
+    font-size: 0.85rem;
+}

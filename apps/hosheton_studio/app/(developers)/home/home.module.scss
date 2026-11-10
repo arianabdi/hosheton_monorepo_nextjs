@@ -1,0 +1,117 @@
+.homeWrapper {
+    height: 100%;
+    overflow-y: scroll;
+    position: relative;
+    padding: 40px 0px;
+}
+
+.embedded {
+    height: auto;
+    overflow: visible;
+    padding: 0;
+
+    .home {
+        padding: 0;
+        min-height: auto;
+    }
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    color: var(--body-text-color);
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.cardRow {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardRow .key {
+    flex: 1;
+}
+
+.cardRow .value {
+    flex: 1;
+    text-align: left;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.statsTop {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    flex: 1;
+    div {
+        border: 1px solid var(--border-color);
+        padding: 2rem 1rem;
+        border-radius: 1rem;
+        min-width: 180px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    span{
+        font-size: 16px;
+    }
+    h2{
+        font-weight: 300;
+        font-size: 19px;
+    }
+}
+
+
+
+.chartSection {
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    min-height: 120px;
+}
+
+.bottomCharts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.chartBox .card {
+    border: unset !important;
+}
+
+.chartBox {
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    .home {
+        padding: 2rem 1rem;
+    }
+}

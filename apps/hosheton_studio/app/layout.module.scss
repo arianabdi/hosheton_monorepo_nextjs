@@ -1,0 +1,24 @@
+
+.global{
+    font-family: iransansxvf, sans-serif;
+}
+
+body{
+    background-color: var(--body-background);
+    box-sizing: border-box;
+
+    overflow-y: scroll; // یا auto
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE و Edge قدیمی
+
+    &::-webkit-scrollbar {
+        display: none; // Chrome, Safari, Opera
+    }
+}
+
+:global(button),
+:global(input),
+:global(textarea),
+{
+    font-family: iransansxvf, sans-serif;
+}

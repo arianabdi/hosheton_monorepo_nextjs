@@ -1,0 +1,319 @@
+/* حالت خالی فهرست گفتگوها — هم‌سبک موشن تنظیمات نود (project-view.module.scss → .emptyHint*):
+   آیکون پیام از بالا می‌افتد → ردیف گفتگو با نشان قرمز در اولین جای خالی می‌نشیند (نشان می‌تپد) →
+   نشانگر روی ردیف کلیک می‌کند (فشرده شدن، بوم، پرتوها، موج) → نشان قرمز محو و ردیف انتخاب می‌شود.
+   صحنه ۲۳۰×۱۲۴ و چپ‌به‌راست؛ در RTL آینه می‌شود. فقط transform/opacity. */
+
+$text: var(--body-text-color);
+$edge: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+$surface: var(--input-background-color);
+$faint: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+$bar: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+$red: #ef4444;
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // در والد ستونی ارتفاع باقی‌مانده را می‌گیرد تا موشن وسط بنشیند
+    flex: 1;
+    justify-content: center;
+    gap: 6px;
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    --hint-accent: #3b82f6;
+    --hint-loop: 4.4s;
+
+    position: relative;
+    width: 230px;
+    height: 124px;
+    margin-bottom: 12px;
+    direction: ltr;
+
+    :where(span, i, b) {
+        display: block;
+    }
+
+    &:dir(rtl) {
+        scale: -1 1;
+
+        svg {
+            scale: -1 1;
+        }
+    }
+}
+
+.card {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid $edge;
+    background: $surface;
+    overflow: hidden;
+}
+
+.head {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    border-bottom: 1px solid $edge;
+
+    > b {
+        width: 64px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+.inboxIcon {
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    color: var(--hint-accent);
+}
+
+/* ───────── جاهای خالی فهرست ───────── */
+
+.slot {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 26px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px dashed $edge;
+}
+
+.slot1 { top: 32px; }
+.slot2 { top: 62px; opacity: 0.7; }
+.slot3 { top: 92px; opacity: 0.4; }
+
+/* ───────── ردیف گفتگوی تازه ───────── */
+
+.row {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 32px;
+    height: 26px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid $edge;
+    background: $faint;
+    opacity: 0;
+    transform-origin: center top;
+    animation: ibRow var(--hint-loop) $ease-pop infinite;
+}
+
+// پس‌زمینهٔ «انتخاب‌شده» بعد از کلیک
+.rowActive {
+    position: absolute;
+    inset: -1px;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--hint-accent) 55%, transparent);
+    background: color-mix(in srgb, var(--hint-accent) 14%, transparent);
+    opacity: 0;
+    animation: ibRowActive var(--hint-loop) ease-out infinite;
+}
+
+.avatar {
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--hint-accent) 30%, transparent);
+}
+
+.lines {
+    position: absolute;
+    left: 26px;
+    top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    b {
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+
+        &:first-child { width: 58px; }
+        &:last-child { width: 104px; opacity: 0.6; }
+    }
+}
+
+.badge {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $red;
+    opacity: 0;
+    animation: ibBadge var(--hint-loop) $ease-pop infinite;
+}
+
+/* پیام ورودی که از بالا روی جای خالی می‌افتد */
+.incoming {
+    position: absolute;
+    left: 106px;
+    top: 30px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: var(--hint-accent);
+    color: #fff;
+    font-size: 11px;
+    opacity: 0;
+    animation: ibIncoming var(--hint-loop) cubic-bezier(0.3, 0.7, 0.4, 1) infinite;
+}
+
+/* ───────── نشانگر و «بوم» روی ردیف؛ نقطهٔ کلیک = (۱۳۶، ۴۵) ───────── */
+
+.ripple {
+    position: absolute;
+    left: 136px;
+    top: 45px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: ibRipple var(--hint-loop) ease-out infinite;
+}
+
+.burst {
+    position: absolute;
+    left: 136px;
+    top: 45px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: ibRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.cursor {
+    position: absolute;
+    left: 128px;
+    top: 37px;
+    width: 22px;
+    height: 22px;
+    color: $text;
+    opacity: 0;
+    animation: ibCursor var(--hint-loop) ease-in-out infinite;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 260px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// حلقهٔ ۴.۴ ثانیه — رسیدن پیام ۴–۱۴٪، ردیف ۱۴٪، کلیک ۴۸٪
+@keyframes ibIncoming {
+    0%, 3% { transform: translateY(-34px) scale(0.6); opacity: 0; }
+    6% { opacity: 1; }
+    12% { transform: translateY(0) scale(1); opacity: 1; }
+    15%, 100% { transform: translateY(2px) scale(0.4); opacity: 0; }
+}
+
+@keyframes ibRow {
+    0%, 13% { transform: translateY(-6px) scaleY(0.6); opacity: 0; }
+    18% { transform: translateY(1px) scaleY(1.04); opacity: 1; }
+    22%, 90% { transform: translateY(0) scaleY(1); opacity: 1; }
+    96%, 100% { transform: translateY(0) scaleY(1); opacity: 0; }
+}
+
+@keyframes ibBadge {
+    0%, 18% { transform: scale(0); opacity: 0; }
+    22% { transform: scale(1.3); opacity: 1; }
+    26% { transform: scale(1); }
+    32% { transform: scale(1.25); }
+    38%, 47% { transform: scale(1); opacity: 1; }
+    52%, 100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes ibRowActive {
+    0%, 48% { opacity: 0; }
+    53%, 90% { opacity: 1; }
+    96%, 100% { opacity: 0; }
+}
+
+@keyframes ibCursor {
+    0%, 24% { transform: translate(34px, 40px); opacity: 0; }
+    42% { transform: translate(0, 0); opacity: 1; }
+    46% { transform: translate(0, 0) scale(0.78); }
+    50%, 66% { transform: translate(0, 0) scale(1); opacity: 1; }
+    78%, 100% { transform: translate(34px, 40px); opacity: 0; }
+}
+
+@keyframes ibRipple {
+    0%, 47% { transform: scale(0.4); opacity: 0; }
+    49% { opacity: 0.9; }
+    62%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes ibRay {
+    0%, 47.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    48.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    58%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+}
+
+// بدون موشن: ردیف انتخاب‌شده را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .row,
+    .rowActive {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,348 @@
+// Variables
+$text-muted: #64748b;
+$border-radius-lg: 12px;
+$border-radius-md: 8px;
+$transition-fast: 0.2s ease;
+
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.idBadge {
+    display: inline-block;
+    background-color: rgba(123, 88, 253, 0.1);
+    color: var(--brand-color, #7b58fd);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+// هدر صفحه
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--body-text-color, #1e293b);
+        margin: 0;
+    }
+
+    .subtitle {
+        font-size: 0.875rem;
+        color: $text-muted;
+        margin-top: 0.5rem;
+        line-height: 1.6;
+        max-width: 700px;
+    }
+}
+
+.backBtn {
+    background: transparent;
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    color: var(--body-text-color, #475569);
+    padding: 0.6rem 1.25rem;
+    border-radius: $border-radius-md;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+        transform: translateX(-4px);
+    }
+}
+
+// --- باکس راهنما (Notice Box) ---
+.noticeContainer {
+    background-color: var(--plan-card-background-color, #fff);
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    border-radius: $border-radius-lg;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.noticeHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--plan-card-border-color, #e2e8f0);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.noticeTitleGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.noticeIcon {
+    font-size: 1.35rem;
+}
+
+.noticeTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--body-text-color, #1e293b);
+}
+
+.noticeBadge {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #e65100;
+    border: 1px solid rgba(255, 183, 77, 0.32);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.noticeGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.noticeCard {
+    background-color: rgba(0, 0, 0, 0.005);
+    border: 1px dashed var(--plan-card-border-color, #cbd5e1);
+    border-radius: $border-radius-md;
+    padding: 1.25rem;
+
+    h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--body-text-color, #1e293b);
+    }
+
+    p {
+        font-size: 0.85rem;
+        color: var(--body-text-color, #334155);
+        opacity: 0.85;
+        line-height: 1.7;
+        margin: 0;
+        margin-top: 0.75rem;
+        text-align: justify;
+    }
+
+    code {
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 0.8rem;
+        direction: ltr;
+        display: inline-block;
+    }
+}
+
+.noticeCardHead {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stepNumber {
+    background-color: var(--brand-color, #7b58fd);
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.noticeFooter {
+    margin-top: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.01);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    border-right: 3px solid #ff9800;
+
+    p {
+        font-size: 0.8rem;
+        margin: 0;
+        color: #475569;
+    }
+}
+
+// --- بخش فرم‌ها و کارت‌های شیشه‌ای کانتینر ---
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.formSection {
+    background-color: var(--plan-card-background-color, #fff);
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    border-radius: $border-radius-lg;
+    padding: 1.75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+
+    .blockTitle {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--body-text-color, #1e293b);
+        margin: 0 0 1.5rem 0;
+        position: relative;
+        padding-right: 12px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background-color: var(--brand-color, #7b58fd);
+            border-radius: 2px;
+        }
+    }
+}
+
+// سیستم گریدبندی ستون‌ها
+.gridTwoCols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.gridThreeCols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+// آپلود تصاویر و فایل‌ها
+.imageGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.uploadCard {
+    background: rgba(0, 0, 0, 0.005);
+    border: 1px solid var(--plan-card-border-color, #e2e8f0);
+    border-radius: $border-radius-md;
+    padding: 1rem;
+}
+
+.managerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.filesGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+// اکشن‌ها و دکمه‌های نهایی
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--plan-card-border-color, #e2e8f0);
+    padding-top: 1.75rem;
+}
+
+.btnSave, .btnCancel {
+    padding: 0.75rem 2rem;
+    border-radius: $border-radius-md;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all $transition-fast;
+    border: none;
+}
+
+.btnSave {
+    background-color: var(--brand-color, #7b58fd);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(123, 88, 253, 0.3);
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(123, 88, 253, 0.4);
+    }
+
+    &:disabled {
+        background-color: #cbd5e1;
+        color: #94a3b8;
+        box-shadow: none;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+.btnCancel {
+    background-color: #f1f5f9;
+    color: #475569;
+
+    &:hover {
+        background-color: #e2e8f0;
+        color: #1e293b;
+    }
+}
+
+// حالت لودینگ صفحه
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1rem;
+    color: $text-muted;
+    font-weight: 600;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(123, 88, 253, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--brand-color, #7b58fd);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

@@ -1,0 +1,74 @@
+.wrap {
+    position: relative;
+}
+
+.trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    color: var(--body-text-color);
+    font-size: 0.85rem;
+
+    &:hover {
+        background: var(--menu-hover);
+    }
+}
+
+.code {
+    font-size: 0.72rem;
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+}
+
+.pickerShell {
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 12px;
+    padding: 4px 2px 6px;
+}
+
+.pickerTitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 8px 14px 10px;
+    color: var(--body-text-color);
+}
+
+.pickerPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 4px 6px;
+    max-height: min(70dvh, 420px);
+    overflow-y: auto;
+}
+
+.pickerItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--body-text-color);
+    font-size: 0.92rem;
+    text-align: start;
+
+    &:hover {
+        background: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    }
+
+    &.active {
+        background: color-mix(in srgb, var(--brand-color) 16%, var(--input-background-color));
+        font-weight: 600;
+        color: var(--brand-color);
+    }
+}

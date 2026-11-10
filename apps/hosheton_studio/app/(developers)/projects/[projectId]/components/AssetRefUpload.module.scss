@@ -1,0 +1,368 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.compact {
+    gap: 6px;
+    outline: none;
+}
+
+.hiddenInput {
+    display: none;
+}
+
+.dropzone {
+    background: var(--body-background);
+    border: 1px dashed var(--input-border-color);
+    border-radius: 12px;
+    min-height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    opacity: 0.85;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+
+    &:hover {
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.04);
+    }
+
+    svg { font-size: 1.1rem; }
+}
+
+.progressTrack {
+    height: 4px;
+    background: var(--input-border-color);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: #8b5cf6;
+    transition: width 0.2s ease;
+}
+
+.urlRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--body-background);
+    border: 1px solid var(--input-border-color);
+    border-radius: 10px;
+    padding: 6px 8px;
+
+    svg { opacity: 0.5; flex-shrink: 0; }
+}
+
+.urlInput {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--body-text-color);
+    font-size: 0.75rem;
+    outline: none;
+    direction: ltr;
+    text-align: left;
+}
+
+.missingPreview {
+    display: grid;
+    place-items: center;
+    min-height: 72px;
+    padding: 8px;
+    color: var(--body-text-color);
+    opacity: 0.6;
+    font-size: 0.7rem;
+}
+
+.error {
+    margin: 0;
+    font-size: 0.72rem;
+    color: #ef4444;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.readOnlyLocked,
+.uploadingLocked {
+    .dropzone,
+    .urlInput[readonly],
+    .urlInput:disabled {
+        opacity: 0.72;
+        cursor: not-allowed;
+    }
+
+    .dropzone {
+        pointer-events: none;
+    }
+}
+
+/* کاشی ویدیو در شبکه فایل‌ها: پوستر + دکمه پخش وسط، بدون کنترل‌های بومی */
+.videoTile {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--body-text-color) 8%, var(--input-background-color));
+    cursor: pointer;
+
+    video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.videoTilePlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 14px;
+    pointer-events: none;
+
+    svg {
+        margin-left: 2px; // مثلث پخش از نظر دیداری وسط نیست
+    }
+}
+
+/* فایلی که آدرس پیش‌نمایش ندارد: کاشی خنثی با آیکون و نام کوتاه (نه متن خام بلند) */
+.missingTile {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border: 1px dashed var(--input-border-color);
+    border-radius: 10px;
+    font-size: 0.6rem;
+
+    svg {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    span {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* ───── نمایش فایل‌ها — یکسان در نود روی بوم و سایدبار: تصویر/تصاویر در اولویت ───── */
+
+/* یک فایل: بزرگ، با نسبت خودش (حداکثر ارتفاع تا نود خیلی دراز نشود) */
+.nodeSingle {
+    position: relative;
+
+    [style*='--tile-ratio'] {
+        max-height: 320px;
+    }
+}
+
+/* چند فایل: کاشی‌های مربعی برش‌خورده؛ کلیک تصویر نمای بزرگ را باز می‌کند */
+.nodeGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.nodeGridDense {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+}
+
+.nodeTile {
+    position: relative;
+    min-width: 0;
+
+    /* قاب پیش‌نمایش (LightweightMediaPreview) نسبت را inline می‌گیرد؛ اینجا مربع */
+    [style*='--tile-ratio'] {
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+    }
+}
+
+.nodeRemove {
+    position: absolute;
+    top: 5px;
+    inset-inline-end: 5px;
+    z-index: 3;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    display: inline-grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(18, 18, 24, 0.78);
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+
+    .nodeSingle:hover &,
+    .nodeTile:hover &,
+    &:focus-visible {
+        opacity: 1;
+    }
+
+    /* لمسی: hover نیست، دکمه همیشه دیده شود */
+    @media (hover: none) {
+        opacity: 1;
+    }
+}
+
+/* تنها فایل نود صوت است: کارت پخش‌کننده کامل و دکمه حذف کنارش (روی کارت، دکمه پخش را می‌پوشاند) */
+.nodeSingleAudio {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    > :first-child {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .nodeRemove {
+        position: static;
+        flex-shrink: 0;
+        opacity: 0.55;
+        background: transparent;
+        color: var(--body-text-color);
+
+        &:hover {
+            opacity: 1;
+            background: color-mix(in srgb, var(--body-text-color) 8%, transparent);
+        }
+    }
+}
+
+/* فایل در حال آپلود: پیش‌نمایش محلی + درصد روی آن */
+.nodeJob {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+
+    img,
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.nodeJobAudio {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.nodeJobOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+
+    button {
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        display: inline-grid;
+        place-items: center;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+        color: #111;
+        cursor: pointer;
+    }
+}
+
+.nodeJobFailed {
+    background: rgba(185, 28, 28, 0.55);
+}
+
+/* افزودن فایل بیشتر / گالری — کوچک، زیر تصاویر */
+.nodeActions {
+    display: flex;
+    gap: 6px;
+}
+
+.nodeAction {
+    flex: 1;
+    min-width: 0;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 8px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 9px;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+
+    svg {
+        flex-shrink: 0;
+        font-size: 0.85rem;
+    }
+
+    &:hover:not(:disabled) {
+        border-color: #8b5cf6;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

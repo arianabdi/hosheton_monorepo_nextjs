@@ -1,0 +1,90 @@
+.searchInput {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--input-border-color, color-mix(in srgb, var(--body-text-color) 14%, transparent));
+    border-radius: 10px;
+    background: var(--body-background, var(--input-background-color));
+    color: var(--body-text-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+    &:hover:not(.disabled) {
+        border-color: color-mix(in srgb, var(--brand-color) 30%, var(--input-border-color, transparent));
+    }
+
+    &:focus-within {
+        border-color: color-mix(in srgb, var(--brand-color) 55%, transparent);
+        background: var(--input-background-color);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-color) 14%, transparent);
+    }
+
+    .searchIcon {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        color: color-mix(in srgb, var(--body-text-color) 45%, transparent);
+        transition: color 0.2s ease;
+    }
+
+    &:focus-within .searchIcon {
+        color: var(--brand-color);
+    }
+
+    input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        background: transparent;
+        padding: 7px 0;
+        font-size: 12.5px;
+        font-family: inherit;
+        color: inherit;
+        outline: none;
+
+        &::placeholder {
+            color: color-mix(in srgb, var(--body-text-color) 42%, transparent);
+        }
+
+        // Hide the native ✕ so only the styled clear button shows.
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-decoration {
+            appearance: none;
+            display: none;
+        }
+    }
+
+    .clearBtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--body-text-color) 10%, transparent);
+        color: color-mix(in srgb, var(--body-text-color) 65%, transparent);
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+
+        svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        &:hover {
+            background: color-mix(in srgb, var(--body-text-color) 18%, transparent);
+            color: var(--body-text-color);
+        }
+    }
+}
+
+.disabled {
+    opacity: 0.55;
+    pointer-events: none;
+}

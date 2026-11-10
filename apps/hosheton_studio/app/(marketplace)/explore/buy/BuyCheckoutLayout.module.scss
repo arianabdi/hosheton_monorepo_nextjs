@@ -1,0 +1,72 @@
+.shell {
+    min-height: 100%;
+    background: var(--body-background);
+    color: var(--body-text-color);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    width: 100%;
+    background: var(--brand-color);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.topbarInner {
+    width: 100%;
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.logo {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.title {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: color-mix(in srgb, #ffffff 88%, transparent);
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: color 0.15s;
+
+    &:hover {
+        color: #ffffff;
+    }
+}
+
+@media (max-width: 920px) {
+    .topbarInner {
+        padding-inline: 16px;
+    }
+}

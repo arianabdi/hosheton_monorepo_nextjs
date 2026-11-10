@@ -1,0 +1,447 @@
+/* حالت خالی تیکت‌ها — هم‌سبک موشن تنظیمات نود (project-view.module.scss → .emptyHint*):
+   تایپ در کامپوزر → کلیک روی «ارسال» (فشرده شدن، بوم، پرتوها، موج) → پیام کاربر بالا می‌رود و
+   وضعیت تیکت «باز» (نقطه نارنجی) می‌شود → پشتیبانی در حال نوشتن → پاسخ و وضعیت «پاسخ داده شد» (تیک سبز).
+   صحنه ۲۳۰×۱۲۴ و چپ‌به‌راست؛ در RTL آینه می‌شود (پیام کاربر و ارسال سمت چپ). فقط transform/opacity. */
+
+$text: var(--body-text-color);
+$edge: color-mix(in srgb, var(--body-text-color) 14%, transparent);
+$surface: var(--input-background-color);
+$faint: color-mix(in srgb, var(--body-text-color) 6%, var(--input-background-color));
+$bar: color-mix(in srgb, var(--body-text-color) 24%, transparent);
+$green: #10b981;
+$amber: #f59e0b;
+$ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    color: $text;
+}
+
+.art {
+    --hint-accent: #3b82f6;
+    --hint-loop: 4.4s;
+
+    position: relative;
+    width: 230px;
+    height: 124px;
+    margin-bottom: 12px;
+    direction: ltr;
+
+    :where(span, i, b) {
+        display: block;
+    }
+
+    &:dir(rtl) {
+        scale: -1 1;
+
+        // آیکون‌ها و نشانگر آینه نشوند
+        svg {
+            scale: -1 1;
+        }
+    }
+}
+
+.card {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid $edge;
+    background: $surface;
+}
+
+.head {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    border-bottom: 1px solid $edge;
+
+    > b {
+        width: 56px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+.ticketIcon {
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    color: var(--hint-accent);
+}
+
+// وضعیت تیکت: بعد از ارسال «باز» (نارنجی)، بعد از پاسخ «پاسخ داده شد» (تیک سبز)
+.status {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    width: 40px;
+    height: 14px;
+    border-radius: 7px;
+    background: $faint;
+    opacity: 0;
+    animation: shStatus var(--hint-loop) $ease-pop infinite;
+
+    > b {
+        position: absolute;
+        left: 16px;
+        top: 5px;
+        width: 18px;
+        height: 4px;
+        border-radius: 2px;
+        background: $bar;
+    }
+}
+
+.statusOpen {
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $amber;
+    animation: shStatusOpen var(--hint-loop) linear infinite;
+}
+
+.statusDone {
+    position: absolute;
+    left: 3px;
+    top: 2px;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $green;
+    color: #fff;
+    font-size: 7px;
+    opacity: 0;
+    animation: shStatusDone var(--hint-loop) $ease-pop infinite;
+}
+
+/* ───────── گفتگو ───────── */
+
+.userMsg,
+.reply {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 10px;
+    opacity: 0;
+
+    b {
+        height: 4px;
+        border-radius: 2px;
+
+        &:last-child {
+            width: 60%;
+        }
+    }
+}
+
+.userMsg {
+    right: 10px;
+    top: 32px;
+    width: 124px;
+    height: 26px;
+    border-radius: 10px 10px 3px 10px;
+    background: color-mix(in srgb, var(--hint-accent) 16%, transparent);
+    transform-origin: right bottom;
+    animation: shUserMsg var(--hint-loop) cubic-bezier(0.2, 0.8, 0.3, 1) infinite;
+
+    b {
+        background: color-mix(in srgb, var(--hint-accent) 50%, transparent);
+    }
+}
+
+.agent {
+    position: absolute;
+    left: 8px;
+    top: 64px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: color-mix(in srgb, $green 16%, transparent);
+    color: $green;
+    font-size: 11px;
+    opacity: 0;
+    animation: shAgent var(--hint-loop) $ease-pop infinite;
+}
+
+.typing {
+    position: absolute;
+    left: 34px;
+    top: 64px;
+    width: 36px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 10px;
+    background: $faint;
+    opacity: 0;
+    animation: shTyping var(--hint-loop) ease-out infinite;
+
+    i {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: $bar;
+        animation: shDot 0.9s ease-in-out infinite;
+
+        &:nth-child(2) { animation-delay: 0.15s; }
+        &:nth-child(3) { animation-delay: 0.3s; }
+    }
+}
+
+.reply {
+    left: 34px;
+    top: 62px;
+    width: 132px;
+    height: 26px;
+    border-radius: 10px 10px 10px 3px;
+    background: $faint;
+    transform-origin: left top;
+    animation: shReply var(--hint-loop) $ease-pop infinite;
+
+    b {
+        background: $bar;
+    }
+}
+
+/* ───────── کامپوزر ───────── */
+
+.composer {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 94px;
+    height: 22px;
+    box-sizing: border-box;
+    border-radius: 11px;
+    border: 1px solid $edge;
+    background: $surface;
+}
+
+.typed {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    width: 110px;
+    height: 4px;
+    border-radius: 2px;
+    background: $bar;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: shTyped var(--hint-loop) steps(12, end) infinite;
+}
+
+.send {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: $bar;
+    color: #fff;
+    font-size: 9px;
+    animation: shSend var(--hint-loop) linear infinite;
+}
+
+/* ───────── نشانگر و «بوم» روی ارسال؛ نقطه کلیک = مرکز ارسال (۲۱۲، ۱۰۴) ───────── */
+
+.ripple {
+    position: absolute;
+    left: 212px;
+    top: 104px;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1.5px solid var(--hint-accent);
+    opacity: 0;
+    animation: shRipple var(--hint-loop) ease-out infinite;
+}
+
+.burst {
+    position: absolute;
+    left: 212px;
+    top: 104px;
+    width: 0;
+    height: 0;
+
+    i {
+        position: absolute;
+        left: -1px;
+        top: -4px;
+        width: 2px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--hint-accent);
+        opacity: 0;
+        animation: shRay var(--hint-loop) cubic-bezier(0.15, 0.85, 0.35, 1) infinite;
+
+        @for $i from 1 through 8 {
+            &:nth-child(#{$i}) {
+                --ray-angle: #{($i - 1) * 45 + 22.5}deg;
+            }
+        }
+    }
+}
+
+.cursor {
+    position: absolute;
+    left: 204px;
+    top: 96px;
+    width: 22px;
+    height: 22px;
+    color: $text;
+    opacity: 0;
+    animation: shCursor var(--hint-loop) ease-in-out infinite;
+}
+
+.title {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text {
+    margin: 0;
+    max-width: 260px;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    opacity: 0.55;
+}
+
+// زمان‌بندی روی حلقه ۴.۴ ثانیه‌ای — هر ۱٪ ≈ ۴۴ms؛ «بوم» حوالی ۲۶٪، پاسخ ۵۶٪
+@keyframes shTyped {
+    0%, 4% { transform: scaleX(0); opacity: 1; }
+    20%, 27% { transform: scaleX(1); opacity: 1; }
+    28.5%, 100% { transform: scaleX(1); opacity: 0; }
+}
+
+@keyframes shSend {
+    0%, 18% { background: color-mix(in srgb, var(--body-text-color) 24%, transparent); transform: scale(1); }
+    20%, 24% { background: var(--hint-accent); transform: scale(1); }
+    26% { transform: scale(0.8); }
+    29% { transform: scale(1.12); }
+    33% { background: var(--hint-accent); transform: scale(1); }
+    40%, 100% { background: color-mix(in srgb, var(--body-text-color) 24%, transparent); transform: scale(1); }
+}
+
+@keyframes shCursor {
+    0%, 6% { transform: translate(30px, 24px); opacity: 0; }
+    20% { transform: translate(0, 0); opacity: 1; }
+    24% { transform: translate(0, 0) scale(0.78); }
+    28%, 50% { transform: translate(0, 0) scale(1); opacity: 1; }
+    62%, 100% { transform: translate(30px, 24px); opacity: 0; }
+}
+
+@keyframes shRipple {
+    0%, 25% { transform: scale(0.4); opacity: 0; }
+    27% { opacity: 0.9; }
+    40%, 100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes shRay {
+    0%, 25.5% { transform: rotate(var(--ray-angle)) translateY(-8px) scaleY(0.3); opacity: 0; }
+    26.5% { transform: rotate(var(--ray-angle)) translateY(-11px) scaleY(1); opacity: 1; }
+    36%, 100% { transform: rotate(var(--ray-angle)) translateY(-26px) scaleY(0.2); opacity: 0; }
+}
+
+// پیام کاربر از روی کامپوزر بالا می‌رود
+@keyframes shUserMsg {
+    0%, 28% { transform: translateY(54px) scale(0.85); opacity: 0; }
+    30% { opacity: 1; }
+    37% { transform: translateY(-2px) scale(1.02); }
+    41%, 90% { transform: translateY(0) scale(1); opacity: 1; }
+    96%, 100% { transform: translateY(0) scale(1); opacity: 0; }
+}
+
+@keyframes shStatus {
+    0%, 31% { transform: scale(0.4); opacity: 0; }
+    35%, 90% { transform: scale(1); opacity: 1; }
+    96%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes shStatusOpen {
+    0%, 61% { opacity: 1; }
+    62%, 100% { opacity: 0; }
+}
+
+@keyframes shStatusDone {
+    0%, 61% { transform: scale(0.3); opacity: 0; }
+    65%, 100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shAgent {
+    0%, 41% { transform: scale(0.4); opacity: 0; }
+    45%, 90% { transform: scale(1); opacity: 1; }
+    96%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes shTyping {
+    0%, 43% { transform: scale(0.85); opacity: 0; }
+    46%, 54% { transform: scale(1); opacity: 1; }
+    56%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes shReply {
+    0%, 55% { transform: scale(0.6); opacity: 0; }
+    60%, 90% { transform: scale(1); opacity: 1; }
+    96%, 100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes shDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-2px); opacity: 1; }
+}
+
+// بدون موشن: گفتگوی پاسخ‌داده‌شده را ثابت نشان بده
+@media (prefers-reduced-motion: reduce) {
+    .art *,
+    .art *::before,
+    .art *::after {
+        animation: none !important;
+    }
+
+    .userMsg,
+    .agent,
+    .reply,
+    .status,
+    .statusDone {
+        opacity: 1;
+    }
+
+    .statusOpen {
+        opacity: 0;
+    }
+}

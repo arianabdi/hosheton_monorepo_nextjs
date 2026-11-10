@@ -1,0 +1,11 @@
+.modalFooter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+    min-height: 62px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    border-top: 1px solid var(--border-color);
+}

@@ -1,0 +1,68 @@
+.bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .bar {
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1100;
+        height: 52px;
+        padding: 0 12px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        direction: ltr;
+        background: var(--plan-card-background-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+.leading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row-reverse;
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+.end {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.usageBtn {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--body-text-color);
+    cursor: pointer;
+    opacity: 0.75;
+    border-radius: 8px;
+    line-height: 0;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    img {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        object-fit: cover;
+    }
+}

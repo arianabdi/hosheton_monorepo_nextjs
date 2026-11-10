@@ -1,0 +1,304 @@
+/* در ابتدای فایل global.scss پروژه تان */
+@import "github-markdown-css/github-markdown.css";
+
+:root {
+    /* کنترل‌ها و نوار مرورگر (Safari/Firefox) هم‌رنگ تم */
+    color-scheme: light;
+    /* ارتفاع نوار پایین موبایل (MobileTabBar) — layoutها به همین اندازه padding پایین می‌گیرند */
+    --mobile-tabbar-height: 0px;
+    --auth-background: linear-gradient(135deg, rgb(246, 245, 247) 0%, rgb(238, 242, 247) 100%);
+    --uploader-height: 340px;
+    --modal-background: #ffffff;
+    --body-padding-top: 85px;
+    --vsc-code-bg: #f2f2f2;
+    --vsc-pre-bg: #f8f8f8;
+    --vsc-link: #0066cc;
+    --project-item-description-background: #f8fafc;
+
+    --code-block-background-color: #f7f7f7;
+    --code-block-border-color: #e3e3e3;
+    --body-horizontal-padding: 30px;
+    --application-view-background: #fff;
+    --body-background: #ebebeb;
+    --workflow-viewport-background-color: #eaeaea;
+    --workflow-tools-item-hover-background: #e6ecf9;
+    --workflow-tools-item-hover-border-color: #3069e8;
+    --card-background: #eaeaea;
+    --left-chat-background: #eaeaea;
+    --base-node-background: #fff;
+    --rag-file-background: #fff;
+    --table-head-item: #e3e3e3;
+    --selected-item: #7b64cf;
+    --card-border-color: #dfdfdf;
+    --card-path-color: #a3a3a3;
+    --form-generator-item-hover-bg: #0069ff1c;
+    --button-green: #09c284;
+    --icon-red: #BB5C5C;
+    --icon-green: #278E67;
+    --logo-color: #000000;
+    --active-card-path-color: #0076ff;
+    --header-background: #2C3447;
+    --header-icon-color: #d5d5d5;
+    --icon-color: #3f4149;
+    --sidebar-color: #f1f1f1;
+    --sidebar-settings-color: #f1f1f1;
+    --border-color: #cbcbcb;
+    --workflow-border-color: #808283;
+    --border-color-selected: #7b64cf;
+    --card-background-selected: #6576ff52;
+    --page-view-background-color: #f7f7f7;
+    --page-view-border-color: #e3e3e3;
+    --plan-card-background-color: #ffffff;
+    --plan-card-border-color: #dddddd;
+    --blue-sky-background: #E6F0FF;
+    --green-sky-background: #A5F2DC;
+    --bottom-nav-background: #222222;
+    --scrollable-background: #fff;
+    --scrollable-list-item-background: #fff;
+    --table-header-and-btn-color: #e8e8e8;
+    --body-text-color: #000000;
+    --link-text-color: #003dff;
+    --blue-bg: #003dff;
+    --button-background: #7b64cf;
+    --button-text-color: #ffffff;
+    --menu-hover: #c2c2c2;
+    --font-yekanbakh: "yekan-bakh", sans-serif;
+    --font-primary: "b-nazanin", sans-serif;
+    --font-almarai: 'almari', sans-serif;
+    --font-b-yekan: 'b yekan', sans-serif;
+    --font-dana: 'dana', sans-serif;
+    --font-fira: 'fira-code';
+    --body-font: "almari", sans-serif;
+    --font-iransans: 'iransans', sans-serif;
+    --header-height: 0px;
+    --application-max-width: 1300px;
+    --video-preview-min-height: 220px;
+    --bottom-navbar-height: 72px;
+    --flashcard-list-background-color: #f7f7f7;
+    --table-selected-row: #EAF3FE;
+    --flashcard-list-border-color: #e9e9e9;
+    --input-background-color: #ffffff;
+    --input-hover-background-color: #e5e5e5;
+    --input-border-color: #e3e3e3;
+    --border-color-green: #38AF84;
+    --border-color-blue: #4972BE;
+    --dictionary-card-background: #ededed;
+    --dictionary-card-divider-color: #c1c1c1;
+    --brand-color: #7b64cf;
+
+    --settings-button-background: #ffffff;
+    --settings-button-border: #e5e5e5;
+    --settings-text-muted: #666666;
+    --settings-surface-muted: #fafafa;
+    --dynamic-text: var(--body-text-color);
+
+    --masonry-card-background: #fff;
+
+    --table-empty-glow: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    --table-empty-icon-bg: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    --table-empty-icon-border: color-mix(in srgb, var(--brand-color) 22%, transparent);
+    --table-empty-icon-shadow: color-mix(in srgb, var(--brand-color) 8%, transparent);
+    --table-empty-hint-bg: color-mix(in srgb, var(--brand-color) 6%, transparent);
+    --table-empty-secondary-hover: color-mix(in srgb, var(--brand-color) 5%, transparent);
+}
+
+/* Dark mode */
+[data-theme='dark'] {
+    color-scheme: dark;
+    --masonry-card-background: #1e1e1e;
+    --auth-background: linear-gradient(75deg, #13141a 0%, #1d3b53 100%);
+    --modal-background:  linear-gradient(90deg, #0D111C 0%, #0D172B 41.87%, #0C172F 49.56%, #0D172B 59.76%, #0D111C 100%);
+    --uploader-height: 340px;
+    --body-padding-top: 85px;
+    --auth-frame-background-color: #11002d;
+    --body-horizontal-padding: 30px;
+    --code-block-background-color: #1e1e1e;
+    --vsc-code-bg: #2d2d2d;
+    --vsc-pre-bg: #141b2b;
+    --vsc-link: #3794ff;
+    --code-block-border-color: #2d2d2d;
+    --form-generator-item-hover-bg: #8cbcff1a;
+    --workflow-viewport-background-color: #060A12;
+    --workflow-tools-item-hover-background: #060B16;
+    --workflow-tools-item-hover-border-color: #3069e8;
+    --body-background: #060608;
+    --plan-card-background-color: #0d0e12;
+    --plan-card-border-color: #1f293d;
+    --card-border-color: #232323;;
+    --table-head-item: #25252B;
+    --header-background: #2C3447;
+    --logo-color: #ffffff;
+    --header-icon-color: #d5d5d5;
+    --icon-color: #b0b0b0;
+    --page-view-background-color: #0C121F;
+    --page-view-border-color: #1D2535;
+    --table-header-and-btn-color: #030719;
+    --sidebar-color: #1d1d20;
+    --sidebar-settings-color: #0c0d0e;
+    --card-path-color: #3b3b3b;
+    --button-green: #318064;
+    --left-chat-background: #1d273b;
+    --blue-bg: #003dff;
+    --icon-red: #BB5C5C;
+    --icon-green: #278E67;
+    --active-card-path-color: #454DDB;
+    --card-background: #0D1424;
+    --base-node-background: #0D1424;
+    --rag-file-background: #0D1424;
+    --scrollable-background: #050911;
+    --scrollable-list-item-background: #0D1424;
+    --border-color: #303236;
+    --workflow-border-color: #C1C8D5;
+    --border-color-selected: #7b64cf;
+    --selected-item: #7b64cf;
+    --card-background-selected: #0d1e38;
+    --blue-sky-background: #1e2229;
+    --green-sky-background: #364d48;
+    --bottom-nav-background: #222222;
+    --body-text-color: #d9d9d9;
+    --link-text-color: #9fd5ff;
+    --font-yekanbakh: "yekan-bakh", sans-serif;
+    --font-primary: "b-nazanin", sans-serif;
+    --font-almarai: 'almari', sans-serif;
+    --font-b-yekan: 'b yekan', sans-serif;
+    --font-dana: 'dana', sans-serif;
+    --font-iransans: 'iransans', sans-serif;
+    --font-fira: 'fira-code';
+    --header-height: 0px;
+    --application-max-width: 1300px;
+    --button-background: #7b64cf;
+    --button-text-color: #ffffff;
+    --menu-hover: #30323C;
+    --table-selected-row: #20283A;
+    --video-preview-min-height: 220px;
+    --bottom-navbar-height: 72px;
+    --flashcard-list-background-color: #2C2C2C;
+    --flashcard-list-border-color: #3B3B3B;
+    --input-background-color: #1b1b1b;
+
+    --project-item-description-background: #282828;
+    --input-hover-background-color: #46464d;
+    --input-border-color: #29292f;
+    --border-color-green: #38AF84;
+    --border-color-blue: #4972BE;
+    --dictionary-card-background: #1b1c1c;
+    --dictionary-card-divider-color: #38393b;
+    --brand-color: #7b64cf;
+
+    --settings-button-background: #25252b;
+    --settings-button-border: #303039;
+    --settings-text-muted: #9ca3af;
+    --settings-surface-muted: #1b1b1f;
+    --dynamic-text: var(--body-text-color);
+
+    --table-empty-glow: color-mix(in srgb, var(--brand-color) 14%, transparent);
+    --table-empty-icon-bg: color-mix(in srgb, var(--brand-color) 16%, transparent);
+    --table-empty-icon-border: color-mix(in srgb, var(--brand-color) 30%, transparent);
+    --table-empty-icon-shadow: color-mix(in srgb, var(--brand-color) 15%, transparent);
+    --table-empty-hint-bg: color-mix(in srgb, var(--brand-color) 10%, transparent);
+    --table-empty-secondary-hover: color-mix(in srgb, var(--brand-color) 10%, transparent);
+}
+
+body{
+    margin: 0px;
+}
+
+
+
+/* Global scrollbar style */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--card-background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* موبایل: مثل اکسپلور همه‌جا اسکرول می‌شود ولی اسکرول‌بار دیده نمی‌شود */
+@media (max-width: 768px) {
+    :root {
+        --mobile-tabbar-height: 80px; /* قرص ۵۶ + فاصله از پایین و بالای آن */
+    }
+
+
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    *::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+}
+
+
+
+
+/* Drawer overlay + content — required for ModalHelper / Vaul on mobile */
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000000;
+}
+
+[data-theme='dark'] .drawer-overlay {
+    background: rgba(0, 0, 0, 0.65);
+}
+
+.drawer-content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--input-background-color);
+    color: var(--body-text-color);
+    border-radius: 16px 16px 0 0;
+    border-top: 1px solid var(--border-color);
+    z-index: 1000001;
+    max-height: min(85dvh, 85vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    outline: none;
+    padding: 20px;
+    padding-top: 28px;
+    box-sizing: border-box;
+}
+
+.drawer-content * {
+    font-family: inherit;
+}
+
+/* Drop the GPU layer after Vaul's open animation so sheet text stays sharp */
+.drawer-content[data-vaul-drawer][data-state='open'] {
+    transform: none;
+    will-change: auto;
+}
+
+.drawer-content[data-state="open"] {
+    transform: none;
+}
+
+.drawer-content::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+}

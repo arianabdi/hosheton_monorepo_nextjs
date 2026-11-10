@@ -1,0 +1,89 @@
+.wrap {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ve-border, var(--input-border-color));
+    background: var(--ve-header-bar, transparent);
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+
+        .title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--ve-muted, inherit);
+        }
+
+        .reset {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 6px;
+            background: transparent;
+            color: var(--ve-muted, inherit);
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+
+            svg {
+                width: 11px;
+                height: 11px;
+            }
+
+            &:hover {
+                color: var(--brand-color, #6366f1);
+                border-color: color-mix(in srgb, var(--brand-color, #6366f1) 40%, transparent);
+            }
+        }
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    .field {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 10px;
+        color: var(--ve-muted, inherit);
+
+        span:first-child {
+            min-width: 12px;
+            font-weight: 700;
+        }
+
+        input {
+            flex: 1;
+            width: 100%;
+            min-width: 0;
+            padding: 4px 6px;
+            border: 1px solid var(--ve-border, var(--input-border-color));
+            border-radius: 6px;
+            background: var(--ve-input-bg, var(--body-background));
+            color: var(--ve-text, var(--body-text-color));
+            font-size: 11px;
+            outline: none;
+
+            &:focus {
+                border-color: var(--brand-color, #6366f1);
+            }
+        }
+
+        .unit {
+            min-width: 10px;
+            opacity: 0.7;
+        }
+    }
+
+    .rotationField {
+        grid-column: 1 / -1;
+    }
+}

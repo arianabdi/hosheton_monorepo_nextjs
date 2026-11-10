@@ -1,0 +1,301 @@
+.root {
+    position: relative;
+    margin-top: 1rem;
+    direction: ltr;
+    text-align: left;
+}
+
+.editorSurface {
+    position: relative;
+}
+
+.input {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    min-height: 88px;
+    box-sizing: border-box;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    padding: 0.75rem 0.85rem;
+    color: transparent;
+    caret-color: var(--body-text-color);
+    background: transparent;
+    outline: none;
+    resize: vertical;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.86rem;
+    line-height: 1.65;
+    -webkit-text-fill-color: transparent;
+}
+
+.input::placeholder {
+    color: var(--body-text-color);
+    opacity: 0.45;
+    -webkit-text-fill-color: var(--body-text-color);
+}
+
+.input::selection {
+    background: color-mix(in srgb, var(--brand-color) 28%, transparent);
+}
+
+.highlightLayer {
+    position: absolute;
+    z-index: 0;
+    inset: 1px;
+    min-height: 86px;
+    padding: 0.75rem 0.85rem;
+    overflow: hidden;
+    border-radius: 7px;
+    color: var(--body-text-color);
+    background: var(--input-background-color);
+    pointer-events: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.86rem;
+    line-height: 1.65;
+    box-sizing: border-box;
+}
+
+.variableBadge {
+    color: #fff;
+    background: var(--brand-color);
+    box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--brand-color) 14%, transparent);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.input:focus {
+    border-color: var(--brand-color);
+}
+
+.invalid {
+    border-color: #dc2626;
+}
+
+.help {
+    margin: 0.4rem 0 0;
+    color: var(--body-text-color);
+    font-size: 0.72rem;
+    opacity: 0.68;
+}
+
+.error {
+    margin: 0.4rem 0 0;
+    color: #dc2626;
+    font-size: 0.78rem;
+}
+
+.lookupBuilder {
+    margin-top: 0.75rem;
+    padding: 0.7rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    direction: rtl;
+    text-align: right;
+
+    summary {
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+}
+
+.lookupHint {
+    margin: 0.55rem 0;
+    font-size: 0.72rem;
+    opacity: 0.68;
+}
+
+.lookupList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
+}
+
+.lookupItem {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--brand-color) 24%, transparent);
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--brand-color) 9%, transparent);
+
+    button {
+        border: 0;
+        color: var(--body-text-color);
+        background: transparent;
+        cursor: pointer;
+    }
+
+    > button:first-child {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 0.4rem 0.55rem;
+        text-align: right;
+    }
+
+    code {
+        color: var(--brand-color);
+        direction: ltr;
+        font-size: 0.68rem;
+        font-weight: 700;
+    }
+
+    span {
+        font-size: 0.68rem;
+    }
+}
+
+.lookupRemove {
+    padding: 0 0.55rem;
+    color: #dc2626 !important;
+    font-size: 1rem;
+}
+
+.lookupGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+}
+
+.lookupName {
+    display: flex;
+    align-items: center;
+    direction: ltr;
+
+    span {
+        padding: 0.45rem 0.5rem;
+        border: 1px solid var(--input-border-color);
+        border-inline-end: 0;
+        border-radius: 6px 0 0 6px;
+        color: var(--brand-color);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.72rem;
+    }
+
+    input {
+        border-radius: 0 6px 6px 0 !important;
+    }
+}
+
+.lookupValues {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    textarea {
+        direction: ltr;
+        text-align: left;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+}
+
+.lookupSave {
+    margin-top: 0.65rem;
+    border: 0;
+    border-radius: 7px;
+    padding: 0.5rem 0.75rem;
+    color: #fff;
+    background: var(--brand-color);
+    cursor: pointer;
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.menu {
+    /* مختصات (top/left/max-height) را FormulaExpressionInput کنار کرسر حساب می‌کند */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: min(560px, calc(100vw - 16px));
+    max-height: 310px;
+    box-sizing: border-box;
+    text-align: left;
+    overflow-y: auto;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    padding: 0.35rem;
+    background: var(--plan-card-background-color);
+    box-shadow: 0 12px 28px rgb(0 0 0 / 18%);
+}
+
+.groupLabel {
+    padding: 0.5rem 0.55rem 0.25rem;
+    color: var(--body-text-color);
+    font-size: 0.68rem;
+    font-weight: 700;
+    opacity: 0.58;
+    text-transform: uppercase;
+}
+
+.option {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border: 0;
+    border-radius: 6px;
+    padding: 0.5rem 0.55rem;
+    color: var(--body-text-color);
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.option:hover,
+.selected {
+    background: color-mix(in srgb, var(--brand-color) 11%, transparent);
+}
+
+.optionLabel {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.78rem;
+}
+
+.reference {
+    flex: 0 0 auto;
+    color: var(--brand-color);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+}
+
+.empty {
+    padding: 0.75rem;
+    color: var(--body-text-color);
+    font-size: 0.76rem;
+    opacity: 0.65;
+}
+
+@media (max-width: 720px) {
+    .lookupGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* کپی نامرئی متن برای اندازه‌گیری جای کرسر (منوی @) */
+.caretMirror {
+    visibility: hidden;
+}

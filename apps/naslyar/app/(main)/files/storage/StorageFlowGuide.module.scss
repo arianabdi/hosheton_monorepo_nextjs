@@ -1,0 +1,261 @@
+/* Image delivery explainer — plain stage, no frame: nodes and wires float on the guide. */
+
+.stage {
+    position: relative;
+    height: 240px;
+    margin: 0.5rem 0 0.25rem;
+}
+
+.border {
+    position: absolute;
+    top: 4%;
+    bottom: 4%;
+    left: 48.5%;
+    border-left: 1px dashed var(--plan-card-border-color);
+}
+
+.zone {
+    position: absolute;
+    top: 0;
+    font-size: 0.68rem;
+    opacity: 0.55;
+}
+
+.zoneIran {
+    right: 0;
+}
+
+.zoneAbroad {
+    left: 0;
+}
+
+.wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.wire,
+.wireLit {
+    stroke-width: 1.5;
+    transition: stroke 0.3s ease, opacity 0.3s ease;
+}
+
+.wire {
+    stroke: var(--plan-card-border-color);
+}
+
+.wireLit {
+    stroke: var(--brand-color);
+    opacity: 0.55;
+}
+
+.node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    width: 96px;
+    text-align: center;
+    z-index: 1;
+}
+
+.nodeIcon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--plan-card-border-color);
+    background: var(--plan-card-background-color);
+    color: var(--body-text-color);
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.nodeTitle {
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.nodeSub {
+    font-size: 0.64rem;
+    opacity: 0.6;
+}
+
+.nodeLit .nodeIcon {
+    border-color: var(--brand-color);
+    color: var(--brand-color);
+}
+
+.packet {
+    position: absolute;
+    z-index: 2;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--brand-color);
+    transform: translate(-50%, -50%);
+    left: var(--x1);
+    top: var(--y1);
+    opacity: 0;
+    animation: hop var(--hop-ms) ease-in-out var(--hop-delay) forwards;
+}
+
+@keyframes hop {
+    0% {
+        left: var(--x1);
+        top: var(--y1);
+        opacity: 0;
+    }
+    12% {
+        opacity: 1;
+    }
+    88% {
+        opacity: 1;
+    }
+    100% {
+        left: var(--x2);
+        top: var(--y2);
+        opacity: 0;
+    }
+}
+
+.caption {
+    min-height: 1.6rem;
+    margin: 0 0 1rem;
+    text-align: center;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.captionStep {
+    margin-left: 0.5rem;
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--plan-card-border-color);
+
+    li {
+        border-bottom: 1px solid var(--plan-card-border-color);
+    }
+}
+
+.stepBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.7rem 0.25rem;
+    border: 0;
+    background: transparent;
+    color: var(--body-text-color);
+    font: inherit;
+    font-size: 0.86rem;
+    text-align: right;
+    cursor: pointer;
+
+    &:hover {
+        background: color-mix(in srgb, var(--body-text-color) 5%, transparent);
+    }
+}
+
+.stepBtnActive {
+    font-weight: 700;
+    color: var(--brand-color);
+}
+
+.stepNum {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    font-size: 0.72rem;
+}
+
+.stepDetail {
+    padding: 0 2.2rem 0.85rem 0.25rem;
+
+    p {
+        margin: 0 0 0.55rem;
+        font-size: 0.82rem;
+        line-height: 1.8;
+        opacity: 0.88;
+    }
+}
+
+.devRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.devLabel {
+    font-size: 0.74rem;
+    opacity: 0.65;
+}
+
+.devChip {
+    unicode-bidi: plaintext;
+    padding: 0.1rem 0.45rem;
+    border-radius: 6px;
+    border: 1px solid var(--plan-card-border-color);
+    font-size: 0.72rem;
+}
+
+.autoplayBtn {
+    margin-top: 0.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--brand-color);
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.cards {
+    margin-top: 1.25rem;
+}
+
+@media (max-width: 640px) {
+    .stage {
+        height: 210px;
+        // edge nodes are centred on 9% / 90% — keep their labels inside the guide
+        margin-inline: 2rem;
+    }
+
+    .node {
+        width: 64px;
+    }
+
+    .nodeIcon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .nodeTitle {
+        font-size: 0.64rem;
+    }
+
+    .nodeSub {
+        display: none;
+    }
+
+    .stepDetail {
+        padding-right: 0.25rem;
+    }
+}

@@ -1,0 +1,430 @@
+// Module-specific pieces of «اشتراک». Layout, tables, panels, badges come from
+// error-tracking/ErrorTracking.module.scss; forms and guides from marketing/Marketing.module.scss
+// and management/hr/Hr.module.scss — keep this file to what those do not have.
+
+.headerActions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+/* ---------- Setup checklist (default plan, empty features…) ---------- */
+
+.setupList {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border-top: 1px solid var(--plan-card-border-color);
+}
+
+.setupItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.7rem 0.1rem;
+    border-bottom: 1px solid var(--plan-card-border-color);
+    font-size: 0.84rem;
+    line-height: 1.8;
+
+    a {
+        color: var(--brand-color);
+        font-weight: 600;
+    }
+}
+
+.setupIcon {
+    flex: 0 0 auto;
+    margin-top: 0.3rem;
+}
+
+.ok {
+    color: #16a34a;
+}
+
+.warn {
+    color: #ea580c;
+}
+
+.bad {
+    color: #dc2626;
+}
+
+/* ---------- KPI row (divider lines, no cards) ---------- */
+
+.kpiRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    border-top: 1px solid var(--plan-card-border-color);
+    border-bottom: 1px solid var(--plan-card-border-color);
+    margin-bottom: 1.5rem;
+}
+
+.kpi {
+    padding: 0.9rem 1rem;
+    border-inline-start: 1px solid var(--plan-card-border-color);
+
+    &:first-child {
+        border-inline-start: none;
+    }
+
+    @media (max-width: 640px) {
+        border-inline-start: none;
+        border-top: 1px solid var(--plan-card-border-color);
+
+        &:first-child {
+            border-top: none;
+        }
+    }
+}
+
+.kpiValue {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.kpiLabel {
+    font-size: 0.76rem;
+    opacity: 0.72;
+    margin-top: 0.15rem;
+}
+
+/* ---------- Cells ---------- */
+
+.person {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.personName {
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--brand-color);
+    }
+}
+
+.muted {
+    font-size: 0.76rem;
+    opacity: 0.65;
+}
+
+.ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+.code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.12rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border: 1px solid var(--plan-card-border-color);
+    white-space: nowrap;
+}
+
+.tagBrand {
+    border-color: color-mix(in srgb, var(--brand-color) 45%, transparent);
+    color: var(--brand-color);
+}
+
+.tagWarn {
+    border-color: #f59e0b80;
+    color: #b45309;
+}
+
+.tags {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+
+.actionsCell {
+    width: 56px;
+    text-align: center;
+}
+
+/* ---------- Usage bar ---------- */
+
+.usage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 140px;
+}
+
+.usageBar {
+    height: 6px;
+    border-radius: 6px;
+    background: var(--plan-card-border-color);
+    overflow: hidden;
+
+    span {
+        display: block;
+        height: 100%;
+        background: var(--brand-color);
+    }
+}
+
+.usageFull span {
+    background: #dc2626;
+}
+
+.usageHigh span {
+    background: #f59e0b;
+}
+
+/* ---------- Matrix (plans × features) ---------- */
+
+.matrixWrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--plan-card-border-color);
+    border-radius: 8px;
+}
+
+.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+
+    th,
+    td {
+        padding: 0.6rem 0.75rem;
+        border-bottom: 1px solid var(--plan-card-border-color);
+        text-align: right;
+        vertical-align: middle;
+    }
+
+    thead th {
+        position: sticky;
+        top: 0;
+        background: var(--plan-card-background-color);
+        font-size: 0.8rem;
+        z-index: 1;
+    }
+}
+
+.matrixFeatureCell {
+    position: sticky;
+    inset-inline-start: 0;
+    background: var(--plan-card-background-color);
+    min-width: 220px;
+    z-index: 1;
+}
+
+.matrixGroupRow td {
+    font-size: 0.76rem;
+    font-weight: 700;
+    opacity: 0.75;
+    background: color-mix(in srgb, var(--brand-color) 5%, transparent);
+}
+
+.matrixPlanHead {
+    min-width: 150px;
+}
+
+.matrixCell {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+
+    input[type='number'] {
+        width: 96px;
+        background: var(--input-background-color);
+        border: 1px solid var(--input-border-color);
+        color: var(--body-text-color);
+        border-radius: 6px;
+        padding: 0.35rem 0.5rem;
+        font-family: inherit;
+        font-size: 0.82rem;
+
+        &:disabled {
+            opacity: 0.45;
+        }
+    }
+}
+
+.matrixDirty {
+    background: color-mix(in srgb, #f59e0b 10%, transparent);
+}
+
+.checkLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.76rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.stickyBar {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 0.75rem 0;
+    margin-top: 0.75rem;
+    background: var(--body-background-color, var(--plan-card-background-color));
+    border-top: 1px solid var(--plan-card-border-color);
+    z-index: 2;
+}
+
+/* ---------- Usage map ---------- */
+
+.mapList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mapItem {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--plan-card-border-color);
+
+    &:first-child {
+        padding-top: 0.25rem;
+    }
+}
+
+.mapHead {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+
+    strong {
+        font-size: 0.95rem;
+    }
+}
+
+.mapDesc {
+    margin: 0 0 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.85;
+    opacity: 0.82;
+}
+
+.mapRefs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+
+    li {
+        display: grid;
+        grid-template-columns: minmax(160px, 260px) 1fr;
+        gap: 0.75rem;
+        font-size: 0.8rem;
+        line-height: 1.7;
+
+        @media (max-width: 640px) {
+            grid-template-columns: 1fr;
+            gap: 0.1rem;
+        }
+    }
+}
+
+/* ---------- Dialog content ---------- */
+
+.dialog {
+    padding: 0.25rem 0.25rem 0.5rem;
+}
+
+.dialogHeader {
+    padding-inline-end: 44px;
+    margin-bottom: 0.75rem;
+
+    h3 {
+        margin: 0 0 0.25rem;
+        font-size: 1.05rem;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.8rem;
+        opacity: 0.75;
+        line-height: 1.7;
+    }
+}
+
+.entList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.entItem {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--plan-card-border-color);
+    font-size: 0.84rem;
+}
+
+.radioCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.5rem;
+}
+
+.radioCard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.84rem;
+    text-align: start;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+
+    small {
+        font-size: 0.72rem;
+        opacity: 0.7;
+        line-height: 1.6;
+    }
+}
+
+.radioCardActive {
+    border-color: var(--brand-color);
+    background: color-mix(in srgb, var(--brand-color) 7%, transparent);
+}
+
+.inlineRow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
